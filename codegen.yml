@@ -1,0 +1,26 @@
+overwrite: true
+schema:
+  - https://graphql.contentful.com/content/v1/spaces/1kfhsqlc8ewi:
+      headers:
+        Authorization: "Bearer ${CONTENTFUL_API_KEY}"
+documents: './src/**/*.graphql'
+hooks:
+  afterOneFileWrite:
+    - prettier --write
+generates:
+  ./src/types.ts:
+    plugins:
+      - "typescript"
+  ./src/:
+    preset: near-operation-file
+    presetConfig:
+      extension: .generated.tsx
+      baseTypesPath: types.ts
+    plugins:
+      - typescript-operations
+      - typescript-urql
+    config:
+      withHooks: true
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"

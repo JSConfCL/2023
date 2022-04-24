@@ -1,0 +1,15 @@
+query AssetCollection {
+  assetCollection {
+    total
+    skip
+    limit
+    items {
+      contentfulMetadata {
+        tags {
+          id
+          name
+        }
+      }
+    }
+  }
+}
