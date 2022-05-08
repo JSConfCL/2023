@@ -7,6 +7,7 @@ query WhyBlockCollection {
 			}
 			icon {
 				url
+				description
 			}
 		}
 	}
