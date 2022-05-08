@@ -5,6 +5,7 @@ const nextConfig = {
   experimental: {
     emotion: true,
   },
+  optimizeFonts: false
 }
 
 module.exports = nextConfig
