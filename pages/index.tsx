@@ -1,11 +1,12 @@
 import type { NextPage } from "next";
 import { Hero } from "../src/Sections/Hero";
-import styles from "../styles/Home.module.css";
+import WhySection from "../src/Components/sections/WhySection";
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.container}>
+    <div>
       <Hero />
+      <WhySection />
     </div>
   );
 };

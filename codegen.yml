@@ -3,7 +3,7 @@ schema:
   - https://graphql.contentful.com/content/v1/spaces/1kfhsqlc8ewi:
       headers:
         Authorization: "Bearer ${CONTENTFUL_API_KEY}"
-documents: './src/**/*.graphql'
+documents: "./src/**/*.graphql"
 hooks:
   afterOneFileWrite:
     - prettier --write
