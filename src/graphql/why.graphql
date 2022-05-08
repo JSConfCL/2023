@@ -1,0 +1,13 @@
+query WhyBlockCollection {
+	whyBlockCollection {
+		items {
+			title
+			description {
+				json
+			}
+			icon {
+				url
+			}
+		}
+	}
+}
