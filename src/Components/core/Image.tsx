@@ -12,11 +12,19 @@ const Picture = styled(motion.picture)`
 
 const Img = styled(motion.img)``;
 
-const Image = (props: { mobile: string; desktop?: string; style?: any, alt: string }) => {
+const Image = (props: {
+  mobile: string;
+  desktop?: string;
+  style?: any;
+  alt: string;
+}) => {
   return (
     <Picture>
       <source media="(max-width: 768px)" srcSet={props.mobile} />
-      <source media="(min-width: 769px)" srcSet={props.desktop || props.mobile} />
+      <source
+        media="(min-width: 769px)"
+        srcSet={props.desktop || props.mobile}
+      />
       <Img
         src={props.desktop || props.mobile}
         style={props.style}

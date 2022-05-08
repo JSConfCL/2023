@@ -7,7 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate": "graphql-codegen --config codegen.yml -r dotenv/config"
+    "prettier": "prettier",
+    "lint-staged": "lint-staged",
+    "generate": "graphql-codegen --config codegen.yml -r dotenv/config",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.12.1",
@@ -40,6 +46,8 @@
     "dotenv": "^16.0.0",
     "eslint": "8.14.0",
     "eslint-config-next": "12.1.5",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.4.1",
     "prettier": "^2.6.2",
     "typescript": "4.6.3"
   }
