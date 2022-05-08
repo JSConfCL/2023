@@ -19,16 +19,18 @@ type InterFontStyle = {
   };
 };
 
+type Colors = {
+  jsconfYellow: string;
+  jsconfBlack: string;
+  violetBlue: string;
+  frostbite: string;
+  white: string;
+  black: string;
+};
+
 declare module "@emotion/react" {
   export interface Theme {
-    colors: {
-      jsconfYellow: string;
-      jsconfBlack: string;
-      violetBlue: string;
-      frostbite: string;
-      white: string;
-      black: string;
-    };
+    colors: Colors;
     fonts: {
       inter: InterFontStyle;
     };
@@ -42,6 +44,7 @@ declare module "@emotion/react" {
       global: {
         backgroundColor: string;
         fontFamily: keyof Theme["fonts"];
+        color: string;
       };
     };
   }

@@ -1,0 +1,28 @@
+query HomeQuery {
+  darkLogo: asset(id: "6WRwV3LQrvpKVwHm9NQnNn") {
+    sys {
+      id
+    }
+    url
+    width
+  }
+  yellowLogo: asset(id: "7vS6nB42b1ciyNfwcjmnWN") {
+    sys {
+      id
+    }
+    url
+    width
+  }
+  whyBlockCollection {
+    items {
+      title
+      description {
+        json
+      }
+      icon {
+        url
+        description
+      }
+    }
+  }
+}

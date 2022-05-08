@@ -130,6 +130,7 @@ export const GlobalStyles = () => {
           html {
             background-color: ${theme.elements.global.backgroundColor};
             font-family: ${theme.elements.global.fontFamily};
+            color: ${theme.elements.global.color};
           }
         `,
       ]}
