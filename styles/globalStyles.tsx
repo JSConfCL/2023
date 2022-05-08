@@ -1,5 +1,4 @@
 import { css, Global, useTheme } from "@emotion/react";
-import { theme } from "twin.macro";
 
 const resetCSS = css`
   /***

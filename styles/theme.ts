@@ -1,4 +1,3 @@
-import { theme } from "twin.macro";
 import { Theme } from "@emotion/react";
 import { lighten } from "polished";
 
