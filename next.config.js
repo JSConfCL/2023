@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 
-
 const nextConfig = {
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
-      use: ["@svgr/webpack"]
+      use: ["@svgr/webpack"],
     });
 
     return config;
@@ -14,7 +13,7 @@ const nextConfig = {
   experimental: {
     emotion: true,
   },
-  optimizeFonts: false
-}
+  optimizeFonts: false,
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

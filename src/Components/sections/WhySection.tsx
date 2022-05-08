@@ -1,11 +1,11 @@
 import React, { Suspense } from "react";
-import styled from "@emotion/styled"
+import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import { useWhyBlockCollectionQuery } from "../../graphql/why.generated";
 import { H2, H3 } from "../core/Typography";
-import Description from "../core/Description"
-import Image from "../core/Image"
-import Line from "../../images/line.svg"
+import Description from "../core/Description";
+import Image from "../core/Image";
+import Line from "../../images/line.svg";
 
 const Container = styled.section`
   display: flex;
@@ -30,7 +30,7 @@ const BlockContainer = styled.section`
     svg {
       display: inline;
     }
-    section:last-child  svg {
+    section:last-child svg {
       display: none;
     }
   }
@@ -41,15 +41,15 @@ const Flex = styled.section<{ index: number }>`
   flex-direction: row;
   gap: 0px 16px;
   justify-content: space-between;
-  padding: ${({ index }) => index % 2 == 0 ? "16px 0px 16px 0px" : "0px 0px 32px 0px"};
-  align-items: ${({ index }) => index % 2 == 0 ? "flex-end" : "flex-start"};
+  padding: ${({ index }) =>
+    index % 2 == 0 ? "16px 0px 16px 0px" : "0px 0px 32px 0px"};
+  align-items: ${({ index }) => (index % 2 == 0 ? "flex-end" : "flex-start")};
 
   svg {
-   transform: ${({ index }) => index % 2 == 0 ? "rotateX(0deg)" : "rotateX(-180deg)"};
+    transform: ${({ index }) =>
+      index % 2 == 0 ? "rotateX(0deg)" : "rotateX(-180deg)"};
   }
-
-
-`
+`;
 
 const Block = styled(motion.section)`
   display: flex;
@@ -75,7 +75,13 @@ const WhySection = () => {
         <BlockContainer>
           {data?.whyBlockCollection?.items?.map((props, index) => (
             <Block key={`why - block - ${index} `}>
-              <Flex index={index}><Image mobile={props?.icon?.url!} alt={props?.icon?.description! || ""} /><Line /></Flex>
+              <Flex index={index}>
+                <Image
+                  mobile={props?.icon?.url!}
+                  alt={props?.icon?.description! || ""}
+                />
+                <Line />
+              </Flex>
               <H3>{props?.title}</H3>
               <Description data={props?.description?.json!} />
             </Block>
@@ -83,7 +89,7 @@ const WhySection = () => {
         </BlockContainer>
       </Suspense>
     </Container>
-  )
-}
+  );
+};
 
 export default WhySection;

@@ -1,14 +1,14 @@
 query WhyBlockCollection {
-	whyBlockCollection {
-		items {
-			title
-			description {
-				json
-			}
-			icon {
-				url
-				description
-			}
-		}
-	}
+  whyBlockCollection {
+    items {
+      title
+      description {
+        json
+      }
+      icon {
+        url
+        description
+      }
+    }
+  }
 }
