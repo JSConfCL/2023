@@ -53,6 +53,7 @@ export const jsconfTheme: Theme = {
     global: {
       backgroundColor: colors.black,
       fontFamily: fonts.inter.name,
+      color: colors.white,
     },
   },
 };
