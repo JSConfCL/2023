@@ -1,11 +1,14 @@
 import React, { Suspense } from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import { useWhyBlockCollectionQuery } from "../../graphql/why.generated";
+import {
+  HomeQueryQuery,
+} from "../../graphql/home.generated";
 import { H2, H3 } from "../core/Typography";
 import Description from "../core/Description";
 import Image from "../core/Image";
 import Line from "../../images/line.svg";
+
 
 const Container = styled.section`
   display: flex;
@@ -47,7 +50,7 @@ const Flex = styled.section<{ index: number }>`
 
   svg {
     transform: ${({ index }) =>
-      index % 2 == 0 ? "rotateX(0deg)" : "rotateX(-180deg)"};
+    index % 2 == 0 ? "rotateX(0deg)" : "rotateX(-180deg)"};
   }
 `;
 
@@ -65,15 +68,13 @@ const Block = styled(motion.section)`
   }
 `;
 
-const WhySection = () => {
-  const [{ data, fetching, error }] = useWhyBlockCollectionQuery();
-
+const WhySection = (props: { page: HomeQueryQuery["whyBlockCollection"] }) => {
   return (
     <Container>
       <Suspense fallback={<h1>Loading why...</h1>}>
         <H2>Why?</H2>
         <BlockContainer>
-          {data?.whyBlockCollection?.items?.map((props, index) => (
+          {props.page?.items.map((props, index) => (
             <Block key={`why - block - ${index} `}>
               <Flex index={index}>
                 <Image
