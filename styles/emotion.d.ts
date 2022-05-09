@@ -31,6 +31,13 @@ type Colors = {
 declare module "@emotion/react" {
   export interface Theme {
     colors: Colors;
+    breakpoints: {
+      desktopOnly: string;
+      tabletLandscapeOnly: string;
+      smallDesktopOnly: string;
+      tabletPortraitOnly: string;
+      phoneOnly: string;
+    };
     fonts: {
       inter: InterFontStyle;
     };

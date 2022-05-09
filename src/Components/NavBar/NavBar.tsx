@@ -2,10 +2,9 @@
 import styled from "@emotion/styled";
 import React from "react";
 import Link from "next/link";
+import { JSConfLogo } from "../svgs/logo";
 
-type Props = {
-  logo: string;
-};
+type Props = {};
 
 const StyledNav = styled.nav`
   height: 80px;
@@ -26,12 +25,9 @@ const StyledWrapper = styled.div`
   justify-content: space-between;
   padding: 16px;
   width: 100%;
-  max-width: 1440px; // TODO: Meter en el theme
+  max-width: 1200px;
 `;
 
-const StyledImg = styled.img`
-  height: 100%;
-`;
 const StyledLinksContainer = styled.li`
   list-style: none;
   display: flex;
@@ -42,16 +38,22 @@ const StyledLinksContainer = styled.li`
 
 const StyledLink = styled.ul`
   padding: 16px;
+  font-size: 0.8em;
   cursor: pointer;
+`;
+
+const StyledJSConfLogoWrapper = styled.div`
+  height: 100%;
+  aspect-ratio: 1/1;
 `;
 
 export const NavBar = (props: Props) => {
   return (
     <StyledNav>
       <StyledWrapper>
-        <div>
-          <StyledImg alt="jsconf logo" src={props.logo} />
-        </div>
+        <StyledJSConfLogoWrapper>
+          <JSConfLogo />
+        </StyledJSConfLogoWrapper>
         <StyledLinksContainer>
           <StyledLink>
             <Link href={"/"}>Home</Link>

@@ -8,15 +8,13 @@ import {
 } from "../src/graphql/home.generated";
 import { urlQlient } from "../src/graphql/urql";
 
-type Props = {
-  logo: string;
-};
+type Props = {};
 
-const Home: NextPage<Props> = (props) => {
+const Home: NextPage<Props> = () => {
   return (
     <div>
-      <NavBar logo={props.logo} />
-      <Hero logo={props.logo} />
+      <NavBar />
+      <Hero />
       <WhySection />
     </div>
   );
@@ -27,9 +25,7 @@ export async function getStaticProps() {
     .query<HomeQueryQuery>(HomeQueryDocument)
     .toPromise();
 
-  const props: Props = {
-    logo: queryResults?.data?.darkLogo?.url!,
-  };
+  const props: Props = {};
   return {
     props,
   };
