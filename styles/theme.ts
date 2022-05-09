@@ -22,9 +22,30 @@ const fonts = {
   },
 };
 
+export enum ViewportSizes {
+  Desktop = 1800,
+  TabletLandscape = 1200,
+  SmallDesktop = 960,
+  TabletPortrait = 900,
+  Phone = 600,
+}
+
+function generateMediaQueryString(viewportSize: ViewportSizes): string {
+  return `@media (max-width: ${viewportSize}px)`;
+}
+
+const breakpoints = {
+  desktopOnly: generateMediaQueryString(ViewportSizes.Desktop),
+  phoneOnly: generateMediaQueryString(ViewportSizes.Phone),
+  smallDesktopOnly: generateMediaQueryString(ViewportSizes.SmallDesktop),
+  tabletLandscapeOnly: generateMediaQueryString(ViewportSizes.TabletLandscape),
+  tabletPortraitOnly: generateMediaQueryString(ViewportSizes.TabletPortrait),
+};
+
 export const jsconfTheme: Theme = {
   colors,
   fonts,
+  breakpoints,
   elements: {
     buttons: {
       variants: {
