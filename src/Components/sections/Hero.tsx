@@ -2,10 +2,12 @@
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import React from "react";
+import { HomeQueryQuery } from "../../graphql/home.generated";
+import { ParseQuery } from "../../helpers/types";
 import { BasePrimaryButton, BaseExternalLink } from "../Button";
 import { JSConfLogo } from "../svgs/logo";
 
-type Props = {};
+type Props = ParseQuery<HomeQueryQuery>["heroBlock"];
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -152,6 +154,7 @@ const StyledImageWrapper = styled.div(({ theme }) => ({
 }));
 
 export const Hero = (props: Props) => {
+  console.log(props);
   const theme = useTheme();
   return (
     <StyledWrapper>

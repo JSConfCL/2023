@@ -304,6 +304,143 @@ export enum EntryOrder {
   SysPublishedVersionDesc = "sys_publishedVersion_DESC",
 }
 
+/** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
+export type HeroBlock = Entry & {
+  __typename?: "HeroBlock";
+  contentfulMetadata: ContentfulMetadata;
+  ctaText?: Maybe<Scalars["String"]>;
+  ctaUrl?: Maybe<Scalars["String"]>;
+  date?: Maybe<Scalars["String"]>;
+  firstSubtitle?: Maybe<Scalars["String"]>;
+  linkedFrom?: Maybe<HeroBlockLinkingCollections>;
+  secondSubtitle?: Maybe<Scalars["String"]>;
+  sys: Sys;
+  tile?: Maybe<Scalars["String"]>;
+};
+
+/** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
+export type HeroBlockCtaTextArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
+export type HeroBlockCtaUrlArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
+export type HeroBlockDateArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
+export type HeroBlockFirstSubtitleArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
+export type HeroBlockLinkedFromArgs = {
+  allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
+export type HeroBlockSecondSubtitleArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
+export type HeroBlockTileArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+export type HeroBlockCollection = {
+  __typename?: "HeroBlockCollection";
+  items: Array<Maybe<HeroBlock>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export type HeroBlockFilter = {
+  AND?: InputMaybe<Array<InputMaybe<HeroBlockFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<HeroBlockFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  ctaText?: InputMaybe<Scalars["String"]>;
+  ctaText_contains?: InputMaybe<Scalars["String"]>;
+  ctaText_exists?: InputMaybe<Scalars["Boolean"]>;
+  ctaText_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  ctaText_not?: InputMaybe<Scalars["String"]>;
+  ctaText_not_contains?: InputMaybe<Scalars["String"]>;
+  ctaText_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  ctaUrl?: InputMaybe<Scalars["String"]>;
+  ctaUrl_contains?: InputMaybe<Scalars["String"]>;
+  ctaUrl_exists?: InputMaybe<Scalars["Boolean"]>;
+  ctaUrl_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  ctaUrl_not?: InputMaybe<Scalars["String"]>;
+  ctaUrl_not_contains?: InputMaybe<Scalars["String"]>;
+  ctaUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  date?: InputMaybe<Scalars["String"]>;
+  date_contains?: InputMaybe<Scalars["String"]>;
+  date_exists?: InputMaybe<Scalars["Boolean"]>;
+  date_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  date_not?: InputMaybe<Scalars["String"]>;
+  date_not_contains?: InputMaybe<Scalars["String"]>;
+  date_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  firstSubtitle?: InputMaybe<Scalars["String"]>;
+  firstSubtitle_contains?: InputMaybe<Scalars["String"]>;
+  firstSubtitle_exists?: InputMaybe<Scalars["Boolean"]>;
+  firstSubtitle_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  firstSubtitle_not?: InputMaybe<Scalars["String"]>;
+  firstSubtitle_not_contains?: InputMaybe<Scalars["String"]>;
+  firstSubtitle_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  secondSubtitle?: InputMaybe<Scalars["String"]>;
+  secondSubtitle_contains?: InputMaybe<Scalars["String"]>;
+  secondSubtitle_exists?: InputMaybe<Scalars["Boolean"]>;
+  secondSubtitle_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  secondSubtitle_not?: InputMaybe<Scalars["String"]>;
+  secondSubtitle_not_contains?: InputMaybe<Scalars["String"]>;
+  secondSubtitle_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  sys?: InputMaybe<SysFilter>;
+  tile?: InputMaybe<Scalars["String"]>;
+  tile_contains?: InputMaybe<Scalars["String"]>;
+  tile_exists?: InputMaybe<Scalars["Boolean"]>;
+  tile_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  tile_not?: InputMaybe<Scalars["String"]>;
+  tile_not_contains?: InputMaybe<Scalars["String"]>;
+  tile_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+export type HeroBlockLinkingCollections = {
+  __typename?: "HeroBlockLinkingCollections";
+  entryCollection?: Maybe<EntryCollection>;
+};
+
+export type HeroBlockLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export enum HeroBlockOrder {
+  CtaTextAsc = "ctaText_ASC",
+  CtaTextDesc = "ctaText_DESC",
+  CtaUrlAsc = "ctaUrl_ASC",
+  CtaUrlDesc = "ctaUrl_DESC",
+  DateAsc = "date_ASC",
+  DateDesc = "date_DESC",
+  SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
+  SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
+  SysIdAsc = "sys_id_ASC",
+  SysIdDesc = "sys_id_DESC",
+  SysPublishedAtAsc = "sys_publishedAt_ASC",
+  SysPublishedAtDesc = "sys_publishedAt_DESC",
+  SysPublishedVersionAsc = "sys_publishedVersion_ASC",
+  SysPublishedVersionDesc = "sys_publishedVersion_DESC",
+  TileAsc = "tile_ASC",
+  TileDesc = "tile_DESC",
+}
+
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/howBlock) */
 export type HowBlock = Entry & {
   __typename?: "HowBlock";
@@ -572,9 +709,17 @@ export type MemberFilter = {
 export type MemberLinkingCollections = {
   __typename?: "MemberLinkingCollections";
   entryCollection?: Maybe<EntryCollection>;
+  teamBlockCollection?: Maybe<TeamBlockCollection>;
 };
 
 export type MemberLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type MemberLinkingCollectionsTeamBlockCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
@@ -601,6 +746,8 @@ export type Query = {
   asset?: Maybe<Asset>;
   assetCollection?: Maybe<AssetCollection>;
   entryCollection?: Maybe<EntryCollection>;
+  heroBlock?: Maybe<HeroBlock>;
+  heroBlockCollection?: Maybe<HeroBlockCollection>;
   howBlock?: Maybe<HowBlock>;
   howBlockCollection?: Maybe<HowBlockCollection>;
   member?: Maybe<Member>;
@@ -611,6 +758,8 @@ export type Query = {
   sponsorCollection?: Maybe<SponsorCollection>;
   talk?: Maybe<Talk>;
   talkCollection?: Maybe<TalkCollection>;
+  teamBlock?: Maybe<TeamBlock>;
+  teamBlockCollection?: Maybe<TeamBlockCollection>;
   whyBlock?: Maybe<WhyBlock>;
   whyBlockCollection?: Maybe<WhyBlockCollection>;
 };
@@ -637,6 +786,21 @@ export type QueryEntryCollectionArgs = {
   preview?: InputMaybe<Scalars["Boolean"]>;
   skip?: InputMaybe<Scalars["Int"]>;
   where?: InputMaybe<EntryFilter>;
+};
+
+export type QueryHeroBlockArgs = {
+  id: Scalars["String"];
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+export type QueryHeroBlockCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  order?: InputMaybe<Array<InputMaybe<HeroBlockOrder>>>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<HeroBlockFilter>;
 };
 
 export type QueryHowBlockArgs = {
@@ -712,6 +876,21 @@ export type QueryTalkCollectionArgs = {
   preview?: InputMaybe<Scalars["Boolean"]>;
   skip?: InputMaybe<Scalars["Int"]>;
   where?: InputMaybe<TalkFilter>;
+};
+
+export type QueryTeamBlockArgs = {
+  id: Scalars["String"];
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+export type QueryTeamBlockCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  order?: InputMaybe<Array<InputMaybe<TeamBlockOrder>>>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<TeamBlockFilter>;
 };
 
 export type QueryWhyBlockArgs = {
@@ -1153,6 +1332,124 @@ export type TalkLinkingCollectionsEntryCollectionArgs = {
 export enum TalkOrder {
   DurationAsc = "duration_ASC",
   DurationDesc = "duration_DESC",
+  SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
+  SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
+  SysIdAsc = "sys_id_ASC",
+  SysIdDesc = "sys_id_DESC",
+  SysPublishedAtAsc = "sys_publishedAt_ASC",
+  SysPublishedAtDesc = "sys_publishedAt_DESC",
+  SysPublishedVersionAsc = "sys_publishedVersion_ASC",
+  SysPublishedVersionDesc = "sys_publishedVersion_DESC",
+  TitleAsc = "title_ASC",
+  TitleDesc = "title_DESC",
+}
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/teamBlock) */
+export type TeamBlock = Entry & {
+  __typename?: "TeamBlock";
+  contentfulMetadata: ContentfulMetadata;
+  description?: Maybe<TeamBlockDescription>;
+  linkedFrom?: Maybe<TeamBlockLinkingCollections>;
+  membersCollection?: Maybe<TeamBlockMembersCollection>;
+  sys: Sys;
+  title?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/teamBlock) */
+export type TeamBlockDescriptionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/teamBlock) */
+export type TeamBlockLinkedFromArgs = {
+  allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/teamBlock) */
+export type TeamBlockMembersCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/teamBlock) */
+export type TeamBlockTitleArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+export type TeamBlockCollection = {
+  __typename?: "TeamBlockCollection";
+  items: Array<Maybe<TeamBlock>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export type TeamBlockDescription = {
+  __typename?: "TeamBlockDescription";
+  json: Scalars["JSON"];
+  links: TeamBlockDescriptionLinks;
+};
+
+export type TeamBlockDescriptionAssets = {
+  __typename?: "TeamBlockDescriptionAssets";
+  block: Array<Maybe<Asset>>;
+  hyperlink: Array<Maybe<Asset>>;
+};
+
+export type TeamBlockDescriptionEntries = {
+  __typename?: "TeamBlockDescriptionEntries";
+  block: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  inline: Array<Maybe<Entry>>;
+};
+
+export type TeamBlockDescriptionLinks = {
+  __typename?: "TeamBlockDescriptionLinks";
+  assets: TeamBlockDescriptionAssets;
+  entries: TeamBlockDescriptionEntries;
+};
+
+export type TeamBlockFilter = {
+  AND?: InputMaybe<Array<InputMaybe<TeamBlockFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<TeamBlockFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  description_contains?: InputMaybe<Scalars["String"]>;
+  description_exists?: InputMaybe<Scalars["Boolean"]>;
+  description_not_contains?: InputMaybe<Scalars["String"]>;
+  membersCollection_exists?: InputMaybe<Scalars["Boolean"]>;
+  sys?: InputMaybe<SysFilter>;
+  title?: InputMaybe<Scalars["String"]>;
+  title_contains?: InputMaybe<Scalars["String"]>;
+  title_exists?: InputMaybe<Scalars["Boolean"]>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  title_not?: InputMaybe<Scalars["String"]>;
+  title_not_contains?: InputMaybe<Scalars["String"]>;
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+export type TeamBlockLinkingCollections = {
+  __typename?: "TeamBlockLinkingCollections";
+  entryCollection?: Maybe<EntryCollection>;
+};
+
+export type TeamBlockLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type TeamBlockMembersCollection = {
+  __typename?: "TeamBlockMembersCollection";
+  items: Array<Maybe<Member>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export enum TeamBlockOrder {
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",

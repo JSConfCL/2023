@@ -7,6 +7,15 @@ export type HomeQueryQueryVariables = Types.Exact<{ [key: string]: never }>;
 
 export type HomeQueryQuery = {
   __typename?: "Query";
+  heroBlock?: {
+    __typename?: "HeroBlock";
+    tile?: string | null;
+    firstSubtitle?: string | null;
+    secondSubtitle?: string | null;
+    date?: string | null;
+    ctaUrl?: string | null;
+    ctaText?: string | null;
+  } | null;
   whyBlockCollection?: {
     __typename?: "WhyBlockCollection";
     items: Array<{
@@ -37,6 +46,14 @@ export type HomeQueryQuery = {
 
 export const HomeQueryDocument = gql`
   query HomeQuery {
+    heroBlock(id: "6AMWd9UWYiuHuPdLhLn42E") {
+      tile
+      firstSubtitle
+      secondSubtitle
+      date
+      ctaUrl
+      ctaText
+    }
     whyBlockCollection {
       items {
         title
