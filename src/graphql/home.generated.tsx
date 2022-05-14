@@ -20,6 +20,19 @@ export type HomeQueryQuery = {
       } | null;
     } | null>;
   } | null;
+  howBlockCollection?: {
+    __typename?: "HowBlockCollection";
+    items: Array<{
+      __typename?: "HowBlock";
+      title?: string | null;
+      description?: { __typename?: "HowBlockDescription"; json: any } | null;
+      image?: {
+        __typename?: "Asset";
+        url?: string | null;
+        description?: string | null;
+      } | null;
+    } | null>;
+  } | null;
 };
 
 export const HomeQueryDocument = gql`
@@ -31,6 +44,18 @@ export const HomeQueryDocument = gql`
           json
         }
         icon {
+          url
+          description
+        }
+      }
+    }
+    howBlockCollection {
+      items {
+        title
+        description {
+          json
+        }
+        image {
           url
           description
         }

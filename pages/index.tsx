@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { NavBar } from "../src/Components/NavBar/NavBar";
 import { Hero } from "../src/Components/sections/Hero";
 import WhySection from "../src/Components/sections/WhySection";
+import HowSection from "../src/Components/sections/HowSection";
 import {
   HomeQueryDocument,
   HomeQueryQuery,
@@ -10,18 +11,18 @@ import { urlQlient } from "../src/graphql/urql";
 
 
 type Props = {
-  logo: string;
-  whyItems: HomeQueryQuery["whyBlockCollection"]
+  whyItems: HomeQueryQuery["whyBlockCollection"];
+  howItems: HomeQueryQuery["howBlockCollection"];
 };
 
 
-const Home: NextPage<Props> = () => {
+const Home: NextPage<Props> = (props) => {
   return (
     <div>
-
-      <NavBar logo={props.logo} />
-      <Hero logo={props.logo} />
+      <NavBar />
+      <Hero />
       <WhySection page={props.whyItems} />
+      <HowSection page={props.howItems} />
     </div>
   );
 };
@@ -32,8 +33,8 @@ export async function getStaticProps() {
     .toPromise();
 
   const props: Props = {
-    logo: queryResults?.data?.darkLogo?.url!,
-    whyItems: queryResults?.data?.whyBlockCollection!
+    whyItems: queryResults?.data?.whyBlockCollection!,
+    howItems: queryResults?.data?.howBlockCollection!,
   };
 
   return {
