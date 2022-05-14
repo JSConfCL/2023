@@ -9,7 +9,6 @@ export const H2 = styled(motion.h2)`
   font-size: 80px;
   line-height: 80px;
   text-align: left;
-
 `;
 
 export const H3 = styled(motion.h3)`

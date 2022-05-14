@@ -11,7 +11,7 @@ import useMediaQuery from "../../helpers/useMediaQuery";
 const Container = styled.section`
   align-self: center;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   max-width: 1440px;
   gap: 0px 32px;
@@ -21,7 +21,13 @@ const Container = styled.section`
   > h2 {
     padding: 48px 0px;
   }
-`
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
+`;
+
+
 
 const BlockContainer = styled.section`
   display: flex;
@@ -113,10 +119,8 @@ const WhySection = (props: { page: PageProps["whyItems"] }) => {
                   mobile={item?.icon?.url!}
                   alt={item?.icon?.description! || ""}
                   style={{
-
                     height: isMobile ? "fit-content" : "390px",
                     width: isMobile ? "100vw" : "fit-content",
-
                     aspectRatio: index % 2 === 0 ? "287 / 390" : "397 / 390",
                     mixBlendMode: "multiply",
                     borderRadius: "0px 32px 0px 0px"
