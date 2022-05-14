@@ -5,7 +5,6 @@ import {
   Document,
   Block,
   Inline,
-  MARKS,
   BLOCKS,
 } from "@contentful/rich-text-types";
 import { P, B } from "./Typography";

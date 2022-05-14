@@ -11,4 +11,16 @@ query HomeQuery {
       }
     }
   }
+	howBlockCollection {
+		items {
+			title
+			description {
+				json
+			}
+			image {
+				url
+				description
+			}
+		}
+	}
 }
