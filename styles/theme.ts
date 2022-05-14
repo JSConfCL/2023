@@ -12,12 +12,20 @@ const colors = {
 };
 
 const fonts = {
-  inter: {
-    name: "inter" as "inter",
+  Barlow: {
+    name: "Barlow" as "Barlow",
     weights: {
-      bold: 700,
       normal: 400,
-      thin: 300,
+      medium: 500,
+      semiBold: 600,
+      bold: 700,
+      extraBold: 800,
+    },
+  },
+  Koulen: {
+    name: "Koulen" as "Koulen",
+    weights: {
+      normal: 400,
     },
   },
 };
@@ -70,7 +78,9 @@ export const jsconfTheme: Theme = {
     },
     global: {
       backgroundColor: colors.black,
-      fontFamily: fonts.inter.name,
+      fontFamily: fonts.Koulen.name,
+      headingsFontFamily: fonts.Barlow.name,
+      headingsFontWeight: 400,
       color: colors.white,
     },
   },

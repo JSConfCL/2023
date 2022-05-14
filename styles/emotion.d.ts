@@ -11,15 +11,6 @@ type ButtonVariantStyles = {
   borderStyle: CSS.Properties["borderStyle"];
 };
 
-type InterFontStyle = {
-  name: "inter";
-  weights: {
-    bold: number;
-    normal: number;
-    thin: number;
-  };
-};
-
 type Colors = {
   jsconfYellow: string;
   jsconfBlack: string;
@@ -40,7 +31,22 @@ declare module "@emotion/react" {
       phoneOnly: string;
     };
     fonts: {
-      inter: InterFontStyle;
+      Barlow: {
+        name: "Barlow";
+        weights: {
+          normal: number;
+          medium: number;
+          semiBold: number;
+          bold: number;
+          extraBold: number;
+        };
+      };
+      Koulen: {
+        name: "Koulen";
+        weights: {
+          normal: number;
+        };
+      };
     };
     elements: {
       buttons: {
@@ -52,6 +58,8 @@ declare module "@emotion/react" {
       global: {
         backgroundColor: string;
         fontFamily: keyof Theme["fonts"];
+        headingsFontFamily: keyof Theme["fonts"];
+        headingsFontWeight: number;
         color: string;
       };
     };
