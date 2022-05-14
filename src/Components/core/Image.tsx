@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const Picture = styled(motion.picture)`
   width: fit-content;
-
+  overflow: hidden;
   > img {
     width: 100%;
   }

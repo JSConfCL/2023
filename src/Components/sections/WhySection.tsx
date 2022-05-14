@@ -5,12 +5,13 @@ import { H2, H3 } from "../core/Typography";
 import Description from "../core/Description";
 import Image from "../core/Image"
 import { PageProps } from "../../../pages";
+import useMediaQuery from "../../helpers/useMediaQuery";
 
 
 const Container = styled.section`
   align-self: center;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   max-width: 1440px;
   gap: 0px 32px;
@@ -20,18 +21,23 @@ const Container = styled.section`
   > h2 {
     padding: 48px 0px;
   }
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
 `;
 
 
 const BlockContainer = styled.section`
   display: flex;
   flex-direction: column;
-  width: fit-content;
-  gap: 0px 20px;
-
+ 
+  gap: 20px 20px;
+  width: 100%;
   justify-content: flex-start;
   @media (min-width: 769px) {
     flex-direction: row;
+    width: fit-content;
   }
 `;
 
@@ -100,6 +106,7 @@ const descriptionVariant = {
 }
 
 const WhySection = (props: { page: PageProps["whyItems"] }) => {
+  const isMobile = useMediaQuery("(max-width: 768px)");
   return (
     <Container>
       <Suspense fallback={<h1>Loading why...</h1>}>
@@ -112,7 +119,8 @@ const WhySection = (props: { page: PageProps["whyItems"] }) => {
                   mobile={item?.icon?.url!}
                   alt={item?.icon?.description! || ""}
                   style={{
-                    height: "390px",
+                    height: isMobile ? "fit-content" : "390px",
+                    width: isMobile ? "100vw" : "fit-content",
                     aspectRatio: index % 2 === 0 ? "287 / 390" : "397 / 390",
                     mixBlendMode: "multiply",
                     borderRadius: "0px 32px 0px 0px"
