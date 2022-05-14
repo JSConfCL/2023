@@ -29,10 +29,9 @@ const Home: NextPage<Props> = (props) => {
 
 export async function getStaticProps() {
   const queryResults = await urlQlient
-    .query<HomeQueryQuery>(HomeQueryDocument)
+    .query<ParseQuery<HomeQueryQuery>>(HomeQueryDocument)
     .toPromise();
 
-  const asd = queryResults?.data?.heroBlock!;
   const props: Props = {
     heroData: queryResults?.data?.heroBlock!,
     whyItems: queryResults?.data?.whyBlockCollection!,

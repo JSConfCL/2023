@@ -154,7 +154,6 @@ const StyledImageWrapper = styled.div(({ theme }) => ({
 }));
 
 export const Hero = (props: Props) => {
-  console.log(props);
   const theme = useTheme();
   return (
     <StyledWrapper>
