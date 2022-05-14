@@ -1,34 +1,37 @@
 query HomeQuery {
-  heroBlock(id: "6AMWd9UWYiuHuPdLhLn42E") {
-    tile
-    firstSubtitle
-    secondSubtitle
-    date
-    ctaUrl
-    ctaText
-  }
-  whyBlockCollection {
-    items {
-      title
-      description {
-        json
-      }
-      icon {
-        url
-        description
-      }
-    }
-  }
-  howBlockCollection {
-    items {
-      title
-      description {
-        json
-      }
-      image {
-        url
-        description
-      }
-    }
-  }
+	page(id: "FTZMMTIKuOMTvkVv0DGzs") {
+		heroBlock {
+			tile
+			firstSubtitle
+			secondSubtitle
+			date
+			ctaUrl
+			ctaText
+		}
+		whyBlockCollection {
+			items {
+				title
+				description {
+					json
+				}
+				icon {
+					url
+					description
+				}
+			}
+		}
+		howBlockCollection {
+			items {
+				title
+				description {
+					json
+				}
+				image {
+					url
+					description
+				}
+			}
+		}
+	}
 }
+

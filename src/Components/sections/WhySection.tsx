@@ -1,13 +1,11 @@
 import React, { Suspense } from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import {
-  HomeQueryQuery,
-} from "../../graphql/home.generated";
 import { H2, H3 } from "../core/Typography";
 import Description from "../core/Description";
 import Image from "../core/Image";
 import Line from "../../images/line.svg";
+import { PageProps } from "../../../pages";
 
 
 const Container = styled.section`
@@ -68,23 +66,23 @@ const Block = styled(motion.section)`
   }
 `;
 
-const WhySection = (props: { page: HomeQueryQuery["whyBlockCollection"] }) => {
+const WhySection = (props: { page: PageProps["whyItems"] }) => {
   return (
     <Container>
       <Suspense fallback={<h1>Loading why...</h1>}>
         <H2>Why?</H2>
         <BlockContainer>
-          {props.page?.items.map((props, index) => (
+          {props.page?.items?.map((item, index) => (
             <Block key={`why - block - ${index} `}>
               <Flex index={index}>
                 <Image
-                  mobile={props?.icon?.url!}
-                  alt={props?.icon?.description! || ""}
+                  mobile={item?.icon?.url!}
+                  alt={item?.icon?.description! || ""}
                 />
                 <Line />
               </Flex>
-              <H3>{props?.title}</H3>
-              <Description data={props?.description?.json!} />
+              <H3>{item?.title}</H3>
+              <Description data={item?.description?.json!} />
             </Block>
           ))}
         </BlockContainer>
