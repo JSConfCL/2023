@@ -8,7 +8,7 @@ interface JSConfLogoProps {
 
 export const JSConfLogo = (props: JSConfLogoProps) => {
   const theme = useTheme();
-  const color1 = props.color1 || theme.colors.frostbite;
+  const color1 = props.color1 || theme.colors.jsconfRed;
   const color2 = props.color2 || theme.colors.violetBlue;
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 274">

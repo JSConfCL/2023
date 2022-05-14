@@ -7,6 +7,7 @@ type ButtonVariantStyles = {
   backgroundFallbackColor: string;
   borderColor: string;
   borderWidth: number;
+  borderTopRightRadius?: number;
   borderStyle: CSS.Properties["borderStyle"];
 };
 
@@ -22,8 +23,8 @@ type InterFontStyle = {
 type Colors = {
   jsconfYellow: string;
   jsconfBlack: string;
+  jsconfRed: string;
   violetBlue: string;
-  frostbite: string;
   white: string;
   black: string;
 };

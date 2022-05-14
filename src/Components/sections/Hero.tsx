@@ -2,6 +2,7 @@
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import React from "react";
+import { BasePrimaryButton, BaseExternalLink } from "../Button";
 import { JSConfLogo } from "../svgs/logo";
 
 type Props = {};
@@ -49,8 +50,8 @@ const StyledTitle = styled.h1`
   line-height: 120px;
   letter-spacing: 1px;
   line-height: 1.1em;
-  filter: drop-shadow(20px 20px 3px #4444dd);
 `;
+
 const StyledSubTitle = styled.h2`
   font-family: "Inter";
   font-style: normal;
@@ -59,7 +60,7 @@ const StyledSubTitle = styled.h2`
   line-height: 120px;
   letter-spacing: 1px;
   line-height: 1.2em;
-  color: ${({ theme }) => theme.colors.frostbite};
+  color: ${({ theme }) => theme.colors.jsconfRed};
 `;
 
 const StyledParagraph = styled.p`
@@ -171,6 +172,12 @@ export const Hero = (props: Props) => {
               100% Híbrida.
             </span>{" "}
             Hecha por y para developers.
+            <BasePrimaryButton>
+              Get <br /> Tickets
+            </BasePrimaryButton>
+            <BaseExternalLink>
+              Get <br /> Tickets
+            </BaseExternalLink>
           </StyledParagraph>
         </StyledTitleContainer>
       </StyledForegroundWrapper>
