@@ -413,9 +413,17 @@ export type HeroBlockFilter = {
 export type HeroBlockLinkingCollections = {
   __typename?: "HeroBlockLinkingCollections";
   entryCollection?: Maybe<EntryCollection>;
+  pageCollection?: Maybe<PageCollection>;
 };
 
 export type HeroBlockLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type HeroBlockLinkingCollectionsPageCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
@@ -527,9 +535,17 @@ export type HowBlockFilter = {
 export type HowBlockLinkingCollections = {
   __typename?: "HowBlockLinkingCollections";
   entryCollection?: Maybe<EntryCollection>;
+  pageCollection?: Maybe<PageCollection>;
 };
 
 export type HowBlockLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type HowBlockLinkingCollectionsPageCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
@@ -741,6 +757,117 @@ export enum MemberOrder {
   TypeDesc = "type_DESC",
 }
 
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
+export type Page = Entry & {
+  __typename?: "Page";
+  contentfulMetadata: ContentfulMetadata;
+  heroBlock?: Maybe<HeroBlock>;
+  howBlockCollection?: Maybe<PageHowBlockCollection>;
+  linkedFrom?: Maybe<PageLinkingCollections>;
+  name?: Maybe<Scalars["String"]>;
+  sys: Sys;
+  whyBlockCollection?: Maybe<PageWhyBlockCollection>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
+export type PageHeroBlockArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
+export type PageHowBlockCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
+export type PageLinkedFromArgs = {
+  allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
+export type PageNameArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
+export type PageWhyBlockCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type PageCollection = {
+  __typename?: "PageCollection";
+  items: Array<Maybe<Page>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export type PageFilter = {
+  AND?: InputMaybe<Array<InputMaybe<PageFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<PageFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  heroBlock?: InputMaybe<CfHeroBlockNestedFilter>;
+  heroBlock_exists?: InputMaybe<Scalars["Boolean"]>;
+  howBlockCollection_exists?: InputMaybe<Scalars["Boolean"]>;
+  name?: InputMaybe<Scalars["String"]>;
+  name_contains?: InputMaybe<Scalars["String"]>;
+  name_exists?: InputMaybe<Scalars["Boolean"]>;
+  name_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  name_not?: InputMaybe<Scalars["String"]>;
+  name_not_contains?: InputMaybe<Scalars["String"]>;
+  name_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  sys?: InputMaybe<SysFilter>;
+  whyBlockCollection_exists?: InputMaybe<Scalars["Boolean"]>;
+};
+
+export type PageHowBlockCollection = {
+  __typename?: "PageHowBlockCollection";
+  items: Array<Maybe<HowBlock>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export type PageLinkingCollections = {
+  __typename?: "PageLinkingCollections";
+  entryCollection?: Maybe<EntryCollection>;
+};
+
+export type PageLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export enum PageOrder {
+  NameAsc = "name_ASC",
+  NameDesc = "name_DESC",
+  SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
+  SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
+  SysIdAsc = "sys_id_ASC",
+  SysIdDesc = "sys_id_DESC",
+  SysPublishedAtAsc = "sys_publishedAt_ASC",
+  SysPublishedAtDesc = "sys_publishedAt_DESC",
+  SysPublishedVersionAsc = "sys_publishedVersion_ASC",
+  SysPublishedVersionDesc = "sys_publishedVersion_DESC",
+}
+
+export type PageWhyBlockCollection = {
+  __typename?: "PageWhyBlockCollection";
+  items: Array<Maybe<WhyBlock>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
 export type Query = {
   __typename?: "Query";
   asset?: Maybe<Asset>;
@@ -752,6 +879,8 @@ export type Query = {
   howBlockCollection?: Maybe<HowBlockCollection>;
   member?: Maybe<Member>;
   memberCollection?: Maybe<MemberCollection>;
+  page?: Maybe<Page>;
+  pageCollection?: Maybe<PageCollection>;
   speaker?: Maybe<Speaker>;
   speakerCollection?: Maybe<SpeakerCollection>;
   sponsor?: Maybe<Sponsor>;
@@ -831,6 +960,21 @@ export type QueryMemberCollectionArgs = {
   preview?: InputMaybe<Scalars["Boolean"]>;
   skip?: InputMaybe<Scalars["Int"]>;
   where?: InputMaybe<MemberFilter>;
+};
+
+export type QueryPageArgs = {
+  id: Scalars["String"];
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+export type QueryPageCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  order?: InputMaybe<Array<InputMaybe<PageOrder>>>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<PageFilter>;
 };
 
 export type QuerySpeakerArgs = {
@@ -1548,9 +1692,17 @@ export type WhyBlockFilter = {
 export type WhyBlockLinkingCollections = {
   __typename?: "WhyBlockLinkingCollections";
   entryCollection?: Maybe<EntryCollection>;
+  pageCollection?: Maybe<PageCollection>;
 };
 
 export type WhyBlockLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type WhyBlockLinkingCollectionsPageCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
@@ -1569,3 +1721,52 @@ export enum WhyBlockOrder {
   TitleAsc = "title_ASC",
   TitleDesc = "title_DESC",
 }
+
+export type CfHeroBlockNestedFilter = {
+  AND?: InputMaybe<Array<InputMaybe<CfHeroBlockNestedFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<CfHeroBlockNestedFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  ctaText?: InputMaybe<Scalars["String"]>;
+  ctaText_contains?: InputMaybe<Scalars["String"]>;
+  ctaText_exists?: InputMaybe<Scalars["Boolean"]>;
+  ctaText_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  ctaText_not?: InputMaybe<Scalars["String"]>;
+  ctaText_not_contains?: InputMaybe<Scalars["String"]>;
+  ctaText_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  ctaUrl?: InputMaybe<Scalars["String"]>;
+  ctaUrl_contains?: InputMaybe<Scalars["String"]>;
+  ctaUrl_exists?: InputMaybe<Scalars["Boolean"]>;
+  ctaUrl_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  ctaUrl_not?: InputMaybe<Scalars["String"]>;
+  ctaUrl_not_contains?: InputMaybe<Scalars["String"]>;
+  ctaUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  date?: InputMaybe<Scalars["String"]>;
+  date_contains?: InputMaybe<Scalars["String"]>;
+  date_exists?: InputMaybe<Scalars["Boolean"]>;
+  date_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  date_not?: InputMaybe<Scalars["String"]>;
+  date_not_contains?: InputMaybe<Scalars["String"]>;
+  date_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  firstSubtitle?: InputMaybe<Scalars["String"]>;
+  firstSubtitle_contains?: InputMaybe<Scalars["String"]>;
+  firstSubtitle_exists?: InputMaybe<Scalars["Boolean"]>;
+  firstSubtitle_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  firstSubtitle_not?: InputMaybe<Scalars["String"]>;
+  firstSubtitle_not_contains?: InputMaybe<Scalars["String"]>;
+  firstSubtitle_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  secondSubtitle?: InputMaybe<Scalars["String"]>;
+  secondSubtitle_contains?: InputMaybe<Scalars["String"]>;
+  secondSubtitle_exists?: InputMaybe<Scalars["Boolean"]>;
+  secondSubtitle_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  secondSubtitle_not?: InputMaybe<Scalars["String"]>;
+  secondSubtitle_not_contains?: InputMaybe<Scalars["String"]>;
+  secondSubtitle_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  sys?: InputMaybe<SysFilter>;
+  tile?: InputMaybe<Scalars["String"]>;
+  tile_contains?: InputMaybe<Scalars["String"]>;
+  tile_exists?: InputMaybe<Scalars["Boolean"]>;
+  tile_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  tile_not?: InputMaybe<Scalars["String"]>;
+  tile_not_contains?: InputMaybe<Scalars["String"]>;
+  tile_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};

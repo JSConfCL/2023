@@ -1,12 +1,10 @@
 import React, { Suspense } from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import {
-  HomeQueryQuery,
-} from "../../graphql/home.generated";
 import { H2, H3 } from "../core/Typography";
 import Description from "../core/Description";
 import Image from "../core/Image";
+import { PageProps } from "../../../pages";
 
 
 
@@ -50,7 +48,7 @@ display: flex;
 
 `
 
-const HowSection = (props: { page: HomeQueryQuery["howBlockCollection"] }) => {
+const HowSection = (props: { page: PageProps["howItems"] }) => {
 
   const [selected, setSelected] = React.useState(`how-block-0`)
   return (
@@ -58,7 +56,7 @@ const HowSection = (props: { page: HomeQueryQuery["howBlockCollection"] }) => {
       <Suspense fallback={<h1>Loading How...</h1>}>
         <H2>How?</H2>
         <BlockContainer>
-          {props.page?.items.map((props, index) => (
+          {props.page?.items?.map((props, index) => (
             <Block key={`how-block-${index}`}>
               <Image
                 mobile={props?.image?.url!}
@@ -69,7 +67,7 @@ const HowSection = (props: { page: HomeQueryQuery["howBlockCollection"] }) => {
           ))}
         </BlockContainer>
 
-        {props.page?.items.map((props, index) => (
+        {props.page?.items?.map((props, index) => (
           <BlockDescription key={`how-block-description-${index} `}>
             <Description data={props?.description?.json!} />
           </BlockDescription>)
