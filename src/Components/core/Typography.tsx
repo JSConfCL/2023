@@ -19,7 +19,6 @@ export const H3 = styled(motion.h3)`
 `;
 
 export const P = styled(motion.p)`
-  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

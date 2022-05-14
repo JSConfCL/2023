@@ -6,8 +6,6 @@ import { PageProps } from "../../../pages";
 import { BasePrimaryButton, BaseExternalLink } from "../Button";
 import { JSConfLogo } from "../svgs/logo";
 
-
-
 const StyledWrapper = styled.div`
   width: 100%;
   position: relative;
@@ -44,7 +42,6 @@ const StyledForegroundWrapper = styled.div(({ theme }) => ({
 }));
 
 const StyledTitle = styled.h1`
-  font-family: "Inter";
   font-style: normal;
   font-weight: 700;
   font-size: 84px;
@@ -54,7 +51,6 @@ const StyledTitle = styled.h1`
 `;
 
 const StyledSubTitle = styled.h2`
-  font-family: "Inter";
   font-style: normal;
   font-weight: 700;
   font-size: 50px;
