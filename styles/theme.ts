@@ -78,8 +78,8 @@ export const jsconfTheme: Theme = {
     },
     global: {
       backgroundColor: colors.black,
-      fontFamily: fonts.koulen.name,
-      headingsFontFamily: fonts.barlow.name,
+      fontFamily: fonts.Koulen.name,
+      headingsFontFamily: fonts.Barlow.name,
       headingsFontWeight: 400,
       color: colors.white,
     },
