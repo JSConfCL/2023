@@ -1,4 +1,12 @@
 query HomeQuery {
+  heroBlock(id: "6AMWd9UWYiuHuPdLhLn42E") {
+    tile
+    firstSubtitle
+    secondSubtitle
+    date
+    ctaUrl
+    ctaText
+  }
   whyBlockCollection {
     items {
       title
@@ -11,16 +19,16 @@ query HomeQuery {
       }
     }
   }
-	howBlockCollection {
-		items {
-			title
-			description {
-				json
-			}
-			image {
-				url
-				description
-			}
-		}
-	}
+  howBlockCollection {
+    items {
+      title
+      description {
+        json
+      }
+      image {
+        url
+        description
+      }
+    }
+  }
 }

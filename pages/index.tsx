@@ -8,19 +8,19 @@ import {
   HomeQueryQuery,
 } from "../src/graphql/home.generated";
 import { urlQlient } from "../src/graphql/urql";
-
+import { ParseQuery } from "../src/helpers/types";
 
 type Props = {
-  whyItems: HomeQueryQuery["whyBlockCollection"];
-  howItems: HomeQueryQuery["howBlockCollection"];
+  heroData: ParseQuery<HomeQueryQuery>["heroBlock"];
+  whyItems: ParseQuery<HomeQueryQuery>["whyBlockCollection"];
+  howItems: ParseQuery<HomeQueryQuery>["howBlockCollection"];
 };
-
 
 const Home: NextPage<Props> = (props) => {
   return (
     <div>
       <NavBar />
-      <Hero />
+      <Hero {...props.heroData} />
       <WhySection page={props.whyItems} />
       <HowSection page={props.howItems} />
     </div>
@@ -29,10 +29,11 @@ const Home: NextPage<Props> = (props) => {
 
 export async function getStaticProps() {
   const queryResults = await urlQlient
-    .query<HomeQueryQuery>(HomeQueryDocument)
+    .query<ParseQuery<HomeQueryQuery>>(HomeQueryDocument)
     .toPromise();
 
   const props: Props = {
+    heroData: queryResults?.data?.heroBlock!,
     whyItems: queryResults?.data?.whyBlockCollection!,
     howItems: queryResults?.data?.howBlockCollection!,
   };
