@@ -29,7 +29,7 @@ const Image = (props: {
         src={props.desktop || props.mobile}
         style={props.style}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { duration: 2.5 } }}
+        animate={{ opacity: 1, transition: { duration: 0.5 } }}
         alt={props.alt}
       />
     </Picture>

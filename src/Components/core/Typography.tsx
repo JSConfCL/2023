@@ -2,13 +2,12 @@ import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 
 export const H2 = styled(motion.h2)`
-  font-weight: 700;
   text-align: center;
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 120px;
   letter-spacing: 1px;
   color: #ffffff;
+  font-weight: 400;
+  font-size: 80px;
+  line-height: 80px;
 `;
 
 export const H3 = styled(motion.h3)`
