@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import styled from "@emotion/styled";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { H2, H3 } from "../core/Typography";
 import Description from "../core/Description";
 import Image from "../core/Image"
@@ -11,7 +11,7 @@ import useMediaQuery from "../../helpers/useMediaQuery";
 const Container = styled.section`
   align-self: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
   max-width: 1440px;
   gap: 0px 32px;
@@ -21,21 +21,15 @@ const Container = styled.section`
   > h2 {
     padding: 48px 0px;
   }
-
-  @media (min-width: 1024px) {
-    flex-direction: row;
-  }
-`;
-
+`
 
 const BlockContainer = styled.section`
   display: flex;
   flex-direction: column;
- 
   gap: 20px 20px;
   width: 100%;
   justify-content: flex-start;
-  @media (min-width: 769px) {
+  @media(min-width: 769px) {
     flex-direction: row;
     width: fit-content;
   }
@@ -71,9 +65,9 @@ const Block = styled(motion.section)`
   width: fit-content;
   max-height: 390px;
   border-radius: 0px 32px 0px 0px;
-  background-color:rgba(240, 224, 64, 0.2);
+  background-color: rgba(240, 224, 64, 0.2);
 
-  @media (min-width: 769px) {
+  @media(min-width: 769px) {
   }
 `;
 
@@ -113,14 +107,16 @@ const WhySection = (props: { page: PageProps["whyItems"] }) => {
         <H2 whileHover={{ scale: 1.1 }}>WHY</H2>
         <BlockContainer>
           {props.page?.items?.map((item, index) => (
-            <WhiteBlock key={`white-block-${index}`} whileHover="hover" whileFocus="hover" whileTap="hover" initial="initial">
-              <Block key={`why-block-${index}`} variants={BlockVariant} >
+            <WhiteBlock key={`white - block - ${index} `} whileHover="hover" whileFocus="hover" whileTap="hover" initial="initial">
+              <Block key={`why - block - ${index} `} variants={BlockVariant} >
                 <Image
                   mobile={item?.icon?.url!}
                   alt={item?.icon?.description! || ""}
                   style={{
+
                     height: isMobile ? "fit-content" : "390px",
                     width: isMobile ? "100vw" : "fit-content",
+
                     aspectRatio: index % 2 === 0 ? "287 / 390" : "397 / 390",
                     mixBlendMode: "multiply",
                     borderRadius: "0px 32px 0px 0px"

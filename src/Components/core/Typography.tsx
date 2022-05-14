@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 
 export const H2 = styled(motion.h2)`
   font-family: 'Koulen';
-  text-align: center;
   letter-spacing: 1px;
   color: #ffffff;
   font-weight: 400;
   font-size: 80px;
   line-height: 80px;
   text-align: left;
+
 `;
 
 export const H3 = styled(motion.h3)`
