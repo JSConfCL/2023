@@ -2,12 +2,12 @@ import { Theme } from "@emotion/react";
 import { lighten } from "polished";
 
 const colors = {
-  jsconfBlack: "#323330",
+  jsconfBlack: "#1E2019",
   jsconfYellow: "#F0E040",
+  jsconfRed: "#F45B69",
   violetBlue: "#3A41A4",
-  frostbite: "#D843A9",
   white: "#FFFFFF",
-  black: "#050505",
+  black: "#000000",
   transparent: "transparent",
 };
 
@@ -50,16 +50,13 @@ export const jsconfTheme: Theme = {
     buttons: {
       variants: {
         primary: {
-          backgroundColor: `linear-gradient(269.01deg, ${
-            colors.violetBlue
-          } 27.84%, ${lighten(0.2, colors.violetBlue)} 135.16%)`,
-          backgroundFallbackColor: colors.violetBlue,
-          textColor: colors.white,
-          borderColor: `linear-gradient(269.01deg, ${
-            colors.violetBlue
-          } 27.84%, ${lighten(0.2, colors.violetBlue)} 135.16%)`,
+          backgroundColor: colors.jsconfYellow,
+          backgroundFallbackColor: colors.jsconfYellow,
+          textColor: colors.jsconfBlack,
+          borderColor: colors.transparent,
           borderWidth: 1,
           borderStyle: "solid",
+          borderTopRightRadius: 24,
         },
         secondary: {
           backgroundColor: colors.black,

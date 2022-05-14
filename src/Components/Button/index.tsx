@@ -7,26 +7,52 @@ const baseStyling = {
   all: "unset",
   display: "inline-flex",
   alignItems: "center",
-  justifyContent: "center",
+  justifyContent: "flex-start",
+  fontWeight: "bold",
   borderRadius: 0,
-  padding: "0 15px",
-  fontSize: 15,
+  padding: "12px 15px",
+  fontSize: 24,
   lineHeight: 1,
   minWidth: 150,
-  fontWeight: 500,
   height: 60,
+  cursor: "pointer",
 } as any;
 
-export const PrimaryButton = styled.button(({ theme }) => ({
+export const BasePrimaryButton = styled.button(({ theme }) => ({
   ...baseStyling,
-  // background: `linear-gradient(269.01deg, #3A41A4 27.84%, rgba(60, 72, 255, 0) 135.16%)`,
+
   background: theme.elements.buttons.variants.primary.backgroundColor,
   backgroundColor:
     theme.elements.buttons.variants.primary.backgroundFallbackColor,
   color: theme.elements.buttons.variants.primary.textColor,
+  borderTopRightRadius:
+    theme.elements.buttons.variants.primary.borderTopRightRadius,
   borderColor: "transparent",
   borderWidth: theme.elements.buttons.variants.primary.borderWidth,
   borderStyle: theme.elements.buttons.variants.primary.borderStyle,
+  textAlign: "left",
+
+  backgroundImage: theme.elements.buttons.variants.primary.borderColor,
+  backgroundOrigin: "border-box",
+
+  // boxShadow: `0 2px 10px ${lighten(0.55, theme.colors.black)}`,
+  "&:hover": { background: darken(0.1, theme.colors.jsconfYellow) },
+  "&:focus": { boxShadow: `0 0 0 2px ${theme.colors.black}` },
+}));
+
+export const BaseExternalLink = styled.a(({ theme }) => ({
+  ...baseStyling,
+
+  background: theme.elements.buttons.variants.primary.backgroundColor,
+  backgroundColor:
+    theme.elements.buttons.variants.primary.backgroundFallbackColor,
+  color: theme.elements.buttons.variants.primary.textColor,
+  borderTopRightRadius:
+    theme.elements.buttons.variants.primary.borderTopRightRadius,
+  borderColor: "transparent",
+  borderWidth: theme.elements.buttons.variants.primary.borderWidth,
+  borderStyle: theme.elements.buttons.variants.primary.borderStyle,
+  textAlign: "left",
 
   backgroundImage: theme.elements.buttons.variants.primary.borderColor,
   backgroundOrigin: "border-box",
