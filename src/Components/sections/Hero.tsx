@@ -7,6 +7,7 @@ import { SecondaryStyledLink } from "../Links";
 import Particles from "react-tsparticles";
 import config from "./config";
 import { loadFull } from "tsparticles";
+import { Engine } from "tsparticles-engine";
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -105,13 +106,7 @@ const StyledSecondaryTitle = styled(StyledTitle)`
 `;
 
 export const Hero = (props: PageProps["heroData"]) => {
-  const ref = useRef<LegacyRef<HTMLDivElement> | undefined>();
-  const particlesInit = async (main) => {
-    console.log(main);
-
-    // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
-    // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-    // starting from v2 you can add only the features you need reducing the bundle size
+  const particlesInit = async (main: Engine) => {
     await loadFull(main);
   };
 
