@@ -18,6 +18,7 @@ type Colors = {
   violetBlue: string;
   white: string;
   black: string;
+  transparent: string;
 };
 
 declare module "@emotion/react" {

@@ -1,37 +1,47 @@
 query HomeQuery {
-	page(id: "FTZMMTIKuOMTvkVv0DGzs") {
-		heroBlock {
-			tile
-			firstSubtitle
-			secondSubtitle
-			date
-			ctaUrl
-			ctaText
-		}
-		whyBlockCollection {
-			items {
-				title
-				description {
-					json
-				}
-				icon {
-					url
-					description
-				}
-			}
-		}
-		howBlockCollection {
-			items {
-				title
-				description {
-					json
-				}
-				image {
-					url
-					description
-				}
-			}
-		}
-	}
+  page(id: "FTZMMTIKuOMTvkVv0DGzs") {
+    navBar {
+      linksCollection(limit: 20) {
+        items {
+          sys {
+            id
+          }
+          contenido
+          link
+        }
+      }
+    }
+    heroBlock {
+      tile
+      firstSubtitle
+      secondSubtitle
+      date
+      ctaUrl
+      ctaText
+    }
+    whyBlockCollection {
+      items {
+        title
+        description {
+          json
+        }
+        icon {
+          url
+          description
+        }
+      }
+    }
+    howBlockCollection {
+      items {
+        title
+        description {
+          json
+        }
+        image {
+          url
+          description
+        }
+      }
+    }
+  }
 }
-

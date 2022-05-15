@@ -9,6 +9,18 @@ export type HomeQueryQuery = {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
+    navBar?: {
+      __typename?: "NavigationBar";
+      linksCollection?: {
+        __typename?: "NavigationBarLinksCollection";
+        items: Array<{
+          __typename?: "LinkItem";
+          contenido?: string | null;
+          link?: string | null;
+          sys: { __typename?: "Sys"; id: string };
+        } | null>;
+      } | null;
+    } | null;
     heroBlock?: {
       __typename?: "HeroBlock";
       tile?: string | null;
@@ -50,6 +62,17 @@ export type HomeQueryQuery = {
 export const HomeQueryDocument = gql`
   query HomeQuery {
     page(id: "FTZMMTIKuOMTvkVv0DGzs") {
+      navBar {
+        linksCollection(limit: 20) {
+          items {
+            sys {
+              id
+            }
+            contenido
+            link
+          }
+        }
+      }
       heroBlock {
         tile
         firstSubtitle
