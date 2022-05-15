@@ -3,29 +3,30 @@ import styled from "@emotion/styled";
 import React from "react";
 import Link from "next/link";
 import { JSConfLogo } from "../svgs/logo";
+import { PageProps } from "../../../pages";
 
-type Props = {};
+type Props = PageProps["navData"];
 
 const StyledNav = styled.nav`
-  height: 80px;
-  background-color: ${({ theme }) => theme.colors.black};
-  background: ${({ theme }) => theme.colors.black};
   z-index: 100;
   justify-content: center;
   align-items: center;
   width: 100%;
-  position: sticky;
   display: flex;
-  top: 0;
+  /* position: sticky; */
+  /* top: 0; */
 `;
 
 const StyledWrapper = styled.div`
   height: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 16px;
+  align-items: center;
+  padding-left: 48px;
+  padding-right: 48px;
+  height: 100px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1366px;
 `;
 
 const StyledLinksContainer = styled.li`
@@ -38,12 +39,14 @@ const StyledLinksContainer = styled.li`
 
 const StyledLink = styled.ul`
   padding: 16px;
-  font-size: 0.8em;
+  font-weight: 400;
+  font-family: "Koulen";
   cursor: pointer;
 `;
 
 const StyledJSConfLogoWrapper = styled.div`
   height: 100%;
+  max-height: 50px;
   aspect-ratio: 1/1;
 `;
 
@@ -55,14 +58,13 @@ export const NavBar = (props: Props) => {
           <JSConfLogo />
         </StyledJSConfLogoWrapper>
         <StyledLinksContainer>
-          <StyledLink>
-            <Link href={"/"}>Home</Link>
-          </StyledLink>
-          <StyledLink>
-            <Link href={"https://github.com/jsconfcl/code_of_conduct"}>
-              Code Of Conduct
-            </Link>
-          </StyledLink>
+          {props.linksCollection.items.map((item) => {
+            return (
+              <StyledLink key={item.sys.id}>
+                <Link href={item.link!}>{item.contenido}</Link>
+              </StyledLink>
+            );
+          })}
         </StyledLinksContainer>
       </StyledWrapper>
     </StyledNav>

@@ -8,18 +8,24 @@ import Particles from "react-tsparticles";
 import config from "./config";
 import { loadFull } from "tsparticles";
 import { Engine } from "tsparticles-engine";
+import { NavBar } from "../NavBar/NavBar";
 
-const StyledWrapper = styled.div`
-  width: 100%;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  height: 90vh;
-  max-height: 700px;
-  background-color: ${({ theme }) => theme.colors.jsconfYellow};
-  /* mix-blend-mode: hard-light; */ // Si? deberíamos?
-  color: ${({ theme }) => theme.colors.jsconfBlack};
-`;
+const StyledWrapper = styled.div(({ theme }) => ({
+  width: "100%",
+  position: "relative",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  "background-color": theme.colors.jsconfYellow,
+  color: theme.colors.jsconfBlack,
+  height: "98vh",
+  minHeight: 800,
+  maxHeight: 900,
+  [theme.breakpoints.smallDesktopOnly]: {
+    height: "unset",
+    maxHeight: "unset",
+  },
+}));
 
 const StyledForegroundWrapper = styled.div(({ theme }) => ({
   height: "100%",
@@ -31,6 +37,7 @@ const StyledForegroundWrapper = styled.div(({ theme }) => ({
   display: "flex",
   flex: 1,
   justifyContent: "space-between",
+  gap: 32,
   maxWidth: 1366,
   alignItems: "center",
   // [theme.breakpoints.desktopOnly]: {
@@ -39,9 +46,9 @@ const StyledForegroundWrapper = styled.div(({ theme }) => ({
   // [theme.breakpoints.tabletLandscapeOnly]: {
   //   justifyContent: "flex-end",
   // },
-  // [theme.breakpoints.smallDesktopOnly]: {
-  //   justifyContent: "flex-end",
-  // },
+  [theme.breakpoints.smallDesktopOnly]: {
+    flexDirection: "column",
+  },
   // [theme.breakpoints.tabletPortraitOnly]: {
   //   justifyContent: "flex-end",
   // },
@@ -55,6 +62,13 @@ const StyledLeftSide = styled.div(({ theme }) => ({
   flexDirection: "column",
   gap: "1.5rem",
   width: 400,
+  transition: "all 200ms ease-in-out",
+  [theme.breakpoints.smallDesktopOnly]: {
+    width: 500,
+  },
+  [theme.breakpoints.phoneOnly]: {
+    width: "100%",
+  },
 }));
 
 const StyledTitle = styled.h1`
@@ -87,6 +101,13 @@ const StyledRightSide = styled.div(({ theme }) => ({
   flexDirection: "column",
   gap: "1.5rem",
   width: 506,
+  transition: "all 200ms ease-in-out",
+  [theme.breakpoints.smallDesktopOnly]: {
+    width: 600,
+  },
+  [theme.breakpoints.phoneOnly]: {
+    width: "100%",
+  },
 }));
 
 const StyledTitlesWrapper = styled.div`
@@ -105,7 +126,13 @@ const StyledSecondaryTitle = styled(StyledTitle)`
   margin-left: 84px;
 `;
 
-export const Hero = (props: PageProps["heroData"]) => {
+export const Hero = ({
+  heroData,
+  navData,
+}: {
+  heroData: PageProps["heroData"];
+  navData: PageProps["navData"];
+}) => {
   const particlesInit = async (main: Engine) => {
     await loadFull(main);
   };
@@ -136,19 +163,20 @@ export const Hero = (props: PageProps["heroData"]) => {
         init={particlesInit}
         options={config}
       />
+      <NavBar {...navData} />
       <StyledForegroundWrapper>
         <StyledLeftSide>
-          <StyledTitle>{props.tile}</StyledTitle>
-          <StyledParagraph>{props.firstSubtitle}</StyledParagraph>
+          <StyledTitle>{heroData.tile}</StyledTitle>
+          <StyledParagraph>{heroData.firstSubtitle}</StyledParagraph>
           <StyledHr />
         </StyledLeftSide>
         <StyledRightSide>
           <StyledSecondaryTextWrapper>
-            <StyledParagraph>{props.secondSubtitle}</StyledParagraph>
+            <StyledParagraph>{heroData.secondSubtitle}</StyledParagraph>
             <StyledHr />
           </StyledSecondaryTextWrapper>
           <StyledTitlesWrapper>
-            <StyledSecondaryTitle as="h2">{props.date}</StyledSecondaryTitle>
+            <StyledSecondaryTitle as="h2">{heroData.date}</StyledSecondaryTitle>
             <StyledTitle as="h2">Chile</StyledTitle>
           </StyledTitlesWrapper>
           <SecondaryStyledLink href="https://jsconf.com">
