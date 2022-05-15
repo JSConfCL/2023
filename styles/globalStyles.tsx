@@ -73,6 +73,7 @@ display:revert; revert to element instead of attribute */
     -moz-user-modify: read-write;
     -webkit-user-modify: read-write;
     overflow-wrap: break-word;
+    line-break: after-white-space;
     -webkit-line-break: after-white-space;
   }
 
