@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import styled from "@emotion/styled";
 import { NavBar } from "../src/Components/NavBar/NavBar";
 import { Hero } from "../src/Components/sections/Hero";
 import WhySection from "../src/Components/sections/WhySection";
@@ -18,15 +19,19 @@ export type PageProps = {
   howItems: Page["howBlockCollection"]
   heroData: Page["heroBlock"]
 };
+const Container = styled.section`
+  display: flex;
+  flex-direction: column;
+`
 
 const Home: NextPage<PageProps> = (props) => {
   return (
-    <div>
+    <Container>
       <NavBar />
       <Hero {...props.heroData} />
       <WhySection page={props.whyItems} />
       <HowSection page={props.howItems} />
-    </div>
+    </Container>
   );
 };
 

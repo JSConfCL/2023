@@ -19,7 +19,7 @@ const resetCSS = css`
   *,
   *::before,
   *::after {
-    box-sizing: border-box;
+    box-sizing: border-box !important;
   }
 
   /* Reapply the pointer cursor for anchor tags */
