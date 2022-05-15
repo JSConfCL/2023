@@ -13,8 +13,6 @@ const StyledNav = styled.nav`
   align-items: center;
   width: 100%;
   display: flex;
-  /* position: sticky; */
-  /* top: 0; */
 `;
 
 const StyledWrapper = styled.div`
