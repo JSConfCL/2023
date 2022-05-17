@@ -366,9 +366,17 @@ export type FollowUsBlockFilter = {
 export type FollowUsBlockLinkingCollections = {
   __typename?: "FollowUsBlockLinkingCollections";
   entryCollection?: Maybe<EntryCollection>;
+  pageCollection?: Maybe<PageCollection>;
 };
 
 export type FollowUsBlockLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type FollowUsBlockLinkingCollectionsPageCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
@@ -1034,6 +1042,7 @@ export enum NavigationBarOrder {
 export type Page = Entry & {
   __typename?: "Page";
   contentfulMetadata: ContentfulMetadata;
+  followUsBlock?: Maybe<FollowUsBlock>;
   heroBlock?: Maybe<HeroBlock>;
   howBlockCollection?: Maybe<PageHowBlockCollection>;
   linkedFrom?: Maybe<PageLinkingCollections>;
@@ -1041,6 +1050,12 @@ export type Page = Entry & {
   navBar?: Maybe<NavigationBar>;
   sys: Sys;
   whyBlockCollection?: Maybe<PageWhyBlockCollection>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
+export type PageFollowUsBlockArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
@@ -1093,6 +1108,8 @@ export type PageFilter = {
   AND?: InputMaybe<Array<InputMaybe<PageFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<PageFilter>>>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  followUsBlock?: InputMaybe<CfFollowUsBlockNestedFilter>;
+  followUsBlock_exists?: InputMaybe<Scalars["Boolean"]>;
   heroBlock?: InputMaybe<CfHeroBlockNestedFilter>;
   heroBlock_exists?: InputMaybe<Scalars["Boolean"]>;
   howBlockCollection_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -2168,6 +2185,21 @@ export enum WhyBlockOrder {
   TitleAsc = "title_ASC",
   TitleDesc = "title_DESC",
 }
+
+export type CfFollowUsBlockNestedFilter = {
+  AND?: InputMaybe<Array<InputMaybe<CfFollowUsBlockNestedFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<CfFollowUsBlockNestedFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  socialNetworksCollection_exists?: InputMaybe<Scalars["Boolean"]>;
+  sys?: InputMaybe<SysFilter>;
+  title?: InputMaybe<Scalars["String"]>;
+  title_contains?: InputMaybe<Scalars["String"]>;
+  title_exists?: InputMaybe<Scalars["Boolean"]>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  title_not?: InputMaybe<Scalars["String"]>;
+  title_not_contains?: InputMaybe<Scalars["String"]>;
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
 
 export type CfHeroBlockNestedFilter = {
   AND?: InputMaybe<Array<InputMaybe<CfHeroBlockNestedFilter>>>;
