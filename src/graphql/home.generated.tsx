@@ -56,6 +56,19 @@ export type HomeQueryQuery = {
         } | null;
       } | null>;
     } | null;
+    followUsBlock?: {
+      __typename?: "FollowUsBlock";
+      title?: string | null;
+      socialNetworksCollection?: {
+        __typename?: "FollowUsBlockSocialNetworksCollection";
+        items: Array<{
+          __typename?: "SocialNetwork";
+          name?: string | null;
+          url?: string | null;
+          icon?: { __typename?: "Asset"; url?: string | null } | null;
+        } | null>;
+      } | null;
+    } | null;
   } | null;
 };
 
@@ -102,6 +115,18 @@ export const HomeQueryDocument = gql`
           image {
             url
             description
+          }
+        }
+      }
+      followUsBlock {
+        title
+        socialNetworksCollection(limit: 20) {
+          items {
+            name
+            url
+            icon {
+              url
+            }
           }
         }
       }

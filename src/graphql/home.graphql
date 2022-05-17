@@ -43,5 +43,17 @@ query HomeQuery {
         }
       }
     }
+    followUsBlock {
+      title
+      socialNetworksCollection(limit: 20) {
+        items {
+          name
+          url
+          icon {
+            url
+          }
+        }
+      }
+    }
   }
 }
