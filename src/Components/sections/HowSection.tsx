@@ -14,11 +14,15 @@ const Container = styled.section`
   width: 100%;
   max-width: 1440px;
   gap: 0px 32px;
-  padding: 48px;
+  padding: 16px;
   justify-content: space-between;
 
   > h2 {
     padding: 48px 0px;
+  }
+
+  @media (min-width: 769px) {
+    padding: 48px;
   }
 
   @media (min-width: 1024px) {
@@ -60,17 +64,22 @@ const BlockDescription = styled(motion.section)`
   position: absolute;
   display: flex;
   flex-direction: column;
-  width: 50%;
-  height: 100%;
+  width: 100%;
+  bottom: 0px;
   right: 0px;
   padding: 16px;
-  gap: 16px 0px;
+  gap: 8px 0px;
   border-radius: 0px 32px 0px 0px;
   background: rgba(244, 91, 105, 0.2);
 
   ul {
     padding: 16px;
     list-style: disc;
+  }
+
+  @media (min-width: 769px) {
+    width: 50%;
+    height: 100%;
   }
 `;
 
@@ -121,27 +130,31 @@ const HowSection = (props: { page: PageProps["howItems"] }) => {
                   style={{
                     height: "257px",
                     aspectRatio: "654 / 257",
+                    width: isMobile ? "100vw" : "inherit",
+                    objectFit: isMobile ? "cover" : "inherit",
                   }}
                 />
-                <Image
-                  mobile={props?.image?.url!}
-                  alt={props?.image?.description! || ""}
-                  style={{
-                    transform: "scaleX(-1)",
-                    height: "257px",
-                    aspectRatio: "654 / 257",
-                    objectFit: "cover",
-                    borderRadius: "32px  0px 0px  0px",
-                    objectPosition: "right",
-                  }}
-                />
+                {!isMobile && (
+                  <Image
+                    mobile={props?.image?.url!}
+                    alt={props?.image?.description! || ""}
+                    style={{
+                      transform: "scaleX(-1)",
+                      height: "257px",
+                      aspectRatio: "654 / 257",
+                      objectFit: "cover",
+                      borderRadius: "32px  0px 0px  0px",
+                      objectPosition: "right",
+                    }}
+                  />
+                )}
               </Flex>
               <BlockDescription
                 key={`how-block-description-${index} `}
                 variants={descriptionVariant}
               >
                 <H3>{props?.title}</H3>
-                <Description data={props?.description?.json!} />
+                {!isMobile && <Description data={props?.description?.json!} />}
               </BlockDescription>
             </Block>
           ))}

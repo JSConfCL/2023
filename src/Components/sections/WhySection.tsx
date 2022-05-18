@@ -14,11 +14,15 @@ const Container = styled.section`
   width: 100%;
   max-width: 1440px;
   gap: 0px 32px;
-  padding: 48px;
+  padding: 16px;
   justify-content: space-between;
 
   > h2 {
     padding: 48px 0px;
+  }
+
+  @media (min-width: 769px) {
+    padding: 48px;
   }
 
   @media (min-width: 1024px) {
@@ -122,11 +126,12 @@ const WhySection = (props: { page: PageProps["whyItems"] }) => {
                   mobile={item?.icon?.url!}
                   alt={item?.icon?.description! || ""}
                   style={{
-                    height: isMobile ? "fit-content" : "390px",
+                    height: isMobile ? "390px" : "390px",
                     width: isMobile ? "100vw" : "fit-content",
                     aspectRatio: index % 2 === 0 ? "287 / 390" : "397 / 390",
                     mixBlendMode: "multiply",
                     borderRadius: "0px 32px 0px 0px",
+                    objectFit: isMobile ? "cover" : "inherit",
                   }}
                 />
                 <Flex index={index}>
