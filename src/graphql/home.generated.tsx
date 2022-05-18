@@ -109,6 +109,10 @@ export type HomeQueryQuery = {
         } | null>;
       } | null;
     } | null;
+    subscribeBlock?: {
+      __typename?: "SubscribeBlock";
+      title?: string | null;
+    } | null;
   } | null;
 };
 
@@ -202,6 +206,9 @@ export const HomeQueryDocument = gql`
             link
           }
         }
+      }
+      subscribeBlock {
+        title
       }
     }
   }

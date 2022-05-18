@@ -1442,6 +1442,7 @@ export type Page = Entry & {
   name?: Maybe<Scalars["String"]>;
   navBar?: Maybe<NavigationBar>;
   speakersBlock?: Maybe<SpeakerBlock>;
+  sponsorTypeCollection?: Maybe<PageSponsorTypeCollection>;
   subscribeBlock?: Maybe<SubscribeBlock>;
   sys: Sys;
   whyBlockCollection?: Maybe<PageWhyBlockCollection>;
@@ -1496,6 +1497,14 @@ export type PageSpeakersBlockArgs = {
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
+export type PageSponsorTypeCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
 export type PageSubscribeBlockArgs = {
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
@@ -1539,6 +1548,7 @@ export type PageFilter = {
   navBar_exists?: InputMaybe<Scalars["Boolean"]>;
   speakersBlock?: InputMaybe<CfSpeakerBlockNestedFilter>;
   speakersBlock_exists?: InputMaybe<Scalars["Boolean"]>;
+  sponsorTypeCollection_exists?: InputMaybe<Scalars["Boolean"]>;
   subscribeBlock?: InputMaybe<CfSubscribeBlockNestedFilter>;
   subscribeBlock_exists?: InputMaybe<Scalars["Boolean"]>;
   sys?: InputMaybe<SysFilter>;
@@ -1577,6 +1587,14 @@ export enum PageOrder {
   SysPublishedVersionAsc = "sys_publishedVersion_ASC",
   SysPublishedVersionDesc = "sys_publishedVersion_DESC",
 }
+
+export type PageSponsorTypeCollection = {
+  __typename?: "PageSponsorTypeCollection";
+  items: Array<Maybe<SponsorType>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
 
 export type PageWhyBlockCollection = {
   __typename?: "PageWhyBlockCollection";
@@ -1617,6 +1635,8 @@ export type Query = {
   speakerCollection?: Maybe<SpeakerCollection>;
   sponsor?: Maybe<Sponsor>;
   sponsorCollection?: Maybe<SponsorCollection>;
+  sponsorType?: Maybe<SponsorType>;
+  sponsorTypeCollection?: Maybe<SponsorTypeCollection>;
   subscribeBlock?: Maybe<SubscribeBlock>;
   subscribeBlockCollection?: Maybe<SubscribeBlockCollection>;
   talk?: Maybe<Talk>;
@@ -1844,6 +1864,21 @@ export type QuerySponsorCollectionArgs = {
   preview?: InputMaybe<Scalars["Boolean"]>;
   skip?: InputMaybe<Scalars["Int"]>;
   where?: InputMaybe<SponsorFilter>;
+};
+
+export type QuerySponsorTypeArgs = {
+  id: Scalars["String"];
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+export type QuerySponsorTypeCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  order?: InputMaybe<Array<InputMaybe<SponsorTypeOrder>>>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<SponsorTypeFilter>;
 };
 
 export type QuerySubscribeBlockArgs = {
@@ -2348,12 +2383,12 @@ export enum SpeakerOrder {
 export type Sponsor = Entry & {
   __typename?: "Sponsor";
   contentfulMetadata: ContentfulMetadata;
-  description?: Maybe<Scalars["String"]>;
+  description?: Maybe<SponsorDescription>;
   linkedFrom?: Maybe<SponsorLinkingCollections>;
   logo?: Maybe<Asset>;
   name?: Maybe<Scalars["String"]>;
   sys: Sys;
-  type?: Maybe<Scalars["String"]>;
+  type?: Maybe<Entry>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsor) */
@@ -2380,6 +2415,7 @@ export type SponsorNameArgs = {
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsor) */
 export type SponsorTypeArgs = {
   locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
 };
 
 export type SponsorCollection = {
@@ -2390,17 +2426,38 @@ export type SponsorCollection = {
   total: Scalars["Int"];
 };
 
+export type SponsorDescription = {
+  __typename?: "SponsorDescription";
+  json: Scalars["JSON"];
+  links: SponsorDescriptionLinks;
+};
+
+export type SponsorDescriptionAssets = {
+  __typename?: "SponsorDescriptionAssets";
+  block: Array<Maybe<Asset>>;
+  hyperlink: Array<Maybe<Asset>>;
+};
+
+export type SponsorDescriptionEntries = {
+  __typename?: "SponsorDescriptionEntries";
+  block: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  inline: Array<Maybe<Entry>>;
+};
+
+export type SponsorDescriptionLinks = {
+  __typename?: "SponsorDescriptionLinks";
+  assets: SponsorDescriptionAssets;
+  entries: SponsorDescriptionEntries;
+};
+
 export type SponsorFilter = {
   AND?: InputMaybe<Array<InputMaybe<SponsorFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<SponsorFilter>>>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
-  description?: InputMaybe<Scalars["String"]>;
   description_contains?: InputMaybe<Scalars["String"]>;
   description_exists?: InputMaybe<Scalars["Boolean"]>;
-  description_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
-  description_not?: InputMaybe<Scalars["String"]>;
   description_not_contains?: InputMaybe<Scalars["String"]>;
-  description_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   logo_exists?: InputMaybe<Scalars["Boolean"]>;
   name?: InputMaybe<Scalars["String"]>;
   name_contains?: InputMaybe<Scalars["String"]>;
@@ -2410,13 +2467,7 @@ export type SponsorFilter = {
   name_not_contains?: InputMaybe<Scalars["String"]>;
   name_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   sys?: InputMaybe<SysFilter>;
-  type?: InputMaybe<Scalars["String"]>;
-  type_contains?: InputMaybe<Scalars["String"]>;
   type_exists?: InputMaybe<Scalars["Boolean"]>;
-  type_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
-  type_not?: InputMaybe<Scalars["String"]>;
-  type_not_contains?: InputMaybe<Scalars["String"]>;
-  type_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
 };
 
 export type SponsorLinkingCollections = {
@@ -2442,8 +2493,131 @@ export enum SponsorOrder {
   SysPublishedAtDesc = "sys_publishedAt_DESC",
   SysPublishedVersionAsc = "sys_publishedVersion_ASC",
   SysPublishedVersionDesc = "sys_publishedVersion_DESC",
-  TypeAsc = "type_ASC",
-  TypeDesc = "type_DESC",
+}
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorType) */
+export type SponsorType = Entry & {
+  __typename?: "SponsorType";
+  contentfulMetadata: ContentfulMetadata;
+  description?: Maybe<SponsorTypeDescription>;
+  linkedFrom?: Maybe<SponsorTypeLinkingCollections>;
+  name?: Maybe<Scalars["String"]>;
+  price?: Maybe<Scalars["Int"]>;
+  sys: Sys;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorType) */
+export type SponsorTypeDescriptionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorType) */
+export type SponsorTypeLinkedFromArgs = {
+  allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorType) */
+export type SponsorTypeNameArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorType) */
+export type SponsorTypePriceArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+export type SponsorTypeCollection = {
+  __typename?: "SponsorTypeCollection";
+  items: Array<Maybe<SponsorType>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export type SponsorTypeDescription = {
+  __typename?: "SponsorTypeDescription";
+  json: Scalars["JSON"];
+  links: SponsorTypeDescriptionLinks;
+};
+
+export type SponsorTypeDescriptionAssets = {
+  __typename?: "SponsorTypeDescriptionAssets";
+  block: Array<Maybe<Asset>>;
+  hyperlink: Array<Maybe<Asset>>;
+};
+
+export type SponsorTypeDescriptionEntries = {
+  __typename?: "SponsorTypeDescriptionEntries";
+  block: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  inline: Array<Maybe<Entry>>;
+};
+
+export type SponsorTypeDescriptionLinks = {
+  __typename?: "SponsorTypeDescriptionLinks";
+  assets: SponsorTypeDescriptionAssets;
+  entries: SponsorTypeDescriptionEntries;
+};
+
+export type SponsorTypeFilter = {
+  AND?: InputMaybe<Array<InputMaybe<SponsorTypeFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<SponsorTypeFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  description_contains?: InputMaybe<Scalars["String"]>;
+  description_exists?: InputMaybe<Scalars["Boolean"]>;
+  description_not_contains?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
+  name_contains?: InputMaybe<Scalars["String"]>;
+  name_exists?: InputMaybe<Scalars["Boolean"]>;
+  name_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  name_not?: InputMaybe<Scalars["String"]>;
+  name_not_contains?: InputMaybe<Scalars["String"]>;
+  name_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  price?: InputMaybe<Scalars["Int"]>;
+  price_exists?: InputMaybe<Scalars["Boolean"]>;
+  price_gt?: InputMaybe<Scalars["Int"]>;
+  price_gte?: InputMaybe<Scalars["Int"]>;
+  price_in?: InputMaybe<Array<InputMaybe<Scalars["Int"]>>>;
+  price_lt?: InputMaybe<Scalars["Int"]>;
+  price_lte?: InputMaybe<Scalars["Int"]>;
+  price_not?: InputMaybe<Scalars["Int"]>;
+  price_not_in?: InputMaybe<Array<InputMaybe<Scalars["Int"]>>>;
+  sys?: InputMaybe<SysFilter>;
+};
+
+export type SponsorTypeLinkingCollections = {
+  __typename?: "SponsorTypeLinkingCollections";
+  entryCollection?: Maybe<EntryCollection>;
+  pageCollection?: Maybe<PageCollection>;
+};
+
+export type SponsorTypeLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type SponsorTypeLinkingCollectionsPageCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export enum SponsorTypeOrder {
+  NameAsc = "name_ASC",
+  NameDesc = "name_DESC",
+  PriceAsc = "price_ASC",
+  PriceDesc = "price_DESC",
+  SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
+  SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
+  SysIdAsc = "sys_id_ASC",
+  SysIdDesc = "sys_id_DESC",
+  SysPublishedAtAsc = "sys_publishedAt_ASC",
+  SysPublishedAtDesc = "sys_publishedAt_DESC",
+  SysPublishedVersionAsc = "sys_publishedVersion_ASC",
+  SysPublishedVersionDesc = "sys_publishedVersion_DESC",
 }
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/subscribeBlock) */

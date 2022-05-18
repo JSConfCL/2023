@@ -6,7 +6,7 @@ import { JSConfLogo } from "../svgs/logo";
 import { PageProps } from "../../../pages";
 
 type Props = {
-  footerData: PageProps["footerData"];
+  page: PageProps["footerData"];
 };
 
 const StyledFooter = styled.footer(
@@ -78,7 +78,7 @@ export const Footer = (props: Props) => {
           <JSConfLogo />
         </StyledJSConfLogoWrapper>
         <StyledLinksContainer>
-          {props.footerData.linksCollection.items.map((item) => {
+          {props.page.linksCollection.items.map((item) => {
             return (
               <StyledLink key={item.sys.id}>
                 <Link href={item.link!}>{item.contenido}</Link>
