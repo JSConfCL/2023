@@ -13,6 +13,7 @@ const StyledNav = styled.nav`
   align-items: center;
   width: 100%;
   display: flex;
+  overflow: hidden;
 `;
 
 const StyledWrapper = styled.div`
