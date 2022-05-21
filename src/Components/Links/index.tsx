@@ -38,7 +38,10 @@ const BasePrimaryAnchor = styled.a(({ theme }) => ({
   borderWidth: theme.elements.buttons.variants.primary.borderWidth,
   borderStyle: theme.elements.buttons.variants.primary.borderStyle,
   // boxShadow: `0 2px 10px ${lighten(0.55, theme.colors.black)}`,
-  "&:hover": { background: lighten(0.1, theme.colors.black) },
+  "&:hover": {
+    background: lighten(0.1, theme.colors.black),
+    color: theme.elements.buttons.variants.primary.onHoverColor,
+  },
 
   "&::selection": {
     backgroundColor: lighten(

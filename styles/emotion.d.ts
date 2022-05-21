@@ -9,6 +9,7 @@ type ButtonVariantStyles = {
   borderWidth: number;
   borderTopRightRadius?: number;
   borderStyle: CSS.Properties["borderStyle"];
+  onHoverColor: string;
 };
 
 type Colors = {

@@ -14,7 +14,7 @@ interface Card {
   };
 }
 
-const Container = styled.section<{ type: string }>`
+const Container = styled.section<{ type: string; index: number }>`
   background: ${({ type }) => (type === "blank" ? "transparent" : "white")};
   border-radius: 0px 32px 0px 0px;
   position: relative;
@@ -25,6 +25,7 @@ const Container = styled.section<{ type: string }>`
   @media (min-width: 769px) {
     width: fit-content;
     height: fit-content;
+    top: 0px;
   }
 
   @media (min-width: 1362px) {
@@ -38,13 +39,41 @@ const BlockColor = styled.section<{ type: string }>`
   border-radius: 0px 32px 0px 0px;
   height: 100%;
   width: 100%;
+
+  @media (min-width: 769px) {
+    max-height: ${({ type }) => (type === "keynote" ? "390px" : "240px")};
+  }
 `;
 
-const BlockDescription = styled(motion.section)`
+const BlockDescription = styled(motion.section)<{ type: string }>`
   position: absolute;
+  display: flex;
+  flex-direction: column;
   bottom: 0px;
-  padding: 16px;
+  padding: 8px;
   width: 100%;
+  gap: 8px 8px;
+
+  > p {
+    font-size: 14px;
+  }
+
+  > h3 {
+    padding: 8px 0px;
+    font-size: 24px;
+  }
+
+  @media (min-width: 769px) {
+    padding: 16px;
+    > p {
+      font-size: ${({ type }) => (type === "normal" ? "14px" : "16px")};
+    }
+
+    > h3 {
+      padding: 8px 0px;
+      font-size: ${({ type }) => (type === "normal" ? "24px" : "36px")};
+    }
+  }
 `;
 const HR = styled.hr`
   border-width: 1px;
@@ -98,11 +127,11 @@ const mobileStyle = {
 };
 
 const Card = (props: any) => {
-  const { name, position, photo, cardType, type } = props;
+  const { name, position, photo, cardType, type, index } = props;
   const isMobile = useMediaQuery("(max-width: 768px)");
   const extraStyle = isMobile ? mobileStyle : styleProps(cardType, type);
   return (
-    <Container type={type}>
+    <Container type={type} index={index}>
       <BlockColor type={type}>
         <Image
           mobile={photo?.url!}
@@ -117,7 +146,7 @@ const Card = (props: any) => {
         />
       </BlockColor>
       {type !== "blank" && (
-        <BlockDescription>
+        <BlockDescription type={type}>
           <H3>{name}</H3>
           <HR />
           <P>{position}</P>
