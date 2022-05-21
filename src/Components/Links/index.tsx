@@ -23,6 +23,7 @@ const baseStyling = {
   textAlign: "left",
   maxWidth: 400,
   transition: "all 200ms ease-in-out",
+  height: 100,
 } as any;
 
 const BasePrimaryAnchor = styled.a(({ theme }) => ({

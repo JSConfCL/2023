@@ -1048,6 +1048,8 @@ export type Page = Entry & {
   linkedFrom?: Maybe<PageLinkingCollections>;
   name?: Maybe<Scalars["String"]>;
   navBar?: Maybe<NavigationBar>;
+  speakersBlock?: Maybe<SpeakerBlock>;
+  subscribeBlock?: Maybe<SubscribeBlock>;
   sys: Sys;
   whyBlockCollection?: Maybe<PageWhyBlockCollection>;
 };
@@ -1089,6 +1091,18 @@ export type PageNavBarArgs = {
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
+export type PageSpeakersBlockArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
+export type PageSubscribeBlockArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
 export type PageWhyBlockCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
@@ -1122,6 +1136,10 @@ export type PageFilter = {
   name_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   navBar?: InputMaybe<CfNavigationBarNestedFilter>;
   navBar_exists?: InputMaybe<Scalars["Boolean"]>;
+  speakersBlock?: InputMaybe<CfSpeakerBlockNestedFilter>;
+  speakersBlock_exists?: InputMaybe<Scalars["Boolean"]>;
+  subscribeBlock?: InputMaybe<CfSubscribeBlockNestedFilter>;
+  subscribeBlock_exists?: InputMaybe<Scalars["Boolean"]>;
   sys?: InputMaybe<SysFilter>;
   whyBlockCollection_exists?: InputMaybe<Scalars["Boolean"]>;
 };
@@ -1189,9 +1207,13 @@ export type Query = {
   socialNetwork?: Maybe<SocialNetwork>;
   socialNetworkCollection?: Maybe<SocialNetworkCollection>;
   speaker?: Maybe<Speaker>;
+  speakerBlock?: Maybe<SpeakerBlock>;
+  speakerBlockCollection?: Maybe<SpeakerBlockCollection>;
   speakerCollection?: Maybe<SpeakerCollection>;
   sponsor?: Maybe<Sponsor>;
   sponsorCollection?: Maybe<SponsorCollection>;
+  subscribeBlock?: Maybe<SubscribeBlock>;
+  subscribeBlockCollection?: Maybe<SubscribeBlockCollection>;
   talk?: Maybe<Talk>;
   talkCollection?: Maybe<TalkCollection>;
   teamBlock?: Maybe<TeamBlock>;
@@ -1350,6 +1372,21 @@ export type QuerySpeakerArgs = {
   preview?: InputMaybe<Scalars["Boolean"]>;
 };
 
+export type QuerySpeakerBlockArgs = {
+  id: Scalars["String"];
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+export type QuerySpeakerBlockCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  order?: InputMaybe<Array<InputMaybe<SpeakerBlockOrder>>>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<SpeakerBlockFilter>;
+};
+
 export type QuerySpeakerCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
@@ -1372,6 +1409,21 @@ export type QuerySponsorCollectionArgs = {
   preview?: InputMaybe<Scalars["Boolean"]>;
   skip?: InputMaybe<Scalars["Int"]>;
   where?: InputMaybe<SponsorFilter>;
+};
+
+export type QuerySubscribeBlockArgs = {
+  id: Scalars["String"];
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+export type QuerySubscribeBlockCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  order?: InputMaybe<Array<InputMaybe<SubscribeBlockOrder>>>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<SubscribeBlockFilter>;
 };
 
 export type QueryTalkArgs = {
@@ -1520,6 +1572,7 @@ export enum SocialNetworkOrder {
 export type Speaker = Entry & {
   __typename?: "Speaker";
   about?: Maybe<Scalars["String"]>;
+  cardType?: Maybe<Scalars["String"]>;
   city?: Maybe<Scalars["String"]>;
   contentfulMetadata: ContentfulMetadata;
   country?: Maybe<Scalars["String"]>;
@@ -1527,13 +1580,20 @@ export type Speaker = Entry & {
   linkedFrom?: Maybe<SpeakerLinkingCollections>;
   name?: Maybe<Scalars["String"]>;
   photo?: Maybe<Asset>;
+  position?: Maybe<Scalars["String"]>;
   sys: Sys;
   twitter?: Maybe<Scalars["String"]>;
+  type?: Maybe<Scalars["String"]>;
   web?: Maybe<Scalars["String"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
 export type SpeakerAboutArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
+export type SpeakerCardTypeArgs = {
   locale?: InputMaybe<Scalars["String"]>;
 };
 
@@ -1569,13 +1629,149 @@ export type SpeakerPhotoArgs = {
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
+export type SpeakerPositionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
 export type SpeakerTwitterArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
+export type SpeakerTypeArgs = {
   locale?: InputMaybe<Scalars["String"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
 export type SpeakerWebArgs = {
   locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speakerBlock) */
+export type SpeakerBlock = Entry & {
+  __typename?: "SpeakerBlock";
+  contentfulMetadata: ContentfulMetadata;
+  description?: Maybe<SpeakerBlockDescription>;
+  linkedFrom?: Maybe<SpeakerBlockLinkingCollections>;
+  speakersCollection?: Maybe<SpeakerBlockSpeakersCollection>;
+  sys: Sys;
+  title?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speakerBlock) */
+export type SpeakerBlockDescriptionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speakerBlock) */
+export type SpeakerBlockLinkedFromArgs = {
+  allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speakerBlock) */
+export type SpeakerBlockSpeakersCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speakerBlock) */
+export type SpeakerBlockTitleArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+export type SpeakerBlockCollection = {
+  __typename?: "SpeakerBlockCollection";
+  items: Array<Maybe<SpeakerBlock>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export type SpeakerBlockDescription = {
+  __typename?: "SpeakerBlockDescription";
+  json: Scalars["JSON"];
+  links: SpeakerBlockDescriptionLinks;
+};
+
+export type SpeakerBlockDescriptionAssets = {
+  __typename?: "SpeakerBlockDescriptionAssets";
+  block: Array<Maybe<Asset>>;
+  hyperlink: Array<Maybe<Asset>>;
+};
+
+export type SpeakerBlockDescriptionEntries = {
+  __typename?: "SpeakerBlockDescriptionEntries";
+  block: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  inline: Array<Maybe<Entry>>;
+};
+
+export type SpeakerBlockDescriptionLinks = {
+  __typename?: "SpeakerBlockDescriptionLinks";
+  assets: SpeakerBlockDescriptionAssets;
+  entries: SpeakerBlockDescriptionEntries;
+};
+
+export type SpeakerBlockFilter = {
+  AND?: InputMaybe<Array<InputMaybe<SpeakerBlockFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<SpeakerBlockFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  description_contains?: InputMaybe<Scalars["String"]>;
+  description_exists?: InputMaybe<Scalars["Boolean"]>;
+  description_not_contains?: InputMaybe<Scalars["String"]>;
+  speakersCollection_exists?: InputMaybe<Scalars["Boolean"]>;
+  sys?: InputMaybe<SysFilter>;
+  title?: InputMaybe<Scalars["String"]>;
+  title_contains?: InputMaybe<Scalars["String"]>;
+  title_exists?: InputMaybe<Scalars["Boolean"]>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  title_not?: InputMaybe<Scalars["String"]>;
+  title_not_contains?: InputMaybe<Scalars["String"]>;
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+export type SpeakerBlockLinkingCollections = {
+  __typename?: "SpeakerBlockLinkingCollections";
+  entryCollection?: Maybe<EntryCollection>;
+  pageCollection?: Maybe<PageCollection>;
+};
+
+export type SpeakerBlockLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type SpeakerBlockLinkingCollectionsPageCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export enum SpeakerBlockOrder {
+  SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
+  SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
+  SysIdAsc = "sys_id_ASC",
+  SysIdDesc = "sys_id_DESC",
+  SysPublishedAtAsc = "sys_publishedAt_ASC",
+  SysPublishedAtDesc = "sys_publishedAt_DESC",
+  SysPublishedVersionAsc = "sys_publishedVersion_ASC",
+  SysPublishedVersionDesc = "sys_publishedVersion_DESC",
+  TitleAsc = "title_ASC",
+  TitleDesc = "title_DESC",
+}
+
+export type SpeakerBlockSpeakersCollection = {
+  __typename?: "SpeakerBlockSpeakersCollection";
+  items: Array<Maybe<Speaker>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
 };
 
 export type SpeakerCollection = {
@@ -1596,6 +1792,13 @@ export type SpeakerFilter = {
   about_not?: InputMaybe<Scalars["String"]>;
   about_not_contains?: InputMaybe<Scalars["String"]>;
   about_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  cardType?: InputMaybe<Scalars["String"]>;
+  cardType_contains?: InputMaybe<Scalars["String"]>;
+  cardType_exists?: InputMaybe<Scalars["Boolean"]>;
+  cardType_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  cardType_not?: InputMaybe<Scalars["String"]>;
+  cardType_not_contains?: InputMaybe<Scalars["String"]>;
+  cardType_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   city?: InputMaybe<Scalars["String"]>;
   city_contains?: InputMaybe<Scalars["String"]>;
   city_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -1626,6 +1829,13 @@ export type SpeakerFilter = {
   name_not_contains?: InputMaybe<Scalars["String"]>;
   name_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   photo_exists?: InputMaybe<Scalars["Boolean"]>;
+  position?: InputMaybe<Scalars["String"]>;
+  position_contains?: InputMaybe<Scalars["String"]>;
+  position_exists?: InputMaybe<Scalars["Boolean"]>;
+  position_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  position_not?: InputMaybe<Scalars["String"]>;
+  position_not_contains?: InputMaybe<Scalars["String"]>;
+  position_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   sys?: InputMaybe<SysFilter>;
   twitter?: InputMaybe<Scalars["String"]>;
   twitter_contains?: InputMaybe<Scalars["String"]>;
@@ -1634,6 +1844,13 @@ export type SpeakerFilter = {
   twitter_not?: InputMaybe<Scalars["String"]>;
   twitter_not_contains?: InputMaybe<Scalars["String"]>;
   twitter_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  type?: InputMaybe<Scalars["String"]>;
+  type_contains?: InputMaybe<Scalars["String"]>;
+  type_exists?: InputMaybe<Scalars["Boolean"]>;
+  type_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  type_not?: InputMaybe<Scalars["String"]>;
+  type_not_contains?: InputMaybe<Scalars["String"]>;
+  type_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   web?: InputMaybe<Scalars["String"]>;
   web_contains?: InputMaybe<Scalars["String"]>;
   web_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -1646,6 +1863,7 @@ export type SpeakerFilter = {
 export type SpeakerLinkingCollections = {
   __typename?: "SpeakerLinkingCollections";
   entryCollection?: Maybe<EntryCollection>;
+  speakerBlockCollection?: Maybe<SpeakerBlockCollection>;
 };
 
 export type SpeakerLinkingCollectionsEntryCollectionArgs = {
@@ -1655,7 +1873,16 @@ export type SpeakerLinkingCollectionsEntryCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
+export type SpeakerLinkingCollectionsSpeakerBlockCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
 export enum SpeakerOrder {
+  CardTypeAsc = "cardType_ASC",
+  CardTypeDesc = "cardType_DESC",
   CityAsc = "city_ASC",
   CityDesc = "city_DESC",
   CountryAsc = "country_ASC",
@@ -1664,6 +1891,8 @@ export enum SpeakerOrder {
   GithubDesc = "github_DESC",
   NameAsc = "name_ASC",
   NameDesc = "name_DESC",
+  PositionAsc = "position_ASC",
+  PositionDesc = "position_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",
@@ -1674,6 +1903,8 @@ export enum SpeakerOrder {
   SysPublishedVersionDesc = "sys_publishedVersion_DESC",
   TwitterAsc = "twitter_ASC",
   TwitterDesc = "twitter_DESC",
+  TypeAsc = "type_ASC",
+  TypeDesc = "type_DESC",
   WebAsc = "web_ASC",
   WebDesc = "web_DESC",
 }
@@ -1778,6 +2009,80 @@ export enum SponsorOrder {
   SysPublishedVersionDesc = "sys_publishedVersion_DESC",
   TypeAsc = "type_ASC",
   TypeDesc = "type_DESC",
+}
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/subscribeBlock) */
+export type SubscribeBlock = Entry & {
+  __typename?: "SubscribeBlock";
+  contentfulMetadata: ContentfulMetadata;
+  linkedFrom?: Maybe<SubscribeBlockLinkingCollections>;
+  sys: Sys;
+  title?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/subscribeBlock) */
+export type SubscribeBlockLinkedFromArgs = {
+  allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/subscribeBlock) */
+export type SubscribeBlockTitleArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+export type SubscribeBlockCollection = {
+  __typename?: "SubscribeBlockCollection";
+  items: Array<Maybe<SubscribeBlock>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export type SubscribeBlockFilter = {
+  AND?: InputMaybe<Array<InputMaybe<SubscribeBlockFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<SubscribeBlockFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  sys?: InputMaybe<SysFilter>;
+  title?: InputMaybe<Scalars["String"]>;
+  title_contains?: InputMaybe<Scalars["String"]>;
+  title_exists?: InputMaybe<Scalars["Boolean"]>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  title_not?: InputMaybe<Scalars["String"]>;
+  title_not_contains?: InputMaybe<Scalars["String"]>;
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+export type SubscribeBlockLinkingCollections = {
+  __typename?: "SubscribeBlockLinkingCollections";
+  entryCollection?: Maybe<EntryCollection>;
+  pageCollection?: Maybe<PageCollection>;
+};
+
+export type SubscribeBlockLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type SubscribeBlockLinkingCollectionsPageCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export enum SubscribeBlockOrder {
+  SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
+  SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
+  SysIdAsc = "sys_id_ASC",
+  SysIdDesc = "sys_id_DESC",
+  SysPublishedAtAsc = "sys_publishedAt_ASC",
+  SysPublishedAtDesc = "sys_publishedAt_DESC",
+  SysPublishedVersionAsc = "sys_publishedVersion_ASC",
+  SysPublishedVersionDesc = "sys_publishedVersion_DESC",
+  TitleAsc = "title_ASC",
+  TitleDesc = "title_DESC",
 }
 
 export type Sys = {
@@ -2263,4 +2568,36 @@ export type CfNavigationBarNestedFilter = {
   navbarName_not_contains?: InputMaybe<Scalars["String"]>;
   navbarName_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   sys?: InputMaybe<SysFilter>;
+};
+
+export type CfSpeakerBlockNestedFilter = {
+  AND?: InputMaybe<Array<InputMaybe<CfSpeakerBlockNestedFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<CfSpeakerBlockNestedFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  description_contains?: InputMaybe<Scalars["String"]>;
+  description_exists?: InputMaybe<Scalars["Boolean"]>;
+  description_not_contains?: InputMaybe<Scalars["String"]>;
+  speakersCollection_exists?: InputMaybe<Scalars["Boolean"]>;
+  sys?: InputMaybe<SysFilter>;
+  title?: InputMaybe<Scalars["String"]>;
+  title_contains?: InputMaybe<Scalars["String"]>;
+  title_exists?: InputMaybe<Scalars["Boolean"]>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  title_not?: InputMaybe<Scalars["String"]>;
+  title_not_contains?: InputMaybe<Scalars["String"]>;
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+export type CfSubscribeBlockNestedFilter = {
+  AND?: InputMaybe<Array<InputMaybe<CfSubscribeBlockNestedFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<CfSubscribeBlockNestedFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  sys?: InputMaybe<SysFilter>;
+  title?: InputMaybe<Scalars["String"]>;
+  title_contains?: InputMaybe<Scalars["String"]>;
+  title_exists?: InputMaybe<Scalars["Boolean"]>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  title_not?: InputMaybe<Scalars["String"]>;
+  title_not_contains?: InputMaybe<Scalars["String"]>;
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
 };

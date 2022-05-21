@@ -69,6 +69,29 @@ export type HomeQueryQuery = {
         } | null>;
       } | null;
     } | null;
+    speakersBlock?: {
+      __typename?: "SpeakerBlock";
+      title?: string | null;
+      description?: {
+        __typename?: "SpeakerBlockDescription";
+        json: any;
+      } | null;
+      speakersCollection?: {
+        __typename?: "SpeakerBlockSpeakersCollection";
+        items: Array<{
+          __typename?: "Speaker";
+          name?: string | null;
+          position?: string | null;
+          cardType?: string | null;
+          type?: string | null;
+          photo?: {
+            __typename?: "Asset";
+            url?: string | null;
+            description?: string | null;
+          } | null;
+        } | null>;
+      } | null;
+    } | null;
   } | null;
 };
 
@@ -127,6 +150,24 @@ export const HomeQueryDocument = gql`
             icon {
               url
             }
+          }
+        }
+      }
+      speakersBlock {
+        title
+        description {
+          json
+        }
+        speakersCollection {
+          items {
+            name
+            position
+            photo {
+              url
+              description
+            }
+            cardType
+            type
           }
         }
       }
