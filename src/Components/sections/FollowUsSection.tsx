@@ -52,7 +52,12 @@ const FollowUsSection = (props: { page: PageProps["followUsData"] }) => (
 
       <Flex>
         {props.page.socialNetworksCollection.items.map((props, index) => (
-          <a target="_blank" href={props.url}>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={props.url}
+            key={`social-${index}`}
+          >
             <Image
               key={`logo-${index}`}
               mobile={props.icon?.url!}
