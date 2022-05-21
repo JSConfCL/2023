@@ -40,12 +40,14 @@ const BlockColor = styled.section<{ type: string }>`
   height: 100%;
   width: 100%;
 
-  &:hover {
+  <<<<<<< HEAD &:hover {
     background: ${({ type }) =>
       type === "blank" ? "transparent" : "rgb(100 31 37 / 79%)"};
   }
 
-  @media (min-width: 769px) {
+  =======>>>>>>>128f0f3100f9859bdc0395a9bf0a21d732ddf86e
+    @media
+    (min-width: 769px) {
     max-height: ${({ type }) => (type === "keynote" ? "390px" : "240px")};
   }
 `;
