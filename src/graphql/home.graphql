@@ -55,5 +55,23 @@ query HomeQuery {
         }
       }
     }
+    speakersBlock {
+      title
+      description {
+        json
+      }
+      speakersCollection {
+        items {
+          name
+          position
+          photo {
+            url
+            description
+          }
+          cardType
+          type
+        }
+      }
+    }
   }
 }

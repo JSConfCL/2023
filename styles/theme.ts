@@ -65,6 +65,7 @@ export const jsconfTheme: Theme = {
           borderWidth: 1,
           borderStyle: "solid",
           borderTopRightRadius: 24,
+          onHoverColor: colors.jsconfYellow,
         },
         secondary: {
           backgroundColor: colors.black,
@@ -74,6 +75,7 @@ export const jsconfTheme: Theme = {
           borderWidth: 1,
           borderStyle: "solid",
           borderTopRightRadius: 24,
+          onHoverColor: colors.jsconfYellow,
         },
       },
     },
