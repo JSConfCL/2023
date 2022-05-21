@@ -14,7 +14,7 @@ interface Card {
   };
 }
 
-const Container = styled.section<{ type: string; index: number }>`
+const Container = styled(motion.section)<{ type: string; index: number }>`
   background: ${({ type }) => (type === "blank" ? "transparent" : "white")};
   border-radius: 0px 32px 0px 0px;
   position: relative;
@@ -40,6 +40,11 @@ const BlockColor = styled.section<{ type: string }>`
   height: 100%;
   width: 100%;
 
+  &:hover {
+    background: ${({ type }) =>
+      type === "blank" ? "transparent" : "rgb(100 31 37 / 79%)"};
+  }
+
   @media (min-width: 769px) {
     max-height: ${({ type }) => (type === "keynote" ? "390px" : "240px")};
   }
@@ -49,10 +54,14 @@ const BlockDescription = styled(motion.section)<{ type: string }>`
   position: absolute;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  border-radius: 0px 32px 0px 0px;
   bottom: 0px;
   padding: 8px;
   width: 100%;
+  height: 100%;
   gap: 8px 8px;
+  background-color: transparent;
 
   > p {
     font-size: 14px;
@@ -73,6 +82,10 @@ const BlockDescription = styled(motion.section)<{ type: string }>`
       padding: 8px 0px;
       font-size: ${({ type }) => (type === "normal" ? "24px" : "36px")};
     }
+  }
+  &:hover {
+    background: ${({ type }) =>
+      type === "blank" ? "transparent" : "rgb(100 31 37 / 79%)"};
   }
 `;
 const HR = styled.hr`
@@ -120,6 +133,10 @@ const styleProps = (cardType: string, type: string) => {
   }
 };
 
+const containerVariants = {
+  hover: {},
+};
+
 const mobileStyle = {
   width: "100%",
   height: "100%",
@@ -131,7 +148,15 @@ const Card = (props: any) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const extraStyle = isMobile ? mobileStyle : styleProps(cardType, type);
   return (
-    <Container type={type} index={index}>
+    <Container
+      type={type}
+      index={index}
+      variants={containerVariants}
+      whileHover="hover"
+      whileFocus="hover"
+      whileTap="hover"
+      initial="initial"
+    >
       <BlockColor type={type}>
         <Image
           mobile={photo?.url!}
