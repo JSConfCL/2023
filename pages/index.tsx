@@ -35,7 +35,7 @@ const Home: NextPage<PageProps> = (props) => {
       <Hero heroData={props.heroData} navData={props.navData} />
       <WhySection page={props.whyItems} />
       <HowSection page={props.howItems} />
-      <SpeakerSection page={props.speakerData} />
+      {props.speakerData && <SpeakerSection page={props.speakerData} />}
       <FollowUsSection page={props.followUsData} />
     </Container>
   );
@@ -53,7 +53,7 @@ export async function getStaticProps() {
     whyItems: page?.whyBlockCollection,
     howItems: page?.howBlockCollection,
     followUsData: page?.followUsBlock,
-    speakerData: page?.speakersBlock,
+    speakerData: page?.speakersBlock!,
   };
 
   return {

@@ -115,13 +115,13 @@ const WhySection = (props: { page: PageProps["whyItems"] }) => {
         <BlockContainer>
           {props.page?.items?.map((item, index) => (
             <WhiteBlock
-              key={`white - block - ${index} `}
+              key={`white-block-${index} `}
               whileHover="hover"
               whileFocus="hover"
               whileTap="hover"
               initial="initial"
             >
-              <Block key={`why - block - ${index} `} variants={BlockVariant}>
+              <Block key={`why-block-${index}`} variants={BlockVariant}>
                 <Image
                   mobile={item?.icon?.url!}
                   alt={item?.icon?.description! || ""}
