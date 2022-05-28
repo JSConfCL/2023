@@ -404,6 +404,90 @@ export type FollowUsBlockSocialNetworksCollection = {
   total: Scalars["Int"];
 };
 
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/footer) */
+export type Footer = Entry & {
+  __typename?: "Footer";
+  contentfulMetadata: ContentfulMetadata;
+  footerName?: Maybe<Scalars["String"]>;
+  linkedFrom?: Maybe<FooterLinkingCollections>;
+  linksCollection?: Maybe<FooterLinksCollection>;
+  sys: Sys;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/footer) */
+export type FooterFooterNameArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/footer) */
+export type FooterLinkedFromArgs = {
+  allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/footer) */
+export type FooterLinksCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type FooterCollection = {
+  __typename?: "FooterCollection";
+  items: Array<Maybe<Footer>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export type FooterFilter = {
+  AND?: InputMaybe<Array<InputMaybe<FooterFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<FooterFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  footerName?: InputMaybe<Scalars["String"]>;
+  footerName_contains?: InputMaybe<Scalars["String"]>;
+  footerName_exists?: InputMaybe<Scalars["Boolean"]>;
+  footerName_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  footerName_not?: InputMaybe<Scalars["String"]>;
+  footerName_not_contains?: InputMaybe<Scalars["String"]>;
+  footerName_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  linksCollection_exists?: InputMaybe<Scalars["Boolean"]>;
+  sys?: InputMaybe<SysFilter>;
+};
+
+export type FooterLinkingCollections = {
+  __typename?: "FooterLinkingCollections";
+  entryCollection?: Maybe<EntryCollection>;
+};
+
+export type FooterLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type FooterLinksCollection = {
+  __typename?: "FooterLinksCollection";
+  items: Array<Maybe<LinkItem>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export enum FooterOrder {
+  FooterNameAsc = "footerName_ASC",
+  FooterNameDesc = "footerName_DESC",
+  SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
+  SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
+  SysIdAsc = "sys_id_ASC",
+  SysIdDesc = "sys_id_DESC",
+  SysPublishedAtAsc = "sys_publishedAt_ASC",
+  SysPublishedAtDesc = "sys_publishedAt_DESC",
+  SysPublishedVersionAsc = "sys_publishedVersion_ASC",
+  SysPublishedVersionDesc = "sys_publishedVersion_DESC",
+}
+
 /** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
 export type HeroBlock = Entry & {
   __typename?: "HeroBlock";
@@ -817,10 +901,18 @@ export type LinkItemFilter = {
 export type LinkItemLinkingCollections = {
   __typename?: "LinkItemLinkingCollections";
   entryCollection?: Maybe<EntryCollection>;
+  footerCollection?: Maybe<FooterCollection>;
   navigationBarCollection?: Maybe<NavigationBarCollection>;
 };
 
 export type LinkItemLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type LinkItemLinkingCollectionsFooterCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
@@ -1192,6 +1284,8 @@ export type Query = {
   entryCollection?: Maybe<EntryCollection>;
   followUsBlock?: Maybe<FollowUsBlock>;
   followUsBlockCollection?: Maybe<FollowUsBlockCollection>;
+  footer?: Maybe<Footer>;
+  footerCollection?: Maybe<FooterCollection>;
   heroBlock?: Maybe<HeroBlock>;
   heroBlockCollection?: Maybe<HeroBlockCollection>;
   howBlock?: Maybe<HowBlock>;
@@ -1259,6 +1353,21 @@ export type QueryFollowUsBlockCollectionArgs = {
   preview?: InputMaybe<Scalars["Boolean"]>;
   skip?: InputMaybe<Scalars["Int"]>;
   where?: InputMaybe<FollowUsBlockFilter>;
+};
+
+export type QueryFooterArgs = {
+  id: Scalars["String"];
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+export type QueryFooterCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  order?: InputMaybe<Array<InputMaybe<FooterOrder>>>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<FooterFilter>;
 };
 
 export type QueryHeroBlockArgs = {

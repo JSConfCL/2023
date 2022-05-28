@@ -65,6 +65,8 @@ const BlockDescription = styled(motion.section)<{ type: string }>`
   > h3 {
     padding: 8px 0px;
     font-size: 24px;
+    margin: 0px;
+    line-height: 27px;
   }
 
   @media (min-width: 769px) {
@@ -87,6 +89,7 @@ const HR = styled.hr`
   border-width: 1px;
   border-color: white;
   border-style: solid;
+  background-color: white;
 `;
 
 const styleProps = (cardType: string, type: string) => {

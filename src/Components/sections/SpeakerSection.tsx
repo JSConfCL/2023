@@ -75,6 +75,7 @@ const HR = styled.hr`
   border-color: #f45b69;
   border-style: solid;
   width: 50%;
+  background-color: #f45b69;
 `;
 
 const ContainerButton = styled.section`

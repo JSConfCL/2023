@@ -63,6 +63,7 @@ const HR = styled.hr`
   border-width: 2px;
   border-color: white;
   border-style: solid;
+  background-color: white;
 `;
 
 const Block = styled(motion.section)`
@@ -88,10 +89,10 @@ const BlockVariant = {
   },
 };
 
-const descriptionVariant = {
+const descriptionVariant = (isMobile: boolean) => ({
   initial: {
-    opacity: 0,
-    height: "20px",
+    opacity: isMobile ? 1 : 0,
+    height: isMobile ? "max-content" : "20px",
   },
   hover: {
     opacity: 1,
@@ -104,10 +105,11 @@ const descriptionVariant = {
       },
     },
   },
-};
+});
 
 const WhySection = (props: { page: PageProps["whyItems"] }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
+
   return (
     <Container>
       <Suspense fallback={<h1>Loading why...</h1>}>
@@ -137,10 +139,18 @@ const WhySection = (props: { page: PageProps["whyItems"] }) => {
                 <Flex index={index}>
                   <H3>{item?.title}</H3>
                   <HR />
-                  <Description
-                    data={item?.description?.json!}
-                    animationVariants={descriptionVariant}
-                  />
+                  {!isMobile && (
+                    <Description
+                      data={item?.description?.json!}
+                      animationVariants={descriptionVariant(false)}
+                    />
+                  )}
+                  {isMobile && (
+                    <Description
+                      data={item?.description?.json!}
+                      animationVariants={descriptionVariant(true)}
+                    />
+                  )}
                 </Flex>
               </Block>
             </WhiteBlock>

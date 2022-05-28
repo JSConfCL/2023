@@ -97,7 +97,7 @@ export type HomeQueryQuery = {
 
 export const HomeQueryDocument = gql`
   query HomeQuery {
-    page(id: "FTZMMTIKuOMTvkVv0DGzs") {
+    page(id: "FTZMMTIKuOMTvkVv0DGzs", locale: "es-CL") {
       navBar {
         linksCollection(limit: 20) {
           items {
