@@ -6,12 +6,13 @@ export const H2 = styled(motion.h2)`
   letter-spacing: 1px;
   color: #ffffff;
   font-weight: 400;
-  line-height: 80px;
   text-align: left;
-  font-size: 62px;
+  font-size: 40px;
+  line-height: 40px;
 
-  @media (min-width: 426px) {
+  @media (min-width: 769px) {
     font-size: 80px;
+    line-height: 80px;
   }
 `;
 

@@ -173,9 +173,9 @@ export const GlobalStyles = () => {
         css`
           body,
           html {
-            background-color: ${theme.elements.global.backgroundColor};
             font-family: ${theme.elements.global.fontFamily};
             color: ${theme.elements.global.color};
+            max-height: 100vh;
           }
           h1,
           h2,

@@ -96,7 +96,7 @@ const descriptionVariant = (isMobile: boolean) => ({
   },
   hover: {
     opacity: 1,
-    height: "fit-content",
+    height: "min-content",
     transition: {
       duration: 0.2,
       opacity: {
@@ -128,7 +128,7 @@ const WhySection = (props: { page: PageProps["whyItems"] }) => {
                   mobile={item?.icon?.url!}
                   alt={item?.icon?.description! || ""}
                   style={{
-                    height: isMobile ? "390px" : "390px",
+                    height: isMobile ? "210px" : "390px",
                     width: isMobile ? "100vw" : "fit-content",
                     aspectRatio: index % 2 === 0 ? "287 / 390" : "397 / 390",
                     mixBlendMode: "multiply",

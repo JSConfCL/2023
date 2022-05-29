@@ -18,6 +18,10 @@ query HomeQuery {
       date
       ctaUrl
       ctaText
+      background {
+        title
+        url
+      }
     }
     whyBlockCollection {
       items {
