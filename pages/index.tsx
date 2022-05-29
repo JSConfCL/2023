@@ -33,8 +33,8 @@ const Home: NextPage<PageProps> = (props) => {
   return (
     <Container>
       <Hero heroData={props.heroData} navData={props.navData} />
-      <WhySection page={props.whyItems} />
-      <HowSection page={props.howItems} />
+      {props.whyItems && <WhySection page={props.whyItems} />}
+      {props.howItems && <HowSection page={props.howItems} />}
       {props.speakerData && <SpeakerSection page={props.speakerData} />}
       <FollowUsSection page={props.followUsData} />
     </Container>
