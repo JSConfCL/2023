@@ -97,6 +97,18 @@ export type HomeQueryQuery = {
         } | null>;
       } | null;
     } | null;
+    footer?: {
+      __typename?: "Footer";
+      linksCollection?: {
+        __typename?: "FooterLinksCollection";
+        items: Array<{
+          __typename?: "LinkItem";
+          contenido?: string | null;
+          link?: string | null;
+          sys: { __typename?: "Sys"; id: string };
+        } | null>;
+      } | null;
+    } | null;
   } | null;
 };
 
@@ -177,6 +189,17 @@ export const HomeQueryDocument = gql`
             }
             cardType
             type
+          }
+        }
+      }
+      footer {
+        linksCollection(limit: 20) {
+          items {
+            sys {
+              id
+            }
+            contenido
+            link
           }
         }
       }
