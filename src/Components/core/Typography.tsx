@@ -1,6 +1,18 @@
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 
+export const H1 = styled(motion.h1)<{ color?: string }>`
+  font-family: "Koulen";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 120px;
+  line-height: 120px;
+  /* or 100% */
+  display: flex;
+  align-items: center;
+  color: ${({ color }) => color || "white"};
+`;
+
 export const H2 = styled(motion.h2)`
   font-family: "Koulen";
   letter-spacing: 1px;
