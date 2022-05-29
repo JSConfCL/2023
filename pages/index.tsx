@@ -13,6 +13,7 @@ import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 import FollowUsSection from "../src/Components/sections/FollowUsSection";
 import SpeakerSection from "../src/Components/sections/SpeakerSection";
+import { Footer } from "../src/Components/Footer/Footer";
 
 type Page = ParseQuery<HomeQueryQuery["page"]>;
 
@@ -23,6 +24,7 @@ export type PageProps = {
   heroData: Page["heroBlock"];
   followUsData: Page["followUsBlock"];
   speakerData: Page["speakersBlock"];
+  footerData: Page["footer"];
 };
 const Container = styled.section`
   display: flex;
@@ -44,6 +46,7 @@ const Home: NextPage<PageProps> = (props) => {
         {props.speakerData && <SpeakerSection page={props.speakerData} />}
         <FollowUsSection page={props.followUsData} />
       </StyledBlackWrapp>
+      <Footer footerData={props.footerData} />
     </Container>
   );
 };
@@ -61,6 +64,7 @@ export async function getStaticProps() {
     howItems: page?.howBlockCollection,
     followUsData: page?.followUsBlock,
     speakerData: page?.speakersBlock!,
+    footerData: page?.footer,
   };
 
   return {

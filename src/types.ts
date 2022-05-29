@@ -466,9 +466,17 @@ export type FooterFilter = {
 export type FooterLinkingCollections = {
   __typename?: "FooterLinkingCollections";
   entryCollection?: Maybe<EntryCollection>;
+  pageCollection?: Maybe<PageCollection>;
 };
 
 export type FooterLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type FooterLinkingCollectionsPageCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
@@ -1151,6 +1159,7 @@ export type Page = Entry & {
   __typename?: "Page";
   contentfulMetadata: ContentfulMetadata;
   followUsBlock?: Maybe<FollowUsBlock>;
+  footer?: Maybe<Footer>;
   heroBlock?: Maybe<HeroBlock>;
   howBlockCollection?: Maybe<PageHowBlockCollection>;
   linkedFrom?: Maybe<PageLinkingCollections>;
@@ -1164,6 +1173,12 @@ export type Page = Entry & {
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
 export type PageFollowUsBlockArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
+export type PageFooterArgs = {
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
 };
@@ -1232,6 +1247,8 @@ export type PageFilter = {
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
   followUsBlock?: InputMaybe<CfFollowUsBlockNestedFilter>;
   followUsBlock_exists?: InputMaybe<Scalars["Boolean"]>;
+  footer?: InputMaybe<CfFooterNestedFilter>;
+  footer_exists?: InputMaybe<Scalars["Boolean"]>;
   heroBlock?: InputMaybe<CfHeroBlockNestedFilter>;
   heroBlock_exists?: InputMaybe<Scalars["Boolean"]>;
   howBlockCollection_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -2629,6 +2646,21 @@ export type CfFollowUsBlockNestedFilter = {
   title_not?: InputMaybe<Scalars["String"]>;
   title_not_contains?: InputMaybe<Scalars["String"]>;
   title_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+export type CfFooterNestedFilter = {
+  AND?: InputMaybe<Array<InputMaybe<CfFooterNestedFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<CfFooterNestedFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  footerName?: InputMaybe<Scalars["String"]>;
+  footerName_contains?: InputMaybe<Scalars["String"]>;
+  footerName_exists?: InputMaybe<Scalars["Boolean"]>;
+  footerName_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  footerName_not?: InputMaybe<Scalars["String"]>;
+  footerName_not_contains?: InputMaybe<Scalars["String"]>;
+  footerName_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  linksCollection_exists?: InputMaybe<Scalars["Boolean"]>;
+  sys?: InputMaybe<SysFilter>;
 };
 
 export type CfHeroBlockNestedFilter = {
