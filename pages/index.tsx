@@ -28,15 +28,22 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
 `;
+const StyledBlackWrapp = styled.section`
+  display: flex;
+  flex-direction: column;
+  background-color: ${({ theme }) => theme.elements.global.backgroundColor};
+`;
 
 const Home: NextPage<PageProps> = (props) => {
   return (
     <Container>
       <Hero heroData={props.heroData} navData={props.navData} />
-      {props.whyItems && <WhySection page={props.whyItems} />}
-      {props.howItems && <HowSection page={props.howItems} />}
-      {props.speakerData && <SpeakerSection page={props.speakerData} />}
-      <FollowUsSection page={props.followUsData} />
+      <StyledBlackWrapp>
+        {props.whyItems && <WhySection page={props.whyItems} />}
+        {props.howItems && <HowSection page={props.howItems} />}
+        {props.speakerData && <SpeakerSection page={props.speakerData} />}
+        <FollowUsSection page={props.followUsData} />
+      </StyledBlackWrapp>
     </Container>
   );
 };

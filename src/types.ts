@@ -175,6 +175,7 @@ export type AssetFilter = {
 export type AssetLinkingCollections = {
   __typename?: "AssetLinkingCollections";
   entryCollection?: Maybe<EntryCollection>;
+  heroBlockCollection?: Maybe<HeroBlockCollection>;
   howBlockCollection?: Maybe<HowBlockCollection>;
   memberCollection?: Maybe<MemberCollection>;
   socialNetworkCollection?: Maybe<SocialNetworkCollection>;
@@ -184,6 +185,13 @@ export type AssetLinkingCollections = {
 };
 
 export type AssetLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type AssetLinkingCollectionsHeroBlockCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
@@ -491,6 +499,7 @@ export enum FooterOrder {
 /** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
 export type HeroBlock = Entry & {
   __typename?: "HeroBlock";
+  background?: Maybe<Asset>;
   contentfulMetadata: ContentfulMetadata;
   ctaText?: Maybe<Scalars["String"]>;
   ctaUrl?: Maybe<Scalars["String"]>;
@@ -500,6 +509,12 @@ export type HeroBlock = Entry & {
   secondSubtitle?: Maybe<Scalars["String"]>;
   sys: Sys;
   tile?: Maybe<Scalars["String"]>;
+};
+
+/** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
+export type HeroBlockBackgroundArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
 };
 
 /** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
@@ -548,6 +563,7 @@ export type HeroBlockCollection = {
 export type HeroBlockFilter = {
   AND?: InputMaybe<Array<InputMaybe<HeroBlockFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<HeroBlockFilter>>>;
+  background_exists?: InputMaybe<Scalars["Boolean"]>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
   ctaText?: InputMaybe<Scalars["String"]>;
   ctaText_contains?: InputMaybe<Scalars["String"]>;
@@ -2618,6 +2634,7 @@ export type CfFollowUsBlockNestedFilter = {
 export type CfHeroBlockNestedFilter = {
   AND?: InputMaybe<Array<InputMaybe<CfHeroBlockNestedFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<CfHeroBlockNestedFilter>>>;
+  background_exists?: InputMaybe<Scalars["Boolean"]>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
   ctaText?: InputMaybe<Scalars["String"]>;
   ctaText_contains?: InputMaybe<Scalars["String"]>;

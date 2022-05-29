@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { css, Global, useTheme } from "@emotion/react";
+import { css, Global } from "@emotion/react";
 import styled from "@emotion/styled";
-import React, { LegacyRef, useRef } from "react";
+import React from "react";
 import { PageProps } from "../../../pages";
 import { SecondaryStyledLink } from "../Links";
 import Particles from "react-tsparticles";
@@ -16,15 +16,26 @@ const StyledWrapper = styled.div(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  "background-color": theme.colors.jsconfYellow,
+  "background-color": "#f0e040d4",
   color: theme.colors.jsconfBlack,
-  height: "98vh",
-  minHeight: 800,
+  height: "90vh",
+  minHeight: 700,
   maxHeight: 900,
   [theme.breakpoints.smallDesktopOnly]: {
     height: "unset",
     maxHeight: "unset",
   },
+
+  [theme.breakpoints.tabletPortraitOnly]: {},
+}));
+
+const StyledBackground = styled.img(({ theme }) => ({
+  position: "absolute",
+  zIndex: -1,
+  height: "100%",
+  aspectRatio: "1320 / 764",
+  width: "100%",
+  objectFit: "fill",
 }));
 
 const StyledForegroundWrapper = styled.div(({ theme }) => ({
@@ -46,15 +57,17 @@ const StyledForegroundWrapper = styled.div(({ theme }) => ({
   // [theme.breakpoints.tabletLandscapeOnly]: {
   //   justifyContent: "flex-end",
   // },
-  [theme.breakpoints.smallDesktopOnly]: {
-    flexDirection: "column",
-  },
+  [theme.breakpoints.smallDesktopOnly]: {},
   // [theme.breakpoints.tabletPortraitOnly]: {
   //   justifyContent: "flex-end",
   // },
   // [theme.breakpoints.phoneOnly]: {
   //   justifyContent: "center",
   // },
+  [theme.breakpoints.tabletPortraitOnly]: {
+    padding: 16,
+    gap: 16,
+  },
 }));
 
 const StyledLeftSide = styled.div(({ theme }) => ({
@@ -69,18 +82,25 @@ const StyledLeftSide = styled.div(({ theme }) => ({
   [theme.breakpoints.phoneOnly]: {
     width: "100%",
   },
+  [theme.breakpoints.tabletPortraitOnly]: {
+    alignSelf: "flex-start",
+    width: "50%",
+  },
 }));
 
-const StyledTitle = styled.h1`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 90px;
-  line-height: 120px;
-  letter-spacing: 1px;
-  line-height: 1em;
-  margin: 0;
-  word-spacing: 100vw;
-`;
+const StyledTitle = styled.h1(({ theme }) => ({
+  fontStyle: "normal",
+  fontWeight: 400,
+  fontSize: "90px",
+  letterSpacing: "1px",
+  lineHeight: "1em",
+  margin: 0,
+  wordSpacing: "100vw",
+  [theme.breakpoints.phoneOnly]: {
+    fontSize: "40px",
+    lineHeight: "40px",
+  },
+}));
 
 const StyledParagraph = styled.p`
   font-style: normal;
@@ -94,6 +114,7 @@ const StyledHr = styled.hr`
   border-style: solid;
   border-color: ${({ theme }) => theme.colors.jsconfBlack};
   border-width: 3px;
+  background-color: ${({ theme }) => theme.colors.jsconfBlack}; ;
 `;
 
 const StyledRightSide = styled.div(({ theme }) => ({
@@ -110,20 +131,35 @@ const StyledRightSide = styled.div(({ theme }) => ({
   },
 }));
 
-const StyledTitlesWrapper = styled.div`
-  display: "flex";
-  flex-direction: "column";
-`;
+const StyledTitlesWrapper = styled.div(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+}));
 
-const StyledSecondaryTextWrapper = styled.div`
-  margin-left: 109px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-`;
+const StyledSecondaryTextWrapper = styled.div(({ theme }) => ({
+  marginLeft: 109,
+  display: "flex",
+  flexDirection: "column",
+  gap: "1.5rem",
+  [theme.breakpoints.tabletPortraitOnly]: {
+    display: "none",
+  },
+}));
 
 const StyledSecondaryTitle = styled(StyledTitle)`
   margin-left: 84px;
+  @media (max-width: 900px) {
+    margin-left: 16px;
+  }
+`;
+
+const StyledWrapperLink = styled.section`
+  @media (max-width: 900px) {
+    margin: 0px 16px;
+    position: absolute;
+    bottom: 16px;
+    left: 0px;
+  }
 `;
 
 export const Hero = ({
@@ -163,6 +199,10 @@ export const Hero = ({
         init={particlesInit}
         options={config}
       />
+      <StyledBackground
+        src={heroData.background.url}
+        alt={heroData.background.title}
+      />
       <NavBar {...navData} />
       <StyledForegroundWrapper>
         <StyledLeftSide>
@@ -179,9 +219,11 @@ export const Hero = ({
             <StyledSecondaryTitle as="h2">{heroData.date}</StyledSecondaryTitle>
             <StyledTitle as="h2">Chile</StyledTitle>
           </StyledTitlesWrapper>
-          <SecondaryStyledLink href="https://jsconf.com">
-            Get Tickets
-          </SecondaryStyledLink>
+          <StyledWrapperLink>
+            <SecondaryStyledLink href="https://jsconf.com">
+              Get Tickets
+            </SecondaryStyledLink>
+          </StyledWrapperLink>
         </StyledRightSide>
       </StyledForegroundWrapper>
     </StyledWrapper>

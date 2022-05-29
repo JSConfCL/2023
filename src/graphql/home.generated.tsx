@@ -29,6 +29,11 @@ export type HomeQueryQuery = {
       date?: string | null;
       ctaUrl?: string | null;
       ctaText?: string | null;
+      background?: {
+        __typename?: "Asset";
+        title?: string | null;
+        url?: string | null;
+      } | null;
     } | null;
     whyBlockCollection?: {
       __typename?: "PageWhyBlockCollection";
@@ -116,6 +121,10 @@ export const HomeQueryDocument = gql`
         date
         ctaUrl
         ctaText
+        background {
+          title
+          url
+        }
       }
       whyBlockCollection {
         items {
