@@ -16,6 +16,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The Circle scalar type represents a circle, defined by the coordinates of its center and a radius. The Circle type is used to represent a searchable area together with the '_within_circle' filter. */
+  Circle: any;
   /**
    * A date-time string at UTC, such as 2007-12-03T10:15:30Z,
    *     compliant with the 'date-time' format outlined in section 5.6 of
@@ -31,6 +33,8 @@ export type Scalars = {
   JSON: any;
   /** The 'Quality' type represents quality as whole numeric values between `1` and `100`. */
   Quality: any;
+  /** The Rectangle scalar type represents a rectangle, defined by the coordinates of its top left and bottom right corners. The Rectangle type is used to represent a searchable area together with the '_within_rectangle' filter. */
+  Rectangle: any;
 };
 
 /** Represents a binary file in a space. An asset can be any file type. */
@@ -177,6 +181,7 @@ export type AssetLinkingCollections = {
   entryCollection?: Maybe<EntryCollection>;
   heroBlockCollection?: Maybe<HeroBlockCollection>;
   howBlockCollection?: Maybe<HowBlockCollection>;
+  lineBlockCollection?: Maybe<LineBlockCollection>;
   memberCollection?: Maybe<MemberCollection>;
   socialNetworkCollection?: Maybe<SocialNetworkCollection>;
   speakerCollection?: Maybe<SpeakerCollection>;
@@ -199,6 +204,13 @@ export type AssetLinkingCollectionsHeroBlockCollectionArgs = {
 };
 
 export type AssetLinkingCollectionsHowBlockCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type AssetLinkingCollectionsLineBlockCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
@@ -664,6 +676,7 @@ export type HowBlock = Entry & {
   description?: Maybe<HowBlockDescription>;
   image?: Maybe<Asset>;
   linkedFrom?: Maybe<HowBlockLinkingCollections>;
+  sectionsCollection?: Maybe<HowBlockSectionsCollection>;
   sys: Sys;
   title?: Maybe<Scalars["String"]>;
 };
@@ -682,6 +695,14 @@ export type HowBlockImageArgs = {
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/howBlock) */
 export type HowBlockLinkedFromArgs = {
   allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/howBlock) */
+export type HowBlockSectionsCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/howBlock) */
@@ -730,6 +751,7 @@ export type HowBlockFilter = {
   description_exists?: InputMaybe<Scalars["Boolean"]>;
   description_not_contains?: InputMaybe<Scalars["String"]>;
   image_exists?: InputMaybe<Scalars["Boolean"]>;
+  sectionsCollection_exists?: InputMaybe<Scalars["Boolean"]>;
   sys?: InputMaybe<SysFilter>;
   title?: InputMaybe<Scalars["String"]>;
   title_contains?: InputMaybe<Scalars["String"]>;
@@ -772,6 +794,14 @@ export enum HowBlockOrder {
   TitleAsc = "title_ASC",
   TitleDesc = "title_DESC",
 }
+
+export type HowBlockSectionsCollection = {
+  __typename?: "HowBlockSectionsCollection";
+  items: Array<Maybe<LineBlock>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
 
 export enum ImageFormat {
   Avif = "AVIF",
@@ -868,6 +898,170 @@ export type ImageTransformOptions = {
   width?: InputMaybe<Scalars["Dimension"]>;
 };
 
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/lineBlock) */
+export type LineBlock = Entry & {
+  __typename?: "LineBlock";
+  button?: Maybe<LinkItem>;
+  contentfulMetadata: ContentfulMetadata;
+  description?: Maybe<LineBlockDescription>;
+  image?: Maybe<Asset>;
+  linkedFrom?: Maybe<LineBlockLinkingCollections>;
+  mapa?: Maybe<Location>;
+  subtext?: Maybe<Scalars["String"]>;
+  sys: Sys;
+  title?: Maybe<Scalars["String"]>;
+  url?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/lineBlock) */
+export type LineBlockButtonArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/lineBlock) */
+export type LineBlockDescriptionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/lineBlock) */
+export type LineBlockImageArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/lineBlock) */
+export type LineBlockLinkedFromArgs = {
+  allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/lineBlock) */
+export type LineBlockMapaArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/lineBlock) */
+export type LineBlockSubtextArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/lineBlock) */
+export type LineBlockTitleArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/lineBlock) */
+export type LineBlockUrlArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+export type LineBlockCollection = {
+  __typename?: "LineBlockCollection";
+  items: Array<Maybe<LineBlock>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export type LineBlockDescription = {
+  __typename?: "LineBlockDescription";
+  json: Scalars["JSON"];
+  links: LineBlockDescriptionLinks;
+};
+
+export type LineBlockDescriptionAssets = {
+  __typename?: "LineBlockDescriptionAssets";
+  block: Array<Maybe<Asset>>;
+  hyperlink: Array<Maybe<Asset>>;
+};
+
+export type LineBlockDescriptionEntries = {
+  __typename?: "LineBlockDescriptionEntries";
+  block: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  inline: Array<Maybe<Entry>>;
+};
+
+export type LineBlockDescriptionLinks = {
+  __typename?: "LineBlockDescriptionLinks";
+  assets: LineBlockDescriptionAssets;
+  entries: LineBlockDescriptionEntries;
+};
+
+export type LineBlockFilter = {
+  AND?: InputMaybe<Array<InputMaybe<LineBlockFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<LineBlockFilter>>>;
+  button?: InputMaybe<CfLinkItemNestedFilter>;
+  button_exists?: InputMaybe<Scalars["Boolean"]>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  description_contains?: InputMaybe<Scalars["String"]>;
+  description_exists?: InputMaybe<Scalars["Boolean"]>;
+  description_not_contains?: InputMaybe<Scalars["String"]>;
+  image_exists?: InputMaybe<Scalars["Boolean"]>;
+  mapa_exists?: InputMaybe<Scalars["Boolean"]>;
+  mapa_within_circle?: InputMaybe<Scalars["Circle"]>;
+  mapa_within_rectangle?: InputMaybe<Scalars["Rectangle"]>;
+  subtext?: InputMaybe<Scalars["String"]>;
+  subtext_contains?: InputMaybe<Scalars["String"]>;
+  subtext_exists?: InputMaybe<Scalars["Boolean"]>;
+  subtext_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  subtext_not?: InputMaybe<Scalars["String"]>;
+  subtext_not_contains?: InputMaybe<Scalars["String"]>;
+  subtext_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  sys?: InputMaybe<SysFilter>;
+  title?: InputMaybe<Scalars["String"]>;
+  title_contains?: InputMaybe<Scalars["String"]>;
+  title_exists?: InputMaybe<Scalars["Boolean"]>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  title_not?: InputMaybe<Scalars["String"]>;
+  title_not_contains?: InputMaybe<Scalars["String"]>;
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  url?: InputMaybe<Scalars["String"]>;
+  url_contains?: InputMaybe<Scalars["String"]>;
+  url_exists?: InputMaybe<Scalars["Boolean"]>;
+  url_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  url_not?: InputMaybe<Scalars["String"]>;
+  url_not_contains?: InputMaybe<Scalars["String"]>;
+  url_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+export type LineBlockLinkingCollections = {
+  __typename?: "LineBlockLinkingCollections";
+  entryCollection?: Maybe<EntryCollection>;
+  howBlockCollection?: Maybe<HowBlockCollection>;
+};
+
+export type LineBlockLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type LineBlockLinkingCollectionsHowBlockCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export enum LineBlockOrder {
+  SubtextAsc = "subtext_ASC",
+  SubtextDesc = "subtext_DESC",
+  SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
+  SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
+  SysIdAsc = "sys_id_ASC",
+  SysIdDesc = "sys_id_DESC",
+  SysPublishedAtAsc = "sys_publishedAt_ASC",
+  SysPublishedAtDesc = "sys_publishedAt_DESC",
+  SysPublishedVersionAsc = "sys_publishedVersion_ASC",
+  SysPublishedVersionDesc = "sys_publishedVersion_DESC",
+  TitleAsc = "title_ASC",
+  TitleDesc = "title_DESC",
+  UrlAsc = "url_ASC",
+  UrlDesc = "url_DESC",
+}
+
 /** para CTAs, links, header links, etc. TIene un "contenido" y una "url" [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/linkItem) */
 export type LinkItem = Entry & {
   __typename?: "LinkItem";
@@ -926,6 +1120,7 @@ export type LinkItemLinkingCollections = {
   __typename?: "LinkItemLinkingCollections";
   entryCollection?: Maybe<EntryCollection>;
   footerCollection?: Maybe<FooterCollection>;
+  lineBlockCollection?: Maybe<LineBlockCollection>;
   navigationBarCollection?: Maybe<NavigationBarCollection>;
 };
 
@@ -937,6 +1132,13 @@ export type LinkItemLinkingCollectionsEntryCollectionArgs = {
 };
 
 export type LinkItemLinkingCollectionsFooterCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type LinkItemLinkingCollectionsLineBlockCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
@@ -964,6 +1166,12 @@ export enum LinkItemOrder {
   SysPublishedVersionAsc = "sys_publishedVersion_ASC",
   SysPublishedVersionDesc = "sys_publishedVersion_DESC",
 }
+
+export type Location = {
+  __typename?: "Location";
+  lat?: Maybe<Scalars["Float"]>;
+  lon?: Maybe<Scalars["Float"]>;
+};
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/member) */
 export type Member = Entry & {
@@ -1323,6 +1531,8 @@ export type Query = {
   heroBlockCollection?: Maybe<HeroBlockCollection>;
   howBlock?: Maybe<HowBlock>;
   howBlockCollection?: Maybe<HowBlockCollection>;
+  lineBlock?: Maybe<LineBlock>;
+  lineBlockCollection?: Maybe<LineBlockCollection>;
   linkItem?: Maybe<LinkItem>;
   linkItemCollection?: Maybe<LinkItemCollection>;
   member?: Maybe<Member>;
@@ -1431,6 +1641,21 @@ export type QueryHowBlockCollectionArgs = {
   preview?: InputMaybe<Scalars["Boolean"]>;
   skip?: InputMaybe<Scalars["Int"]>;
   where?: InputMaybe<HowBlockFilter>;
+};
+
+export type QueryLineBlockArgs = {
+  id: Scalars["String"];
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+export type QueryLineBlockCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  order?: InputMaybe<Array<InputMaybe<LineBlockOrder>>>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<LineBlockFilter>;
 };
 
 export type QueryLinkItemArgs = {
@@ -2745,6 +2970,27 @@ export type CfHeroBlockNestedFilter = {
   tile_not?: InputMaybe<Scalars["String"]>;
   tile_not_contains?: InputMaybe<Scalars["String"]>;
   tile_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+export type CfLinkItemNestedFilter = {
+  AND?: InputMaybe<Array<InputMaybe<CfLinkItemNestedFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<CfLinkItemNestedFilter>>>;
+  contenido?: InputMaybe<Scalars["String"]>;
+  contenido_contains?: InputMaybe<Scalars["String"]>;
+  contenido_exists?: InputMaybe<Scalars["Boolean"]>;
+  contenido_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  contenido_not?: InputMaybe<Scalars["String"]>;
+  contenido_not_contains?: InputMaybe<Scalars["String"]>;
+  contenido_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  link?: InputMaybe<Scalars["String"]>;
+  link_contains?: InputMaybe<Scalars["String"]>;
+  link_exists?: InputMaybe<Scalars["Boolean"]>;
+  link_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  link_not?: InputMaybe<Scalars["String"]>;
+  link_not_contains?: InputMaybe<Scalars["String"]>;
+  link_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  sys?: InputMaybe<SysFilter>;
 };
 
 export type CfNavigationBarNestedFilter = {

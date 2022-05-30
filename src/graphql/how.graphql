@@ -1,0 +1,61 @@
+query HowQuery($id: String!, $locale: String!) {
+  page(id: $id, locale: $locale) {
+    navBar {
+      linksCollection(limit: 20) {
+        items {
+          sys {
+            id
+          }
+          contenido
+          link
+        }
+      }
+    }
+    howBlockCollection(limit: 10) {
+      items {
+        title
+        description {
+          json
+        }
+        image {
+          url
+          description
+        }
+        sectionsCollection(limit: 20) {
+          items {
+            title
+            subtext
+            description {
+              json
+            }
+            button {
+              link
+              contenido
+            }
+            mapa {
+              lat
+              lon
+            }
+            url
+            image {
+              url
+              title
+            }
+          }
+        }
+      }
+    }
+    followUsBlock {
+      title
+      socialNetworksCollection(limit: 20) {
+        items {
+          name
+          url
+          icon {
+            url
+          }
+        }
+      }
+    }
+  }
+}
