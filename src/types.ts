@@ -2522,6 +2522,7 @@ export type WhyBlock = Entry & {
   __typename?: "WhyBlock";
   contentfulMetadata: ContentfulMetadata;
   description?: Maybe<WhyBlockDescription>;
+  extendedDescription?: Maybe<WhyBlockExtendedDescription>;
   icon?: Maybe<Asset>;
   linkedFrom?: Maybe<WhyBlockLinkingCollections>;
   sys: Sys;
@@ -2530,6 +2531,11 @@ export type WhyBlock = Entry & {
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/whyBlock) */
 export type WhyBlockDescriptionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/whyBlock) */
+export type WhyBlockExtendedDescriptionArgs = {
   locale?: InputMaybe<Scalars["String"]>;
 };
 
@@ -2582,6 +2588,31 @@ export type WhyBlockDescriptionLinks = {
   entries: WhyBlockDescriptionEntries;
 };
 
+export type WhyBlockExtendedDescription = {
+  __typename?: "WhyBlockExtendedDescription";
+  json: Scalars["JSON"];
+  links: WhyBlockExtendedDescriptionLinks;
+};
+
+export type WhyBlockExtendedDescriptionAssets = {
+  __typename?: "WhyBlockExtendedDescriptionAssets";
+  block: Array<Maybe<Asset>>;
+  hyperlink: Array<Maybe<Asset>>;
+};
+
+export type WhyBlockExtendedDescriptionEntries = {
+  __typename?: "WhyBlockExtendedDescriptionEntries";
+  block: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  inline: Array<Maybe<Entry>>;
+};
+
+export type WhyBlockExtendedDescriptionLinks = {
+  __typename?: "WhyBlockExtendedDescriptionLinks";
+  assets: WhyBlockExtendedDescriptionAssets;
+  entries: WhyBlockExtendedDescriptionEntries;
+};
+
 export type WhyBlockFilter = {
   AND?: InputMaybe<Array<InputMaybe<WhyBlockFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<WhyBlockFilter>>>;
@@ -2589,6 +2620,9 @@ export type WhyBlockFilter = {
   description_contains?: InputMaybe<Scalars["String"]>;
   description_exists?: InputMaybe<Scalars["Boolean"]>;
   description_not_contains?: InputMaybe<Scalars["String"]>;
+  extendedDescription_contains?: InputMaybe<Scalars["String"]>;
+  extendedDescription_exists?: InputMaybe<Scalars["Boolean"]>;
+  extendedDescription_not_contains?: InputMaybe<Scalars["String"]>;
   icon_exists?: InputMaybe<Scalars["Boolean"]>;
   sys?: InputMaybe<SysFilter>;
   title?: InputMaybe<Scalars["String"]>;
