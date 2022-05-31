@@ -35,7 +35,7 @@ const StyledWrapper = styled.div(({ theme }) => ({
   padding: "0px 48px",
   height: 100,
   width: "100%",
-  maxWidth: 1366,
+  maxWidth: 1440,
   [theme.breakpoints.phoneOnly]: {
     flexDirection: "column",
     height: "100%",
