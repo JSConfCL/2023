@@ -27,6 +27,10 @@ type HowCardProps =
         | undefined;
       url?: string | undefined;
       subtext?: string | undefined;
+      mapa?: {
+        lat?: number | undefined;
+        lng?: number | undefined;
+      };
     }
   | undefined;
 
@@ -36,6 +40,7 @@ const Container = styled.section<{ direction: boolean }>`
   gap: 32px;
   flex-direction: ${({ direction }) => (!direction ? "row" : "row-reverse")};
   overflow: hidden;
+  margin-bottom: 24px;
   @media (min-width: 1560px) {
     overflow: visible;
   }
@@ -53,26 +58,18 @@ const WrapperDescription = styled.section`
   }
   p {
     font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    margin: 16px 0px;
   }
-`;
-
-const Number = styled.section<{ direction: boolean }>`
-  font-family: "Koulen";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 341.766px;
-  line-height: 342px;
-  /* identical to box height, or 100% */
-  display: flex;
-  align-items: flex-start;
-  min-width: 300px;
-  color: #f0e040;
 `;
 
 const ImageContainer = styled.section`
   position: relative;
   max-width: 830px;
   width: 100vw;
+  height: 450px;
 
   svg {
     width: 40px;
@@ -101,11 +98,8 @@ const Text = styled.p`
   font-weight: 400;
   font-size: 80px;
   line-height: 145px;
-  /* identical to box height */
-
   display: flex;
   align-items: center;
-
   color: #f0e040;
 `;
 
@@ -127,52 +121,57 @@ const HowCard = (props: HowCardProps) => {
           </PrimaryStyledLink>
         )}
       </WrapperDescription>
-      <ImageContainer>
-        <WhiteBlock onClick={onHandleClick} isClickeable={Boolean(props?.url!)}>
-          <Image
-            mobile={props?.image?.url!}
-            alt={props?.image?.description! || ""}
-            style={{
-              borderRadius: "0px 32px 0px 0px",
-              width: "100vw",
-              maxWidth: "830px",
-              minWidth: "830px",
-              aspectRatio: "830 / 456",
-              objectFit: "cover",
-              objectPosition: "bottom",
-              mixBlendMode: "multiply",
-              zIndex: 3,
-              position: "absolute",
-            }}
-          />
-        </WhiteBlock>
+      {props?.image && (
+        <ImageContainer>
+          <WhiteBlock
+            onClick={onHandleClick}
+            isClickeable={Boolean(props?.url!)}
+          >
+            <Image
+              mobile={props?.image?.url!}
+              alt={props?.image?.description! || ""}
+              style={{
+                borderRadius: "0px 32px 0px 0px",
+                width: "100vw",
+                maxWidth: "830px",
+                minWidth: "830px",
+                aspectRatio: "830 / 456",
+                objectFit: "cover",
+                objectPosition: "bottom",
+                mixBlendMode: "multiply",
+                zIndex: 3,
+                position: "absolute",
+              }}
+            />
+          </WhiteBlock>
 
-        <Image
-          mobile="/images/image-background.png"
-          alt="background"
-          style={{
-            position: "absolute",
-            zIndex: 1,
-            bottom: "-64px",
-            right: "-64px",
-          }}
-        />
-        {props?.subtext && <Text>{props.subtext}</Text>}
-        {props?.button?.link! && (
           <Image
-            mobile="/images/play.png"
-            alt="background play"
+            mobile="/images/image-background.png"
+            alt="background"
             style={{
               position: "absolute",
-              zIndex: 4,
-              width: "80px",
-              bottom: "calc(50% - 40px)",
-              right: "calc(50% - 40px)",
+              zIndex: 1,
+              bottom: "-64px",
+              right: "-64px",
             }}
           />
-        )}
-        <JSConfLogo />
-      </ImageContainer>
+          {props?.subtext && <Text>{props.subtext}</Text>}
+          {props?.url! && (
+            <Image
+              mobile="/images/play.png"
+              alt="background play"
+              style={{
+                position: "absolute",
+                zIndex: 4,
+                width: "80px",
+                bottom: "calc(50% - 40px)",
+                right: "calc(50% - 40px)",
+              }}
+            />
+          )}
+          <JSConfLogo />
+        </ImageContainer>
+      )}
     </Container>
   );
 };

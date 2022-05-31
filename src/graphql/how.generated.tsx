@@ -125,6 +125,10 @@ export const HowQueryDocument = gql`
                 url
                 title
               }
+              mapa {
+                lat
+                lon
+              }
             }
           }
         }

@@ -41,6 +41,10 @@ query HowQuery($id: String!, $locale: String!) {
               url
               title
             }
+            mapa {
+              lat
+              lon
+            }
           }
         }
       }

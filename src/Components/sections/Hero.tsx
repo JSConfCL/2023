@@ -49,7 +49,7 @@ const StyledForegroundWrapper = styled.div(({ theme }) => ({
   flex: 1,
   justifyContent: "space-between",
   gap: 32,
-  maxWidth: 1366,
+  maxWidth: 1440,
   alignItems: "center",
   // [theme.breakpoints.desktopOnly]: {
   //   justifyContent: "center",

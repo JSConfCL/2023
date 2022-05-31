@@ -9,7 +9,7 @@ const Container = styled.section`
   flex-direction: row;
   max-width: 1440px;
   height: 100vh;
-  padding: 64px;
+  padding: 48px;
   align-items: center;
   max-height: 420px;
 
