@@ -35,12 +35,16 @@ type HowCardProps =
   | undefined;
 
 const Container = styled.section<{ direction: boolean }>`
-  padding: 48px;
+  padding: 16px;
   display: flex;
   gap: 32px;
   flex-direction: ${({ direction }) => (!direction ? "row" : "row-reverse")};
   overflow: hidden;
   margin-bottom: 24px;
+  @media (min-width: 769px) {
+    padding: 48px;
+  }
+
   @media (min-width: 1560px) {
     overflow: visible;
   }
