@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import { H2 } from "../core/Typography";
@@ -116,31 +116,29 @@ const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
 
   return (
     <Container>
-      <Suspense fallback={<h1>Loading How...</h1>}>
-        <DescriptionContainer>
-          <H2 whileHover={{ scale: 1.01 }}>{title}</H2>
-          <Description data={description?.json!} />
-          <HR />
-        </DescriptionContainer>
-        <ContainerButton>
-          <PrimaryStyledLink href="/">CFP Registration</PrimaryStyledLink>
-        </ContainerButton>
+      <DescriptionContainer>
+        <H2 whileHover={{ scale: 1.01 }}>{title}</H2>
+        <Description data={description?.json!} />
+        <HR />
+      </DescriptionContainer>
+      <ContainerButton>
+        <PrimaryStyledLink href="/">CFP Registration</PrimaryStyledLink>
+      </ContainerButton>
 
-        {speakers.map((item: any, index: number) => {
-          if (index === 6) {
-            return (
-              <Column index={index}>
-                <PrimaryStyledLink href="/">CFP Registration</PrimaryStyledLink>
-                <Card key={`speaker-${index}`} {...item} />
-              </Column>
-            );
-          }
-          return <Card key={`speaker-${index}`} {...item} index={index} />;
-        })}
-        {isLoadMore && (
-          <LoadMoreButton onClick={LoadMoreHandle}>Load More</LoadMoreButton>
-        )}
-      </Suspense>
+      {speakers.map((item: any, index: number) => {
+        if (index === 6) {
+          return (
+            <Column index={index}>
+              <PrimaryStyledLink href="/">CFP Registration</PrimaryStyledLink>
+              <Card key={`speaker-${index}`} {...item} />
+            </Column>
+          );
+        }
+        return <Card key={`speaker-${index}`} {...item} index={index} />;
+      })}
+      {isLoadMore && (
+        <LoadMoreButton onClick={LoadMoreHandle}>Load More</LoadMoreButton>
+      )}
     </Container>
   );
 };

@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import { H2, H3 } from "../core/Typography";
@@ -112,54 +112,52 @@ const HowSection = (props: { page: PageProps["howItems"] }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   return (
     <Container>
-      <Suspense fallback={<h1>Loading How...</h1>}>
-        <H2 whileHover={{ scale: 1.01 }}>How</H2>
-        <BlockContainer>
-          {props.page?.items?.map((props, index) => (
-            <Block
-              key={`how-block-${index}`}
-              whileHover="hover"
-              whileFocus="hover"
-              whileTap="hover"
-              initial="initial"
-            >
-              <Flex>
+      <H2 whileHover={{ scale: 1.01 }}>COMO?</H2>
+      <BlockContainer>
+        {props.page?.items?.map((props, index) => (
+          <Block
+            key={`how-block-${index}`}
+            whileHover="hover"
+            whileFocus="hover"
+            whileTap="hover"
+            initial="initial"
+          >
+            <Flex>
+              <Image
+                mobile={props?.image?.url!}
+                alt={props?.image?.description! || ""}
+                style={{
+                  height: "257px",
+                  aspectRatio: "654 / 257",
+                  width: isMobile ? "100vw" : "inherit",
+                  objectFit: isMobile ? "cover" : "inherit",
+                }}
+              />
+              {!isMobile && (
                 <Image
                   mobile={props?.image?.url!}
                   alt={props?.image?.description! || ""}
                   style={{
+                    transform: "scaleX(-1)",
                     height: "257px",
                     aspectRatio: "654 / 257",
-                    width: isMobile ? "100vw" : "inherit",
-                    objectFit: isMobile ? "cover" : "inherit",
+                    objectFit: "cover",
+                    borderRadius: "32px  0px 0px  0px",
+                    objectPosition: "right",
                   }}
                 />
-                {!isMobile && (
-                  <Image
-                    mobile={props?.image?.url!}
-                    alt={props?.image?.description! || ""}
-                    style={{
-                      transform: "scaleX(-1)",
-                      height: "257px",
-                      aspectRatio: "654 / 257",
-                      objectFit: "cover",
-                      borderRadius: "32px  0px 0px  0px",
-                      objectPosition: "right",
-                    }}
-                  />
-                )}
-              </Flex>
-              <BlockDescription
-                key={`how-block-description-${index} `}
-                variants={descriptionVariant}
-              >
-                <H3>{props?.title}</H3>
-                {!isMobile && <Description data={props?.description?.json!} />}
-              </BlockDescription>
-            </Block>
-          ))}
-        </BlockContainer>
-      </Suspense>
+              )}
+            </Flex>
+            <BlockDescription
+              key={`how-block-description-${index} `}
+              variants={descriptionVariant}
+            >
+              <H3>{props?.title}</H3>
+              {!isMobile && <Description data={props?.description?.json!} />}
+            </BlockDescription>
+          </Block>
+        ))}
+      </BlockContainer>
     </Container>
   );
 };

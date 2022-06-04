@@ -14,7 +14,7 @@ type OnClickProps = {
   onClick: Function;
 };
 
-const StyledNav = styled.nav`
+const StyledNav = styled(motion.nav)`
   z-index: 100;
   justify-content: center;
   align-items: center;
@@ -103,12 +103,22 @@ const MobileMenu = (props: Props & OnClickProps) => {
   );
 };
 
+const NavVariant = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: { duration: 0.5 },
+  },
+};
+
 export const NavBar = (props: Props) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
-    <StyledNav>
+    <StyledNav variants={NavVariant} animate="animate" initial="initial">
       <StyledWrapper>
         <StyledJSConfLogoWrapper>
           <JSConfLogo />

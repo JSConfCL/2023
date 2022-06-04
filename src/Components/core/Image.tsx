@@ -17,9 +17,10 @@ const Image = (props: {
   desktop?: string;
   style?: any;
   alt: string;
+  className?: string;
 }) => {
   return (
-    <Picture>
+    <Picture className={props.className}>
       <source media="(max-width: 768px)" srcSet={props.mobile} />
       <source
         media="(min-width: 769px)"
