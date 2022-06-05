@@ -58,8 +58,10 @@ export async function getStaticProps() {
     .query<HowQueryQuery, HowQueryQueryVariables>(HowQueryDocument, {
       id: "45QeQG01Mx67Ng2XNWksmo",
       locale: "es-CL",
+      isPreview: Boolean(process.env.NEXT_PUBLIC_CONTENTFUL_IS_PREVIEW),
     })
     .toPromise();
+
   const page = queryResults.data?.page as Page;
   const props: PageProps = {
     navData: page?.navBar,

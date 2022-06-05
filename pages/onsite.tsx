@@ -58,6 +58,7 @@ export async function getStaticProps() {
     .query<HowQueryQuery, HowQueryQueryVariables>(HowQueryDocument, {
       id: "6WMOBLoBEhCWUtyQtw872A",
       locale: "es-CL",
+      isPreview: Boolean(process.env.NEXT_PUBLIC_CONTENTFUL_IS_PREVIEW),
     })
     .toPromise();
   const page = queryResults.data?.page as Page;

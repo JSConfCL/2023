@@ -6,6 +6,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type HowQueryQueryVariables = Types.Exact<{
   id: Types.Scalars["String"];
   locale: Types.Scalars["String"];
+  isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
 
 export type HowQueryQuery = {
@@ -94,8 +95,8 @@ export type HowQueryQuery = {
 };
 
 export const HowQueryDocument = gql`
-  query HowQuery($id: String!, $locale: String!) {
-    page(id: $id, locale: $locale) {
+  query HowQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {
+    page(id: $id, locale: $locale, preview: $isPreview) {
       navBar {
         linksCollection(limit: 20) {
           items {
