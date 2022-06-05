@@ -40,11 +40,11 @@ const OnSitePage: NextPage<PageProps> = (props) => {
   return (
     <StyledBlackWrapp>
       <Container>
-        <NavBar {...props.navData} />
-        <BannerCFP {...props.heroData} />
-        <FollowUsSection page={props.followUsData} />
+        {props.navData && <NavBar {...props.navData} />}
+        {props.heroData && <BannerCFP {...props.heroData} />}
+        {props.followUsData && <FollowUsSection page={props.followUsData} />}
       </Container>
-      <Footer footerData={props.footerData} />
+      {props.footerData && <Footer footerData={props.footerData} />}
     </StyledBlackWrapp>
   );
 };
@@ -58,6 +58,7 @@ export async function getStaticProps() {
     })
     .toPromise();
   const page = queryResults.data?.page as Page;
+  if (!page) return { props: {} };
   const props: PageProps = {
     navData: page?.navBar,
     heroData: page?.heroBlock,
