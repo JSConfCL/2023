@@ -10,7 +10,6 @@ import { urlQlient } from "../src/graphql/urql";
 import FollowUsSection from "../src/Components/sections/FollowUsSection";
 import { ParseQuery } from "../src/helpers/types";
 import { NavBar } from "../src/Components/NavBar/NavBar";
-import HowCard from "../src/Components/Card/How";
 import { Footer } from "../src/Components/Footer/Footer";
 import BannerCFP from "../src/Components/Banner/CFP";
 
