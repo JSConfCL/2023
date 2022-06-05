@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import { H2, H3 } from "../core/Typography";
@@ -112,51 +112,49 @@ const WhySection = (props: { page: PageProps["whyItems"] }) => {
 
   return (
     <Container>
-      <Suspense fallback={<h1>Loading why...</h1>}>
-        <H2 whileHover={{ scale: 1.1 }}>WHY</H2>
-        <BlockContainer>
-          {props.page?.items?.map((item, index) => (
-            <WhiteBlock
-              key={`white-block-${index} `}
-              whileHover="hover"
-              whileFocus="hover"
-              whileTap="hover"
-              initial="initial"
-            >
-              <Block key={`why-block-${index}`} variants={BlockVariant}>
-                <Image
-                  mobile={item?.icon?.url!}
-                  alt={item?.icon?.description! || ""}
-                  style={{
-                    height: isMobile ? "210px" : "390px",
-                    width: isMobile ? "100vw" : "fit-content",
-                    aspectRatio: index % 2 === 0 ? "287 / 390" : "397 / 390",
-                    mixBlendMode: "multiply",
-                    borderRadius: "0px 32px 0px 0px",
-                    objectFit: isMobile ? "cover" : "inherit",
-                  }}
-                />
-                <Flex index={index}>
-                  <H3>{item?.title}</H3>
-                  <HR />
-                  {!isMobile && (
-                    <Description
-                      data={item?.description?.json!}
-                      animationVariants={descriptionVariant(false)}
-                    />
-                  )}
-                  {isMobile && (
-                    <Description
-                      data={item?.description?.json!}
-                      animationVariants={descriptionVariant(true)}
-                    />
-                  )}
-                </Flex>
-              </Block>
-            </WhiteBlock>
-          ))}
-        </BlockContainer>
-      </Suspense>
+      <H2 whileHover={{ scale: 1.1 }}>POR QUE?</H2>
+      <BlockContainer>
+        {props.page?.items?.map((item, index) => (
+          <WhiteBlock
+            key={`white-block-${index} `}
+            whileHover="hover"
+            whileFocus="hover"
+            whileTap="hover"
+            initial="initial"
+          >
+            <Block key={`why-block-${index}`} variants={BlockVariant}>
+              <Image
+                mobile={item?.icon?.url!}
+                alt={item?.icon?.description! || ""}
+                style={{
+                  height: isMobile ? "210px" : "390px",
+                  width: isMobile ? "100vw" : "fit-content",
+                  aspectRatio: index % 2 === 0 ? "287 / 390" : "397 / 390",
+                  mixBlendMode: "multiply",
+                  borderRadius: "0px 32px 0px 0px",
+                  objectFit: isMobile ? "cover" : "inherit",
+                }}
+              />
+              <Flex index={index}>
+                <H3>{item?.title}</H3>
+                <HR />
+                {!isMobile && (
+                  <Description
+                    data={item?.description?.json!}
+                    animationVariants={descriptionVariant(false)}
+                  />
+                )}
+                {isMobile && (
+                  <Description
+                    data={item?.description?.json!}
+                    animationVariants={descriptionVariant(true)}
+                  />
+                )}
+              </Flex>
+            </Block>
+          </WhiteBlock>
+        ))}
+      </BlockContainer>
     </Container>
   );
 };

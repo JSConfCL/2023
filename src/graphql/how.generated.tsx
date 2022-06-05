@@ -6,6 +6,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type HowQueryQueryVariables = Types.Exact<{
   id: Types.Scalars["String"];
   locale: Types.Scalars["String"];
+  isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
 
 export type HowQueryQuery = {
@@ -78,12 +79,24 @@ export type HowQueryQuery = {
         } | null>;
       } | null;
     } | null;
+    footer?: {
+      __typename?: "Footer";
+      linksCollection?: {
+        __typename?: "FooterLinksCollection";
+        items: Array<{
+          __typename?: "LinkItem";
+          contenido?: string | null;
+          link?: string | null;
+          sys: { __typename?: "Sys"; id: string };
+        } | null>;
+      } | null;
+    } | null;
   } | null;
 };
 
 export const HowQueryDocument = gql`
-  query HowQuery($id: String!, $locale: String!) {
-    page(id: $id, locale: $locale) {
+  query HowQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {
+    page(id: $id, locale: $locale, preview: $isPreview) {
       navBar {
         linksCollection(limit: 20) {
           items {
@@ -142,6 +155,17 @@ export const HowQueryDocument = gql`
             icon {
               url
             }
+          }
+        }
+      }
+      footer {
+        linksCollection(limit: 20) {
+          items {
+            sys {
+              id
+            }
+            contenido
+            link
           }
         }
       }

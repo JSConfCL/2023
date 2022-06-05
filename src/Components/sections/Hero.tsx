@@ -220,9 +220,11 @@ export const Hero = ({
             <StyledTitle as="h2">Chile</StyledTitle>
           </StyledTitlesWrapper>
           <StyledWrapperLink>
-            <SecondaryStyledLink href="https://jsconf.com">
-              Get Tickets
-            </SecondaryStyledLink>
+            {heroData.ctaUrl && (
+              <SecondaryStyledLink href={heroData.ctaUrl}>
+                {heroData.ctaText}
+              </SecondaryStyledLink>
+            )}
           </StyledWrapperLink>
         </StyledRightSide>
       </StyledForegroundWrapper>

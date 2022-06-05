@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import Image from "../core/Image";
 import { motion } from "framer-motion";
@@ -13,11 +13,15 @@ const Container = styled.section`
   width: 100%;
   max-width: 1440px;
   gap: 0px 32px;
-  padding: 48px;
+  padding: 16px;
   justify-content: space-between;
 
   > h2 {
     padding: 48px 0px;
+  }
+
+  @media (min-width: 769px) {
+    padding: 48px;
   }
 
   @media (min-width: 1024px) {
@@ -30,7 +34,7 @@ const Flex = styled.section`
   flex-direction: row;
   width: 100%;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 
   @media (min-width: 1024px) {
     width: 30vw;
@@ -47,27 +51,25 @@ const titleAnimation = {
 
 const FollowUsSection = (props: { page: PageProps["followUsData"] }) => (
   <Container>
-    <Suspense fallback={<h2>Loading Follow Us...</h2>}>
-      <H2 whileHover={titleAnimation}>{props.page.title}</H2>
+    <H2 whileHover={titleAnimation}>{props.page.title}</H2>
 
-      <Flex>
-        {props.page.socialNetworksCollection.items.map((props, index) => (
-          <a
-            target="_blank"
-            rel="noreferrer"
-            href={props.url}
-            key={`social-${index}`}
-          >
-            <Image
-              key={`logo-${index}`}
-              mobile={props.icon?.url!}
-              alt={`${props.name} logo`}
-              style={{ width: 40 }}
-            />
-          </a>
-        ))}
-      </Flex>
-    </Suspense>
+    <Flex>
+      {props.page.socialNetworksCollection.items.map((props, index) => (
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={props.url}
+          key={`social-${index}`}
+        >
+          <Image
+            key={`logo-${index}`}
+            mobile={props.icon?.url!}
+            alt={`${props.name} logo`}
+            style={{ width: 40 }}
+          />
+        </a>
+      ))}
+    </Flex>
   </Container>
 );
 

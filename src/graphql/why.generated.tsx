@@ -61,6 +61,18 @@ export type WhyQueryQuery = {
         } | null>;
       } | null;
     } | null;
+    footer?: {
+      __typename?: "Footer";
+      linksCollection?: {
+        __typename?: "FooterLinksCollection";
+        items: Array<{
+          __typename?: "LinkItem";
+          contenido?: string | null;
+          link?: string | null;
+          sys: { __typename?: "Sys"; id: string };
+        } | null>;
+      } | null;
+    } | null;
   } | null;
 };
 
@@ -111,6 +123,17 @@ export const WhyQueryDocument = gql`
             icon {
               url
             }
+          }
+        }
+      }
+      footer {
+        linksCollection(limit: 20) {
+          items {
+            sys {
+              id
+            }
+            contenido
+            link
           }
         }
       }

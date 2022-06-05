@@ -8,6 +8,7 @@ import { ParseQuery } from "../src/helpers/types";
 import { NavBar } from "../src/Components/NavBar/NavBar";
 import WhyBanner from "../src/Components/Banner/Why";
 import WhyCard from "../src/Components/Card/Why";
+import { Footer } from "../src/Components/Footer/Footer";
 
 type Page = ParseQuery<WhyQueryQuery["page"]>;
 
@@ -16,6 +17,7 @@ export type PageProps = {
   whyItems: Page["whyBlockCollection"];
   heroData: Page["heroBlock"];
   followUsData: Page["followUsBlock"];
+  footerData: Page["footer"];
 };
 
 const Container = styled.section`
@@ -23,6 +25,7 @@ const Container = styled.section`
   flex-direction: column;
   width: 100vw;
   max-width: 1440px;
+  min-height: calc(100vh - 100px);
 `;
 const StyledBlackWrapp = styled.section`
   display: flex;
@@ -42,6 +45,7 @@ const Home: NextPage<PageProps> = (props) => {
         ))}
         <FollowUsSection page={props.followUsData} />
       </Container>
+      <Footer footerData={props.footerData} />
     </StyledBlackWrapp>
   );
 };
@@ -56,6 +60,7 @@ export async function getStaticProps() {
     heroData: page?.heroBlock,
     whyItems: page?.whyBlockCollection,
     followUsData: page?.followUsBlock,
+    footerData: page?.footer,
   };
   return {
     props,

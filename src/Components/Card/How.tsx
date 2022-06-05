@@ -38,11 +38,13 @@ const Container = styled.section<{ direction: boolean }>`
   padding: 16px;
   display: flex;
   gap: 32px;
-  flex-direction: ${({ direction }) => (!direction ? "row" : "row-reverse")};
+  flex-direction: column-reverse;
   overflow: hidden;
   margin-bottom: 24px;
   @media (min-width: 769px) {
+    flex-wrap: nowrap;
     padding: 48px;
+    flex-direction: ${({ direction }) => (!direction ? "row" : "row-reverse")};
   }
 
   @media (min-width: 1560px) {
@@ -54,7 +56,7 @@ const WrapperDescription = styled.section`
   display: flex;
   flex-direction: column;
   width: 100vw;
-  max-width: 400px;
+  max-width: 100%;
   gap: 32px 0px;
 
   > h2 {
@@ -67,19 +69,40 @@ const WrapperDescription = styled.section`
     letter-spacing: 0.5px;
     margin: 16px 0px;
   }
+
+  @media (min-width: 769px) {
+    max-width: 400px;
+    min-width: 400px;
+  }
 `;
 
 const ImageContainer = styled.section`
   position: relative;
   max-width: 830px;
-  width: 100vw;
-  height: 450px;
+  width: 100%;
+  aspect-ratio: 830 / 456;
+  margin-bottom: 16px;
 
   svg {
     width: 40px;
     position: absolute;
     z-index: 3;
     margin: 16px;
+  }
+  .play img {
+    width: 50px;
+    height: 50px;
+    bottom: calc(50% - 40px);
+    right: calc(50% - 40px);
+  }
+
+  @media (min-width: 769px) {
+    height: 450px;
+    width: calc(100% - 400px);
+    svg {
+      width: 40px;
+      margin: 16px;
+    }
   }
 `;
 
@@ -90,21 +113,43 @@ const WhiteBlock = styled.section<{ isClickeable: boolean }>`
   background-color: white;
   z-index: 2;
   cursor: ${({ isClickeable }) => (isClickeable ? "pointer" : "inherit")};
+
+  section > picture > img {
+    width: calc(100% - 16px);
+    max-width: 830px;
+    min-width: 230px;
+    height: 300px;
+  }
+
+  @media (min-width: 769px) {
+    img {
+      height: 460px;
+      max-width: 830px;
+      width: 100%;
+    }
+  }
 `;
 
 const Text = styled.p`
   position: absolute;
   z-index: 3;
-  bottom: -90px;
-  right: 48px;
   font-family: "Koulen";
   font-style: normal;
   font-weight: 400;
-  font-size: 80px;
-  line-height: 145px;
+  font-size: 32px;
+  line-height: 58px;
   display: flex;
   align-items: center;
   color: #f0e040;
+  bottom: -48px;
+  right: 0px;
+
+  @media (min-width: 769px) {
+    font-size: 80px;
+    line-height: 145px;
+    bottom: -90px;
+    right: 48px;
+  }
 `;
 
 const HowCard = (props: HowCardProps) => {
@@ -136,9 +181,6 @@ const HowCard = (props: HowCardProps) => {
               alt={props?.image?.description! || ""}
               style={{
                 borderRadius: "0px 32px 0px 0px",
-                width: "100vw",
-                maxWidth: "830px",
-                minWidth: "830px",
                 aspectRatio: "830 / 456",
                 objectFit: "cover",
                 objectPosition: "bottom",
@@ -152,6 +194,7 @@ const HowCard = (props: HowCardProps) => {
           <Image
             mobile="/images/image-background.png"
             alt="background"
+            className="background"
             style={{
               position: "absolute",
               zIndex: 1,
@@ -162,14 +205,12 @@ const HowCard = (props: HowCardProps) => {
           {props?.subtext && <Text>{props.subtext}</Text>}
           {props?.url! && (
             <Image
+              className="play"
               mobile="/images/play.png"
               alt="background play"
               style={{
                 position: "absolute",
                 zIndex: 4,
-                width: "80px",
-                bottom: "calc(50% - 40px)",
-                right: "calc(50% - 40px)",
               }}
             />
           )}

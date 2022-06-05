@@ -1,5 +1,5 @@
-query HowQuery($id: String!, $locale: String!) {
-  page(id: $id, locale: $locale) {
+query HowQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {
+  page(id: $id, locale: $locale, preview: $isPreview) {
     navBar {
       linksCollection(limit: 20) {
         items {
@@ -58,6 +58,17 @@ query HowQuery($id: String!, $locale: String!) {
           icon {
             url
           }
+        }
+      }
+    }
+    footer {
+      linksCollection(limit: 20) {
+        items {
+          sys {
+            id
+          }
+          contenido
+          link
         }
       }
     }

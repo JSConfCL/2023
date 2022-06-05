@@ -11,6 +11,7 @@ import FollowUsSection from "../src/Components/sections/FollowUsSection";
 import { ParseQuery } from "../src/helpers/types";
 import { NavBar } from "../src/Components/NavBar/NavBar";
 import HowCard from "../src/Components/Card/How";
+import { Footer } from "../src/Components/Footer/Footer";
 
 type Page = ParseQuery<HowQueryQuery["page"]>;
 
@@ -18,6 +19,7 @@ export type PageProps = {
   navData: Page["navBar"];
   howItems: Page["howBlockCollection"];
   followUsData: Page["followUsBlock"];
+  footerData: Page["footer"];
 };
 
 const Container = styled.section`
@@ -46,6 +48,7 @@ const OnSitePage: NextPage<PageProps> = (props) => {
         )}
         <FollowUsSection page={props.followUsData} />
       </Container>
+      <Footer footerData={props.footerData} />
     </StyledBlackWrapp>
   );
 };
@@ -55,6 +58,7 @@ export async function getStaticProps() {
     .query<HowQueryQuery, HowQueryQueryVariables>(HowQueryDocument, {
       id: "6WMOBLoBEhCWUtyQtw872A",
       locale: "es-CL",
+      isPreview: Boolean(process.env.NEXT_PUBLIC_CONTENTFUL_IS_PREVIEW),
     })
     .toPromise();
   const page = queryResults.data?.page as Page;
@@ -62,6 +66,7 @@ export async function getStaticProps() {
     navData: page?.navBar,
     howItems: page?.howBlockCollection,
     followUsData: page?.followUsBlock,
+    footerData: page?.footer,
   };
   return {
     props,

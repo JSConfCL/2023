@@ -33,6 +33,7 @@ const Container = styled.section`
 const StyledBlackWrapp = styled.section`
   display: flex;
   flex-direction: column;
+  min-height: calc(100vh - 200px);
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 

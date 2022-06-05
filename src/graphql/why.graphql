@@ -47,5 +47,16 @@ query WhyQuery {
         }
       }
     }
+    footer {
+      linksCollection(limit: 20) {
+        items {
+          sys {
+            id
+          }
+          contenido
+          link
+        }
+      }
+    }
   }
 }
