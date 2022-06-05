@@ -524,8 +524,10 @@ export type HeroBlock = Entry & {
   ctaText?: Maybe<Scalars["String"]>;
   ctaUrl?: Maybe<Scalars["String"]>;
   date?: Maybe<Scalars["String"]>;
+  description?: Maybe<HeroBlockDescription>;
   firstSubtitle?: Maybe<Scalars["String"]>;
   linkedFrom?: Maybe<HeroBlockLinkingCollections>;
+  secondDescription?: Maybe<HeroBlockSecondDescription>;
   secondSubtitle?: Maybe<Scalars["String"]>;
   sys: Sys;
   tile?: Maybe<Scalars["String"]>;
@@ -553,6 +555,11 @@ export type HeroBlockDateArgs = {
 };
 
 /** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
+export type HeroBlockDescriptionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
 export type HeroBlockFirstSubtitleArgs = {
   locale?: InputMaybe<Scalars["String"]>;
 };
@@ -560,6 +567,11 @@ export type HeroBlockFirstSubtitleArgs = {
 /** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
 export type HeroBlockLinkedFromArgs = {
   allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
+export type HeroBlockSecondDescriptionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
 };
 
 /** Primera sección del sitio :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/heroBlock) */
@@ -578,6 +590,31 @@ export type HeroBlockCollection = {
   limit: Scalars["Int"];
   skip: Scalars["Int"];
   total: Scalars["Int"];
+};
+
+export type HeroBlockDescription = {
+  __typename?: "HeroBlockDescription";
+  json: Scalars["JSON"];
+  links: HeroBlockDescriptionLinks;
+};
+
+export type HeroBlockDescriptionAssets = {
+  __typename?: "HeroBlockDescriptionAssets";
+  block: Array<Maybe<Asset>>;
+  hyperlink: Array<Maybe<Asset>>;
+};
+
+export type HeroBlockDescriptionEntries = {
+  __typename?: "HeroBlockDescriptionEntries";
+  block: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  inline: Array<Maybe<Entry>>;
+};
+
+export type HeroBlockDescriptionLinks = {
+  __typename?: "HeroBlockDescriptionLinks";
+  assets: HeroBlockDescriptionAssets;
+  entries: HeroBlockDescriptionEntries;
 };
 
 export type HeroBlockFilter = {
@@ -606,6 +643,9 @@ export type HeroBlockFilter = {
   date_not?: InputMaybe<Scalars["String"]>;
   date_not_contains?: InputMaybe<Scalars["String"]>;
   date_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  description_contains?: InputMaybe<Scalars["String"]>;
+  description_exists?: InputMaybe<Scalars["Boolean"]>;
+  description_not_contains?: InputMaybe<Scalars["String"]>;
   firstSubtitle?: InputMaybe<Scalars["String"]>;
   firstSubtitle_contains?: InputMaybe<Scalars["String"]>;
   firstSubtitle_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -613,6 +653,9 @@ export type HeroBlockFilter = {
   firstSubtitle_not?: InputMaybe<Scalars["String"]>;
   firstSubtitle_not_contains?: InputMaybe<Scalars["String"]>;
   firstSubtitle_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  secondDescription_contains?: InputMaybe<Scalars["String"]>;
+  secondDescription_exists?: InputMaybe<Scalars["Boolean"]>;
+  secondDescription_not_contains?: InputMaybe<Scalars["String"]>;
   secondSubtitle?: InputMaybe<Scalars["String"]>;
   secondSubtitle_contains?: InputMaybe<Scalars["String"]>;
   secondSubtitle_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -668,6 +711,31 @@ export enum HeroBlockOrder {
   TileAsc = "tile_ASC",
   TileDesc = "tile_DESC",
 }
+
+export type HeroBlockSecondDescription = {
+  __typename?: "HeroBlockSecondDescription";
+  json: Scalars["JSON"];
+  links: HeroBlockSecondDescriptionLinks;
+};
+
+export type HeroBlockSecondDescriptionAssets = {
+  __typename?: "HeroBlockSecondDescriptionAssets";
+  block: Array<Maybe<Asset>>;
+  hyperlink: Array<Maybe<Asset>>;
+};
+
+export type HeroBlockSecondDescriptionEntries = {
+  __typename?: "HeroBlockSecondDescriptionEntries";
+  block: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  inline: Array<Maybe<Entry>>;
+};
+
+export type HeroBlockSecondDescriptionLinks = {
+  __typename?: "HeroBlockSecondDescriptionLinks";
+  assets: HeroBlockSecondDescriptionAssets;
+  entries: HeroBlockSecondDescriptionEntries;
+};
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/howBlock) */
 export type HowBlock = Entry & {
@@ -2948,6 +3016,9 @@ export type CfHeroBlockNestedFilter = {
   date_not?: InputMaybe<Scalars["String"]>;
   date_not_contains?: InputMaybe<Scalars["String"]>;
   date_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  description_contains?: InputMaybe<Scalars["String"]>;
+  description_exists?: InputMaybe<Scalars["Boolean"]>;
+  description_not_contains?: InputMaybe<Scalars["String"]>;
   firstSubtitle?: InputMaybe<Scalars["String"]>;
   firstSubtitle_contains?: InputMaybe<Scalars["String"]>;
   firstSubtitle_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -2955,6 +3026,9 @@ export type CfHeroBlockNestedFilter = {
   firstSubtitle_not?: InputMaybe<Scalars["String"]>;
   firstSubtitle_not_contains?: InputMaybe<Scalars["String"]>;
   firstSubtitle_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  secondDescription_contains?: InputMaybe<Scalars["String"]>;
+  secondDescription_exists?: InputMaybe<Scalars["Boolean"]>;
+  secondDescription_not_contains?: InputMaybe<Scalars["String"]>;
   secondSubtitle?: InputMaybe<Scalars["String"]>;
   secondSubtitle_contains?: InputMaybe<Scalars["String"]>;
   secondSubtitle_exists?: InputMaybe<Scalars["Boolean"]>;
