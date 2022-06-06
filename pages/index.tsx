@@ -32,15 +32,19 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
 `;
+const FlexRow = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
+`;
 const StyledBlackWrapp = styled.section`
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 200px);
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
-`;
-
-const FlexRow = styled.div`
-  display: flex;
 `;
 
 const Home: NextPage<PageProps> = (props) => {

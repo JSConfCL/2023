@@ -1,6 +1,6 @@
-import React, { Suspense, useState } from "react";
+import React, { useRef, useState, useCallback } from "react";
 import styled from "@emotion/styled";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { H2, H3 } from "../core/Typography";
 import { PageProps } from "../../../pages";
@@ -12,7 +12,7 @@ const Container = styled.section`
   width: 100%;
   max-width: 1440px;
   gap: 0px 32px;
-  padding: 48px;
+  padding: 12px;
   justify-content: space-between;
 
   > h2 {
@@ -65,31 +65,19 @@ const SubmitButton = styled.input(
 `
 );
 
-const SubmitLoader = styled.span(
+const ThanksMessage = styled.div(
   ({ theme }) => `
-background: ${theme.colors.jsconfYellow};
-  height: 100%;
-  width: 500px;
-  z-index: 5;
-  position: absolute;
-  left:-500px;
-  display: inline-block;
-  transition: transform 1s ease 0s;
-`
-);
-
-const ThanksMessage = styled.span(
-  ({ theme }) => `
-  background: transparent;
+  background: ${theme.colors.jsconfYellow};
   color: ${theme.colors.jsconfBlack};
   height: 100%;
-  width: 300px;
-  z-index: 5;
+  width: 400px;
+  margin: 20px 0;
   padding: 20px;
-  position: absolute;
-  top:50px;
-  display: inline-block;
-  -webkit-transition: transform 0.5s ease 0s;
+  display: block;
+  min-height: 50px;
+  font-weight: bold;
+  text-align: center;
+  border-top-right-radius: 25px;
 `
 );
 
@@ -105,59 +93,86 @@ interface SubscribeSectionPage {
   page: PageProps["subscribeData"];
 }
 const SubscribeSection = (props: SubscribeSectionPage) => {
-  const [submiting, setSubmiting] = useState(false);
-  const [subscribeResponse, setSubscribeResponse] = useState<any | null>(null);
+  const messages = {
+    loading: "Enviando ...",
+    success: "Enviado",
+    error: "Error =(",
+  };
+  const [isSubmiting, setIsSubmiting] = useState(false);
+  const [subscribeResponse, setSubscribeResponse] = useState("");
+  const formElement = useRef<HTMLFormElement>(null);
 
   const wait = (seconds: number) =>
     new Promise((resolve) =>
       setTimeout(() => {
         resolve(null);
-      }, seconds)
+      }, seconds * 1000)
     );
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = useCallback(async (event: React.FormEvent) => {
     event.preventDefault();
 
-    setSubmiting(true);
+    try {
+      const formData = Array.from(
+        new FormData(formElement.current || undefined)
+      );
+      const formDataObj: Record<string, FormDataEntryValue> = {};
 
-    //Se envia la peticion y llega la respuesta
-    await wait(3000);
-    setSubscribeResponse({ message: "OK" });
+      for (const [key, value] of formData) {
+        formDataObj[key] = value;
+      }
+      const body = JSON.stringify({
+        ...formDataObj,
+      });
 
-    //Se le dan 2 segundos al usuario para que lea el mensaje (Podría cambiarse por un botón cerrar)
-    await wait(2000);
-    setSubmiting(false);
-    setSubscribeResponse(null);
-  };
+      setSubscribeResponse(messages.loading);
+      setIsSubmiting(true);
+
+      const response = await fetch(
+        "https://jsconf-chile-email-worker-1.jsconfcl.workers.dev",
+        {
+          method: "POST",
+          body,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status !== 200) {
+        throw new Error();
+      }
+      setSubscribeResponse(messages.success);
+      await wait(2);
+      setIsSubmiting(false);
+    } catch (e) {
+      console.error(e);
+      setSubscribeResponse(messages.error);
+      await wait(5);
+      setIsSubmiting(false);
+    }
+  }, []);
 
   return (
     <Container>
-      <Suspense fallback={<h2>Loading Follow Us...</h2>}>
-        <H2 whileHover={titleAnimation}>{props.page.title}</H2>
+      <H2 whileHover={titleAnimation}>{props.page.title}</H2>
 
-        <Form onSubmit={handleSubmit}>
-          <EmailInput
-            style={{ transform: submiting ? "translateX(400px)" : "none" }}
-          />
-          <SubmitButton
-            type="submit"
-            style={{ transform: submiting ? "translateY(50px)" : "none" }}
-          />
-          <SubmitLoader
-            style={{ transform: submiting ? "translateX(300px)" : "none" }}
-          />
-          <ThanksMessage
-            style={{
-              transform:
-                submiting && subscribeResponse !== null
-                  ? "translateY(-50px)"
-                  : "none",
-            }}
+      <Form onSubmit={handleSubmit} ref={formElement}>
+        <EmailInput name="email" />
+        <SubmitButton type="submit" />
+      </Form>
+
+      <AnimatePresence>
+        {isSubmiting && (
+          <motion.div
+            style={{ x: -100 }}
+            animate={{ x: 0 }}
+            exit={{ x: -100, opacity: 0 }}
           >
-            Thank you. You have been subscribed
-          </ThanksMessage>
-        </Form>
-      </Suspense>
+            <ThanksMessage>{subscribeResponse}</ThanksMessage>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Container>
   );
 };
