@@ -46,10 +46,14 @@ export const P = styled(motion.p)`
   font-family: "Barlow";
   font-weight: 400;
   font-size: 16px;
-  line-height: 19px;
   font-style: normal;
   color: #e2e2e2;
   letter-spacing: 0.5px;
+  line-height: 25px;
+
+  @media (min-width: 769px) {
+    font-size: 20px;
+  }
 `;
 
 export const B = styled(motion.b)`
@@ -60,4 +64,9 @@ export const UL = styled(motion.ul)`
   list-style: disc;
   padding: 16px 0px;
   padding-left: 28px;
+  line-height: 25px;
+
+  > li {
+    line-height: 25px;
+  }
 `;

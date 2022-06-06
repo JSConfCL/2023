@@ -1,0 +1,66 @@
+query SponsorQuery(
+  $id: String!
+  $locale: String!
+  $isPreview: Boolean = false
+) {
+  page(id: $id, locale: $locale, preview: $isPreview) {
+    navBar {
+      linksCollection(limit: 20) {
+        items {
+          sys {
+            id
+          }
+          contenido
+          link
+        }
+      }
+    }
+    heroBlock {
+      tile
+      firstSubtitle
+      secondSubtitle
+      date
+      ctaUrl
+      ctaText
+      background {
+        title
+        url
+      }
+      description {
+        json
+      }
+    }
+    sponsorTypeCollection(limit: 20) {
+      items {
+        name
+        price
+        description {
+          json
+        }
+      }
+    }
+    followUsBlock {
+      title
+      socialNetworksCollection(limit: 20) {
+        items {
+          name
+          url
+          icon {
+            url
+          }
+        }
+      }
+    }
+    footer {
+      linksCollection(limit: 20) {
+        items {
+          sys {
+            id
+          }
+          contenido
+          link
+        }
+      }
+    }
+  }
+}
