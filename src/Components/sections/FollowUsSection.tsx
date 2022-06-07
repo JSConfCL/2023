@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Image from "../core/Image";
-import { motion } from "framer-motion";
 
-import { H2, H3 } from "../core/Typography";
+import { H2 } from "../core/Typography";
 import { PageProps } from "../../../pages";
 
 const Container = styled.section`

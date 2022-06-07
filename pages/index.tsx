@@ -14,6 +14,7 @@ import { ParseQuery } from "../src/helpers/types";
 import FollowUsSection from "../src/Components/sections/FollowUsSection";
 import SpeakerSection from "../src/Components/sections/SpeakerSection";
 import { Footer } from "../src/Components/Footer/Footer";
+import SubscribeSection from "../src/Components/sections/SubscribeSection";
 
 type Page = ParseQuery<HomeQueryQuery["page"]>;
 
@@ -25,10 +26,19 @@ export type PageProps = {
   followUsData: Page["followUsBlock"];
   speakerData: Page["speakersBlock"];
   footerData: Page["footer"];
+  subscribeData: Page["subscribeBlock"];
 };
 const Container = styled.section`
   display: flex;
   flex-direction: column;
+`;
+const FlexRow = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
 `;
 const StyledBlackWrapp = styled.section`
   display: flex;
@@ -45,9 +55,12 @@ const Home: NextPage<PageProps> = (props) => {
         {props.whyItems && <WhySection page={props.whyItems} />}
         {props.howItems && <HowSection page={props.howItems} />}
         {props.speakerData && <SpeakerSection page={props.speakerData} />}
-        <FollowUsSection page={props.followUsData} />
       </StyledBlackWrapp>
-      <Footer footerData={props.footerData} />
+      <FlexRow>
+        <FollowUsSection page={props.followUsData} />
+        <SubscribeSection page={props.subscribeData} />
+      </FlexRow>
+      <Footer page={props.footerData} />
     </Container>
   );
 };
@@ -66,6 +79,7 @@ export async function getStaticProps() {
     followUsData: page?.followUsBlock,
     speakerData: page?.speakersBlock!,
     footerData: page?.footer,
+    subscribeData: page?.subscribeBlock,
   };
 
   return {

@@ -88,5 +88,8 @@ query HomeQuery {
         }
       }
     }
+    subscribeBlock {
+      title
+    }
   }
 }
