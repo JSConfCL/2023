@@ -142,6 +142,8 @@ const SubscribeSection = (props: SubscribeSectionPage) => {
 
       // waiting 3 seconds for give time to user to read
       await wait(3);
+
+      formElement.current?.reset();
       setIsSubmiting(false);
     } catch (e) {
       console.error(e);
