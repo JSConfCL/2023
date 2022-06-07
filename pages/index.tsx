@@ -35,6 +35,7 @@ const Container = styled.section`
 const FlexRow = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 
   @media (min-width: 1024px) {
     flex-direction: row;
