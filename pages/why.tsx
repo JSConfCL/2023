@@ -45,7 +45,7 @@ const Home: NextPage<PageProps> = (props) => {
         ))}
         <FollowUsSection page={props.followUsData} />
       </Container>
-      <Footer footerData={props.footerData} />
+      <Footer page={props.footerData} />
     </StyledBlackWrapp>
   );
 };

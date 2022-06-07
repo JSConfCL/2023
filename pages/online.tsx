@@ -48,7 +48,7 @@ const OnlinePage: NextPage<PageProps> = (props) => {
         )}
         {props.followUsData && <FollowUsSection page={props.followUsData} />}
       </Container>
-      {props.footerData && <Footer footerData={props.footerData} />}
+      {props.footerData && <Footer page={props.footerData} />}
     </StyledBlackWrapp>
   );
 };
