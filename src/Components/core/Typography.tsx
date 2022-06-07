@@ -44,7 +44,7 @@ export const H3 = styled(motion.h3)`
 
 export const P = styled(motion.p)`
   font-family: "Barlow";
-  font-weight: 600;
+  font-weight: 400;
   font-size: 16px;
   line-height: 19px;
   font-style: normal;
@@ -53,5 +53,11 @@ export const P = styled(motion.p)`
 `;
 
 export const B = styled(motion.b)`
-  color: white;
+  font-weight: 600;
+`;
+
+export const UL = styled(motion.ul)`
+  list-style: disc;
+  padding: 16px 0px;
+  padding-left: 28px;
 `;

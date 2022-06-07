@@ -2,24 +2,24 @@ import type { NextPage } from "next";
 import styled from "@emotion/styled";
 
 import {
-  HowQueryDocument,
-  HowQueryQuery,
-  HowQueryQueryVariables,
-} from "../src/graphql/how.generated";
+  CfpQueryDocument,
+  CfpQueryQuery,
+  CfpQueryQueryVariables,
+} from "../src/graphql/cfp.generated";
 import { urlQlient } from "../src/graphql/urql";
 import FollowUsSection from "../src/Components/sections/FollowUsSection";
 import { ParseQuery } from "../src/helpers/types";
 import { NavBar } from "../src/Components/NavBar/NavBar";
-import HowCard from "../src/Components/Card/How";
 import { Footer } from "../src/Components/Footer/Footer";
+import BannerCFP from "../src/Components/Banner/CFP";
 
-type Page = ParseQuery<HowQueryQuery["page"]>;
+type Page = ParseQuery<CfpQueryQuery["page"]>;
 
 export type PageProps = {
   navData: Page["navBar"];
-  howItems: Page["howBlockCollection"];
   followUsData: Page["followUsBlock"];
   footerData: Page["footer"];
+  heroData: Page["heroBlock"];
 };
 
 const Container = styled.section`
@@ -41,11 +41,7 @@ const OnSitePage: NextPage<PageProps> = (props) => {
     <StyledBlackWrapp>
       <Container>
         {props.navData && <NavBar {...props.navData} />}
-        {props.howItems?.items?.map((elem, index) =>
-          elem.sectionsCollection?.items.map((item, subIndex) => (
-            <HowCard {...item} number={subIndex + 1} key={subIndex} />
-          ))
-        )}
+        {props.heroData && <BannerCFP {...props.heroData} />}
         {props.followUsData && <FollowUsSection page={props.followUsData} />}
       </Container>
       {props.footerData && <Footer footerData={props.footerData} />}
@@ -55,8 +51,8 @@ const OnSitePage: NextPage<PageProps> = (props) => {
 
 export async function getStaticProps() {
   const queryResults = await urlQlient
-    .query<HowQueryQuery, HowQueryQueryVariables>(HowQueryDocument, {
-      id: "6WMOBLoBEhCWUtyQtw872A",
+    .query<CfpQueryQuery, CfpQueryQueryVariables>(CfpQueryDocument, {
+      id: "1GDpX9fgkG15wZWOYFV4il",
       locale: "es-CL",
       isPreview: Boolean(process.env.NEXT_PUBLIC_CONTENTFUL_IS_PREVIEW),
     })
@@ -65,7 +61,7 @@ export async function getStaticProps() {
   if (!page) return { props: {} };
   const props: PageProps = {
     navData: page?.navBar,
-    howItems: page?.howBlockCollection,
+    heroData: page?.heroBlock,
     followUsData: page?.followUsBlock,
     footerData: page?.footer,
   };
