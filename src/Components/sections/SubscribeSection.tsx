@@ -44,7 +44,6 @@ const EmailInput = styled.input`
   text-align: left;
   line-height: 50px;
   vertical-align: middle;
-  z-index: 10;
   color: black;
   -webkit-transition: transform 0.2s ease-in-out 0s;
 `;
@@ -70,9 +69,9 @@ const ThanksMessage = styled.div(
   background: ${theme.colors.jsconfYellow};
   color: ${theme.colors.jsconfBlack};
   height: 100%;
-  width: 400px;
-  margin: 20px 0;
-  padding: 20px;
+  width: 100%;
+  position: absolute;
+  padding: 15px;
   display: block;
   min-height: 50px;
   font-weight: bold;
@@ -103,11 +102,7 @@ const SubscribeSection = (props: SubscribeSectionPage) => {
   const formElement = useRef<HTMLFormElement>(null);
 
   const wait = (seconds: number) =>
-    new Promise((resolve) =>
-      setTimeout(() => {
-        resolve(null);
-      }, seconds * 1000)
-    );
+    new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 
   const handleSubmit = useCallback(async (event: React.FormEvent) => {
     event.preventDefault();
@@ -142,8 +137,11 @@ const SubscribeSection = (props: SubscribeSectionPage) => {
       if (response.status !== 200) {
         throw new Error();
       }
-      setSubscribeResponse(messages.success);
       await wait(2);
+      setSubscribeResponse(messages.success);
+
+      // waiting 3 seconds for give time to user to read
+      await wait(3);
       setIsSubmiting(false);
     } catch (e) {
       console.error(e);
@@ -160,19 +158,19 @@ const SubscribeSection = (props: SubscribeSectionPage) => {
       <Form onSubmit={handleSubmit} ref={formElement}>
         <EmailInput name="email" />
         <SubmitButton type="submit" />
-      </Form>
 
-      <AnimatePresence>
-        {isSubmiting && (
-          <motion.div
-            style={{ x: -100 }}
-            animate={{ x: 0 }}
-            exit={{ x: -100, opacity: 0 }}
-          >
-            <ThanksMessage>{subscribeResponse}</ThanksMessage>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <AnimatePresence>
+          {isSubmiting && (
+            <motion.div
+              style={{ x: -100 }}
+              animate={{ x: 0 }}
+              exit={{ x: -400 }}
+            >
+              <ThanksMessage>{subscribeResponse}</ThanksMessage>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Form>
     </Container>
   );
 };
