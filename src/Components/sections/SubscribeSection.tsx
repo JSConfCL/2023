@@ -1,5 +1,6 @@
 import React, { useRef, useState, useCallback } from "react";
 import styled from "@emotion/styled";
+import { FieldValues, useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { H2, H3 } from "../core/Typography";
@@ -24,43 +25,70 @@ const Container = styled.section`
   }
 `;
 
-const Form = styled.form`
-  width: 400px;
-  height: 50px;
-  background: white;
-  border-radius: 10px;
+const Form = styled.form(
+  ({ theme }) => `
+  width: 550px;
+  height: 80px;
+  background: ${theme.colors.black};
+  color: ${theme.colors.white};
   top: 50%;
   position: relative;
   z-index: 1;
   overflow: hidden;
-`;
+  border-style: solid;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  border-bottom-color: ${theme.colors.jsconfYellow};
+`
+);
 
-const EmailInput = styled.input`
+const Fieldset = styled.fieldset(
+  ({ theme }) => `
+  display: flex;
+  height: 60px;
+  margin: 10px 0;
+  border-width: 2px;
+`
+);
+
+const EmailInput = styled.input(
+  ({ theme }) => `
   background: transparent;
-  position: absolute;
   height: 100%;
-  width: 280px;
+  width: 400px;
   padding-left: 10px;
   text-align: left;
   line-height: 50px;
   vertical-align: middle;
-  color: black;
+  background: ${theme.colors.black};
+  color: ${theme.colors.white}
+
   -webkit-transition: transform 0.2s ease-in-out 0s;
-`;
+`
+);
+
+const ErrorMessage = styled.p(
+  ({ theme }) => `
+  margin: 12px 0;
+  color: ${theme.colors.jsconfRed}
+`
+);
 
 const SubmitButton = styled.input(
   ({ theme }) => `
   background: ${theme.colors.jsconfYellow};
   color: ${theme.colors.jsconfBlack};
-  position: absolute;
-  top: -50px;
-  left: 300px;
-  height: 150px;
-  width: 100px;
-  text-align: center;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 150px;
+  padding: 12px;
   vertical-align: middle;	
   transition: transform 0.5s ease 0s;
   cursor: pointer;
+  font-weight: bold;
+  border-radius: 0 24px 0 0;
 `
 );
 
@@ -69,14 +97,17 @@ const ThanksMessage = styled.div(
   background: ${theme.colors.jsconfYellow};
   color: ${theme.colors.jsconfBlack};
   height: 100%;
-  width: 100%;
-  position: absolute;
-  padding: 15px;
-  display: block;
+  min-height: 80px;
+  width: 550px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 50px;
   font-weight: bold;
   text-align: center;
-  border-top-right-radius: 25px;
+  position: absolute;
+  border-radius: 0 24px 0 0;
 `
 );
 
@@ -100,24 +131,15 @@ const SubscribeSection = (props: SubscribeSectionPage) => {
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [subscribeResponse, setSubscribeResponse] = useState("");
   const formElement = useRef<HTMLFormElement>(null);
+  const { register, handleSubmit, formState } = useForm();
 
   const wait = (seconds: number) =>
     new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 
-  const handleSubmit = useCallback(async (event: React.FormEvent) => {
-    event.preventDefault();
-
+  const onSubmit = async (data: FieldValues) => {
     try {
-      const formData = Array.from(
-        new FormData(formElement.current || undefined)
-      );
-      const formDataObj: Record<string, FormDataEntryValue> = {};
-
-      for (const [key, value] of formData) {
-        formDataObj[key] = value;
-      }
       const body = JSON.stringify({
-        ...formDataObj,
+        ...data,
       });
 
       setSubscribeResponse(messages.loading);
@@ -151,28 +173,44 @@ const SubscribeSection = (props: SubscribeSectionPage) => {
       await wait(5);
       setIsSubmiting(false);
     }
-  }, []);
+  };
+  const emailValidation = {
+    required: true,
+    pattern: {
+      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+      message: "Escribe un email valido",
+    },
+  };
+  const { errors } = formState;
 
   return (
     <Container>
       <H2 whileHover={titleAnimation}>{props.page.title}</H2>
 
-      <Form onSubmit={handleSubmit} ref={formElement}>
-        <EmailInput name="email" />
-        <SubmitButton type="submit" />
+      <Form onSubmit={handleSubmit(onSubmit)} ref={formElement}>
+        <Fieldset>
+          <EmailInput
+            placeholder="Tu Email"
+            {...register("email", emailValidation)}
+          />
+          <SubmitButton type="submit" value={props.page.title} />
 
-        <AnimatePresence>
-          {isSubmiting && (
-            <motion.div
-              style={{ x: -100 }}
-              animate={{ x: 0 }}
-              exit={{ x: -400 }}
-            >
-              <ThanksMessage>{subscribeResponse}</ThanksMessage>
-            </motion.div>
-          )}
-        </AnimatePresence>
+          <AnimatePresence>
+            {isSubmiting && (
+              <motion.div
+                style={{ x: 0 }}
+                animate={{ x: -550, opacity: 1 }}
+                transition={{ ease: "backInOut", duration: 0.7 }}
+                exit={{ x: 100 }}
+              >
+                <ThanksMessage>{subscribeResponse}</ThanksMessage>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Fieldset>
       </Form>
+
+      <ErrorMessage>{errors.email?.message}</ErrorMessage>
     </Container>
   );
 };
