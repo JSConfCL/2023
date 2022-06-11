@@ -67,6 +67,9 @@ const BaseSecondaryExternalLink = styled.a(({ theme }) => ({
   // boxShadow: `0 2px 10px ${lighten(0.55, theme.colors.black)}`,
   "&:hover": { background: lighten(0.1, theme.colors.black) },
   "&:focus": { boxShadow: `0 0 0 2px ${theme.colors.black}` },
+  [theme.breakpoints.phoneOnly]: {
+    width: "100%",
+  },
 }));
 
 const StyledIconWrapper = styled.div`

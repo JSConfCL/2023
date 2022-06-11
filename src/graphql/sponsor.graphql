@@ -14,6 +14,15 @@ query SponsorQuery(
           link
         }
       }
+      buttonsCollection(limit: 20) {
+        items {
+          contenido
+          link
+        }
+      }
+      description {
+        json
+      }
     }
     heroBlock {
       tile

@@ -7,7 +7,6 @@ import {
   HowQueryQueryVariables,
 } from "../src/graphql/how.generated";
 import { urlQlient } from "../src/graphql/urql";
-import FollowUsSection from "../src/Components/sections/FollowUsSection";
 import { ParseQuery } from "../src/helpers/types";
 import { NavBar } from "../src/Components/NavBar/NavBar";
 import HowCard from "../src/Components/Card/How";
@@ -18,6 +17,7 @@ export type PageProps = {
   navData: Page["navBar"];
   howItems: Page["howBlockCollection"];
   followUsData: Page["followUsBlock"];
+  GM_KEY: string;
 };
 
 const Container = styled.section`
@@ -41,10 +41,14 @@ const OnSitePage: NextPage<PageProps> = (props) => {
         {props.navData && <NavBar {...props.navData} />}
         {props.howItems?.items?.map((elem, index) =>
           elem.sectionsCollection?.items.map((item, subIndex) => (
-            <HowCard {...item} number={subIndex + 1} key={subIndex} />
+            <HowCard
+              {...item}
+              number={subIndex + 1}
+              key={subIndex}
+              GM_KEY={props.GM_KEY}
+            />
           ))
         )}
-        {props.followUsData && <FollowUsSection page={props.followUsData} />}
       </Container>
     </StyledBlackWrapp>
   );
@@ -64,6 +68,7 @@ export async function getStaticProps() {
     navData: page?.navBar,
     howItems: page?.howBlockCollection,
     followUsData: page?.followUsBlock,
+    GM_KEY: process.env.NEXT_PUBLIC_CONTENTFUL_API_GOOGLE_MAP,
   };
   return {
     props,

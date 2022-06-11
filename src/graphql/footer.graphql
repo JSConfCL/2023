@@ -10,6 +10,15 @@ query FooterQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {
           link
         }
       }
+      buttonsCollection(limit: 20) {
+        items {
+          contenido
+          link
+        }
+      }
+      description {
+        json
+      }
     }
     followUsBlock {
       title

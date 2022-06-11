@@ -38,7 +38,13 @@ const FlexRow = styled.div`
   }
 `;
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: ${({ theme }) => theme.elements.global.backgroundColor};
+  justify-content: center; ;
+`;
 
 const ExtendedFooter = () => {
   const [{ data, fetching, error }] = useFooterQueryQuery({

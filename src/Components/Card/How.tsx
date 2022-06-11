@@ -5,6 +5,7 @@ import { H2 } from "../core/Typography";
 import Description from "../core/Description";
 import Image from "../core/Image";
 import { JSConfLogo } from "../svgs/logo";
+import GoogleMapReact from "google-map-react";
 
 type HowCardProps =
   | {
@@ -26,6 +27,7 @@ type HowCardProps =
           }
         | undefined;
       url?: string | undefined;
+      GM_KEY: string;
       subtext?: string | undefined;
       mapa?: {
         lat?: number | undefined;
@@ -152,6 +154,26 @@ const Text = styled.p`
   }
 `;
 
+const StyledWrapperMap = styled.section`
+  position: relative;
+  border-radius: 0px 32px 0px 0px;
+  width: 100vw;
+  height: 100vh;
+  max-height: 460px;
+
+  > div > div {
+    border-radius: 0px 32px 0px 0px;
+    z-index: 2;
+  }
+`;
+
+const StyledMarker = styled.section`
+  background-color: red;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+`;
+
 const HowCard = (props: HowCardProps) => {
   const onHandleClick = () => {
     if (props?.url) {
@@ -214,8 +236,32 @@ const HowCard = (props: HowCardProps) => {
               }}
             />
           )}
+
           <JSConfLogo />
         </ImageContainer>
+      )}
+      {props?.mapa && (
+        <StyledWrapperMap>
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: props.GM_KEY }}
+            defaultCenter={{ lat: props.mapa?.lat!, lng: props.mapa?.lon! }}
+            defaultZoom={15}
+          >
+            <StyledMarker lat={props.mapa?.lat!} lng={props.mapa?.lon!} />
+          </GoogleMapReact>
+          <Image
+            mobile="/images/image-background.png"
+            alt="background"
+            className="background"
+            style={{
+              position: "absolute",
+              zIndex: 0,
+              bottom: "-64px",
+              right: "16px",
+              maxHeight: "460px",
+            }}
+          />
+        </StyledWrapperMap>
       )}
     </Container>
   );
