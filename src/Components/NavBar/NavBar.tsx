@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import styled from "@emotion/styled";
 import React from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 import { motion } from "framer-motion";
@@ -44,11 +45,18 @@ const StyledLinksContainer = styled.ul`
   gap: 20px;
 `;
 
-const StyledLink = styled.li`
-  padding: 16px;
+const StyledLink = styled.li<{ isActive: string }>`
+  padding: 8px 16px;
   font-weight: 400;
   font-family: "Koulen";
   cursor: pointer;
+  border: 0px solid #f45b69;
+  color: ${({ isActive }) => (isActive === "active" ? "#F45B69" : "#1E2019")};
+  @media (min-width: 769px) {
+    border-width: ${({ isActive }) =>
+      isActive === "active" ? "0px 0px 2px 0px" : "0px"};
+    color: inherit;
+  }
 `;
 
 const StyledJSConfLogoWrapper = styled.div`
@@ -64,9 +72,10 @@ const StyledPortalWrapper = styled(motion.section)`
   position: fixed;
   z-index: 9999;
   top: 0px;
-  background-color: black;
+  background-color: #f0e040;
   flex-direction: column;
-  padding: 40px 16px;
+  padding: 29px 16px;
+  font-size: 32px;
 
   > ul {
     display: flex;
@@ -78,12 +87,31 @@ const StyledPortalWrapper = styled(motion.section)`
   }
 `;
 
+const Flex = styled.section`
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  > svg {
+    height: 36px;
+    color: black;
+  }
+`;
+
+const StyledBottom = styled.section``;
+
 const Menu = (props: Props) => {
+  const { pathname } = useRouter();
+
   return (
     <StyledLinksContainer>
       {props.linksCollection.items.map((item) => {
         return (
-          <StyledLink key={item.sys.id}>
+          <StyledLink
+            key={item.sys.id}
+            isActive={item.link === pathname ? "active" : ""}
+          >
             <Link href={item.link!}>{item.contenido}</Link>
           </StyledLink>
         );
@@ -96,8 +124,17 @@ const MobileMenu = (props: Props & OnClickProps) => {
   return (
     <Portal>
       <StyledPortalWrapper>
-        <FeatherIcon icon="x" onClick={() => props.onClick(false)} />
+        <Flex>
+          <JSConfLogo />
+          <FeatherIcon
+            icon="x"
+            onClick={() => props.onClick(false)}
+            color="#1E2019"
+          />
+        </Flex>
+
         <Menu {...props} />
+        <StyledBottom></StyledBottom>
       </StyledPortalWrapper>
     </Portal>
   );

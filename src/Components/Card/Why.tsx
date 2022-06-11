@@ -13,7 +13,11 @@ type WhyCardProps =
             json?: Document | undefined;
           }
         | undefined;
-      icon?:
+      icon?: {
+        url?: string | undefined;
+        description?: string | undefined;
+      };
+      fullImage?:
         | {
             url?: string | undefined;
             description?: string | undefined;
@@ -133,13 +137,14 @@ const WhyCard = (props: WhyCardProps) => {
         <HR />
       </WrapperDescription>
       <Image
-        mobile={props?.icon?.url!}
+        desktop={props?.fullImage?.url!}
+        mobile={props?.fullImage?.url!}
         alt={props?.icon?.description! || ""}
         style={{
           borderRadius: "0px 32px 0px 0px",
           aspectRatio: "611 / 390",
           objectFit: "cover",
-          objectPosition: "bottom",
+          objectPosition: "center",
         }}
       />
       <Number direction={props?.number! % 2 === 0}>0{props?.number!}</Number>

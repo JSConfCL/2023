@@ -1,5 +1,5 @@
-query WhyQuery {
-  page(id: "7rT5EZIWOXMxoy8151P9WL", locale: "es-CL") {
+query FooterQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {
+  page(id: $id, locale: $locale, preview: $isPreview) {
     navBar {
       linksCollection(limit: 20) {
         items {
@@ -8,34 +8,6 @@ query WhyQuery {
           }
           contenido
           link
-        }
-      }
-    }
-    heroBlock {
-      tile
-      firstSubtitle
-      secondSubtitle
-      date
-      ctaUrl
-      ctaText
-      background {
-        title
-        url
-      }
-    }
-    whyBlockCollection {
-      items {
-        title
-        description {
-          json
-        }
-        icon {
-          url
-          description
-        }
-        fullImage {
-          url
-          description
         }
       }
     }
@@ -61,6 +33,9 @@ query WhyQuery {
           link
         }
       }
+    }
+    subscribeBlock {
+      title
     }
   }
 }

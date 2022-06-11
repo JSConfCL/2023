@@ -133,20 +133,6 @@ const HowSection = (props: { page: PageProps["howItems"] }) => {
                   objectFit: isMobile ? "cover" : "inherit",
                 }}
               />
-              {!isMobile && (
-                <Image
-                  mobile={props?.image?.url!}
-                  alt={props?.image?.description! || ""}
-                  style={{
-                    transform: "scaleX(-1)",
-                    height: "257px",
-                    aspectRatio: "654 / 257",
-                    objectFit: "cover",
-                    borderRadius: "32px  0px 0px  0px",
-                    objectPosition: "right",
-                  }}
-                />
-              )}
             </Flex>
             <BlockDescription
               key={`how-block-description-${index} `}

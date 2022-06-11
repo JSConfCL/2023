@@ -3,9 +3,13 @@ import * as Types from "../types";
 import gql from "graphql-tag";
 import * as Urql from "urql";
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type WhyQueryQueryVariables = Types.Exact<{ [key: string]: never }>;
+export type FooterQueryQueryVariables = Types.Exact<{
+  id: Types.Scalars["String"];
+  locale: Types.Scalars["String"];
+  isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
+}>;
 
-export type WhyQueryQuery = {
+export type FooterQueryQuery = {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
@@ -20,38 +24,6 @@ export type WhyQueryQuery = {
           sys: { __typename?: "Sys"; id: string };
         } | null>;
       } | null;
-    } | null;
-    heroBlock?: {
-      __typename?: "HeroBlock";
-      tile?: string | null;
-      firstSubtitle?: string | null;
-      secondSubtitle?: string | null;
-      date?: string | null;
-      ctaUrl?: string | null;
-      ctaText?: string | null;
-      background?: {
-        __typename?: "Asset";
-        title?: string | null;
-        url?: string | null;
-      } | null;
-    } | null;
-    whyBlockCollection?: {
-      __typename?: "PageWhyBlockCollection";
-      items: Array<{
-        __typename?: "WhyBlock";
-        title?: string | null;
-        description?: { __typename?: "WhyBlockDescription"; json: any } | null;
-        icon?: {
-          __typename?: "Asset";
-          url?: string | null;
-          description?: string | null;
-        } | null;
-        fullImage?: {
-          __typename?: "Asset";
-          url?: string | null;
-          description?: string | null;
-        } | null;
-      } | null>;
     } | null;
     followUsBlock?: {
       __typename?: "FollowUsBlock";
@@ -78,12 +50,20 @@ export type WhyQueryQuery = {
         } | null>;
       } | null;
     } | null;
+    subscribeBlock?: {
+      __typename?: "SubscribeBlock";
+      title?: string | null;
+    } | null;
   } | null;
 };
 
-export const WhyQueryDocument = gql`
-  query WhyQuery {
-    page(id: "7rT5EZIWOXMxoy8151P9WL", locale: "es-CL") {
+export const FooterQueryDocument = gql`
+  query FooterQuery(
+    $id: String!
+    $locale: String!
+    $isPreview: Boolean = false
+  ) {
+    page(id: $id, locale: $locale, preview: $isPreview) {
       navBar {
         linksCollection(limit: 20) {
           items {
@@ -92,34 +72,6 @@ export const WhyQueryDocument = gql`
             }
             contenido
             link
-          }
-        }
-      }
-      heroBlock {
-        tile
-        firstSubtitle
-        secondSubtitle
-        date
-        ctaUrl
-        ctaText
-        background {
-          title
-          url
-        }
-      }
-      whyBlockCollection {
-        items {
-          title
-          description {
-            json
-          }
-          icon {
-            url
-            description
-          }
-          fullImage {
-            url
-            description
           }
         }
       }
@@ -146,12 +98,18 @@ export const WhyQueryDocument = gql`
           }
         }
       }
+      subscribeBlock {
+        title
+      }
     }
   }
 `;
 
-export function useWhyQueryQuery(
-  options?: Omit<Urql.UseQueryArgs<WhyQueryQueryVariables>, "query">
+export function useFooterQueryQuery(
+  options: Omit<Urql.UseQueryArgs<FooterQueryQueryVariables>, "query">
 ) {
-  return Urql.useQuery<WhyQueryQuery>({ query: WhyQueryDocument, ...options });
+  return Urql.useQuery<FooterQueryQuery>({
+    query: FooterQueryDocument,
+    ...options,
+  });
 }

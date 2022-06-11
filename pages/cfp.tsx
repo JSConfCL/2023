@@ -7,18 +7,14 @@ import {
   CfpQueryQueryVariables,
 } from "../src/graphql/cfp.generated";
 import { urlQlient } from "../src/graphql/urql";
-import FollowUsSection from "../src/Components/sections/FollowUsSection";
 import { ParseQuery } from "../src/helpers/types";
 import { NavBar } from "../src/Components/NavBar/NavBar";
-import { Footer } from "../src/Components/Footer/Footer";
 import BannerCFP from "../src/Components/Banner/CFP";
 
 type Page = ParseQuery<CfpQueryQuery["page"]>;
 
 export type PageProps = {
   navData: Page["navBar"];
-  followUsData: Page["followUsBlock"];
-  footerData: Page["footer"];
   heroData: Page["heroBlock"];
 };
 
@@ -42,9 +38,7 @@ const OnSitePage: NextPage<PageProps> = (props) => {
       <Container>
         {props.navData && <NavBar {...props.navData} />}
         {props.heroData && <BannerCFP {...props.heroData} />}
-        {props.followUsData && <FollowUsSection page={props.followUsData} />}
       </Container>
-      {props.footerData && <Footer page={props.footerData} />}
     </StyledBlackWrapp>
   );
 };
@@ -62,8 +56,6 @@ export async function getStaticProps() {
   const props: PageProps = {
     navData: page?.navBar,
     heroData: page?.heroBlock,
-    followUsData: page?.followUsBlock,
-    footerData: page?.footer,
   };
   return {
     props,
