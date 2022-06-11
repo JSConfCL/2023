@@ -1135,6 +1135,7 @@ export type LinkItem = Entry & {
   __typename?: "LinkItem";
   contenido?: Maybe<Scalars["String"]>;
   contentfulMetadata: ContentfulMetadata;
+  isBlank?: Maybe<Scalars["Boolean"]>;
   link?: Maybe<Scalars["String"]>;
   linkedFrom?: Maybe<LinkItemLinkingCollections>;
   sys: Sys;
@@ -1142,6 +1143,11 @@ export type LinkItem = Entry & {
 
 /** para CTAs, links, header links, etc. TIene un "contenido" y una "url" [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/linkItem) */
 export type LinkItemContenidoArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** para CTAs, links, header links, etc. TIene un "contenido" y una "url" [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/linkItem) */
+export type LinkItemIsBlankArgs = {
   locale?: InputMaybe<Scalars["String"]>;
 };
 
@@ -1174,6 +1180,9 @@ export type LinkItemFilter = {
   contenido_not_contains?: InputMaybe<Scalars["String"]>;
   contenido_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  isBlank?: InputMaybe<Scalars["Boolean"]>;
+  isBlank_exists?: InputMaybe<Scalars["Boolean"]>;
+  isBlank_not?: InputMaybe<Scalars["Boolean"]>;
   link?: InputMaybe<Scalars["String"]>;
   link_contains?: InputMaybe<Scalars["String"]>;
   link_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -1223,6 +1232,8 @@ export type LinkItemLinkingCollectionsNavigationBarCollectionArgs = {
 export enum LinkItemOrder {
   ContenidoAsc = "contenido_ASC",
   ContenidoDesc = "contenido_DESC",
+  IsBlankAsc = "isBlank_ASC",
+  IsBlankDesc = "isBlank_DESC",
   LinkAsc = "link_ASC",
   LinkDesc = "link_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
@@ -2990,6 +3001,7 @@ export type WhyBlock = Entry & {
   contentfulMetadata: ContentfulMetadata;
   description?: Maybe<WhyBlockDescription>;
   extendedDescription?: Maybe<WhyBlockExtendedDescription>;
+  fullImage?: Maybe<Asset>;
   icon?: Maybe<Asset>;
   linkedFrom?: Maybe<WhyBlockLinkingCollections>;
   sys: Sys;
@@ -3004,6 +3016,12 @@ export type WhyBlockDescriptionArgs = {
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/whyBlock) */
 export type WhyBlockExtendedDescriptionArgs = {
   locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/whyBlock) */
+export type WhyBlockFullImageArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/whyBlock) */
@@ -3090,6 +3108,7 @@ export type WhyBlockFilter = {
   extendedDescription_contains?: InputMaybe<Scalars["String"]>;
   extendedDescription_exists?: InputMaybe<Scalars["Boolean"]>;
   extendedDescription_not_contains?: InputMaybe<Scalars["String"]>;
+  fullImage_exists?: InputMaybe<Scalars["Boolean"]>;
   icon_exists?: InputMaybe<Scalars["Boolean"]>;
   sys?: InputMaybe<SysFilter>;
   title?: InputMaybe<Scalars["String"]>;
@@ -3231,6 +3250,9 @@ export type CfLinkItemNestedFilter = {
   contenido_not_contains?: InputMaybe<Scalars["String"]>;
   contenido_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  isBlank?: InputMaybe<Scalars["Boolean"]>;
+  isBlank_exists?: InputMaybe<Scalars["Boolean"]>;
+  isBlank_not?: InputMaybe<Scalars["Boolean"]>;
   link?: InputMaybe<Scalars["String"]>;
   link_contains?: InputMaybe<Scalars["String"]>;
   link_exists?: InputMaybe<Scalars["Boolean"]>;
