@@ -9,25 +9,28 @@ import { PageProps } from "../../../pages";
 const Container = styled.section`
   align-self: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
   max-width: 1440px;
-  gap: 0px 32px;
-  padding: 12px;
-  justify-content: space-between;
+  gap: 32px 16px;
+  padding: 16px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 
   > h2 {
     padding: 48px 0px;
   }
 
-  @media (min-width: 1024px) {
-    flex-direction: column;
+  @media (min-width: 769px) {
+    padding: 48px;
+    gap: 32px 32px;
+    justify-content: flex-start;
   }
 `;
 
 const Form = styled.form(
   ({ theme }) => `
-  width: 550px;
+  width: 90vw;
   height: 80px;
   background: ${theme.colors.black};
   color: ${theme.colors.white};
@@ -40,6 +43,10 @@ const Form = styled.form(
   border-right-color: transparent;
   border-top-color: transparent;
   border-bottom-color: ${theme.colors.jsconfYellow};
+
+  @media (min-width: 1024px) {
+    max-width: 40vw;
+  }
 `
 );
 
@@ -56,14 +63,13 @@ const EmailInput = styled.input(
   ({ theme }) => `
   background: transparent;
   height: 100%;
-  width: 400px;
+  width: 80vw;
   padding-left: 10px;
   text-align: left;
   line-height: 50px;
   vertical-align: middle;
   background: ${theme.colors.black};
   color: ${theme.colors.white}
-
   -webkit-transition: transform 0.2s ease-in-out 0s;
 `
 );
@@ -89,6 +95,10 @@ const SubmitButton = styled.input(
   cursor: pointer;
   font-weight: bold;
   border-radius: 0 24px 0 0;
+
+  @media (min-width: 769px) {
+    min-width: 150px;
+  }
 `
 );
 
@@ -186,7 +196,6 @@ const SubscribeSection = (props: SubscribeSectionPage) => {
   return (
     <Container>
       <H2 whileHover={titleAnimation}>{props.page.title}</H2>
-
       <Form onSubmit={handleSubmit(onSubmit)} ref={formElement}>
         <Fieldset>
           <EmailInput

@@ -32,10 +32,11 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
 `;
-const FlexRow = styled.div`
+const FlexRow = styled.section`
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
+  padding: 0 10vw;
 
   @media (min-width: 1024px) {
     flex-direction: row;
