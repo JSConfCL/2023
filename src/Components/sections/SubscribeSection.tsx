@@ -71,7 +71,6 @@ const EmailInput = styled.input(
   background: ${theme.colors.black};
   color: ${theme.colors.white}
   -webkit-transition: transform 0.2s ease-in-out 0s;
-  
 `
 );
 
