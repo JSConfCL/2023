@@ -24,6 +24,18 @@ export type HowQueryQuery = {
           sys: { __typename?: "Sys"; id: string };
         } | null>;
       } | null;
+      buttonsCollection?: {
+        __typename?: "NavigationBarButtonsCollection";
+        items: Array<{
+          __typename?: "LinkItem";
+          contenido?: string | null;
+          link?: string | null;
+        } | null>;
+      } | null;
+      description?: {
+        __typename?: "NavigationBarDescription";
+        json: any;
+      } | null;
     } | null;
     howBlockCollection?: {
       __typename?: "PageHowBlockCollection";
@@ -106,6 +118,15 @@ export const HowQueryDocument = gql`
             contenido
             link
           }
+        }
+        buttonsCollection(limit: 20) {
+          items {
+            contenido
+            link
+          }
+        }
+        description {
+          json
         }
       }
       howBlockCollection(limit: 10) {

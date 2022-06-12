@@ -1,8 +1,4 @@
-query SponsorQuery(
-  $id: String!
-  $locale: String!
-  $isPreview: Boolean = false
-) {
+query FooterQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {
   page(id: $id, locale: $locale, preview: $isPreview) {
     navBar {
       linksCollection(limit: 20) {
@@ -22,30 +18,6 @@ query SponsorQuery(
       }
       description {
         json
-      }
-    }
-    heroBlock {
-      tile
-      firstSubtitle
-      secondSubtitle
-      date
-      ctaUrl
-      ctaText
-      background {
-        title
-        url
-      }
-      description {
-        json
-      }
-    }
-    sponsorTypeCollection(limit: 20) {
-      items {
-        name
-        price
-        description {
-          json
-        }
       }
     }
     followUsBlock {
@@ -70,6 +42,9 @@ query SponsorQuery(
           link
         }
       }
+    }
+    subscribeBlock {
+      title
     }
   }
 }

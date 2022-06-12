@@ -3,8 +3,13 @@ import styled from "@emotion/styled";
 import { FieldValues, useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { Get } from "type-fest";
 import { H2, H3 } from "../core/Typography";
-import { PageProps } from "../../../pages";
+import { FooterQueryQuery } from "../../graphql/footer.generated";
+
+type Props = {
+  page: Get<FooterQueryQuery, "page.subscribeBlock">;
+};
 
 const Container = styled.section`
   align-self: center;
@@ -12,18 +17,18 @@ const Container = styled.section`
   flex-direction: row;
   width: 100%;
   max-width: 1440px;
-  gap: 32px 16px;
-  padding: 16px;
   justify-content: flex-start;
+  align-items: flex-start;
   flex-wrap: wrap;
 
   > h2 {
     padding: 48px 0px;
+    font-size: 32px;
+    line-height: 58px;
   }
 
   @media (min-width: 769px) {
-    padding: 48px;
-    gap: 32px 32px;
+    width: 50%;
     justify-content: flex-start;
   }
 `;
@@ -77,6 +82,7 @@ const EmailInput = styled.input(
 const ErrorMessage = styled.p(
   ({ theme }) => `
   margin: 12px 0;
+  min-height: 20px;
   color: ${theme.colors.jsconfRed}
 `
 );
@@ -129,10 +135,7 @@ const titleAnimation = {
   },
 };
 
-interface SubscribeSectionPage {
-  page: PageProps["subscribeData"];
-}
-const SubscribeSection = (props: SubscribeSectionPage) => {
+const SubscribeSection = (props: Props) => {
   const messages = {
     loading: "Enviando ...",
     success: "Enviado",
@@ -195,14 +198,14 @@ const SubscribeSection = (props: SubscribeSectionPage) => {
 
   return (
     <Container>
-      <H2 whileHover={titleAnimation}>{props.page.title}</H2>
+      <H2 whileHover={titleAnimation}>{props?.page?.title}</H2>
       <Form onSubmit={handleSubmit(onSubmit)} ref={formElement}>
         <Fieldset>
           <EmailInput
             placeholder="Tu Email"
             {...register("email", emailValidation)}
           />
-          <SubmitButton type="submit" value={props.page.title} />
+          <SubmitButton type="submit" value={props?.page?.title!} />
 
           <AnimatePresence>
             {isSubmiting && (

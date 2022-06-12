@@ -1352,11 +1352,26 @@ export enum MemberOrder {
 /** Navigation Bar. Links y ETC :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/navigationBar) */
 export type NavigationBar = Entry & {
   __typename?: "NavigationBar";
+  buttonsCollection?: Maybe<NavigationBarButtonsCollection>;
   contentfulMetadata: ContentfulMetadata;
+  description?: Maybe<NavigationBarDescription>;
   linkedFrom?: Maybe<NavigationBarLinkingCollections>;
   linksCollection?: Maybe<NavigationBarLinksCollection>;
   navbarName?: Maybe<Scalars["String"]>;
   sys: Sys;
+};
+
+/** Navigation Bar. Links y ETC :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/navigationBar) */
+export type NavigationBarButtonsCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+/** Navigation Bar. Links y ETC :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/navigationBar) */
+export type NavigationBarDescriptionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
 };
 
 /** Navigation Bar. Links y ETC :) [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/navigationBar) */
@@ -1377,6 +1392,14 @@ export type NavigationBarNavbarNameArgs = {
   locale?: InputMaybe<Scalars["String"]>;
 };
 
+export type NavigationBarButtonsCollection = {
+  __typename?: "NavigationBarButtonsCollection";
+  items: Array<Maybe<LinkItem>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
 export type NavigationBarCollection = {
   __typename?: "NavigationBarCollection";
   items: Array<Maybe<NavigationBar>>;
@@ -1385,10 +1408,39 @@ export type NavigationBarCollection = {
   total: Scalars["Int"];
 };
 
+export type NavigationBarDescription = {
+  __typename?: "NavigationBarDescription";
+  json: Scalars["JSON"];
+  links: NavigationBarDescriptionLinks;
+};
+
+export type NavigationBarDescriptionAssets = {
+  __typename?: "NavigationBarDescriptionAssets";
+  block: Array<Maybe<Asset>>;
+  hyperlink: Array<Maybe<Asset>>;
+};
+
+export type NavigationBarDescriptionEntries = {
+  __typename?: "NavigationBarDescriptionEntries";
+  block: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  inline: Array<Maybe<Entry>>;
+};
+
+export type NavigationBarDescriptionLinks = {
+  __typename?: "NavigationBarDescriptionLinks";
+  assets: NavigationBarDescriptionAssets;
+  entries: NavigationBarDescriptionEntries;
+};
+
 export type NavigationBarFilter = {
   AND?: InputMaybe<Array<InputMaybe<NavigationBarFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<NavigationBarFilter>>>;
+  buttonsCollection_exists?: InputMaybe<Scalars["Boolean"]>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  description_contains?: InputMaybe<Scalars["String"]>;
+  description_exists?: InputMaybe<Scalars["Boolean"]>;
+  description_not_contains?: InputMaybe<Scalars["String"]>;
   linksCollection_exists?: InputMaybe<Scalars["Boolean"]>;
   navbarName?: InputMaybe<Scalars["String"]>;
   navbarName_contains?: InputMaybe<Scalars["String"]>;
@@ -3266,7 +3318,11 @@ export type CfLinkItemNestedFilter = {
 export type CfNavigationBarNestedFilter = {
   AND?: InputMaybe<Array<InputMaybe<CfNavigationBarNestedFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<CfNavigationBarNestedFilter>>>;
+  buttonsCollection_exists?: InputMaybe<Scalars["Boolean"]>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  description_contains?: InputMaybe<Scalars["String"]>;
+  description_exists?: InputMaybe<Scalars["Boolean"]>;
+  description_not_contains?: InputMaybe<Scalars["String"]>;
   linksCollection_exists?: InputMaybe<Scalars["Boolean"]>;
   navbarName?: InputMaybe<Scalars["String"]>;
   navbarName_contains?: InputMaybe<Scalars["String"]>;

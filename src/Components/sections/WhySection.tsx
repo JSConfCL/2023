@@ -124,7 +124,8 @@ const WhySection = (props: { page: PageProps["whyItems"] }) => {
           >
             <Block key={`why-block-${index}`} variants={BlockVariant}>
               <Image
-                mobile={item?.icon?.url!}
+                mobile={item?.fullImage?.url!}
+                desktop={item?.icon?.url!}
                 alt={item?.icon?.description! || ""}
                 style={{
                   height: isMobile ? "210px" : "390px",
@@ -132,7 +133,7 @@ const WhySection = (props: { page: PageProps["whyItems"] }) => {
                   aspectRatio: index % 2 === 0 ? "287 / 390" : "397 / 390",
                   mixBlendMode: "multiply",
                   borderRadius: "0px 32px 0px 0px",
-                  objectFit: isMobile ? "cover" : "inherit",
+                  objectFit: isMobile ? "top" : "inherit",
                 }}
               />
               <Flex index={index}>

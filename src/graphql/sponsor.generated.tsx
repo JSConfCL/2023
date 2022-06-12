@@ -24,6 +24,18 @@ export type SponsorQueryQuery = {
           sys: { __typename?: "Sys"; id: string };
         } | null>;
       } | null;
+      buttonsCollection?: {
+        __typename?: "NavigationBarButtonsCollection";
+        items: Array<{
+          __typename?: "LinkItem";
+          contenido?: string | null;
+          link?: string | null;
+        } | null>;
+      } | null;
+      description?: {
+        __typename?: "NavigationBarDescription";
+        json: any;
+      } | null;
     } | null;
     heroBlock?: {
       __typename?: "HeroBlock";
@@ -96,6 +108,15 @@ export const SponsorQueryDocument = gql`
             contenido
             link
           }
+        }
+        buttonsCollection(limit: 20) {
+          items {
+            contenido
+            link
+          }
+        }
+        description {
+          json
         }
       }
       heroBlock {

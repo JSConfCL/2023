@@ -11,10 +11,7 @@ import {
 import { urlQlient } from "../src/graphql/urql";
 
 import { ParseQuery } from "../src/helpers/types";
-import FollowUsSection from "../src/Components/sections/FollowUsSection";
 import SpeakerSection from "../src/Components/sections/SpeakerSection";
-import { Footer } from "../src/Components/Footer/Footer";
-import SubscribeSection from "../src/Components/sections/SubscribeSection";
 
 type Page = ParseQuery<HomeQueryQuery["page"]>;
 
@@ -23,25 +20,13 @@ export type PageProps = {
   whyItems: Page["whyBlockCollection"];
   howItems: Page["howBlockCollection"];
   heroData: Page["heroBlock"];
-  followUsData: Page["followUsBlock"];
   speakerData: Page["speakersBlock"];
-  footerData: Page["footer"];
-  subscribeData: Page["subscribeBlock"];
 };
 const Container = styled.section`
   display: flex;
   flex-direction: column;
 `;
-const FlexRow = styled.section`
-  display: flex;
-  flex-direction: column;
-  background-color: ${({ theme }) => theme.elements.global.backgroundColor};
-  padding: 0 10vw;
 
-  @media (min-width: 1024px) {
-    flex-direction: row;
-  }
-`;
 const StyledBlackWrapp = styled.section`
   display: flex;
   flex-direction: column;
@@ -58,11 +43,6 @@ const Home: NextPage<PageProps> = (props) => {
         {props.howItems && <HowSection page={props.howItems} />}
         {props.speakerData && <SpeakerSection page={props.speakerData} />}
       </StyledBlackWrapp>
-      <FlexRow>
-        <FollowUsSection page={props.followUsData} />
-        <SubscribeSection page={props.subscribeData} />
-      </FlexRow>
-      <Footer page={props.footerData} />
     </Container>
   );
 };
@@ -78,10 +58,7 @@ export async function getStaticProps() {
     heroData: page?.heroBlock,
     whyItems: page?.whyBlockCollection,
     howItems: page?.howBlockCollection,
-    followUsData: page?.followUsBlock,
     speakerData: page?.speakersBlock!,
-    footerData: page?.footer,
-    subscribeData: page?.subscribeBlock,
   };
 
   return {

@@ -7,19 +7,15 @@ import {
   HowQueryQueryVariables,
 } from "../src/graphql/how.generated";
 import { urlQlient } from "../src/graphql/urql";
-import FollowUsSection from "../src/Components/sections/FollowUsSection";
 import { ParseQuery } from "../src/helpers/types";
 import { NavBar } from "../src/Components/NavBar/NavBar";
 import HowCard from "../src/Components/Card/How";
-import { Footer } from "../src/Components/Footer/Footer";
 
 type Page = ParseQuery<HowQueryQuery["page"]>;
 
 export type PageProps = {
   navData: Page["navBar"];
   howItems: Page["howBlockCollection"];
-  followUsData: Page["followUsBlock"];
-  footerData: Page["footer"];
 };
 
 const Container = styled.section`
@@ -43,12 +39,10 @@ const OnlinePage: NextPage<PageProps> = (props) => {
         {props.navData && <NavBar {...props.navData} />}
         {props.howItems?.items?.map((elem, index) =>
           elem.sectionsCollection?.items.map((item, subIndex) => (
-            <HowCard {...item} number={subIndex + 1} key={subIndex} />
+            <HowCard {...item} number={subIndex + 1} key={subIndex} GM_KEY="" />
           ))
         )}
-        {props.followUsData && <FollowUsSection page={props.followUsData} />}
       </Container>
-      {props.footerData && <Footer page={props.footerData} />}
     </StyledBlackWrapp>
   );
 };
@@ -67,8 +61,6 @@ export async function getStaticProps() {
   const props: PageProps = {
     navData: page?.navBar,
     howItems: page?.howBlockCollection,
-    followUsData: page?.followUsBlock,
-    footerData: page?.footer,
   };
   return {
     props,

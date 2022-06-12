@@ -3,12 +3,10 @@ import styled from "@emotion/styled";
 
 import { WhyQueryDocument, WhyQueryQuery } from "../src/graphql/why.generated";
 import { urlQlient } from "../src/graphql/urql";
-import FollowUsSection from "../src/Components/sections/FollowUsSection";
 import { ParseQuery } from "../src/helpers/types";
 import { NavBar } from "../src/Components/NavBar/NavBar";
 import WhyBanner from "../src/Components/Banner/Why";
 import WhyCard from "../src/Components/Card/Why";
-import { Footer } from "../src/Components/Footer/Footer";
 
 type Page = ParseQuery<WhyQueryQuery["page"]>;
 
@@ -16,8 +14,6 @@ export type PageProps = {
   navData: Page["navBar"];
   whyItems: Page["whyBlockCollection"];
   heroData: Page["heroBlock"];
-  followUsData: Page["followUsBlock"];
-  footerData: Page["footer"];
 };
 
 const Container = styled.section`
@@ -43,9 +39,7 @@ const Home: NextPage<PageProps> = (props) => {
         {props.whyItems.items.map((elem, index) => (
           <WhyCard number={index + 1} {...elem} key={`why-card-${index}`} />
         ))}
-        <FollowUsSection page={props.followUsData} />
       </Container>
-      <Footer page={props.footerData} />
     </StyledBlackWrapp>
   );
 };
@@ -59,8 +53,6 @@ export async function getStaticProps() {
     navData: page?.navBar,
     heroData: page?.heroBlock,
     whyItems: page?.whyBlockCollection,
-    followUsData: page?.followUsBlock,
-    footerData: page?.footer,
   };
   return {
     props,

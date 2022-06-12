@@ -3,13 +3,13 @@ import * as Types from "../types";
 import gql from "graphql-tag";
 import * as Urql from "urql";
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type CfpQueryQueryVariables = Types.Exact<{
+export type FooterQueryQueryVariables = Types.Exact<{
   id: Types.Scalars["String"];
   locale: Types.Scalars["String"];
   isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
 
-export type CfpQueryQuery = {
+export type FooterQueryQuery = {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
@@ -37,25 +37,6 @@ export type CfpQueryQuery = {
         json: any;
       } | null;
     } | null;
-    heroBlock?: {
-      __typename?: "HeroBlock";
-      tile?: string | null;
-      firstSubtitle?: string | null;
-      secondSubtitle?: string | null;
-      date?: string | null;
-      ctaUrl?: string | null;
-      ctaText?: string | null;
-      description?: { __typename?: "HeroBlockDescription"; json: any } | null;
-      secondDescription?: {
-        __typename?: "HeroBlockSecondDescription";
-        json: any;
-      } | null;
-      background?: {
-        __typename?: "Asset";
-        title?: string | null;
-        url?: string | null;
-      } | null;
-    } | null;
     followUsBlock?: {
       __typename?: "FollowUsBlock";
       title?: string | null;
@@ -81,11 +62,19 @@ export type CfpQueryQuery = {
         } | null>;
       } | null;
     } | null;
+    subscribeBlock?: {
+      __typename?: "SubscribeBlock";
+      title?: string | null;
+    } | null;
   } | null;
 };
 
-export const CfpQueryDocument = gql`
-  query CFPQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {
+export const FooterQueryDocument = gql`
+  query FooterQuery(
+    $id: String!
+    $locale: String!
+    $isPreview: Boolean = false
+  ) {
     page(id: $id, locale: $locale, preview: $isPreview) {
       navBar {
         linksCollection(limit: 20) {
@@ -105,24 +94,6 @@ export const CfpQueryDocument = gql`
         }
         description {
           json
-        }
-      }
-      heroBlock {
-        tile
-        firstSubtitle
-        secondSubtitle
-        description {
-          json
-        }
-        secondDescription {
-          json
-        }
-        date
-        ctaUrl
-        ctaText
-        background {
-          title
-          url
         }
       }
       followUsBlock {
@@ -148,12 +119,18 @@ export const CfpQueryDocument = gql`
           }
         }
       }
+      subscribeBlock {
+        title
+      }
     }
   }
 `;
 
-export function useCfpQueryQuery(
-  options: Omit<Urql.UseQueryArgs<CfpQueryQueryVariables>, "query">
+export function useFooterQueryQuery(
+  options: Omit<Urql.UseQueryArgs<FooterQueryQueryVariables>, "query">
 ) {
-  return Urql.useQuery<CfpQueryQuery>({ query: CfpQueryDocument, ...options });
+  return Urql.useQuery<FooterQueryQuery>({
+    query: FooterQueryDocument,
+    ...options,
+  });
 }

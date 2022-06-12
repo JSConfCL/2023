@@ -10,6 +10,15 @@ query WhyQuery {
           link
         }
       }
+      buttonsCollection(limit: 20) {
+        items {
+          contenido
+          link
+        }
+      }
+      description {
+        json
+      }
     }
     heroBlock {
       tile
@@ -30,6 +39,10 @@ query WhyQuery {
           json
         }
         icon {
+          url
+          description
+        }
+        fullImage {
           url
           description
         }

@@ -10,7 +10,6 @@ import { urlQlient } from "../src/graphql/urql";
 import FollowUsSection from "../src/Components/sections/FollowUsSection";
 import { ParseQuery } from "../src/helpers/types";
 import { NavBar } from "../src/Components/NavBar/NavBar";
-import { Footer } from "../src/Components/Footer/Footer";
 import BannerSponsor from "../src/Components/Banner/Sponsor";
 import SponsorCard from "../src/Components/Card/Sponsor";
 
@@ -19,7 +18,6 @@ type Page = ParseQuery<SponsorQueryQuery["page"]>;
 export type PageProps = {
   navData: Page["navBar"];
   followUsData: Page["followUsBlock"];
-  footerData: Page["footer"];
   heroData: Page["heroBlock"];
   sponsors: Page["sponsorTypeCollection"];
 };
@@ -49,7 +47,6 @@ const OnSitePage: NextPage<PageProps> = (props) => {
         ))}
         {props.followUsData && <FollowUsSection page={props.followUsData} />}
       </Container>
-      {props.footerData && <Footer page={props.footerData} />}
     </StyledBlackWrapp>
   );
 };
@@ -71,7 +68,6 @@ export async function getStaticProps() {
     navData: page?.navBar,
     heroData: page?.heroBlock,
     followUsData: page?.followUsBlock,
-    footerData: page?.footer,
     sponsors: page?.sponsorTypeCollection,
   };
   return {
