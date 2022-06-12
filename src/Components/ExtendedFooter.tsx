@@ -26,6 +26,7 @@ const FlexRow = styled.div`
   max-width: 1440px;
   width: 100vw;
   align-self: flex-start;
+  padding: 16px;
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 
   @media (min-width: 769px) {

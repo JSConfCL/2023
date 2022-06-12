@@ -17,18 +17,18 @@ const Container = styled.section`
   flex-direction: row;
   width: 100%;
   max-width: 1440px;
-  gap: 32px 16px;
-  padding: 16px;
   justify-content: flex-start;
+  align-items: flex-start;
   flex-wrap: wrap;
 
   > h2 {
     padding: 48px 0px;
+    font-size: 32px;
+    line-height: 58px;
   }
 
   @media (min-width: 769px) {
-    padding: 48px;
-    gap: 32px 32px;
+    width: 50%;
     justify-content: flex-start;
   }
 `;
@@ -82,6 +82,7 @@ const EmailInput = styled.input(
 const ErrorMessage = styled.p(
   ({ theme }) => `
   margin: 12px 0;
+  min-height: 20px;
   color: ${theme.colors.jsconfRed}
 `
 );
@@ -197,7 +198,7 @@ const SubscribeSection = (props: Props) => {
 
   return (
     <Container>
-      <H2 whileHover={titleAnimation}>{props.page.title}</H2>
+      <H2 whileHover={titleAnimation}>{props?.page?.title}</H2>
       <Form onSubmit={handleSubmit(onSubmit)} ref={formElement}>
         <Fieldset>
           <EmailInput

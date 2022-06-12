@@ -17,20 +17,23 @@ const Container = styled.section`
   flex-direction: column;
   width: 100%;
   max-width: 1440px;
-  gap: 0px 32px;
-  padding: 16px;
   justify-content: space-between;
+  align-items: flex-start;
+  min-height: 10px;
 
   > h2 {
     padding: 48px 0px;
+    font-size: 32px;
+    line-height: 58px;
   }
 
   @media (min-width: 769px) {
-    padding: 48px;
+    width: 50%;
+    min-height: 280px;
   }
 
   @media (min-width: 1024px) {
-    flex-direction: column;
+    min-height: 240px;
   }
 `;
 
@@ -39,10 +42,14 @@ const Flex = styled.section`
   flex-direction: row;
   width: 100%;
   align-items: center;
-  justify-content: space-between;
+  gap: 32px;
+
+  @media (min-width: 769px) {
+    padding-bottom: 46px;
+  }
 
   @media (min-width: 1024px) {
-    width: 30vw;
+    padding-bottom: 6px;
   }
 `;
 
