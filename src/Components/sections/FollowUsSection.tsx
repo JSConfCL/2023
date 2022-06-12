@@ -1,9 +1,15 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { Get } from "type-fest";
+
+import { FooterQueryQuery } from "../../graphql/footer.generated";
 import Image from "../core/Image";
 
 import { H2 } from "../core/Typography";
-import { PageProps } from "../../../pages";
+
+type Props = {
+  page: Get<FooterQueryQuery, "page.followUsBlock">;
+};
 
 const Container = styled.section`
   align-self: center;
@@ -48,22 +54,22 @@ const titleAnimation = {
   },
 };
 
-const FollowUsSection = (props: { page: PageProps["followUsData"] }) => (
+const FollowUsSection = (props: Props) => (
   <Container>
-    <H2 whileHover={titleAnimation}>{props.page.title}</H2>
+    <H2 whileHover={titleAnimation}>{props.page?.title}</H2>
 
     <Flex>
-      {props.page.socialNetworksCollection.items.map((props, index) => (
+      {props.page?.socialNetworksCollection?.items.map((props, index) => (
         <a
           target="_blank"
           rel="noreferrer"
-          href={props.url}
+          href={props?.url!}
           key={`social-${index}`}
         >
           <Image
             key={`logo-${index}`}
-            mobile={props.icon?.url!}
-            alt={`${props.name} logo`}
+            mobile={props?.icon?.url!}
+            alt={`${props?.name} logo`}
             style={{ width: 40 }}
           />
         </a>

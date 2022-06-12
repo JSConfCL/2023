@@ -2,12 +2,9 @@ import type { NextPage } from "next";
 import styled from "@emotion/styled";
 
 import {
-  FooterQueryDocument,
   FooterQueryQuery,
-  FooterQueryQueryVariables,
   useFooterQueryQuery,
 } from "../graphql/footer.generated";
-import { urlQlient } from "../graphql/urql";
 
 import { ParseQuery } from "../helpers/types";
 import FollowUsSection from "../Components/sections/FollowUsSection";
@@ -17,10 +14,10 @@ import SubscribeSection from "../Components/sections/SubscribeSection";
 type Page = ParseQuery<FooterQueryQuery["page"]>;
 
 export type PageProps = {
-  navData: Page["navBar"];
-  followUsData: Page["followUsBlock"];
-  footerData: Page["footer"];
-  subscribeData: Page["subscribeBlock"];
+  navBar: Page["navBar"];
+  followUsBlock: Page["followUsBlock"];
+  footer: Page["footer"];
+  subscribeBlock: Page["subscribeBlock"];
 };
 
 const FlexRow = styled.div`
@@ -47,7 +44,7 @@ const Container = styled.div`
 `;
 
 const ExtendedFooter = () => {
-  const [{ data, fetching, error }] = useFooterQueryQuery({
+  const [{ data }] = useFooterQueryQuery({
     variables: {
       id: "45QeQG01Mx67Ng2XNWksmo",
       locale: "es-CL",
@@ -60,10 +57,10 @@ const ExtendedFooter = () => {
   return (
     <Container>
       <FlexRow>
-        <FollowUsSection page={data?.page.followUsBlock!} />
-        <SubscribeSection page={data.page.subscribeBlock!} />
+        <FollowUsSection page={data.page.followUsBlock} />
+        <SubscribeSection page={data.page.subscribeBlock} />
       </FlexRow>
-      <Footer page={data?.page.footer!} />
+      <Footer page={data.page.footer} />
     </Container>
   );
 };

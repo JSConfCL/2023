@@ -31,7 +31,7 @@ type HowCardProps =
       subtext?: string | undefined;
       mapa?: {
         lat?: number | undefined;
-        lng?: number | undefined;
+        lon?: number | undefined;
       };
     }
   | undefined;
@@ -167,7 +167,7 @@ const StyledWrapperMap = styled.section`
   }
 `;
 
-const StyledMarker = styled.section`
+const StyledMarker = styled.section<{ lat: number; lng: number }>`
   background-color: red;
   width: 5px;
   height: 5px;

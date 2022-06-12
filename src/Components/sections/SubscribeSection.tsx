@@ -3,8 +3,13 @@ import styled from "@emotion/styled";
 import { FieldValues, useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { Get } from "type-fest";
 import { H2, H3 } from "../core/Typography";
-import { PageProps } from "../../../pages";
+import { FooterQueryQuery } from "../../graphql/footer.generated";
+
+type Props = {
+  page: Get<FooterQueryQuery, "page.subscribeBlock">;
+};
 
 const Container = styled.section`
   align-self: center;
@@ -129,10 +134,7 @@ const titleAnimation = {
   },
 };
 
-interface SubscribeSectionPage {
-  page: PageProps["subscribeData"];
-}
-const SubscribeSection = (props: SubscribeSectionPage) => {
+const SubscribeSection = (props: Props) => {
   const messages = {
     loading: "Enviando ...",
     success: "Enviado",
@@ -202,7 +204,7 @@ const SubscribeSection = (props: SubscribeSectionPage) => {
             placeholder="Tu Email"
             {...register("email", emailValidation)}
           />
-          <SubmitButton type="submit" value={props.page.title} />
+          <SubmitButton type="submit" value={props?.page?.title!} />
 
           <AnimatePresence>
             {isSubmiting && (

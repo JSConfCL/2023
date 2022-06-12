@@ -39,7 +39,7 @@ const OnlinePage: NextPage<PageProps> = (props) => {
         {props.navData && <NavBar {...props.navData} />}
         {props.howItems?.items?.map((elem, index) =>
           elem.sectionsCollection?.items.map((item, subIndex) => (
-            <HowCard {...item} number={subIndex + 1} key={subIndex} />
+            <HowCard {...item} number={subIndex + 1} key={subIndex} GM_KEY="" />
           ))
         )}
       </Container>

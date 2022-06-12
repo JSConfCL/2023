@@ -68,7 +68,7 @@ export async function getStaticProps() {
     navData: page?.navBar,
     howItems: page?.howBlockCollection,
     followUsData: page?.followUsBlock,
-    GM_KEY: process.env.NEXT_PUBLIC_CONTENTFUL_API_GOOGLE_MAP,
+    GM_KEY: process.env.NEXT_PUBLIC_CONTENTFUL_API_GOOGLE_MAP || "",
   };
   return {
     props,

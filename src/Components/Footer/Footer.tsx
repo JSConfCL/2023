@@ -2,11 +2,12 @@
 import styled from "@emotion/styled";
 import React from "react";
 import Link from "next/link";
+import { Get } from "type-fest";
 import { JSConfLogo } from "../svgs/logo";
-import { PageProps } from "../../../pages";
+import { FooterQueryQuery } from "../../graphql/footer.generated";
 
 type Props = {
-  page: PageProps["footerData"];
+  page: Get<FooterQueryQuery, "page.footer">;
 };
 
 const StyledFooter = styled.footer(
@@ -70,7 +71,7 @@ const StyledJSConfLogoWrapper = styled.div`
   aspect-ratio: 1/1;
 `;
 
-export const Footer = (props: Props) => {
+export const Footer = (page: Props) => {
   return (
     <StyledFooter>
       <StyledWrapper>
@@ -78,10 +79,10 @@ export const Footer = (props: Props) => {
           <JSConfLogo />
         </StyledJSConfLogoWrapper>
         <StyledLinksContainer>
-          {props.page.linksCollection.items.map((item) => {
+          {page.page?.linksCollection?.items.map((item) => {
             return (
-              <StyledLink key={item.sys.id}>
-                <Link href={item.link!}>{item.contenido}</Link>
+              <StyledLink key={item?.sys.id}>
+                <Link href={item?.link!}>{item?.contenido}</Link>
               </StyledLink>
             );
           })}
