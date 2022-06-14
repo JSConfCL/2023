@@ -53,6 +53,12 @@ const Flex = styled.section`
   }
 `;
 
+const StyledA = styled.a`
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
 const titleAnimation = {
   scale: 1.01,
   transition: {
@@ -67,7 +73,7 @@ const FollowUsSection = (props: Props) => (
 
     <Flex>
       {props.page?.socialNetworksCollection?.items.map((props, index) => (
-        <a
+        <StyledA
           target="_blank"
           rel="noreferrer"
           href={props?.url!}
@@ -79,7 +85,7 @@ const FollowUsSection = (props: Props) => (
             alt={`${props?.name} logo`}
             style={{ width: 40 }}
           />
-        </a>
+        </StyledA>
       ))}
     </Flex>
   </Container>
