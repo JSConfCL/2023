@@ -70,11 +70,14 @@ const BlockDescription = styled(motion.section)`
   padding: 16px;
   gap: 8px 0px;
   border-radius: 0px 32px 0px 0px;
-  background: rgba(244, 91, 105, 0.2);
+  background: rgba(244, 91, 105, 0.7);
 
   ul {
-    padding: 16px;
+    padding: 16px 0px 16px 16px;
     list-style: disc;
+    p {
+      font-size: 18px;
+    }
   }
 
   @media (min-width: 769px) {
@@ -97,7 +100,7 @@ const Flex = styled.section`
 const descriptionVariant = {
   initial: {},
   hover: {
-    backgroundColor: "rgba(244, 91, 105, 0.7)",
+    backgroundColor: "rgba(209, 62, 74, 0.879)",
     transition: {
       duration: 0.2,
       opacity: {

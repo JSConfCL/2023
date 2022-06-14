@@ -63,6 +63,9 @@ const StyledLink = styled.li`
   font-weight: 400;
   font-family: "Koulen";
   cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
 const StyledJSConfLogoWrapper = styled.div`
@@ -82,7 +85,13 @@ export const Footer = (page: Props) => {
           {page.page?.linksCollection?.items.map((item) => {
             return (
               <StyledLink key={item?.sys.id}>
-                <Link href={item?.link!}>{item?.contenido}</Link>
+                {item?.isBlank ? (
+                  <Link href={item?.link!} passHref>
+                    <a target="_blank">{item?.contenido}</a>
+                  </Link>
+                ) : (
+                  <Link href={item?.link!}>{item?.contenido}</Link>
+                )}
               </StyledLink>
             );
           })}

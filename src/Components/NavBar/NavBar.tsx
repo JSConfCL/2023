@@ -61,6 +61,10 @@ const StyledLink = styled.li<{ isActive: string }>`
       isActive === "active" ? "0px 0px 2px 0px" : "0px"};
     color: inherit;
   }
+
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
 const StyledJSConfLogoWrapper = styled.div`
@@ -80,6 +84,7 @@ const StyledPortalWrapper = styled(motion.section)`
   flex-direction: column;
   padding: 29px 16px;
   font-size: 32px;
+  opacity: 0;
 
   > ul {
     display: flex;
@@ -140,7 +145,13 @@ const Menu = (props: Props) => {
             key={item.sys.id}
             isActive={item.link === pathname ? "active" : ""}
           >
-            <Link href={item.link!}>{item.contenido}</Link>
+            {item.isBlank ? (
+              <Link href={item.link!} passHref>
+                <a target="_blank">{item.contenido}</a>
+              </Link>
+            ) : (
+              <Link href={item.link!}>{item.contenido}</Link>
+            )}
           </StyledLink>
         );
       })}

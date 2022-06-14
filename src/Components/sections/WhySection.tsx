@@ -73,9 +73,10 @@ const Block = styled(motion.section)`
   width: fit-content;
   max-height: 390px;
   border-radius: 0px 32px 0px 0px;
-  background-color: rgba(240, 224, 64, 0.2);
+  background-color: rgba(30, 32, 25, 0.5);
 
   @media (min-width: 769px) {
+    background-color: rgba(240, 224, 64, 0.2);
   }
 `;
 

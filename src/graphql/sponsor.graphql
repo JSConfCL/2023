@@ -12,6 +12,7 @@ query SponsorQuery(
           }
           contenido
           link
+          isBlank
         }
       }
       buttonsCollection(limit: 20) {

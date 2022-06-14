@@ -8,6 +8,7 @@ query HowQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {
           }
           contenido
           link
+          isBlank
         }
       }
       buttonsCollection(limit: 20) {

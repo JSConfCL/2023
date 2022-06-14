@@ -17,6 +17,7 @@ export type HomeQueryQuery = {
           __typename?: "LinkItem";
           contenido?: string | null;
           link?: string | null;
+          isBlank?: boolean | null;
           sys: { __typename?: "Sys"; id: string };
         } | null>;
       } | null;
@@ -144,6 +145,7 @@ export const HomeQueryDocument = gql`
             }
             contenido
             link
+            isBlank
           }
         }
         buttonsCollection(limit: 20) {
