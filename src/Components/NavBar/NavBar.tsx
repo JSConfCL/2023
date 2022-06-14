@@ -141,7 +141,13 @@ const Menu = (props: Props) => {
             key={item.sys.id}
             isActive={item.link === pathname ? "active" : ""}
           >
-            <Link href={item.link!}>{item.contenido}</Link>
+            {item.isBlank ? (
+              <Link href={item.link!} passHref>
+                <a target="_blank">{item.contenido}</a>
+              </Link>
+            ) : (
+              <Link href={item.link!}>{item.contenido}</Link>
+            )}
           </StyledLink>
         );
       })}

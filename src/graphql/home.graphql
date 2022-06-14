@@ -8,6 +8,7 @@ query HomeQuery {
           }
           contenido
           link
+          isBlank
         }
       }
       buttonsCollection(limit: 20) {
