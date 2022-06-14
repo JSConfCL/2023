@@ -80,6 +80,7 @@ const StyledPortalWrapper = styled(motion.section)`
   flex-direction: column;
   padding: 29px 16px;
   font-size: 32px;
+  opacity: 0;
 
   > ul {
     display: flex;
