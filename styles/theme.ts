@@ -65,7 +65,7 @@ export const jsconfTheme: Theme = {
           borderWidth: 1,
           borderStyle: "solid",
           borderTopRightRadius: 24,
-          onHoverColor: colors.jsconfYellow,
+          onHoverColor: colors.jsconfBlack,
         },
         secondary: {
           backgroundColor: colors.black,
