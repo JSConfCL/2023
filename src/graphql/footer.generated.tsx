@@ -59,6 +59,7 @@ export type FooterQueryQuery = {
           __typename?: "LinkItem";
           contenido?: string | null;
           link?: string | null;
+          isBlank?: boolean | null;
           sys: { __typename?: "Sys"; id: string };
         } | null>;
       } | null;
@@ -118,6 +119,7 @@ export const FooterQueryDocument = gql`
             }
             contenido
             link
+            isBlank
           }
         }
       }

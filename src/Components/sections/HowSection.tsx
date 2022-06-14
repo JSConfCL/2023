@@ -73,8 +73,11 @@ const BlockDescription = styled(motion.section)`
   background: rgba(244, 91, 105, 0.7);
 
   ul {
-    padding: 16px;
+    padding: 16px 0px 16px 16px;
     list-style: disc;
+    p {
+      font-size: 18px;
+    }
   }
 
   @media (min-width: 769px) {

@@ -61,6 +61,10 @@ const StyledLink = styled.li<{ isActive: string }>`
       isActive === "active" ? "0px 0px 2px 0px" : "0px"};
     color: inherit;
   }
+
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
 const StyledJSConfLogoWrapper = styled.div`
