@@ -1,12 +1,14 @@
+import { lazy, Suspense } from "react";
 import type { NextPage } from "next";
 import styled from "@emotion/styled";
 
 import { WhyQueryDocument, WhyQueryQuery } from "../src/graphql/why.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
-import { NavBar } from "../src/Components/NavBar/NavBar";
-import WhyBanner from "../src/Components/Banner/Why";
-import WhyCard from "../src/Components/Card/Why";
+
+const NavBar = lazy(() => import("../src/Components/NavBar/NavBar"));
+const WhyBanner = lazy(() => import("../src/Components/Banner/Why"));
+const WhyCard = lazy(() => import("../src/Components/Card/Why"));
 
 type Page = ParseQuery<WhyQueryQuery["page"]>;
 
@@ -34,10 +36,16 @@ const Home: NextPage<PageProps> = (props) => {
   return (
     <StyledBlackWrapp>
       <Container>
-        <NavBar {...props.navData} />
-        <WhyBanner {...props.heroData} />
+        <Suspense fallback={null}>
+          <NavBar {...props.navData} />
+        </Suspense>
+        <Suspense fallback={null}>
+          <WhyBanner {...props.heroData} />
+        </Suspense>
         {props.whyItems.items.map((elem, index) => (
-          <WhyCard number={index + 1} {...elem} key={`why-card-${index}`} />
+          <Suspense key={`why-card-${index}`} fallback={null}>
+            <WhyCard number={index + 1} {...elem} key={`why-card-${index}`} />
+          </Suspense>
         ))}
       </Container>
     </StyledBlackWrapp>

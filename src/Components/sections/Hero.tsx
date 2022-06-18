@@ -1,16 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-
-import { css, Global } from "@emotion/react";
 import styled from "@emotion/styled";
 import { lazy, Suspense } from "react";
-import { loadFull } from "tsparticles";
-
-import { Engine } from "tsparticles-engine";
 import { PageProps } from "../../../pages";
 import { SecondaryStyledLink } from "../Links";
-import config from "./config";
 
-const Particles = lazy(() => import("react-tsparticles"));
+const Particles = lazy(() => import("../Particles"));
+
 const NavBar = lazy(() => import("../NavBar/NavBar"));
 
 const StyledWrapper = styled.section(({ theme }) => ({
@@ -175,39 +170,10 @@ export const Hero = ({
   heroData: PageProps["heroData"];
   navData: PageProps["navData"];
 }) => {
-  const particlesInit = async (main: Engine) => {
-    await loadFull(main);
-  };
-
   return (
     <StyledWrapper>
-      <Global
-        styles={[
-          css`
-            #tsparticles-container {
-              position: absolute;
-              top: 0px;
-              bottom: 0px;
-              left: 0px;
-              right: 0px;
-              padding: 0px;
-              margin: 0px;
-              z-index: 0;
-            }
-          `,
-        ]}
-      />
-      <Suspense fallback={null}>
-        <Particles
-          id="tsparticles-container"
-          loaded={async (container) => {}}
-          init={particlesInit}
-          options={config}
-        />
-      </Suspense>
       <Suspense fallback={null}>
         <StyledBackground
-          loading="lazy"
           src={`${heroData.background.url}?fm=webp`}
           alt={heroData.background.title}
         />
@@ -215,7 +181,9 @@ export const Hero = ({
       <Suspense fallback={null}>
         <NavBar {...navData} />
       </Suspense>
-
+      <Suspense>
+        <Particles />
+      </Suspense>
       <StyledForegroundWrapper>
         <StyledLeftSide>
           <StyledTitle>{heroData.tile}</StyledTitle>

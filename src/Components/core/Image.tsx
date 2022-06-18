@@ -19,8 +19,9 @@ const Image = (props: {
   alt: string;
   className?: string;
   params?: string;
+  loading?: "lazy" | "eager";
 }) => {
-  const { params = "" } = props;
+  const { params = "", loading = "lazy" } = props;
   return (
     <Picture className={props.className}>
       <source
@@ -32,7 +33,7 @@ const Image = (props: {
         srcSet={`${props.desktop || props.mobile}?fm=webp${params}`}
       />
       <Img
-        loading="lazy"
+        loading={loading}
         src={`${props.desktop || props.mobile}?fm=webp${params}`}
         style={props.style}
         initial={{ opacity: 0 }}

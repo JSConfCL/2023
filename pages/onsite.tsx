@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import type { NextPage } from "next";
 import styled from "@emotion/styled";
 
@@ -8,8 +9,9 @@ import {
 } from "../src/graphql/how.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
-import { NavBar } from "../src/Components/NavBar/NavBar";
-import HowCard from "../src/Components/Card/How";
+
+const NavBar = lazy(() => import("../src/Components/NavBar/NavBar"));
+const HowCard = lazy(() => import("../src/Components/Card/How"));
 
 type Page = ParseQuery<HowQueryQuery["page"]>;
 
@@ -38,15 +40,21 @@ const OnSitePage: NextPage<PageProps> = (props) => {
   return (
     <StyledBlackWrapp>
       <Container>
-        {props.navData && <NavBar {...props.navData} />}
+        {props.navData && (
+          <Suspense fallback={null}>
+            <NavBar {...props.navData} />
+          </Suspense>
+        )}
         {props.howItems?.items?.map((elem, index) =>
           elem.sectionsCollection?.items.map((item, subIndex) => (
-            <HowCard
-              {...item}
-              number={subIndex + 1}
-              key={subIndex}
-              GM_KEY={props.GM_KEY}
-            />
+            <Suspense key={subIndex} fallback={null}>
+              <HowCard
+                {...item}
+                number={subIndex + 1}
+                key={subIndex}
+                GM_KEY={props.GM_KEY}
+              />
+            </Suspense>
           ))
         )}
       </Container>

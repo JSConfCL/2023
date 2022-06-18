@@ -1,7 +1,9 @@
+import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { PageProps } from "../../../pages/why";
 import { H1 } from "../core/Typography";
-import Image from "../core/Image";
+
+const Image = lazy(() => import("../core/Image"));
 
 const Container = styled.section`
   display: flex;
@@ -66,18 +68,20 @@ const BannerWhy = (props: PageProps["heroData"]) => {
   return (
     <Container>
       <H1 color="#F45B69">{props.tile}</H1>
-      <Image
-        mobile={props?.background?.url!}
-        alt={props?.background?.title! || ""}
-        style={{
-          position: "absolute",
-          maxWidth: "864px",
-          borderRadius: "0px 32px 0px 0px",
-          aspectRatio: "864 / 273",
-          objectFit: "cover",
-          zIndex: 2,
-        }}
-      />
+      <Suspense fallback={null}>
+        <Image
+          mobile={props?.background?.url!}
+          alt={props?.background?.title! || ""}
+          style={{
+            position: "absolute",
+            maxWidth: "864px",
+            borderRadius: "0px 32px 0px 0px",
+            aspectRatio: "864 / 273",
+            objectFit: "cover",
+            zIndex: 2,
+          }}
+        />
+      </Suspense>
     </Container>
   );
 };

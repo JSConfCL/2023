@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import { GlobalStyles } from "../styles/globalStyles";
 import { Provider } from "urql";
 import type { AppProps } from "next/app";
@@ -20,7 +20,9 @@ function MyApp(appProps: AppProps) {
         <ThemeProvider theme={jsconfTheme}>
           <GlobalStyles />
           <Component {...pageProps} />
-          <ExtendedFooter />
+          <Suspense fallback={null}>
+            <ExtendedFooter />
+          </Suspense>
         </ThemeProvider>
       </Provider>
     </CacheProvider>

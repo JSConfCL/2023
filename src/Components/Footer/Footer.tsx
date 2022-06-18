@@ -105,3 +105,5 @@ export const Footer = (page: Props) => {
     </StyledFooter>
   );
 };
+
+export default Footer;

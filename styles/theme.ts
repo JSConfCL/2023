@@ -1,5 +1,4 @@
 import { Theme } from "@emotion/react";
-import { lighten } from "polished";
 
 const colors = {
   jsconfBlack: "#1E2019",
