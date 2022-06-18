@@ -18,17 +18,22 @@ const Image = (props: {
   style?: any;
   alt: string;
   className?: string;
+  params?: string;
 }) => {
+  const { params = "" } = props;
   return (
     <Picture className={props.className}>
-      <source media="(max-width: 768px)" srcSet={`${props.mobile}?fm=webp`} />
+      <source
+        media="(max-width: 768px)"
+        srcSet={`${props.mobile}?fm=webp${params}`}
+      />
       <source
         media="(min-width: 769px)"
-        srcSet={`${props.desktop || props.mobile}?fm=webp`}
+        srcSet={`${props.desktop || props.mobile}?fm=webp${params}`}
       />
       <Img
         loading="lazy"
-        src={`${props.desktop || props.mobile}?fm=webp`}
+        src={`${props.desktop || props.mobile}?fm=webp${params}`}
         style={props.style}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { duration: 0.5 } }}

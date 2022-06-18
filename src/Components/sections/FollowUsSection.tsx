@@ -83,7 +83,8 @@ const FollowUsSection = (props: Props) => (
             key={`logo-${index}`}
             mobile={props?.icon?.url!}
             alt={`${props?.name} logo`}
-            style={{ width: 40 }}
+            params="&w=40"
+            style={{ width: "40px", aspectRatio: "40 / 40" }}
           />
         </StyledA>
       ))}
