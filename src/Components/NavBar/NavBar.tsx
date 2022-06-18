@@ -1,17 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
+import { lazy, Suspense } from "react";
+import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
 import React, { useEffect } from "react";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
-import FeatherIcon from "feather-icons-react";
+
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { Portal } from "react-portal";
+
 import useMediaQuery from "../../helpers/useMediaQuery";
-import Description from "../core/Description";
-import { JSConfLogo } from "../svgs/logo";
 import { PageProps } from "../../../pages";
 import { SecondaryStyledLink } from "../Links";
+
+const FeatherIcon = lazy(() => import("feather-icons-react"));
+const JSConfLogo = dynamic(() => import("../svgs/logo"));
+const Description = lazy(() => import("../core/Description"));
 
 type Props = PageProps["navData"];
 type OnClickProps = {
@@ -146,7 +151,7 @@ const Menu = (props: Props) => {
             isActive={item.link === pathname ? "active" : ""}
           >
             {item.isBlank ? (
-              <Link href={item.link!} passHref>
+              <Link rel="preconnect" href={item.link!} passHref>
                 <a target="_blank">{item.contenido}</a>
               </Link>
             ) : (
@@ -164,7 +169,9 @@ const MobileMenu = (props: Props & OnClickProps) => {
     <Portal>
       <StyledPortalWrapper animate={props.animate}>
         <Flex>
-          <JSConfLogo />
+          <Suspense fallback={<div>Loading...</div>}>
+            <JSConfLogo />
+          </Suspense>
           <FeatherIcon
             icon="x"
             onClick={() => props.onClick(false)}
@@ -174,7 +181,9 @@ const MobileMenu = (props: Props & OnClickProps) => {
 
         <Menu {...props} />
         <StyledBottom>
-          <Description data={props?.description?.json!} />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Description data={props?.description?.json!} />
+          </Suspense>
           {props.buttonsCollection.items.map((button, index) => (
             <SecondaryStyledLink
               key={`button-mobile-${index}`}

@@ -1,7 +1,5 @@
-import { css, SerializedStyles } from "@emotion/react";
 import styled from "@emotion/styled";
-import { darken, lighten, opacify } from "polished";
-import { jsconfTheme } from "../../../styles/theme";
+import { lighten } from "polished";
 import { ArrowIcon } from "../svgs/arrow";
 
 const baseStyling = {

@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { Suspense } from "react";
 import styled from "@emotion/styled";
 import React from "react";
 import Link from "next/link";
@@ -79,22 +80,26 @@ export const Footer = (page: Props) => {
     <StyledFooter>
       <StyledWrapper>
         <StyledJSConfLogoWrapper>
-          <JSConfLogo />
+          <Suspense fallback={<div>Loading...</div>}>
+            <JSConfLogo />
+          </Suspense>
         </StyledJSConfLogoWrapper>
         <StyledLinksContainer>
-          {page.page?.linksCollection?.items.map((item) => {
-            return (
-              <StyledLink key={item?.sys.id}>
-                {item?.isBlank ? (
-                  <Link href={item?.link!} passHref>
-                    <a target="_blank">{item?.contenido}</a>
-                  </Link>
-                ) : (
-                  <Link href={item?.link!}>{item?.contenido}</Link>
-                )}
-              </StyledLink>
-            );
-          })}
+          <Suspense fallback={<div>Loading...</div>}>
+            {page.page?.linksCollection?.items.map((item) => {
+              return (
+                <StyledLink key={item?.sys.id}>
+                  {item?.isBlank ? (
+                    <Link rel="preconnect" href={item?.link!} passHref>
+                      <a target="_blank">{item?.contenido}</a>
+                    </Link>
+                  ) : (
+                    <Link href={item?.link!}>{item?.contenido}</Link>
+                  )}
+                </StyledLink>
+              );
+            })}
+          </Suspense>
         </StyledLinksContainer>
       </StyledWrapper>
     </StyledFooter>

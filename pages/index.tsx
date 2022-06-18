@@ -44,7 +44,11 @@ const Home: NextPage<PageProps> = (props) => {
     <Container>
       <Suspense fallback={<div>Loading...</div>}>
         <Seo {...props.seo} />
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
         <Hero heroData={props.heroData} navData={props.navData} />
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
         <StyledBlackWrapp>
           {props.whyItems?.items && <WhySection page={props.whyItems} />}
           {props.howItems && <HowSection page={props.howItems} />}

@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+
 import { css, Global } from "@emotion/react";
 import styled from "@emotion/styled";
 import { lazy, Suspense } from "react";
@@ -196,20 +197,25 @@ export const Hero = ({
           `,
         ]}
       />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={null}>
         <Particles
           id="tsparticles-container"
           loaded={async (container) => {}}
           init={particlesInit}
           options={config}
         />
+      </Suspense>
+      <Suspense fallback={null}>
         <StyledBackground
           loading="lazy"
           src={`${heroData.background.url}?fm=webp`}
           alt={heroData.background.title}
         />
       </Suspense>
-      <NavBar {...navData} />
+      <Suspense fallback={null}>
+        <NavBar {...navData} />
+      </Suspense>
+
       <StyledForegroundWrapper>
         <StyledLeftSide>
           <StyledTitle>{heroData.tile}</StyledTitle>

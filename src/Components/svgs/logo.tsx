@@ -12,3 +12,5 @@ export const JSConfLogo = () => {
     </svg>
   );
 };
+
+export default JSConfLogo;

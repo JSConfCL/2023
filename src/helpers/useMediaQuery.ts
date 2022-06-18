@@ -8,7 +8,7 @@ export default function useMediaQuery(query: string) {
       setMatches(mediaQuery.matches);
       // TODO: Fix event
       const handler = (event: any) => setMatches(event.matches);
-      mediaQuery.addEventListener("change", handler);
+      mediaQuery.addEventListener("change", handler, { passive: true });
       return () => mediaQuery.removeEventListener("change", handler);
     },
     [] // Empty array ensures effect is only run on mount and unmount
