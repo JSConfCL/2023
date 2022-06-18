@@ -21,6 +21,11 @@ query HomeQuery {
         json
       }
     }
+    seo {
+      title
+      description
+      metadata
+    }
     heroBlock {
       tile
       firstSubtitle

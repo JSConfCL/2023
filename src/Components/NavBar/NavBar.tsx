@@ -246,9 +246,13 @@ export const NavBar = (props: Props) => {
           {isMobile && (
             <FeatherIcon icon="menu" onClick={() => handleOpen(true)} />
           )}
-          {<MobileMenu {...props} onClick={handleOpen} animate={controls} />}
+          {isMobile && (
+            <MobileMenu {...props} onClick={handleOpen} animate={controls} />
+          )}
         </StyledWrapper>
       </AnimatePresence>
     </StyledNav>
   );
 };
+
+export default NavBar;

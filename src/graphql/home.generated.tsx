@@ -34,6 +34,12 @@ export type HomeQueryQuery = {
         json: any;
       } | null;
     } | null;
+    seo?: {
+      __typename?: "Seo";
+      title?: string | null;
+      description?: string | null;
+      metadata?: any | null;
+    } | null;
     heroBlock?: {
       __typename?: "HeroBlock";
       tile?: string | null;
@@ -157,6 +163,11 @@ export const HomeQueryDocument = gql`
         description {
           json
         }
+      }
+      seo {
+        title
+        description
+        metadata
       }
       heroBlock {
         tile

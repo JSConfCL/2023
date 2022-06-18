@@ -21,13 +21,14 @@ const Image = (props: {
 }) => {
   return (
     <Picture className={props.className}>
-      <source media="(max-width: 768px)" srcSet={props.mobile} />
+      <source media="(max-width: 768px)" srcSet={`${props.mobile}?fm=webp`} />
       <source
         media="(min-width: 769px)"
-        srcSet={props.desktop || props.mobile}
+        srcSet={`${props.desktop || props.mobile}?fm=webp`}
       />
       <Img
-        src={props.desktop || props.mobile}
+        loading="lazy"
+        src={`${props.desktop || props.mobile}?fm=webp`}
         style={props.style}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { duration: 0.5 } }}

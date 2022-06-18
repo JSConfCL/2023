@@ -1,3 +1,4 @@
+import { lazy } from "react";
 import { GlobalStyles } from "../styles/globalStyles";
 import { Provider } from "urql";
 import type { AppProps } from "next/app";
@@ -5,7 +6,8 @@ import { CacheProvider, ThemeProvider } from "@emotion/react";
 import { jsconfTheme } from "../styles/theme";
 import createCache from "@emotion/cache";
 import { urlQlient } from "../src/graphql/urql";
-import ExtendedFooter from "../src/Components/ExtendedFooter";
+
+const ExtendedFooter = lazy(() => import("../src/Components/ExtendedFooter"));
 
 const cache = createCache({ key: "next" });
 

@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const withCss = require("@zeit/next-css");
+const withPurgeCss = require("next-purgecss");
 
 const nextConfig = {
   webpack(config) {
@@ -9,11 +11,14 @@ const nextConfig = {
 
     return config;
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   experimental: {
     emotion: true,
   },
   optimizeFonts: false,
+  optimization: {
+    mergeDuplicateChunks: true,
+  },
 };
 
-module.exports = nextConfig;
+module.exports = { ...withCss(withPurgeCss()), ...nextConfig };
