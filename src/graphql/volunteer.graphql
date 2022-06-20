@@ -1,0 +1,79 @@
+query VolunteerQuery {
+  page(id: "2X6aesEoId54kb4oEw4QCb", locale: "es-CL") {
+    navBar {
+      linksCollection(limit: 20) {
+        items {
+          sys {
+            id
+          }
+          contenido
+          link
+          isBlank
+        }
+      }
+      buttonsCollection(limit: 20) {
+        items {
+          contenido
+          link
+        }
+      }
+      description {
+        json
+      }
+    }
+    heroBlock {
+      tile
+      firstSubtitle
+      secondSubtitle
+      description {
+        json
+      }
+      date
+      ctaUrl
+      ctaText
+      background {
+        title
+        url
+      }
+    }
+    whyBlockCollection {
+      items {
+        title
+        description {
+          json
+        }
+        icon {
+          url
+          description
+        }
+        fullImage {
+          url
+          description
+        }
+      }
+    }
+    followUsBlock {
+      title
+      socialNetworksCollection(limit: 20) {
+        items {
+          name
+          url
+          icon {
+            url
+          }
+        }
+      }
+    }
+    footer {
+      linksCollection(limit: 20) {
+        items {
+          sys {
+            id
+          }
+          contenido
+          link
+        }
+      }
+    }
+  }
+}
