@@ -37,9 +37,7 @@ const StyledBlackWrapp = styled.section`
 const Home: NextPage<PageProps> = (props) => {
   return (
     <StyledBlackWrapp>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Seo {...props.seo} />
-      </Suspense>
+      <Seo {...props.seo} />
       <Container>
         <Suspense fallback={null}>
           <NavBar {...props.navData} />

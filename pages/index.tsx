@@ -9,6 +9,7 @@ import {
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 import Seo from "../src/Components/Seo";
+import EventSchema from "../src/Components/schema/event";
 
 const Hero = lazy(() => import("../src/Components/sections/Hero"));
 const WhySection = lazy(() => import("../src/Components/sections/WhySection"));
@@ -42,13 +43,12 @@ const StyledBlackWrapp = styled.section`
 const Home: NextPage<PageProps> = (props) => {
   return (
     <Container>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Seo {...props.seo} />
-      </Suspense>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Seo {...props.seo} />
+      <EventSchema />
+      <Suspense>
         <Hero heroData={props.heroData} navData={props.navData} />
       </Suspense>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense>
         <StyledBlackWrapp>
           {props.whyItems?.items && <WhySection page={props.whyItems} />}
           {props.howItems && <HowSection page={props.howItems} />}
