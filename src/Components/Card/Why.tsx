@@ -1,8 +1,10 @@
+import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { Document } from "@contentful/rich-text-types";
 import { H2 } from "../core/Typography";
-import Description from "../core/Description";
-import Image from "../core/Image";
+
+const Description = lazy(() => import("../core/Description"));
+const Image = lazy(() => import("../core/Image"));
 
 type WhyCardProps =
   | {
@@ -133,20 +135,24 @@ const WhyCard = (props: WhyCardProps) => {
     <Container direction={props?.number! % 2 === 0}>
       <WrapperDescription>
         <H2>{props?.title!}</H2>
-        <Description data={props?.description?.json!} />
+        <Suspense fallback={null}>
+          <Description data={props?.description?.json!} />
+        </Suspense>
         <HR />
       </WrapperDescription>
-      <Image
-        desktop={props?.fullImage?.url!}
-        mobile={props?.fullImage?.url!}
-        alt={props?.icon?.description! || ""}
-        style={{
-          borderRadius: "0px 32px 0px 0px",
-          aspectRatio: "611 / 390",
-          objectFit: "cover",
-          objectPosition: "center",
-        }}
-      />
+      <Suspense fallback={null}>
+        <Image
+          desktop={props?.fullImage?.url!}
+          mobile={props?.fullImage?.url!}
+          alt={props?.icon?.description! || ""}
+          style={{
+            borderRadius: "0px 32px 0px 0px",
+            aspectRatio: "611 / 390",
+            objectFit: "cover",
+            objectPosition: "center",
+          }}
+        />
+      </Suspense>
       <Number direction={props?.number! % 2 === 0}>0{props?.number!}</Number>
     </Container>
   );

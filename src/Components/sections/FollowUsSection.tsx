@@ -1,11 +1,10 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import styled from "@emotion/styled";
 import { Get } from "type-fest";
-
 import { FooterQueryQuery } from "../../graphql/footer.generated";
-import Image from "../core/Image";
-
 import { H2 } from "../core/Typography";
+
+const Image = lazy(() => import("../core/Image"));
 
 type Props = {
   page: Get<FooterQueryQuery, "page.followUsBlock">;
@@ -70,24 +69,28 @@ const titleAnimation = {
 const FollowUsSection = (props: Props) => (
   <Container>
     <H2 whileHover={titleAnimation}>{props.page?.title}</H2>
-
-    <Flex>
-      {props.page?.socialNetworksCollection?.items.map((props, index) => (
-        <StyledA
-          target="_blank"
-          rel="noreferrer"
-          href={props?.url!}
-          key={`social-${index}`}
-        >
-          <Image
-            key={`logo-${index}`}
-            mobile={props?.icon?.url!}
-            alt={`${props?.name} logo`}
-            style={{ width: 40 }}
-          />
-        </StyledA>
-      ))}
-    </Flex>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Flex>
+        {props.page?.socialNetworksCollection?.items.map((props, index) => (
+          <StyledA
+            target="_blank"
+            rel="noreferrer"
+            href={props?.url!}
+            key={`social-${index}`}
+          >
+            <Suspense fallback={<div>Loading...</div>}>
+              <Image
+                key={`logo-${index}`}
+                mobile={props?.icon?.url!}
+                alt={`${props?.name} logo`}
+                params="&w=40"
+                style={{ width: "40px", aspectRatio: "40 / 40" }}
+              />
+            </Suspense>
+          </StyledA>
+        ))}
+      </Flex>
+    </Suspense>
   </Container>
 );
 

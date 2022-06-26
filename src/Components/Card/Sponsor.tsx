@@ -1,8 +1,10 @@
+import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { Document } from "@contentful/rich-text-types";
 import { H2 } from "../core/Typography";
-import Description from "../core/Description";
-import { BasePrimaryButton, SecondaryButton } from "../Button";
+import { BasePrimaryButton } from "../Button";
+
+const Description = lazy(() => import("../core/Description"));
 
 type SponsorCardProps =
   | {
@@ -97,7 +99,9 @@ const SponsorCard = (props: SponsorCardProps) => {
       <WrapperDescription>
         <H2>{props?.name!}</H2>
         <StyledPrice>USD ${props?.price}</StyledPrice>
-        <Description data={props?.description?.json!} />
+        <Suspense fallback={null}>
+          <Description data={props?.description?.json!} />
+        </Suspense>
         <BasePrimaryButton>Sponsors Registration</BasePrimaryButton>
       </WrapperDescription>
     </Container>

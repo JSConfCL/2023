@@ -34,7 +34,7 @@ declare module "@emotion/react" {
     };
     fonts: {
       Barlow: {
-        name: "Barlow";
+        name: string;
         weights: {
           normal: number;
           medium: number;
@@ -44,7 +44,7 @@ declare module "@emotion/react" {
         };
       };
       Koulen: {
-        name: "Koulen";
+        name: string;
         weights: {
           normal: number;
         };
@@ -59,8 +59,8 @@ declare module "@emotion/react" {
       };
       global: {
         backgroundColor: string;
-        fontFamily: keyof Theme["fonts"];
-        headingsFontFamily: keyof Theme["fonts"];
+        fontFamily: string;
+        headingsFontFamily: string;
         headingsFontWeight: number;
         color: string;
       };

@@ -1,8 +1,10 @@
+import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { PageProps } from "../../../pages/sponsor";
 import { H1 } from "../core/Typography";
-import Description from "../core/Description";
-import Image from "../core/Image";
+
+const Description = lazy(() => import("../core/Description"));
+const Image = lazy(() => import("../core/Image"));
 
 const Container = styled.section`
   display: flex;
@@ -95,18 +97,22 @@ const BannerSponsor = (props: PageProps["heroData"]) => {
     <Container>
       <Block>
         <H1 color="#F45B69">{props.tile}</H1>
-        <Image
-          mobile={props?.background?.url!}
-          alt={props?.background?.title! || ""}
-          style={{
-            maxWidth: "864px",
-            borderRadius: "0px 32px 0px 0px",
-            aspectRatio: "864 / 273",
-            objectFit: "cover",
-          }}
-        />
+        <Suspense fallback={null}>
+          <Image
+            mobile={props?.background?.url!}
+            alt={props?.background?.title! || ""}
+            style={{
+              maxWidth: "864px",
+              borderRadius: "0px 32px 0px 0px",
+              aspectRatio: "864 / 273",
+              objectFit: "cover",
+            }}
+          />
+        </Suspense>
       </Block>
-      <Description data={props?.description?.json!} />
+      <Suspense fallback={null}>
+        <Description data={props?.description?.json!} />
+      </Suspense>
     </Container>
   );
 };

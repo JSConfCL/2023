@@ -1,11 +1,12 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import { H2, H3 } from "../core/Typography";
-import Description from "../core/Description";
-import Image from "../core/Image";
 import { PageProps } from "../../../pages";
 import useMediaQuery from "../../helpers/useMediaQuery";
+
+const Description = lazy(() => import("../core/Description"));
+const Image = lazy(() => import("../core/Image"));
 
 const Container = styled.section`
   align-self: center;
@@ -114,40 +115,49 @@ const descriptionVariant = {
 const HowSection = (props: { page: PageProps["howItems"] }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   return (
-    <Container>
-      <H2 whileHover={{ scale: 1.01 }}>COMO?</H2>
-      <BlockContainer>
-        {props.page?.items?.map((props, index) => (
-          <Block
-            key={`how-block-${index}`}
-            whileHover="hover"
-            whileFocus="hover"
-            whileTap="hover"
-            initial="initial"
-          >
-            <Flex>
-              <Image
-                mobile={props?.image?.url!}
-                alt={props?.image?.description! || ""}
-                style={{
-                  height: "257px",
-                  aspectRatio: "654 / 257",
-                  width: isMobile ? "100vw" : "inherit",
-                  objectFit: isMobile ? "cover" : "inherit",
-                }}
-              />
-            </Flex>
-            <BlockDescription
-              key={`how-block-description-${index} `}
-              variants={descriptionVariant}
+    <Suspense fallback={<div>Loading...</div>}>
+      <Container>
+        <H2 whileHover={{ scale: 1.01 }}>COMO?</H2>
+        <BlockContainer>
+          {props.page?.items?.map((props, index) => (
+            <Block
+              key={`how-block-${index}`}
+              whileHover="hover"
+              whileFocus="hover"
+              whileTap="hover"
+              initial="initial"
             >
-              <H3>{props?.title}</H3>
-              {!isMobile && <Description data={props?.description?.json!} />}
-            </BlockDescription>
-          </Block>
-        ))}
-      </BlockContainer>
-    </Container>
+              <Flex>
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Image
+                    mobile={props?.image?.url!}
+                    alt={props?.image?.description! || ""}
+                    style={{
+                      height: "257px",
+                      aspectRatio: "654 / 257",
+                      width: isMobile ? "100vw" : "inherit",
+                      objectFit: isMobile ? "cover" : "inherit",
+                    }}
+                  />
+                </Suspense>
+              </Flex>
+
+              <BlockDescription
+                key={`how-block-description-${index} `}
+                variants={descriptionVariant}
+              >
+                <H3>{props?.title}</H3>
+                {!isMobile && (
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <Description data={props?.description?.json!} />
+                  </Suspense>
+                )}
+              </BlockDescription>
+            </Block>
+          ))}
+        </BlockContainer>
+      </Container>
+    </Suspense>
   );
 };
 

@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import type { NextPage } from "next";
 import styled from "@emotion/styled";
 
@@ -7,11 +8,12 @@ import {
   SponsorQueryQueryVariables,
 } from "../src/graphql/sponsor.generated";
 import { urlQlient } from "../src/graphql/urql";
-import FollowUsSection from "../src/Components/sections/FollowUsSection";
+import Seo from "../src/Components/Seo";
 import { ParseQuery } from "../src/helpers/types";
-import { NavBar } from "../src/Components/NavBar/NavBar";
-import BannerSponsor from "../src/Components/Banner/Sponsor";
-import SponsorCard from "../src/Components/Card/Sponsor";
+
+const NavBar = lazy(() => import("../src/Components/NavBar/NavBar"));
+const BannerSponsor = lazy(() => import("../src/Components/Banner/Sponsor"));
+const SponsorCard = lazy(() => import("../src/Components/Card/Sponsor"));
 
 type Page = ParseQuery<SponsorQueryQuery["page"]>;
 
@@ -20,6 +22,7 @@ export type PageProps = {
   followUsData: Page["followUsBlock"];
   heroData: Page["heroBlock"];
   sponsors: Page["sponsorTypeCollection"];
+  seo: Page["seo"];
 };
 
 const Container = styled.section`
@@ -39,13 +42,27 @@ const StyledBlackWrapp = styled.section`
 const OnSitePage: NextPage<PageProps> = (props) => {
   return (
     <StyledBlackWrapp>
+      <Seo {...props.seo} />
       <Container>
-        {props.navData && <NavBar {...props.navData} />}
-        {props.heroData && <BannerSponsor {...props.heroData} />}
+        {props.navData && (
+          <Suspense fallback={null}>
+            <NavBar {...props.navData} />
+          </Suspense>
+        )}
+        {props.heroData && (
+          <Suspense fallback={null}>
+            <BannerSponsor {...props.heroData} />
+          </Suspense>
+        )}
         {props.sponsors?.items?.map((elem, index) => (
-          <SponsorCard {...elem} number={index + 1} key={`sponsor-${index}`} />
+          <Suspense key={`sponsor-${index}`} fallback={null}>
+            <SponsorCard
+              {...elem}
+              number={index + 1}
+              key={`sponsor-${index}`}
+            />
+          </Suspense>
         ))}
-        {props.followUsData && <FollowUsSection page={props.followUsData} />}
       </Container>
     </StyledBlackWrapp>
   );
@@ -69,6 +86,7 @@ export async function getStaticProps() {
     heroData: page?.heroBlock,
     followUsData: page?.followUsBlock,
     sponsors: page?.sponsorTypeCollection,
+    seo: page?.seo,
   };
   return {
     props,

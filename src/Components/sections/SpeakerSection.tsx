@@ -1,12 +1,13 @@
-import React from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import { H2 } from "../core/Typography";
-import Description from "../core/Description";
-import Card from "../Card";
 import { PageProps } from "../../../pages";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { PrimaryStyledLink } from "../Links/index";
+
+const Description = lazy(() => import("../core/Description"));
+const Card = lazy(() => import("../Card"));
 
 const Container = styled.section`
   align-self: center;
@@ -92,8 +93,8 @@ const LoadMoreButton = styled.button`
 `;
 
 const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
-  const [speakers, setSpeakers] = React.useState<any>([]);
-  const [loadCount, setLoadCount] = React.useState(6);
+  const [speakers, setSpeakers] = useState<any>([]);
+  const [loadCount, setLoadCount] = useState(6);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const {
     page: { title, description, speakersCollection },
@@ -106,7 +107,7 @@ const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
 
   const isLoadMore = isMobile && speakersCollection.items.length !== loadCount;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isMobile) {
       setSpeakers(speakersCollection.items.slice(0, loadCount));
       return;
@@ -118,7 +119,9 @@ const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
     <Container>
       <DescriptionContainer>
         <H2 whileHover={{ scale: 1.01 }}>{title}</H2>
-        <Description data={description?.json!} />
+        <Suspense fallback={null}>
+          <Description data={description?.json!} />
+        </Suspense>
         <HR />
       </DescriptionContainer>
       <ContainerButton>
@@ -130,11 +133,17 @@ const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
           return (
             <Column index={index}>
               <PrimaryStyledLink href="/">CFP Registration</PrimaryStyledLink>
-              <Card key={`speaker-${index}`} {...item} />
+              <Suspense key={`speaker-${index}`} fallback={null}>
+                <Card key={`speaker-${index}`} {...item} />
+              </Suspense>
             </Column>
           );
         }
-        return <Card key={`speaker-${index}`} {...item} index={index} />;
+        return (
+          <Suspense key={`speaker-${index}`} fallback={null}>
+            <Card key={`speaker-${index}`} {...item} index={index} />
+          </Suspense>
+        );
       })}
       {isLoadMore && (
         <LoadMoreButton onClick={LoadMoreHandle}>Load More</LoadMoreButton>

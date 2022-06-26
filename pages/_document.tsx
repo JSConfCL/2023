@@ -3,13 +3,11 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 class MyDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html lang="es">
         <Head>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link
-            rel="preconnect"
-            href="https://fonts.gstatic.com"
-            crossOrigin="anonymous"
+          <meta
+            name="google-site-verification"
+            content="FnXGyMn103-phm99UXro_3UNBa9Uxfu9T3SLqFQD5XY"
           />
         </Head>
         <body>

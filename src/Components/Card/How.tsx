@@ -1,11 +1,13 @@
+import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { Document } from "@contentful/rich-text-types";
 import { PrimaryStyledLink } from "../Links";
 import { H2 } from "../core/Typography";
-import Description from "../core/Description";
-import Image from "../core/Image";
 import { JSConfLogo } from "../svgs/logo";
-import GoogleMapReact from "google-map-react";
+
+const Description = lazy(() => import("../core/Description"));
+const Image = lazy(() => import("../core/Image"));
+const GoogleMapReact = lazy(() => import("google-map-react"));
 
 type HowCardProps =
   | {
@@ -185,7 +187,9 @@ const HowCard = (props: HowCardProps) => {
     <Container direction={props?.number! % 2 === 0}>
       <WrapperDescription>
         <H2>{props?.title!}</H2>
-        <Description data={props?.description?.json!} />
+        <Suspense fallback={null}>
+          <Description data={props?.description?.json!} />
+        </Suspense>
         {props?.button?.link! && (
           <PrimaryStyledLink href={props?.button?.link!}>
             {props?.button?.contenido!}
@@ -198,43 +202,48 @@ const HowCard = (props: HowCardProps) => {
             onClick={onHandleClick}
             isClickeable={Boolean(props?.url!)}
           >
+            <Suspense fallback={null}>
+              <Image
+                mobile={props?.image?.url!}
+                alt={props?.image?.description! || ""}
+                style={{
+                  borderRadius: "0px 32px 0px 0px",
+                  aspectRatio: "830 / 456",
+                  objectFit: "cover",
+                  objectPosition: "bottom",
+                  mixBlendMode: "multiply",
+                  zIndex: 3,
+                  position: "absolute",
+                }}
+              />
+            </Suspense>
+          </WhiteBlock>
+          <Suspense fallback={null}>
             <Image
-              mobile={props?.image?.url!}
-              alt={props?.image?.description! || ""}
+              mobile="https://images.ctfassets.net/1kfhsqlc8ewi/3N0MGioufHIKv6bghApVdE/c3545a885192924e0627a8fd1b6ec730/image-background.png"
+              alt="background"
+              className="background"
               style={{
-                borderRadius: "0px 32px 0px 0px",
-                aspectRatio: "830 / 456",
-                objectFit: "cover",
-                objectPosition: "bottom",
-                mixBlendMode: "multiply",
-                zIndex: 3,
                 position: "absolute",
+                zIndex: 1,
+                bottom: "-64px",
+                right: "-64px",
               }}
             />
-          </WhiteBlock>
-
-          <Image
-            mobile="/images/image-background.png"
-            alt="background"
-            className="background"
-            style={{
-              position: "absolute",
-              zIndex: 1,
-              bottom: "-64px",
-              right: "-64px",
-            }}
-          />
+          </Suspense>
           {props?.subtext && <Text>{props.subtext}</Text>}
           {props?.url! && (
-            <Image
-              className="play"
-              mobile="/images/play.png"
-              alt="background play"
-              style={{
-                position: "absolute",
-                zIndex: 4,
-              }}
-            />
+            <Suspense fallback={null}>
+              <Image
+                className="play"
+                mobile="https://images.ctfassets.net/1kfhsqlc8ewi/4mJqM4xD9wp39jQQgYI7Wu/19cc0c49041293a5a287e5c85640740d/play.png"
+                alt="background play"
+                style={{
+                  position: "absolute",
+                  zIndex: 4,
+                }}
+              />
+            </Suspense>
           )}
 
           <JSConfLogo />
@@ -242,25 +251,29 @@ const HowCard = (props: HowCardProps) => {
       )}
       {props?.mapa && (
         <StyledWrapperMap>
-          <GoogleMapReact
-            bootstrapURLKeys={{ key: props.GM_KEY }}
-            defaultCenter={{ lat: props.mapa?.lat!, lng: props.mapa?.lon! }}
-            defaultZoom={15}
-          >
-            <StyledMarker lat={props.mapa?.lat!} lng={props.mapa?.lon!} />
-          </GoogleMapReact>
-          <Image
-            mobile="/images/image-background.png"
-            alt="background"
-            className="background"
-            style={{
-              position: "absolute",
-              zIndex: 0,
-              bottom: "-64px",
-              right: "16px",
-              maxHeight: "460px",
-            }}
-          />
+          <Suspense fallback={null}>
+            <GoogleMapReact
+              bootstrapURLKeys={{ key: props.GM_KEY }}
+              defaultCenter={{ lat: props.mapa?.lat!, lng: props.mapa?.lon! }}
+              defaultZoom={15}
+            >
+              <StyledMarker lat={props.mapa?.lat!} lng={props.mapa?.lon!} />
+            </GoogleMapReact>
+          </Suspense>
+          <Suspense fallback={null}>
+            <Image
+              mobile="https://images.ctfassets.net/1kfhsqlc8ewi/3N0MGioufHIKv6bghApVdE/c3545a885192924e0627a8fd1b6ec730/image-background.png"
+              alt="background"
+              className="background"
+              style={{
+                position: "absolute",
+                zIndex: 0,
+                bottom: "-64px",
+                right: "16px",
+                maxHeight: "460px",
+              }}
+            />
+          </Suspense>
         </StyledWrapperMap>
       )}
     </Container>

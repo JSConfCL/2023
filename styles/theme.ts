@@ -1,5 +1,4 @@
 import { Theme } from "@emotion/react";
-import { lighten } from "polished";
 
 const colors = {
   jsconfBlack: "#1E2019",
@@ -13,7 +12,7 @@ const colors = {
 
 const fonts = {
   Barlow: {
-    name: "Barlow" as "Barlow",
+    name: "Barlow, Tahoma",
     weights: {
       normal: 400,
       medium: 500,
@@ -23,7 +22,7 @@ const fonts = {
     },
   },
   Koulen: {
-    name: "Koulen" as "Koulen",
+    name: "Koulen, Arial",
     weights: {
       normal: 400,
     },

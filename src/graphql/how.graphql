@@ -21,6 +21,11 @@ query HowQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {
         json
       }
     }
+    seo {
+      title
+      description
+      metadata
+    }
     howBlockCollection(limit: 10) {
       items {
         title

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState, Suspense } from "react";
 import styled from "@emotion/styled";
 import { FieldValues, useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
@@ -199,28 +199,30 @@ const SubscribeSection = (props: Props) => {
   return (
     <Container>
       <H2 whileHover={titleAnimation}>{props?.page?.title}</H2>
-      <Form onSubmit={handleSubmit(onSubmit)} ref={formElement}>
-        <Fieldset>
-          <EmailInput
-            placeholder="Tu Email"
-            {...register("email", emailValidation)}
-          />
-          <SubmitButton type="submit" value={props?.page?.title!} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Form onSubmit={handleSubmit(onSubmit)} ref={formElement}>
+          <Fieldset>
+            <EmailInput
+              placeholder="Tu Email"
+              {...register("email", emailValidation)}
+            />
+            <SubmitButton type="submit" value={props?.page?.title!} />
 
-          <AnimatePresence>
-            {isSubmiting && (
-              <motion.div
-                style={{ x: 0 }}
-                animate={{ x: -550, opacity: 1 }}
-                transition={{ ease: "backInOut", duration: 0.7 }}
-                exit={{ x: 100 }}
-              >
-                <ThanksMessage>{subscribeResponse}</ThanksMessage>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </Fieldset>
-      </Form>
+            <AnimatePresence>
+              {isSubmiting && (
+                <motion.div
+                  style={{ x: 0 }}
+                  animate={{ x: -550, opacity: 1 }}
+                  transition={{ ease: "backInOut", duration: 0.7 }}
+                  exit={{ x: 100 }}
+                >
+                  <ThanksMessage>{subscribeResponse}</ThanksMessage>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Fieldset>
+        </Form>
+      </Suspense>
 
       <ErrorMessage>{errors.email?.message}</ErrorMessage>
     </Container>

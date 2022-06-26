@@ -1,17 +1,22 @@
+import { lazy, Suspense } from "react";
 import type { NextPage } from "next";
 import styled from "@emotion/styled";
 
-import { Hero } from "../src/Components/sections/Hero";
-import WhySection from "../src/Components/sections/WhySection";
-import HowSection from "../src/Components/sections/HowSection";
 import {
   HomeQueryDocument,
   HomeQueryQuery,
 } from "../src/graphql/home.generated";
 import { urlQlient } from "../src/graphql/urql";
-
 import { ParseQuery } from "../src/helpers/types";
-import SpeakerSection from "../src/Components/sections/SpeakerSection";
+import Seo from "../src/Components/Seo";
+import EventSchema from "../src/Components/schema/event";
+
+const Hero = lazy(() => import("../src/Components/sections/Hero"));
+const WhySection = lazy(() => import("../src/Components/sections/WhySection"));
+const HowSection = lazy(() => import("../src/Components/sections/HowSection"));
+const SpeakerSection = lazy(
+  () => import("../src/Components/sections/SpeakerSection")
+);
 
 type Page = ParseQuery<HomeQueryQuery["page"]>;
 
@@ -21,6 +26,7 @@ export type PageProps = {
   howItems: Page["howBlockCollection"];
   heroData: Page["heroBlock"];
   speakerData: Page["speakersBlock"];
+  seo: Page["seo"];
 };
 const Container = styled.section`
   display: flex;
@@ -37,12 +43,18 @@ const StyledBlackWrapp = styled.section`
 const Home: NextPage<PageProps> = (props) => {
   return (
     <Container>
-      <Hero heroData={props.heroData} navData={props.navData} />
-      <StyledBlackWrapp>
-        {props.whyItems && <WhySection page={props.whyItems} />}
-        {props.howItems && <HowSection page={props.howItems} />}
-        {props.speakerData && <SpeakerSection page={props.speakerData} />}
-      </StyledBlackWrapp>
+      <Seo {...props.seo} />
+      <EventSchema />
+      <Suspense>
+        <Hero heroData={props.heroData} navData={props.navData} />
+      </Suspense>
+      <Suspense>
+        <StyledBlackWrapp>
+          {props.whyItems?.items && <WhySection page={props.whyItems} />}
+          {props.howItems && <HowSection page={props.howItems} />}
+          {props.speakerData && <SpeakerSection page={props.speakerData} />}
+        </StyledBlackWrapp>
+      </Suspense>
     </Container>
   );
 };
@@ -58,7 +70,8 @@ export async function getStaticProps() {
     heroData: page?.heroBlock,
     whyItems: page?.whyBlockCollection,
     howItems: page?.howBlockCollection,
-    speakerData: page?.speakersBlock!,
+    speakerData: page?.speakersBlock,
+    seo: page?.seo,
   };
 
   return {

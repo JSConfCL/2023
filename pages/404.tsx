@@ -1,9 +1,10 @@
+import { lazy, Suspense } from "react";
 import type { NextPage } from "next";
 import styled from "@emotion/styled";
-import Image from "../src/Components/core/Image";
 import { H1, P } from "../src/Components/core/Typography";
-import { SecondaryButton } from "../src/Components/Button";
 import { PrimaryStyledLink } from "../src/Components/Links";
+
+const Image = lazy(() => import("../src/Components/core/Image"));
 
 export type PageProps = {};
 const Container = styled.section`
@@ -24,15 +25,22 @@ const Home: NextPage<PageProps> = (props) => {
   return (
     <Container>
       <StyledBlackWrapp>
-        <Image mobile="/images/404.svg" alt="" />
-        <H1>OOPS!</H1>
+        <Suspense fallback={null}>
+          <Image
+            mobile="https://images.ctfassets.net/1kfhsqlc8ewi/vWYrXTF1XIpXzCrCOKate/41a1703baf107004ff6f08719a69c8d7/404.svg"
+            alt=""
+          />
+        </Suspense>
+        <Suspense fallback={null}>
+          <H1>OOPS!</H1>
 
-        <P>
-          <b>JSconf</b> es un evento Open Source, sin fines de lucro, realizado
-          por la comunidad y para la comunidad.
-        </P>
+          <P>
+            <b>JSconf</b> es un evento Open Source, sin fines de lucro,
+            realizado por la comunidad y para la comunidad.
+          </P>
 
-        <PrimaryStyledLink href="/">GO HOME</PrimaryStyledLink>
+          <PrimaryStyledLink href="/">GO HOME</PrimaryStyledLink>
+        </Suspense>
       </StyledBlackWrapp>
     </Container>
   );

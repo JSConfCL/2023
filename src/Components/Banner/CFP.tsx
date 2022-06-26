@@ -1,10 +1,13 @@
+import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { PageProps } from "../../../pages/cfp";
 import { H1 } from "../core/Typography";
-import Description from "../core/Description";
-import Image from "../core/Image";
+
 import { PrimaryStyledLink } from "../Links";
-import { JSConfLogo } from "../svgs/logo";
+
+const Description = lazy(() => import("../core/Description"));
+const Image = lazy(() => import("../core/Image"));
+const JSConfLogo = lazy(() => import("../svgs/logo"));
 
 const Container = styled.section`
   display: flex;
@@ -149,8 +152,12 @@ const BannerCFP = (props: PageProps["heroData"]) => {
     <Container>
       <H1 color="#F45B69">{props.tile}</H1>
       <WrapperDescription>
-        <Description data={props?.description?.json!} />
-        <Description data={props?.secondDescription?.json!} />
+        <Suspense fallback={null}>
+          <Description data={props?.description?.json!} />
+        </Suspense>
+        <Suspense fallback={null}>
+          <Description data={props?.secondDescription?.json!} />
+        </Suspense>
         {props.ctaUrl && (
           <PrimaryStyledLink href={props.ctaUrl}>
             {props.ctaText}
@@ -158,33 +165,39 @@ const BannerCFP = (props: PageProps["heroData"]) => {
         )}
       </WrapperDescription>
       <ImageContainer>
-        <JSConfLogo />
+        <Suspense fallback={null}>
+          <JSConfLogo />
+        </Suspense>
         {props?.date && <Text>{props.date}</Text>}
-        <Image
-          mobile={props?.background?.url!}
-          alt={props?.background?.title! || ""}
-          className="principal"
-          style={{
-            position: "absolute",
-            maxWidth: "864px",
-            borderRadius: "0px 32px 0px 0px",
-            aspectRatio: "830 / 365",
-            objectFit: "cover",
-            zIndex: 2,
-          }}
-        />
-        <Image
-          mobile="/images/image-background.png"
-          alt="background"
-          className="background"
-          style={{
-            position: "absolute",
-            zIndex: 1,
-            width: "70%",
-            bottom: "30px",
-            right: "0px",
-          }}
-        />
+        <Suspense fallback={null}>
+          <Image
+            mobile={props?.background?.url!}
+            alt={props?.background?.title! || ""}
+            className="principal"
+            style={{
+              position: "absolute",
+              maxWidth: "864px",
+              borderRadius: "0px 32px 0px 0px",
+              aspectRatio: "830 / 365",
+              objectFit: "cover",
+              zIndex: 2,
+            }}
+          />
+        </Suspense>
+        <Suspense fallback={null}>
+          <Image
+            mobile="https://images.ctfassets.net/1kfhsqlc8ewi/3N0MGioufHIKv6bghApVdE/c3545a885192924e0627a8fd1b6ec730/image-background.png"
+            alt="background"
+            className="background"
+            style={{
+              position: "absolute",
+              zIndex: 1,
+              width: "70%",
+              bottom: "30px",
+              right: "0px",
+            }}
+          />
+        </Suspense>
       </ImageContainer>
     </Container>
   );

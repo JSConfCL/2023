@@ -1,22 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
-import { css, Global } from "@emotion/react";
 import styled from "@emotion/styled";
-import React from "react";
+import { lazy, Suspense } from "react";
 import { PageProps } from "../../../pages";
 import { SecondaryStyledLink } from "../Links";
-import Particles from "react-tsparticles";
-import config from "./config";
-import { loadFull } from "tsparticles";
-import { Engine } from "tsparticles-engine";
-import { NavBar } from "../NavBar/NavBar";
 
-const StyledWrapper = styled.div(({ theme }) => ({
+const Particles = lazy(() => import("../Particles"));
+
+const NavBar = lazy(() => import("../NavBar/NavBar"));
+
+const StyledWrapper = styled.section(({ theme }) => ({
   width: "100%",
   position: "relative",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  "background-color": "#f0e040d4",
+  backgroundColor: "#f0e040d4",
   color: theme.colors.jsconfBlack,
   height: "90vh",
   minHeight: 700,
@@ -33,12 +31,15 @@ const StyledBackground = styled.img(({ theme }) => ({
   position: "absolute",
   zIndex: -1,
   height: "100%",
-  aspectRatio: "1320 / 764",
+  aspectRatio: "1366 / 680",
   width: "100%",
   objectFit: "fill",
+  [theme.breakpoints.smallDesktopOnly]: {
+    objectFit: "cover",
+  },
 }));
 
-const StyledForegroundWrapper = styled.div(({ theme }) => ({
+const StyledForegroundWrapper = styled.section(({ theme }) => ({
   height: "100%",
   width: "100%",
   overflow: "hidden",
@@ -70,7 +71,7 @@ const StyledForegroundWrapper = styled.div(({ theme }) => ({
   },
 }));
 
-const StyledLeftSide = styled.div(({ theme }) => ({
+const StyledLeftSide = styled.section(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   gap: "1.5rem",
@@ -117,7 +118,7 @@ const StyledHr = styled.hr`
   background-color: ${({ theme }) => theme.colors.jsconfBlack}; ;
 `;
 
-const StyledRightSide = styled.div(({ theme }) => ({
+const StyledRightSide = styled.section(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   gap: "1.5rem",
@@ -131,12 +132,12 @@ const StyledRightSide = styled.div(({ theme }) => ({
   },
 }));
 
-const StyledTitlesWrapper = styled.div(({ theme }) => ({
+const StyledTitlesWrapper = styled.section(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
 }));
 
-const StyledSecondaryTextWrapper = styled.div(({ theme }) => ({
+const StyledSecondaryTextWrapper = styled.section(({ theme }) => ({
   marginLeft: 109,
   display: "flex",
   flexDirection: "column",
@@ -169,41 +170,20 @@ export const Hero = ({
   heroData: PageProps["heroData"];
   navData: PageProps["navData"];
 }) => {
-  const particlesInit = async (main: Engine) => {
-    await loadFull(main);
-  };
-
   return (
     <StyledWrapper>
-      <Global
-        styles={[
-          css`
-            #tsparticles-container {
-              position: absolute;
-              top: 0px;
-              bottom: 0px;
-              left: 0px;
-              right: 0px;
-              padding: 0px;
-              margin: 0px;
-              z-index: 0;
-            }
-          `,
-        ]}
-      />
-      <Particles
-        id="tsparticles-container"
-        loaded={async (container) => {
-          console.log(container);
-        }}
-        init={particlesInit}
-        options={config}
-      />
-      <StyledBackground
-        src={heroData.background.url}
-        alt={heroData.background.title}
-      />
-      <NavBar {...navData} />
+      <Suspense fallback={null}>
+        <StyledBackground
+          src={`${heroData.background.url}?fm=webp`}
+          alt={heroData.background.title}
+        />
+      </Suspense>
+      <Suspense fallback={null}>
+        <NavBar {...navData} />
+      </Suspense>
+      <Suspense>
+        <Particles />
+      </Suspense>
       <StyledForegroundWrapper>
         <StyledLeftSide>
           <StyledTitle>{heroData.tile}</StyledTitle>
@@ -231,3 +211,5 @@ export const Hero = ({
     </StyledWrapper>
   );
 };
+
+export default Hero;

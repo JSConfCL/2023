@@ -1,9 +1,10 @@
-import React from "react";
+import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import Image from "./core/Image";
 import { H3, P } from "./core/Typography";
 import useMediaQuery from "../helpers/useMediaQuery";
+
+const Image = lazy(() => import("./core/Image"));
 
 interface Card {
   name?: string;
@@ -156,17 +157,19 @@ const Card = (props: any) => {
       initial="initial"
     >
       <BlockColor type={type}>
-        <Image
-          mobile={photo?.url!}
-          alt={photo?.description!}
-          style={{
-            borderRadius: "0px 32px 0px 0px",
-            position: "relative",
-            objectFit: "cover",
-            mixBlendMode: "multiply",
-            ...extraStyle,
-          }}
-        />
+        <Suspense fallback={null}>
+          <Image
+            mobile={photo?.url!}
+            alt={photo?.description!}
+            style={{
+              borderRadius: "0px 32px 0px 0px",
+              position: "relative",
+              objectFit: "cover",
+              mixBlendMode: "multiply",
+              ...extraStyle,
+            }}
+          />
+        </Suspense>
       </BlockColor>
       {type !== "blank" && (
         <BlockDescription type={type}>

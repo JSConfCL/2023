@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 
 import {
@@ -7,9 +7,14 @@ import {
 } from "../graphql/footer.generated";
 
 import { ParseQuery } from "../helpers/types";
-import FollowUsSection from "../Components/sections/FollowUsSection";
-import { Footer } from "../Components/Footer/Footer";
-import SubscribeSection from "../Components/sections/SubscribeSection";
+
+const Footer = lazy(() => import("../Components/Footer/Footer"));
+const SubscribeSection = lazy(
+  () => import("../Components/sections/SubscribeSection")
+);
+const FollowUsSection = lazy(
+  () => import("../Components/sections/FollowUsSection")
+);
 
 type Page = ParseQuery<FooterQueryQuery["page"]>;
 
@@ -58,10 +63,16 @@ const ExtendedFooter = () => {
   return (
     <Container>
       <FlexRow>
-        <FollowUsSection page={data.page.followUsBlock} />
-        <SubscribeSection page={data.page.subscribeBlock} />
+        <Suspense fallback={null}>
+          <FollowUsSection page={data.page.followUsBlock} />
+        </Suspense>
+        <Suspense fallback={null}>
+          <SubscribeSection page={data.page.subscribeBlock} />
+        </Suspense>
       </FlexRow>
-      <Footer page={data.page.footer} />
+      <Suspense fallback={null}>
+        <Footer page={data.page.footer} />
+      </Suspense>
     </Container>
   );
 };

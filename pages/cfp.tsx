@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import type { NextPage } from "next";
 import styled from "@emotion/styled";
 
@@ -8,14 +9,17 @@ import {
 } from "../src/graphql/cfp.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
-import { NavBar } from "../src/Components/NavBar/NavBar";
-import BannerCFP from "../src/Components/Banner/CFP";
+import Seo from "../src/Components/Seo";
+
+const NavBar = lazy(() => import("../src/Components/NavBar/NavBar"));
+const BannerCFP = lazy(() => import("../src/Components/Banner/CFP"));
 
 type Page = ParseQuery<CfpQueryQuery["page"]>;
 
 export type PageProps = {
   navData: Page["navBar"];
   heroData: Page["heroBlock"];
+  seo: Page["seo"];
 };
 
 const Container = styled.section`
@@ -35,9 +39,18 @@ const StyledBlackWrapp = styled.section`
 const OnSitePage: NextPage<PageProps> = (props) => {
   return (
     <StyledBlackWrapp>
+      <Seo {...props.seo} />
       <Container>
-        {props.navData && <NavBar {...props.navData} />}
-        {props.heroData && <BannerCFP {...props.heroData} />}
+        {props.navData && (
+          <Suspense fallback={null}>
+            <NavBar {...props.navData} />
+          </Suspense>
+        )}
+        {props.heroData && (
+          <Suspense fallback={null}>
+            <BannerCFP {...props.heroData} />
+          </Suspense>
+        )}
       </Container>
     </StyledBlackWrapp>
   );
@@ -56,6 +69,7 @@ export async function getStaticProps() {
   const props: PageProps = {
     navData: page?.navBar,
     heroData: page?.heroBlock,
+    seo: page?.seo,
   };
   return {
     props,

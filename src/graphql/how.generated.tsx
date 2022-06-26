@@ -38,6 +38,12 @@ export type HowQueryQuery = {
         json: any;
       } | null;
     } | null;
+    seo?: {
+      __typename?: "Seo";
+      title?: string | null;
+      description?: string | null;
+      metadata?: any | null;
+    } | null;
     howBlockCollection?: {
       __typename?: "PageHowBlockCollection";
       items: Array<{
@@ -130,6 +136,11 @@ export const HowQueryDocument = gql`
         description {
           json
         }
+      }
+      seo {
+        title
+        description
+        metadata
       }
       howBlockCollection(limit: 10) {
         items {

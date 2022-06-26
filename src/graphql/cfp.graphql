@@ -21,6 +21,11 @@ query CFPQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {
         json
       }
     }
+    seo {
+      title
+      description
+      metadata
+    }
     heroBlock {
       tile
       firstSubtitle
