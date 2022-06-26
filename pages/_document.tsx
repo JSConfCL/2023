@@ -7,7 +7,7 @@ class MyDocument extends Document {
         <Head>
           <meta
             name="google-site-verification"
-            content="FnXGyMn103-QkN0PJqi2M99JGKL6AX8pREFHhGVzIG89Qda20xdSEI"
+            content="FnXGyMn103-phm99UXro_3UNBa9Uxfu9T3SLqFQD5XY"
           />
         </Head>
         <body>
