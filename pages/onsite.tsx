@@ -9,6 +9,7 @@ import {
 } from "../src/graphql/how.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
+import Seo from "../src/Components/Seo";
 
 const NavBar = lazy(() => import("../src/Components/NavBar/NavBar"));
 const HowCard = lazy(() => import("../src/Components/Card/How"));
@@ -20,6 +21,7 @@ export type PageProps = {
   howItems: Page["howBlockCollection"];
   followUsData: Page["followUsBlock"];
   GM_KEY: string;
+  seo: Page["seo"];
 };
 
 const Container = styled.section`
@@ -39,6 +41,9 @@ const StyledBlackWrapp = styled.section`
 const OnSitePage: NextPage<PageProps> = (props) => {
   return (
     <StyledBlackWrapp>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Seo {...props.seo} />
+      </Suspense>
       <Container>
         {props.navData && (
           <Suspense fallback={null}>
@@ -77,6 +82,7 @@ export async function getStaticProps() {
     howItems: page?.howBlockCollection,
     followUsData: page?.followUsBlock,
     GM_KEY: process.env.NEXT_PUBLIC_CONTENTFUL_API_GOOGLE_MAP || "",
+    seo: page?.seo,
   };
   return {
     props,

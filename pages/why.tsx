@@ -5,6 +5,7 @@ import styled from "@emotion/styled";
 import { WhyQueryDocument, WhyQueryQuery } from "../src/graphql/why.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
+import Seo from "../src/Components/Seo";
 
 const NavBar = lazy(() => import("../src/Components/NavBar/NavBar"));
 const WhyBanner = lazy(() => import("../src/Components/Banner/Why"));
@@ -16,6 +17,7 @@ export type PageProps = {
   navData: Page["navBar"];
   whyItems: Page["whyBlockCollection"];
   heroData: Page["heroBlock"];
+  seo: Page["seo"];
 };
 
 const Container = styled.section`
@@ -35,6 +37,9 @@ const StyledBlackWrapp = styled.section`
 const Home: NextPage<PageProps> = (props) => {
   return (
     <StyledBlackWrapp>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Seo {...props.seo} />
+      </Suspense>
       <Container>
         <Suspense fallback={null}>
           <NavBar {...props.navData} />
@@ -61,6 +66,7 @@ export async function getStaticProps() {
     navData: page?.navBar,
     heroData: page?.heroBlock,
     whyItems: page?.whyBlockCollection,
+    seo: page?.seo,
   };
   return {
     props,

@@ -25,6 +25,11 @@ query SponsorQuery(
         json
       }
     }
+    seo {
+      title
+      description
+      metadata
+    }
     heroBlock {
       tile
       firstSubtitle

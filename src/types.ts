@@ -186,6 +186,7 @@ export type AssetLinkingCollections = {
   socialNetworkCollection?: Maybe<SocialNetworkCollection>;
   speakerCollection?: Maybe<SpeakerCollection>;
   sponsorCollection?: Maybe<SponsorCollection>;
+  volunteerBlockCollection?: Maybe<VolunteerBlockCollection>;
   whyBlockCollection?: Maybe<WhyBlockCollection>;
 };
 
@@ -239,6 +240,13 @@ export type AssetLinkingCollectionsSpeakerCollectionArgs = {
 };
 
 export type AssetLinkingCollectionsSponsorCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type AssetLinkingCollectionsVolunteerBlockCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
@@ -1717,6 +1725,8 @@ export type Query = {
   talkCollection?: Maybe<TalkCollection>;
   teamBlock?: Maybe<TeamBlock>;
   teamBlockCollection?: Maybe<TeamBlockCollection>;
+  volunteerBlock?: Maybe<VolunteerBlock>;
+  volunteerBlockCollection?: Maybe<VolunteerBlockCollection>;
   whyBlock?: Maybe<WhyBlock>;
   whyBlockCollection?: Maybe<WhyBlockCollection>;
 };
@@ -2013,6 +2023,21 @@ export type QueryTeamBlockCollectionArgs = {
   preview?: InputMaybe<Scalars["Boolean"]>;
   skip?: InputMaybe<Scalars["Int"]>;
   where?: InputMaybe<TeamBlockFilter>;
+};
+
+export type QueryVolunteerBlockArgs = {
+  id: Scalars["String"];
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+export type QueryVolunteerBlockCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  order?: InputMaybe<Array<InputMaybe<VolunteerBlockOrder>>>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<VolunteerBlockFilter>;
 };
 
 export type QueryWhyBlockArgs = {
@@ -3157,6 +3182,156 @@ export type TeamBlockMembersCollection = {
 };
 
 export enum TeamBlockOrder {
+  SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
+  SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
+  SysIdAsc = "sys_id_ASC",
+  SysIdDesc = "sys_id_DESC",
+  SysPublishedAtAsc = "sys_publishedAt_ASC",
+  SysPublishedAtDesc = "sys_publishedAt_DESC",
+  SysPublishedVersionAsc = "sys_publishedVersion_ASC",
+  SysPublishedVersionDesc = "sys_publishedVersion_DESC",
+  TitleAsc = "title_ASC",
+  TitleDesc = "title_DESC",
+}
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/volunteerBlock) */
+export type VolunteerBlock = Entry & {
+  __typename?: "VolunteerBlock";
+  contentfulMetadata: ContentfulMetadata;
+  description?: Maybe<VolunteerBlockDescription>;
+  extendedDescription?: Maybe<VolunteerBlockExtendedDescription>;
+  fullImage?: Maybe<Asset>;
+  icon?: Maybe<Asset>;
+  linkedFrom?: Maybe<VolunteerBlockLinkingCollections>;
+  sys: Sys;
+  title?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/volunteerBlock) */
+export type VolunteerBlockDescriptionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/volunteerBlock) */
+export type VolunteerBlockExtendedDescriptionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/volunteerBlock) */
+export type VolunteerBlockFullImageArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/volunteerBlock) */
+export type VolunteerBlockIconArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/volunteerBlock) */
+export type VolunteerBlockLinkedFromArgs = {
+  allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/volunteerBlock) */
+export type VolunteerBlockTitleArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+export type VolunteerBlockCollection = {
+  __typename?: "VolunteerBlockCollection";
+  items: Array<Maybe<VolunteerBlock>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export type VolunteerBlockDescription = {
+  __typename?: "VolunteerBlockDescription";
+  json: Scalars["JSON"];
+  links: VolunteerBlockDescriptionLinks;
+};
+
+export type VolunteerBlockDescriptionAssets = {
+  __typename?: "VolunteerBlockDescriptionAssets";
+  block: Array<Maybe<Asset>>;
+  hyperlink: Array<Maybe<Asset>>;
+};
+
+export type VolunteerBlockDescriptionEntries = {
+  __typename?: "VolunteerBlockDescriptionEntries";
+  block: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  inline: Array<Maybe<Entry>>;
+};
+
+export type VolunteerBlockDescriptionLinks = {
+  __typename?: "VolunteerBlockDescriptionLinks";
+  assets: VolunteerBlockDescriptionAssets;
+  entries: VolunteerBlockDescriptionEntries;
+};
+
+export type VolunteerBlockExtendedDescription = {
+  __typename?: "VolunteerBlockExtendedDescription";
+  json: Scalars["JSON"];
+  links: VolunteerBlockExtendedDescriptionLinks;
+};
+
+export type VolunteerBlockExtendedDescriptionAssets = {
+  __typename?: "VolunteerBlockExtendedDescriptionAssets";
+  block: Array<Maybe<Asset>>;
+  hyperlink: Array<Maybe<Asset>>;
+};
+
+export type VolunteerBlockExtendedDescriptionEntries = {
+  __typename?: "VolunteerBlockExtendedDescriptionEntries";
+  block: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  inline: Array<Maybe<Entry>>;
+};
+
+export type VolunteerBlockExtendedDescriptionLinks = {
+  __typename?: "VolunteerBlockExtendedDescriptionLinks";
+  assets: VolunteerBlockExtendedDescriptionAssets;
+  entries: VolunteerBlockExtendedDescriptionEntries;
+};
+
+export type VolunteerBlockFilter = {
+  AND?: InputMaybe<Array<InputMaybe<VolunteerBlockFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<VolunteerBlockFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  description_contains?: InputMaybe<Scalars["String"]>;
+  description_exists?: InputMaybe<Scalars["Boolean"]>;
+  description_not_contains?: InputMaybe<Scalars["String"]>;
+  extendedDescription_contains?: InputMaybe<Scalars["String"]>;
+  extendedDescription_exists?: InputMaybe<Scalars["Boolean"]>;
+  extendedDescription_not_contains?: InputMaybe<Scalars["String"]>;
+  fullImage_exists?: InputMaybe<Scalars["Boolean"]>;
+  icon_exists?: InputMaybe<Scalars["Boolean"]>;
+  sys?: InputMaybe<SysFilter>;
+  title?: InputMaybe<Scalars["String"]>;
+  title_contains?: InputMaybe<Scalars["String"]>;
+  title_exists?: InputMaybe<Scalars["Boolean"]>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  title_not?: InputMaybe<Scalars["String"]>;
+  title_not_contains?: InputMaybe<Scalars["String"]>;
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+export type VolunteerBlockLinkingCollections = {
+  __typename?: "VolunteerBlockLinkingCollections";
+  entryCollection?: Maybe<EntryCollection>;
+};
+
+export type VolunteerBlockLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export enum VolunteerBlockOrder {
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",

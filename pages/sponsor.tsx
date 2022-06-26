@@ -8,7 +8,7 @@ import {
   SponsorQueryQueryVariables,
 } from "../src/graphql/sponsor.generated";
 import { urlQlient } from "../src/graphql/urql";
-import FollowUsSection from "../src/Components/sections/FollowUsSection";
+import Seo from "../src/Components/Seo";
 import { ParseQuery } from "../src/helpers/types";
 
 const NavBar = lazy(() => import("../src/Components/NavBar/NavBar"));
@@ -22,6 +22,7 @@ export type PageProps = {
   followUsData: Page["followUsBlock"];
   heroData: Page["heroBlock"];
   sponsors: Page["sponsorTypeCollection"];
+  seo: Page["seo"];
 };
 
 const Container = styled.section`
@@ -41,6 +42,9 @@ const StyledBlackWrapp = styled.section`
 const OnSitePage: NextPage<PageProps> = (props) => {
   return (
     <StyledBlackWrapp>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Seo {...props.seo} />
+      </Suspense>
       <Container>
         {props.navData && (
           <Suspense fallback={null}>
@@ -84,6 +88,7 @@ export async function getStaticProps() {
     heroData: page?.heroBlock,
     followUsData: page?.followUsBlock,
     sponsors: page?.sponsorTypeCollection,
+    seo: page?.seo,
   };
   return {
     props,

@@ -7,8 +7,10 @@ import {
   HowQueryQuery,
   HowQueryQueryVariables,
 } from "../src/graphql/how.generated";
+
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
+import Seo from "../src/Components/Seo";
 
 const NavBar = lazy(() => import("../src/Components/NavBar/NavBar"));
 const HowCard = lazy(() => import("../src/Components/Card/How"));
@@ -18,6 +20,7 @@ type Page = ParseQuery<HowQueryQuery["page"]>;
 export type PageProps = {
   navData: Page["navBar"];
   howItems: Page["howBlockCollection"];
+  seo: Page["seo"];
 };
 
 const Container = styled.section`
@@ -37,6 +40,9 @@ const StyledBlackWrapp = styled.section`
 const OnlinePage: NextPage<PageProps> = (props) => {
   return (
     <StyledBlackWrapp>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Seo {...props.seo} />
+      </Suspense>
       <Container>
         {props.navData && (
           <Suspense fallback={null}>
@@ -74,6 +80,7 @@ export async function getStaticProps() {
   const props: PageProps = {
     navData: page?.navBar,
     howItems: page?.howBlockCollection,
+    seo: page?.seo,
   };
   return {
     props,

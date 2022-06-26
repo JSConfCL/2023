@@ -9,6 +9,7 @@ import {
 } from "../src/graphql/cfp.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
+import Seo from "../src/Components/Seo";
 
 const NavBar = lazy(() => import("../src/Components/NavBar/NavBar"));
 const BannerCFP = lazy(() => import("../src/Components/Banner/CFP"));
@@ -18,6 +19,7 @@ type Page = ParseQuery<CfpQueryQuery["page"]>;
 export type PageProps = {
   navData: Page["navBar"];
   heroData: Page["heroBlock"];
+  seo: Page["seo"];
 };
 
 const Container = styled.section`
@@ -37,6 +39,9 @@ const StyledBlackWrapp = styled.section`
 const OnSitePage: NextPage<PageProps> = (props) => {
   return (
     <StyledBlackWrapp>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Seo {...props.seo} />
+      </Suspense>
       <Container>
         {props.navData && (
           <Suspense fallback={null}>
@@ -66,6 +71,7 @@ export async function getStaticProps() {
   const props: PageProps = {
     navData: page?.navBar,
     heroData: page?.heroBlock,
+    seo: page?.seo,
   };
   return {
     props,

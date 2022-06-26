@@ -21,6 +21,11 @@ query WhyQuery {
         json
       }
     }
+    seo {
+      title
+      description
+      metadata
+    }
     heroBlock {
       tile
       firstSubtitle
