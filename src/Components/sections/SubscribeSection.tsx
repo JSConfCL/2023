@@ -2,7 +2,7 @@ import React, { useRef, useState, Suspense } from "react";
 import styled from "@emotion/styled";
 import { FieldValues, useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
-
+import useMediaQuery from "../../helpers/useMediaQuery";
 import { Get } from "type-fest";
 import { H2, H3 } from "../core/Typography";
 import { FooterQueryQuery } from "../../graphql/footer.generated";
@@ -114,7 +114,7 @@ const ThanksMessage = styled.div(
   color: ${theme.colors.jsconfBlack};
   height: 100%;
   min-height: 80px;
-  width: 550px;
+  width: 620px;
   padding: 12px;
   display: flex;
   align-items: center;
@@ -124,6 +124,10 @@ const ThanksMessage = styled.div(
   text-align: center;
   position: absolute;
   border-radius: 0 24px 0 0;
+
+   @media (max-width: 768px) {
+    width: 100vw;
+   }
 `
 );
 
@@ -191,10 +195,12 @@ const SubscribeSection = (props: Props) => {
     required: true,
     pattern: {
       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-      message: "Escribe un email valido",
+      message: "Escribe un email válido",
     },
   };
   const { errors } = formState;
+
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
     <Container>
@@ -212,7 +218,7 @@ const SubscribeSection = (props: Props) => {
               {isSubmiting && (
                 <motion.div
                   style={{ x: 0 }}
-                  animate={{ x: -550, opacity: 1 }}
+                  animate={{ x: isMobile ? "-100vw" : "-620px", opacity: 1 }}
                   transition={{ ease: "backInOut", duration: 0.7 }}
                   exit={{ x: 100 }}
                 >
