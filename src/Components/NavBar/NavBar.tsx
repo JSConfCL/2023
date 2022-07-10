@@ -62,7 +62,7 @@ const StyledLink = styled.li<{ isActive: string }>`
   color: ${({ isActive }) => (isActive === "active" ? "#F45B69" : "#1E2019")};
   @media (min-width: 769px) {
     border-width: ${({ isActive }) =>
-      isActive === "active" ? "0px 0px 2px 0px" : "0px"};
+    isActive === "active" ? "0px 0px 2px 0px" : "0px"};
     color: inherit;
   }
 
