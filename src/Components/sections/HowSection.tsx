@@ -93,7 +93,7 @@ const Flex = styled.section`
   width: 100%;
   border-radius: 0px 32px 0px 0px;
 
-  picture:nth-child(2) {
+  picture:nth-of-type(2) {
     width: 30%;
   }
 `;

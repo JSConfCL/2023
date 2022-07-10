@@ -184,7 +184,7 @@ const MobileMenu = (props: Props & OnClickProps) => {
           <Suspense fallback={<div>Loading...</div>}>
             <Description data={props?.description?.json!} />
           </Suspense>
-          {props.buttonsCollection.items.map((button, index) => (
+          {props.buttonsCollection?.items.map((button, index) => (
             <SecondaryStyledLink
               key={`button-mobile-${index}`}
               href={button?.link!}
@@ -217,6 +217,7 @@ export const NavBar = (props: Props) => {
     if (value) {
       await controls.start({
         zIndex: 9999,
+        top: 0,
         opacity: 1,
         scale: 1,
         transition: { duration: 0.5 },
@@ -228,7 +229,8 @@ export const NavBar = (props: Props) => {
         transition: { duration: 0.5 },
       });
       await controls.start({
-        zIndex: 0,
+        zIndex: -1000,
+        top: -3000,
         transition: { duration: 0.01 },
       });
       setIsOpen(false);
@@ -238,11 +240,12 @@ export const NavBar = (props: Props) => {
   useEffect(() => {
     controls.start({
       opacity: 0,
-      zIndex: 0,
+      top: -3000,
+      zIndex: -1000,
       scale: 0,
       transition: { duration: 0 },
     });
-  }, []);
+  }, [controls]);
 
   return (
     <StyledNav variants={NavVariant} animate="animate" initial="initial">

@@ -10,6 +10,7 @@ const Seo = (props: {
   title: string;
   description: string;
   metadata: IMetadata[];
+  scripts?: any;
 }) => {
   return (
     <>
@@ -20,6 +21,8 @@ const Seo = (props: {
         {props.metadata?.map((elem, index) => (
           <meta key={`metadata-${index}`} {...elem} />
         ))}
+
+        {props.scripts}
       </Head>
     </>
   );

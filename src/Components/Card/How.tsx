@@ -170,10 +170,26 @@ const StyledWrapperMap = styled.section`
 `;
 
 const StyledMarker = styled.section<{ lat: number; lng: number }>`
-  background-color: red;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+  border-width: 0 14px 14px 14px;
+  height: 0;
+  top: 0px;
+  left: -24px;
+  width: 28px;
+  position: relative;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: -14px;
+    width: 28px;
+    height: 0;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+    border-width: 28px 14px 0 14px;
+  }
 `;
 
 const HowCard = (props: HowCardProps) => {
