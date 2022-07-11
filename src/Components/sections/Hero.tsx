@@ -197,7 +197,7 @@ export const Hero = ({
           </StyledSecondaryTextWrapper>
           <StyledTitlesWrapper>
             <StyledSecondaryTitle as="h2">{heroData.date}</StyledSecondaryTitle>
-            <StyledTitle as="h2">Chile</StyledTitle>
+            <StyledTitle as="h2">Santiago</StyledTitle>
           </StyledTitlesWrapper>
           <StyledWrapperLink>
             {heroData.ctaUrl && (

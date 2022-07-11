@@ -19,10 +19,6 @@ const JSConfLogo = dynamic(() => import("../svgs/logo"));
 const Description = lazy(() => import("../core/Description"));
 
 type Props = PageProps["navData"];
-type OnClickProps = {
-  onClick: Function;
-  animate: any;
-};
 
 const StyledNav = styled(motion.nav)`
   z-index: 100;
@@ -52,6 +48,9 @@ const StyledLinksContainer = styled.ul`
   flex-direction: row;
   align-items: center;
   gap: 20px;
+  @media (max-width: 769px) {
+    display: none;
+  }
 `;
 
 const StyledLink = styled.li<{ isActive: string }>`
@@ -103,6 +102,9 @@ const StyledPortalWrapper = styled(motion.section)`
   svg {
     align-self: flex-end;
   }
+  @media (min-width: 769px) {
+    display: none;
+  }
 `;
 
 const Flex = styled.section`
@@ -139,6 +141,13 @@ const StyledBottom = styled.section`
   }
 `;
 
+const FeatherIconWrapper = styled.div`
+  cursor: pointer;
+  @media (min-width: 769px) {
+    display: none;
+  }
+`;
+
 const Menu = (props: Props) => {
   const { pathname } = useRouter();
 
@@ -164,37 +173,86 @@ const Menu = (props: Props) => {
   );
 };
 
-const MobileMenu = (props: Props & OnClickProps) => {
-  return (
-    <Portal>
-      <StyledPortalWrapper animate={props.animate}>
-        <Flex>
-          <Suspense fallback={<div>Loading...</div>}>
-            <JSConfLogo />
-          </Suspense>
-          <FeatherIcon
-            icon="x"
-            onClick={() => props.onClick(false)}
-            color="#1E2019"
-          />
-        </Flex>
+const MobileMenu = (props: Props) => {
+  const controls = useAnimation();
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const [isOpen, setIsOpen] = React.useState(false);
 
-        <Menu {...props} />
-        <StyledBottom>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Description data={props?.description?.json!} />
-          </Suspense>
-          {props.buttonsCollection?.items.map((button, index) => (
-            <SecondaryStyledLink
-              key={`button-mobile-${index}`}
-              href={button?.link!}
-            >
-              {button?.contenido!}
-            </SecondaryStyledLink>
-          ))}
-        </StyledBottom>
-      </StyledPortalWrapper>
-    </Portal>
+  React.useEffect(() => {
+    const animate = async () => {
+      if (isOpen) {
+        await controls.start({
+          zIndex: 9999,
+          top: 3,
+          opacity: 1,
+          scale: 1,
+          transition: { duration: 0.5 },
+        });
+      } else {
+        await controls.start({
+          opacity: 0,
+          scale: 0.0,
+          transition: { duration: 0.5 },
+        });
+        await controls.start({
+          zIndex: -1000,
+          top: -3000,
+          transition: { duration: 0.01 },
+        });
+      }
+    };
+    animate();
+  }, [controls, isOpen]);
+
+  React.useEffect(() => {
+    if (!isMobile) {
+      setIsOpen(false);
+    }
+  }, [isMobile]);
+
+  // useEffect(() => {
+  //   controls.start({
+  //     opacity: 0,
+  //     top: -3000,
+  //     zIndex: -1000,
+  //     scale: 0,
+  //     transition: { duration: 0 },
+  //   });
+  // }, [controls]);
+
+  return (
+    <>
+      <FeatherIconWrapper onClick={() => setIsOpen(true)}>
+        <FeatherIcon icon="menu" />
+      </FeatherIconWrapper>
+      <Portal>
+        <StyledPortalWrapper animate={controls}>
+          <Flex>
+            <Suspense fallback={<div>Loading...</div>}>
+              <JSConfLogo />
+            </Suspense>
+            <FeatherIconWrapper onClick={() => setIsOpen(false)}>
+              <FeatherIcon icon="x" color="#1E2019" />
+            </FeatherIconWrapper>
+          </Flex>
+
+          <Menu {...props} />
+          <StyledBottom>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Description data={props?.description?.json!} />
+            </Suspense>
+            {props.buttonsCollection?.items.map((button, index) => (
+              <SecondaryStyledLink
+                key={`button-mobile-${index}`}
+                href={button?.link!}
+              >
+                {button?.contenido!}
+              </SecondaryStyledLink>
+            ))}
+          </StyledBottom>
+        </StyledPortalWrapper>
+      </Portal>
+    </>
   );
 };
 
@@ -209,43 +267,7 @@ const NavVariant = {
 };
 
 export const NavBar = (props: Props) => {
-  const controls = useAnimation();
-  const [isOpen, setIsOpen] = React.useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
-
-  const handleOpen = async (value: boolean) => {
-    if (value) {
-      await controls.start({
-        zIndex: 9999,
-        top: 0,
-        opacity: 1,
-        scale: 1,
-        transition: { duration: 0.5 },
-      });
-    } else {
-      await controls.start({
-        opacity: 0,
-        scale: 0.0,
-        transition: { duration: 0.5 },
-      });
-      await controls.start({
-        zIndex: -1000,
-        top: -3000,
-        transition: { duration: 0.01 },
-      });
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    controls.start({
-      opacity: 0,
-      top: -3000,
-      zIndex: -1000,
-      scale: 0,
-      transition: { duration: 0 },
-    });
-  }, [controls]);
 
   return (
     <StyledNav variants={NavVariant} animate="animate" initial="initial">
@@ -254,13 +276,8 @@ export const NavBar = (props: Props) => {
           <StyledJSConfLogoWrapper>
             <JSConfLogo />
           </StyledJSConfLogoWrapper>
-          {!isMobile && <Menu {...props} />}
-          {isMobile && (
-            <FeatherIcon icon="menu" onClick={() => handleOpen(true)} />
-          )}
-          {isMobile && (
-            <MobileMenu {...props} onClick={handleOpen} animate={controls} />
-          )}
+          <Menu {...props} />
+          <MobileMenu {...props} />
         </StyledWrapper>
       </AnimatePresence>
     </StyledNav>

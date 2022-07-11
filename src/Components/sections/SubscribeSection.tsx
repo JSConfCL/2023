@@ -148,7 +148,7 @@ const SubscribeSection = (props: Props) => {
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [subscribeResponse, setSubscribeResponse] = useState("");
   const formElement = useRef<HTMLFormElement>(null);
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState } = useForm<{ email: "string" }>();
 
   const wait = (seconds: number) =>
     new Promise((resolve) => setTimeout(resolve, seconds * 1000));
