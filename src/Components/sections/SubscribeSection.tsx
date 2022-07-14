@@ -1,8 +1,7 @@
 import React, { useRef, useState, Suspense } from "react";
 import styled from "@emotion/styled";
 import { FieldValues, useForm } from "react-hook-form";
-import { motion, AnimatePresence } from "framer-motion";
-import useMediaQuery from "../../helpers/useMediaQuery";
+import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { Get } from "type-fest";
 import { H2, H3 } from "../core/Typography";
 import { FooterQueryQuery } from "../../graphql/footer.generated";
@@ -57,25 +56,8 @@ const Form = styled.form(
 
 const Fieldset = styled.fieldset(
   ({ theme }) => `
-  display: flex;
-  height: 60px;
-  margin: 10px 0;
-  border-width: 2px;
-`
-);
-
-const EmailInput = styled.input(
-  ({ theme }) => `
-  background: transparent;
-  height: 100%;
-  width: 80vw;
-  padding-left: 10px;
-  text-align: left;
-  line-height: 50px;
-  vertical-align: middle;
-  background: ${theme.colors.black};
-  color: ${theme.colors.white}
-  -webkit-transition: transform 0.2s ease-in-out 0s;
+  height: 90%;
+  position: relative;
 `
 );
 
@@ -87,47 +69,38 @@ const ErrorMessage = styled.p(
 `
 );
 
-const SubmitButton = styled.input(
+const buttonWidth = 150;
+const SubmitButton = styled(motion.input)(
   ({ theme }) => `
+  position: absolute;
   background: ${theme.colors.jsconfYellow};
   color: ${theme.colors.jsconfBlack};
   top: 0;
   right: 0;
   height: 100%;
-  width: 150px;
-  padding: 12px;
+  width: ${buttonWidth}px;
+  text-align:center;
   vertical-align: middle;	
-  transition: transform 0.5s ease 0s;
   cursor: pointer;
   font-weight: bold;
   border-radius: 0 24px 0 0;
 
   @media (min-width: 769px) {
-    min-width: 150px;
+    min-width: ${buttonWidth}px;
   }
 `
 );
-
-const ThanksMessage = styled.div(
+const EmailInput = styled.input(
   ({ theme }) => `
-  background: ${theme.colors.jsconfYellow};
-  color: ${theme.colors.jsconfBlack};
+  background: transparent;
   height: 100%;
-  min-height: 80px;
-  width: 620px;
-  padding: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 50px;
-  font-weight: bold;
-  text-align: center;
-  position: absolute;
-  border-radius: 0 24px 0 0;
-
-   @media (max-width: 768px) {
-    width: 100vw;
-   }
+  width: calc(100% - ${buttonWidth}px);
+  padding-left: 10px;
+  text-align: left;
+  line-height: 50px;
+  vertical-align: middle;
+  background: ${theme.colors.black};
+  color: ${theme.colors.white}
 `
 );
 
@@ -140,10 +113,11 @@ const titleAnimation = {
 };
 
 const SubscribeSection = (props: Props) => {
+  const controls = useAnimation();
   const messages = {
-    loading: "Enviando ...",
-    success: "Enviado",
-    error: "Error =(",
+    loading: "Enviando ⌛️",
+    success: "Estás suscrito! 😊",
+    error: "Algo salió mal 😢",
   };
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [subscribeResponse, setSubscribeResponse] = useState("");
@@ -160,8 +134,14 @@ const SubscribeSection = (props: Props) => {
       });
 
       setSubscribeResponse(messages.loading);
+      await controls.start({
+        width: "100%",
+        transition: { duration: 0.5, ease: "backInOut" },
+      });
+      await wait(0.1);
       setIsSubmiting(true);
 
+      await wait(1.5);
       const response = await fetch(
         "https://jsconf-chile-email-worker-1.jsconfcl.workers.dev",
         {
@@ -176,19 +156,20 @@ const SubscribeSection = (props: Props) => {
       if (response.status !== 200) {
         throw new Error();
       }
-      await wait(2);
       setSubscribeResponse(messages.success);
-
-      // waiting 3 seconds for give time to user to read
-      await wait(3);
-
+      await wait(2);
       formElement.current?.reset();
       setIsSubmiting(false);
     } catch (e) {
       console.error(e);
       setSubscribeResponse(messages.error);
-      await wait(5);
+      await wait(1);
       setIsSubmiting(false);
+    } finally {
+      await controls.start({
+        width: buttonWidth,
+        transition: { duration: 0.5, ease: "backInOut" },
+      });
     }
   };
   const emailValidation = {
@@ -200,34 +181,27 @@ const SubscribeSection = (props: Props) => {
   };
   const { errors } = formState;
 
-  const isMobile = useMediaQuery("(max-width: 768px)");
-
   return (
     <Container>
       <H2 whileHover={titleAnimation}>{props?.page?.title}</H2>
       <Suspense fallback={<div>Loading...</div>}>
-        <Form onSubmit={handleSubmit(onSubmit)} ref={formElement}>
-          <Fieldset>
-            <EmailInput
-              placeholder="Tu Email"
-              {...register("email", emailValidation)}
-            />
-            <SubmitButton type="submit" value={props?.page?.title!} />
+        <AnimatePresence exitBeforeEnter>
+          <Form onSubmit={handleSubmit(onSubmit)} ref={formElement}>
+            <Fieldset>
+              <EmailInput
+                placeholder="Tu Email"
+                {...register("email", emailValidation)}
+              />
 
-            <AnimatePresence>
-              {isSubmiting && (
-                <motion.div
-                  style={{ x: 0 }}
-                  animate={{ x: isMobile ? "-100vw" : "-620px", opacity: 1 }}
-                  transition={{ ease: "backInOut", duration: 0.7 }}
-                  exit={{ x: 100 }}
-                >
-                  <ThanksMessage>{subscribeResponse}</ThanksMessage>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </Fieldset>
-        </Form>
+              <SubmitButton
+                id="qqqqq"
+                animate={controls}
+                type="submit"
+                value={isSubmiting ? subscribeResponse : props?.page?.title!}
+              />
+            </Fieldset>
+          </Form>
+        </AnimatePresence>
       </Suspense>
 
       <ErrorMessage>{errors.email?.message}</ErrorMessage>
