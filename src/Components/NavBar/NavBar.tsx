@@ -54,6 +54,19 @@ const StyledLinksContainer = styled.ul`
   }
 `;
 
+const MobileStyledLinksContainer = styled.ul`
+  width: fit-content;
+  list-style: none;
+  padding: 29px 16px;
+  height: 100%;
+  flex-direction: row;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 100;
+`;
+
 const StyledLink = styled.li<{ isActive: string }>`
   padding: 8px 16px;
   font-weight: 400;
@@ -85,16 +98,12 @@ const StyledPortalWrapper = styled(motion.section)`
   position: fixed;
   z-index: 9999;
   top: 0px;
+  overflow: scroll;
   background-color: #f0e040;
   flex-direction: column;
-  padding: 29px 16px;
+  align-items: center;
   font-size: 32px;
   opacity: 0;
-
-  > ul {
-    display: flex;
-    flex-direction: column;
-  }
 
   li {
     text-align: center;
@@ -108,13 +117,18 @@ const StyledPortalWrapper = styled(motion.section)`
   }
 `;
 
-const Flex = styled.section`
-  height: 40px;
+const MobileTopAreaWrapper = styled.section`
+  height: 100px;
   display: flex;
   flex-direction: row;
+  position: absolute;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  width: 100%;
   justify-content: space-between;
+  align-items: center;
 
-  > svg {
+  & svg {
     height: 36px;
     color: black;
   }
@@ -122,11 +136,12 @@ const Flex = styled.section`
 
 const StyledBottom = styled.section`
   bottom: 0px;
-  position: absolute;
   width: calc(100vw - 32px);
   padding: 32px 0px;
   display: flex;
   flex-direction: column;
+  padding-left: 2rem;
+  padding-right: 2rem;
   gap: 32px;
   justify-content: center;
   align-items: center;
@@ -142,8 +157,10 @@ const StyledBottom = styled.section`
   }
 `;
 
-const FeatherIconWrapper = styled.div`
+const MobileFeatherIconWrapper = styled.span`
   cursor: pointer;
+  position: relative;
+  height: fit-content;
   @media (min-width: 769px) {
     display: none;
   }
@@ -153,7 +170,7 @@ const Menu = (props: Props) => {
   const { pathname } = useRouter();
 
   return (
-    <StyledLinksContainer>
+    <>
       {props.linksCollection.items.map((item) => {
         return (
           <StyledLink
@@ -170,10 +187,13 @@ const Menu = (props: Props) => {
           </StyledLink>
         );
       })}
-    </StyledLinksContainer>
+    </>
   );
 };
 
+const JSConfLogoWrapper = styled.div`
+  height: fit-content;
+`;
 const MobileMenu = (props: Props) => {
   const controls = useAnimation();
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -214,25 +234,27 @@ const MobileMenu = (props: Props) => {
 
   return (
     <>
-      <FeatherIconWrapper onClick={() => setIsOpen(true)}>
+      <MobileFeatherIconWrapper onClick={() => setIsOpen(true)}>
         <FeatherIcon icon="menu" />
-      </FeatherIconWrapper>
+      </MobileFeatherIconWrapper>
       <Portal>
         <StyledPortalWrapper animate={controls}>
-          <Flex>
-            <Suspense fallback={<div>Loading...</div>}>
-              <JSConfLogo />
+          <MobileTopAreaWrapper>
+            <Suspense fallback={null}>
+              <JSConfLogoWrapper>
+                <JSConfLogo />
+              </JSConfLogoWrapper>
             </Suspense>
-            <FeatherIconWrapper onClick={() => setIsOpen(false)}>
+            <MobileFeatherIconWrapper onClick={() => setIsOpen(false)}>
               <FeatherIcon icon="x" color="#1E2019" />
-            </FeatherIconWrapper>
-          </Flex>
+            </MobileFeatherIconWrapper>
+          </MobileTopAreaWrapper>
 
-          <Menu {...props} />
+          <MobileStyledLinksContainer>
+            <Menu {...props} />
+          </MobileStyledLinksContainer>
           <StyledBottom>
-            <Suspense fallback={<div>Loading...</div>}>
-              <Description data={props?.description?.json!} />
-            </Suspense>
+            <Description data={props?.description?.json!} />
             {props.buttonsCollection?.items.map((button, index) => (
               <SecondaryStyledLink
                 key={`button-mobile-${index}`}
@@ -266,7 +288,9 @@ export const NavBar = (props: Props) => {
           <StyledJSConfLogoWrapper>
             <JSConfLogo />
           </StyledJSConfLogoWrapper>
-          <Menu {...props} />
+          <StyledLinksContainer>
+            <Menu {...props} />
+          </StyledLinksContainer>
           <MobileMenu {...props} />
         </StyledWrapper>
       </AnimatePresence>

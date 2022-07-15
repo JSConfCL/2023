@@ -4,6 +4,12 @@ import { jsconfTheme } from "../../../styles/theme";
 // https://vincentgarreau.com/particles.js/#default
 // https://codepen.io/fforres/pen/gOvLQpQ
 const config = {
+  background: {
+    color: {
+      value: "rgba(0,0,0,0)",
+    },
+    opacity: 0,
+  },
   particles: {
     number: {
       value: 92,

@@ -2,9 +2,8 @@ import { lazy, Suspense } from "react";
 import { css, Global } from "@emotion/react";
 import { loadFull } from "tsparticles";
 import { Engine } from "tsparticles-engine";
+import Particles from "react-tsparticles";
 import config from "./sections/config";
-
-const Particles = lazy(() => import("react-tsparticles"));
 
 const ParticleComponent = () => {
   const particlesInit = async (main: Engine) => {
@@ -28,14 +27,12 @@ const ParticleComponent = () => {
           `,
         ]}
       />
-      <Suspense>
-        <Particles
-          id="tsparticles-container"
-          loaded={async (container) => {}}
-          init={particlesInit}
-          options={config}
-        />
-      </Suspense>
+      <Particles
+        id="tsparticles-container"
+        loaded={async (container) => {}}
+        init={particlesInit}
+        options={config}
+      />
     </>
   );
 };
