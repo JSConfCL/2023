@@ -1,12 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import styled from "@emotion/styled";
+import dynamic from "next/dynamic";
 import { lazy, Suspense } from "react";
 import { PageProps } from "../../../pages";
 import { SecondaryStyledLink } from "../Links";
 
 const Particles = lazy(() => import("../Particles"));
 
-const NavBar = lazy(() => import("../NavBar/NavBar"));
+const NavBar = dynamic(() => import("../NavBar/NavBar"), { ssr: false });
 
 const StyledWrapper = styled.section(({ theme }) => ({
   width: "100%",
@@ -62,12 +63,13 @@ const StyledForegroundWrapper = styled.section(({ theme }) => ({
   // [theme.breakpoints.tabletPortraitOnly]: {
   //   justifyContent: "flex-end",
   // },
-  // [theme.breakpoints.phoneOnly]: {
-  //   justifyContent: "center",
-  // },
   [theme.breakpoints.tabletPortraitOnly]: {
     padding: 16,
-    gap: 16,
+    gap: 32,
+  },
+  [theme.breakpoints.phoneOnly]: {
+    padding: 16,
+    gap: 8,
   },
 }));
 
@@ -97,6 +99,9 @@ const StyledTitle = styled.h1(({ theme }) => ({
   lineHeight: "1em",
   margin: 0,
   wordSpacing: "100vw",
+  [theme.breakpoints.tabletPortraitOnly]: {
+    fontSize: "80px",
+  },
   [theme.breakpoints.phoneOnly]: {
     fontSize: "40px",
     lineHeight: "40px",
@@ -128,7 +133,7 @@ const StyledRightSide = styled.section(({ theme }) => ({
     width: 600,
   },
   [theme.breakpoints.phoneOnly]: {
-    width: "100%",
+    width: 200,
   },
 }));
 
@@ -147,12 +152,12 @@ const StyledSecondaryTextWrapper = styled.section(({ theme }) => ({
   },
 }));
 
-const StyledSecondaryTitle = styled(StyledTitle)`
-  margin-left: 84px;
-  @media (max-width: 900px) {
-    margin-left: 16px;
-  }
-`;
+const StyledSecondaryTitle = styled(StyledTitle)(({ theme }) => ({
+  marginLeft: 84,
+  [theme.breakpoints.phoneOnly]: {
+    marginLeft: 16,
+  },
+}));
 
 const StyledWrapperLink = styled.section`
   @media (max-width: 900px) {

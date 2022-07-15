@@ -32,12 +32,12 @@ export const H3 = styled(motion.h3)`
   font-family: "Barlow";
   font-style: normal;
   font-weight: 800;
-  font-size: 20px;
+  font-size: 28px;
   line-height: 24px;
   letter-spacing: 0.5px;
   color: #ffffff;
   @media (min-width: 769px) {
-    font-size: 36px;
+    font-size: 32px;
     line-height: 43px;
   }
 `;

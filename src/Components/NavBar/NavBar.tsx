@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { lazy, Suspense } from "react";
+import { useLockBodyScroll, useToggle } from "react-use";
 import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
 import React, { useEffect } from "react";
@@ -62,7 +63,7 @@ const StyledLink = styled.li<{ isActive: string }>`
   color: ${({ isActive }) => (isActive === "active" ? "#F45B69" : "#1E2019")};
   @media (min-width: 769px) {
     border-width: ${({ isActive }) =>
-    isActive === "active" ? "0px 0px 2px 0px" : "0px"};
+      isActive === "active" ? "0px 0px 2px 0px" : "0px"};
     color: inherit;
   }
 
@@ -178,6 +179,7 @@ const MobileMenu = (props: Props) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [isOpen, setIsOpen] = React.useState(false);
 
+  useLockBodyScroll(isOpen);
   React.useEffect(() => {
     const animate = async () => {
       if (isOpen) {
@@ -209,16 +211,6 @@ const MobileMenu = (props: Props) => {
       setIsOpen(false);
     }
   }, [isMobile]);
-
-  // useEffect(() => {
-  //   controls.start({
-  //     opacity: 0,
-  //     top: -3000,
-  //     zIndex: -1000,
-  //     scale: 0,
-  //     transition: { duration: 0 },
-  //   });
-  // }, [controls]);
 
   return (
     <>
@@ -267,8 +259,6 @@ const NavVariant = {
 };
 
 export const NavBar = (props: Props) => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
-
   return (
     <StyledNav variants={NavVariant} animate="animate" initial="initial">
       <AnimatePresence exitBeforeEnter>

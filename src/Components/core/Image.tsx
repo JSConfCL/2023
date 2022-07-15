@@ -3,10 +3,10 @@ import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 
 const Picture = styled(motion.picture)`
-  width: fit-content;
+  object-fit: cover;
   overflow: hidden;
+  width: 100%;
   > img {
-    width: 100%;
   }
 `;
 
@@ -17,13 +17,12 @@ const Image = (props: {
   desktop?: string;
   style?: any;
   alt: string;
-  className?: string;
   params?: string;
   loading?: "lazy" | "eager";
 }) => {
   const { params = "", loading = "lazy" } = props;
   return (
-    <Picture className={props.className}>
+    <Picture>
       <source
         media="(max-width: 768px)"
         srcSet={`${props.mobile}?fm=webp${params}`}

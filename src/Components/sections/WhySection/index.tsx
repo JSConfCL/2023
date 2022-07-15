@@ -1,12 +1,12 @@
 import React, { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import useMediaQuery from "../../helpers/useMediaQuery";
-import { H2, H3 } from "../core/Typography";
-import { PageProps } from "../../../pages";
+import useMediaQuery from "../../../helpers/useMediaQuery";
+import { H2 } from "../../core/Typography";
+import { PageProps } from "../../../../pages";
+import Description from "./Description";
 
-const Description = lazy(() => import("../core/Description"));
-const Image = lazy(() => import("../core/Image"));
+const Image = lazy(() => import("../../core/Image"));
 
 const Container = styled.section`
   align-self: center;
@@ -78,6 +78,23 @@ const Block = styled(motion.section)`
 
   @media (min-width: 769px) {
     background-color: rgba(240, 224, 64, 0.2);
+  }
+`;
+
+export const H3 = styled(motion.h3)`
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  @media (min-width: 769px) {
+    font-size: 24px;
+    line-height: 43px;
+  }
+  @media (min-width: 1025px) {
+    font-size: 36px;
   }
 `;
 

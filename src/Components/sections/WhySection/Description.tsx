@@ -10,7 +10,24 @@ import {
   BLOCKS,
   MARKS,
 } from "@contentful/rich-text-types";
-import { P, B, UL, H3 } from "./Typography";
+import { UL, B } from "../../core/Typography";
+
+export const P = styled(motion.p)`
+  font-family: "Barlow";
+  font-weight: 400;
+  font-size: 16px;
+  font-style: normal;
+  color: #e2e2e2;
+  letter-spacing: 0.5px;
+  line-height: 25px;
+
+  @media (min-width: 769px) {
+    font-size: 16px;
+  }
+  @media (min-width: 1025px) {
+    font-size: 18px;
+  }
+`;
 
 const Block = styled(motion.section)``;
 
