@@ -6,7 +6,7 @@ import { jsconfTheme } from "../../../styles/theme";
 const config = {
   background: {
     color: {
-      value: "rgba(0,0,0,0)",
+      value: jsconfTheme.colors.jsconfYellow,
     },
     opacity: 0,
   },

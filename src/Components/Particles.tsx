@@ -23,6 +23,10 @@ const ParticleComponent = () => {
               padding: 0px;
               margin: 0px;
               z-index: 0;
+              background-color: #f0e040d4;
+            }
+            #tsparticles-container canvas {
+              background-color: #f0e040d4 !important;
             }
           `,
         ]}
