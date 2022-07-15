@@ -10,7 +10,7 @@ import {
   BLOCKS,
   MARKS,
 } from "@contentful/rich-text-types";
-import { P, B, UL, H3 } from "./Typography";
+import { P, B, UL, H3 } from "../core/Typography";
 
 const Block = styled(motion.section)``;
 
