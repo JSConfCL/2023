@@ -13,6 +13,7 @@ const Picture = styled(motion.picture)`
 const Img = styled(motion.img)``;
 
 const Image = (props: {
+  className?: string;
   mobile: string;
   desktop?: string;
   style?: any;
@@ -22,7 +23,7 @@ const Image = (props: {
 }) => {
   const { params = "", loading = "lazy" } = props;
   return (
-    <Picture>
+    <Picture className={props.className}>
       <source
         media="(max-width: 768px)"
         srcSet={`${props.mobile}?fm=webp${params}`}
