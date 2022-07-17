@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import dynamic from "next/dynamic";
 import { lazy, Suspense } from "react";
 import { PageProps } from "../../../pages";
-import { SecondaryStyledLink } from "../Links";
+import { SecondaryStyledLink, TertiaryStyledLink } from "../Links";
 
 const Particles = lazy(() => import("../Particles"));
 
@@ -20,12 +20,17 @@ const StyledWrapper = styled.section(({ theme }) => ({
   height: "90vh",
   minHeight: 700,
   maxHeight: 900,
+  [theme.breakpoints.phoneOnly]: {
+    minHeight: 800,
+  },
   [theme.breakpoints.smallDesktopOnly]: {
     height: "unset",
     maxHeight: "unset",
   },
 
-  [theme.breakpoints.tabletPortraitOnly]: {},
+  [theme.breakpoints.tabletPortraitOnly]: {
+    minHeight: 800,
+  },
 }));
 
 const StyledBackground = styled.img(({ theme }) => ({
@@ -160,6 +165,14 @@ const StyledSecondaryTitle = styled(StyledTitle)(({ theme }) => ({
 }));
 
 const StyledWrapperLink = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (min-width: 769px) {
+    flex-direction: row;
+  }
+
   @media (max-width: 900px) {
     margin: 0px 16px;
     position: absolute;
@@ -209,6 +222,11 @@ export const Hero = ({
               <SecondaryStyledLink href={heroData.ctaUrl}>
                 {heroData.ctaText}
               </SecondaryStyledLink>
+            )}
+            {heroData.secondButton && (
+              <TertiaryStyledLink href={heroData.secondButton.link}>
+                {heroData.secondButton.contenido}
+              </TertiaryStyledLink>
             )}
           </StyledWrapperLink>
         </StyledRightSide>

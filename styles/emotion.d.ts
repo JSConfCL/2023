@@ -10,6 +10,7 @@ type ButtonVariantStyles = {
   borderTopRightRadius?: number;
   borderStyle: CSS.Properties["borderStyle"];
   onHoverColor: string;
+  minWidth?: number;
 };
 
 type Colors = {
@@ -55,6 +56,7 @@ declare module "@emotion/react" {
         variants: {
           primary: ButtonVariantStyles;
           secondary: ButtonVariantStyles;
+          tertiary: ButtonVariantStyles;
         };
       };
       global: {
