@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { Document } from "@contentful/rich-text-types";
 import { H2 } from "../core/Typography";
-import { BasePrimaryButton } from "../Button";
+import { PrimaryStyledLink } from "../Links";
 
 const Description = lazy(() => import("../core/Description"));
 
@@ -98,11 +98,15 @@ const SponsorCard = (props: SponsorCardProps) => {
       <Number number={(4 - props?.number!) % 3}>0{props?.number!}</Number>
       <WrapperDescription>
         <H2>{props?.name!}</H2>
-        <StyledPrice>USD ${props?.price}</StyledPrice>
+        {props?.price && <StyledPrice>USD ${props?.price}</StyledPrice>}
         <Suspense fallback={null}>
           <Description data={props?.description?.json!} />
         </Suspense>
-        <BasePrimaryButton>Sponsors Registration</BasePrimaryButton>
+        <PrimaryStyledLink
+          href={`mailto:sponsors@jsconf.cl?subject=${props?.name!}`}
+        >
+          Sponsors Registration
+        </PrimaryStyledLink>
       </WrapperDescription>
     </Container>
   );

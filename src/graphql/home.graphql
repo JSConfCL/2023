@@ -1,5 +1,5 @@
-query HomeQuery {
-  page(id: "FTZMMTIKuOMTvkVv0DGzs", locale: "es-CL") {
+query HomeQuery($locale: String!, $isPreview: Boolean = false) {
+  page(id: "FTZMMTIKuOMTvkVv0DGzs", locale: $locale, preview: $isPreview) {
     navBar {
       linksCollection(limit: 20) {
         items {
@@ -36,6 +36,10 @@ query HomeQuery {
       background {
         title
         url
+      }
+      secondButton {
+        link
+        contenido
       }
     }
     whyBlockCollection {

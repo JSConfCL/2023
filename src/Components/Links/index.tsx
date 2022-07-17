@@ -70,6 +70,28 @@ const BaseSecondaryExternalLink = styled.a(({ theme }) => ({
   },
 }));
 
+const BaseTertiaryExternalLink = styled.a(({ theme }) => ({
+  ...baseStyling,
+
+  background: theme.elements.buttons.variants.tertiary.backgroundColor,
+  backgroundColor:
+    theme.elements.buttons.variants.tertiary.backgroundFallbackColor,
+  color: theme.elements.buttons.variants.tertiary.textColor,
+  borderTopRightRadius:
+    theme.elements.buttons.variants.tertiary.borderTopRightRadius,
+  borderColor: theme.elements.buttons.variants.tertiary.borderColor,
+  borderWidth: theme.elements.buttons.variants.tertiary.borderWidth,
+  borderStyle: theme.elements.buttons.variants.tertiary.borderStyle,
+  minWidth: theme.elements.buttons.variants.tertiary.minWidth,
+
+  // boxShadow: `0 2px 10px ${lighten(0.55, theme.colors.black)}`,
+  "&:hover": { background: lighten(0.1, theme.colors.jsconfYellow) },
+  "&:focus": { boxShadow: `0 0 0 2px ${theme.colors.black}` },
+  [theme.breakpoints.phoneOnly]: {
+    width: "100%",
+  },
+}));
+
 const StyledIconWrapper = styled.div`
   position: absolute;
   bottom: 0;
@@ -108,8 +130,27 @@ export const SecondaryStyledLink = (props: {
     >
       {props.children}
       <StyledIconWrapper>
-        <ArrowIcon />
+        <ArrowIcon color="white" />
       </StyledIconWrapper>
     </BaseSecondaryExternalLink>
+  );
+};
+
+export const TertiaryStyledLink = (props: {
+  href: string;
+  children: React.ReactNode;
+}) => {
+  const isExternal = props.href.startsWith("http");
+  return (
+    <BaseTertiaryExternalLink
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
+      href={props.href}
+    >
+      {props.children}
+      <StyledIconWrapper>
+        <ArrowIcon color="black" />
+      </StyledIconWrapper>
+    </BaseTertiaryExternalLink>
   );
 };

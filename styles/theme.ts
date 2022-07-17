@@ -76,6 +76,17 @@ export const jsconfTheme: Theme = {
           borderTopRightRadius: 24,
           onHoverColor: colors.jsconfYellow,
         },
+        tertiary: {
+          backgroundColor: "transparent",
+          backgroundFallbackColor: "transparent",
+          textColor: colors.black,
+          borderColor: colors.black,
+          borderWidth: 4,
+          borderStyle: "solid",
+          borderTopRightRadius: 24,
+          onHoverColor: colors.jsconfYellow,
+          minWidth: 200,
+        },
       },
     },
     global: {

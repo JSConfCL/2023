@@ -5,6 +5,7 @@ import styled from "@emotion/styled";
 import {
   HomeQueryDocument,
   HomeQueryQuery,
+  HomeQueryQueryVariables,
 } from "../src/graphql/home.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
@@ -43,7 +44,8 @@ const StyledBlackWrapp = styled.section`
 const Home: NextPage<PageProps> = (props) => {
   return (
     <Container>
-      <Seo {...props.seo} scripts={<EventSchema />} />
+      <Seo {...props.seo} />
+      <EventSchema />
       <Suspense fallback={null}>
         <Hero heroData={props.heroData} navData={props.navData} />
       </Suspense>
@@ -64,7 +66,10 @@ const Home: NextPage<PageProps> = (props) => {
 
 export async function getStaticProps() {
   const queryResults = await urlQlient
-    .query<HomeQueryQuery>(HomeQueryDocument)
+    .query<HomeQueryQuery, HomeQueryQueryVariables>(HomeQueryDocument, {
+      locale: "es-CL",
+      isPreview: Boolean(process.env.NEXT_PUBLIC_CONTENTFUL_IS_PREVIEW),
+    })
     .toPromise();
 
   const page = queryResults.data?.page as Page;

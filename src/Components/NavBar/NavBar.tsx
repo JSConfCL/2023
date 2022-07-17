@@ -85,10 +85,11 @@ const StyledLink = styled.li<{ isActive: string }>`
   }
 `;
 
-const StyledJSConfLogoWrapper = styled.div`
+const StyledJSConfLogoWrapper = styled.button`
   height: 100%;
   max-height: 50px;
   aspect-ratio: 1/1;
+  cursor: pointer;
 `;
 
 const StyledPortalWrapper = styled(motion.section)`
@@ -196,6 +197,7 @@ const JSConfLogoWrapper = styled.div`
 `;
 const MobileMenu = (props: Props) => {
   const controls = useAnimation();
+
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -281,11 +283,12 @@ const NavVariant = {
 };
 
 export const NavBar = (props: Props) => {
+  const router = useRouter();
   return (
     <StyledNav variants={NavVariant} animate="animate" initial="initial">
       <AnimatePresence exitBeforeEnter>
         <StyledWrapper>
-          <StyledJSConfLogoWrapper>
+          <StyledJSConfLogoWrapper onClick={() => router.push("/")}>
             <JSConfLogo />
           </StyledJSConfLogoWrapper>
           <StyledLinksContainer>

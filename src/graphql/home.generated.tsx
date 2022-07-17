@@ -3,7 +3,10 @@ import * as Types from "../types";
 import gql from "graphql-tag";
 import * as Urql from "urql";
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type HomeQueryQueryVariables = Types.Exact<{ [key: string]: never }>;
+export type HomeQueryQueryVariables = Types.Exact<{
+  locale: Types.Scalars["String"];
+  isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
+}>;
 
 export type HomeQueryQuery = {
   __typename?: "Query";
@@ -52,6 +55,11 @@ export type HomeQueryQuery = {
         __typename?: "Asset";
         title?: string | null;
         url?: string | null;
+      } | null;
+      secondButton?: {
+        __typename?: "LinkItem";
+        link?: string | null;
+        contenido?: string | null;
       } | null;
     } | null;
     whyBlockCollection?: {
@@ -141,8 +149,8 @@ export type HomeQueryQuery = {
 };
 
 export const HomeQueryDocument = gql`
-  query HomeQuery {
-    page(id: "FTZMMTIKuOMTvkVv0DGzs", locale: "es-CL") {
+  query HomeQuery($locale: String!, $isPreview: Boolean = false) {
+    page(id: "FTZMMTIKuOMTvkVv0DGzs", locale: $locale, preview: $isPreview) {
       navBar {
         linksCollection(limit: 20) {
           items {
@@ -179,6 +187,10 @@ export const HomeQueryDocument = gql`
         background {
           title
           url
+        }
+        secondButton {
+          link
+          contenido
         }
       }
       whyBlockCollection {
@@ -258,7 +270,7 @@ export const HomeQueryDocument = gql`
 `;
 
 export function useHomeQueryQuery(
-  options?: Omit<Urql.UseQueryArgs<HomeQueryQueryVariables>, "query">
+  options: Omit<Urql.UseQueryArgs<HomeQueryQueryVariables>, "query">
 ) {
   return Urql.useQuery<HomeQueryQuery>({
     query: HomeQueryDocument,

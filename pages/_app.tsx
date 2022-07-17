@@ -6,6 +6,7 @@ import { CacheProvider, ThemeProvider } from "@emotion/react";
 import { jsconfTheme } from "../styles/theme";
 import createCache from "@emotion/cache";
 import { urlQlient } from "../src/graphql/urql";
+import WebSchema from "../src/Components/schema/webpage";
 
 const ExtendedFooter = lazy(() => import("../src/Components/ExtendedFooter"));
 
@@ -18,6 +19,7 @@ function MyApp(appProps: AppProps) {
     <CacheProvider value={cache}>
       <Provider value={urlQlient}>
         <ThemeProvider theme={jsconfTheme}>
+          <WebSchema />
           <GlobalStyles />
           <Component {...pageProps} />
           <Suspense fallback={null}>
