@@ -1,4 +1,9 @@
+# *
 User-agent: *
-Allow: /*
+Allow: /
 
-Disallow: /api/*
+# Host
+Host: https://jsconf.cl
+
+# Sitemaps
+Sitemap: https://jsconf.cl/sitemap.xml
