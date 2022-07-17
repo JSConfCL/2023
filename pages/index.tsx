@@ -44,7 +44,8 @@ const StyledBlackWrapp = styled.section`
 const Home: NextPage<PageProps> = (props) => {
   return (
     <Container>
-      <Seo {...props.seo} scripts={<EventSchema />} />
+      <Seo {...props.seo} />
+      <EventSchema />
       <Suspense fallback={null}>
         <Hero heroData={props.heroData} navData={props.navData} />
       </Suspense>
