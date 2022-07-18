@@ -1,5 +1,5 @@
-query WhyQuery {
-  page(id: "7rT5EZIWOXMxoy8151P9WL", locale: "es-CL") {
+query WhyQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {
+  page(id: $id, locale: $locale, preview: $isPreview) {
     navBar {
       linksCollection(limit: 20) {
         items {

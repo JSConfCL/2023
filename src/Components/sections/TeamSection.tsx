@@ -24,6 +24,10 @@ const Container = styled.section`
     padding: 48px 0px;
   }
 
+  h3 {
+    font-size: 24px !important;
+  }
+
   @media (min-width: 769px) {
     padding: 48px;
     gap: 32px 32px;
@@ -92,28 +96,15 @@ const LoadMoreButton = styled.button`
   color: #f0e040;
 `;
 
-const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
-  const [speakers, setSpeakers] = useState<any>([]);
-  const [loadCount, setLoadCount] = useState(6);
-  const isMobile = useMediaQuery("(max-width: 768px)");
+const TeamSection = (props: { page: PageProps["teamData"] }) => {
   const {
-    page: { title, description, speakersCollection },
+    page: {
+      title,
+      description,
+      callToAction,
+      membersCollection: { items },
+    },
   } = props;
-
-  const LoadMoreHandle = () => {
-    setSpeakers(speakersCollection.items);
-    setLoadCount(speakersCollection.items.length);
-  };
-
-  const isLoadMore = isMobile && speakersCollection.items.length !== loadCount;
-
-  useEffect(() => {
-    if (isMobile) {
-      setSpeakers(speakersCollection.items.slice(0, loadCount));
-      return;
-    }
-    setSpeakers(speakersCollection.items);
-  }, [isMobile, speakersCollection, loadCount]);
 
   return (
     <Container>
@@ -125,33 +116,63 @@ const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
         <HR />
       </DescriptionContainer>
       <ContainerButton>
-        <PrimaryStyledLink href="/cfp">CFP Registration</PrimaryStyledLink>
+        {callToAction && (
+          <PrimaryStyledLink href={callToAction.link}>
+            {callToAction.contenido}
+          </PrimaryStyledLink>
+        )}
       </ContainerButton>
 
-      {speakers.map((item: any, index: number) => {
+      {items.map((item: any, index: number) => {
         if (index === 6) {
           return (
             <Column index={index}>
-              <PrimaryStyledLink href="/cfp">
-                CFP Registration
-              </PrimaryStyledLink>
-              <Suspense key={`speaker-${index}`} fallback={null}>
-                <Card key={`speaker-${index}`} {...item} />
+              {callToAction && (
+                <PrimaryStyledLink href={callToAction.link}>
+                  {callToAction.contenido}
+                </PrimaryStyledLink>
+              )}
+              <Suspense key={`team-${index}`} fallback={null}>
+                <Card
+                  key={`team-${index}`}
+                  {...item}
+                  type={item.type !== "blank" ? "normal-simple" : "blank"}
+                  position={
+                    <a
+                      href={`https://twitter.com/${item.twitter}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {item.twitter}
+                    </a>
+                  }
+                />
               </Suspense>
             </Column>
           );
         }
+
         return (
           <Suspense key={`speaker-${index}`} fallback={null}>
-            <Card key={`speaker-${index}`} {...item} index={index} />
+            <Card
+              key={`speaker-${index}`}
+              {...item}
+              type={item.type !== "blank" ? "normal-simple" : "blank"}
+              position={
+                <a
+                  href={`https://twitter.com/${item.twitter}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {item.twitter}
+                </a>
+              }
+            />
           </Suspense>
         );
       })}
-      {isLoadMore && (
-        <LoadMoreButton onClick={LoadMoreHandle}>Load More</LoadMoreButton>
-      )}
     </Container>
   );
 };
 
-export default SpeakerSection;
+export default TeamSection;

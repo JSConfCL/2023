@@ -3,7 +3,11 @@ import * as Types from "../types";
 import gql from "graphql-tag";
 import * as Urql from "urql";
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type WhyQueryQueryVariables = Types.Exact<{ [key: string]: never }>;
+export type WhyQueryQueryVariables = Types.Exact<{
+  id: Types.Scalars["String"];
+  locale: Types.Scalars["String"];
+  isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
+}>;
 
 export type WhyQueryQuery = {
   __typename?: "Query";
@@ -101,8 +105,8 @@ export type WhyQueryQuery = {
 };
 
 export const WhyQueryDocument = gql`
-  query WhyQuery {
-    page(id: "7rT5EZIWOXMxoy8151P9WL", locale: "es-CL") {
+  query WhyQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {
+    page(id: $id, locale: $locale, preview: $isPreview) {
       navBar {
         linksCollection(limit: 20) {
           items {
@@ -185,7 +189,7 @@ export const WhyQueryDocument = gql`
 `;
 
 export function useWhyQueryQuery(
-  options?: Omit<Urql.UseQueryArgs<WhyQueryQueryVariables>, "query">
+  options: Omit<Urql.UseQueryArgs<WhyQueryQueryVariables>, "query">
 ) {
   return Urql.useQuery<WhyQueryQuery>({ query: WhyQueryDocument, ...options });
 }

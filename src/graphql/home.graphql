@@ -82,12 +82,12 @@ query HomeQuery($locale: String!, $isPreview: Boolean = false) {
         }
       }
     }
-    speakersBlock {
+    speakersBlock(preview: $isPreview) {
       title
       description {
         json
       }
-      speakersCollection {
+      speakersCollection(preview: $isPreview) {
         items {
           name
           position
@@ -113,6 +113,26 @@ query HomeQuery($locale: String!, $isPreview: Boolean = false) {
     }
     subscribeBlock {
       title
+    }
+    teamBlock {
+      membersCollection {
+        items {
+          name
+          type
+          twitter
+          photo {
+            url
+          }
+        }
+      }
+      title
+      description {
+        json
+      }
+      callToAction {
+        contenido
+        link
+      }
     }
   }
 }
