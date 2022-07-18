@@ -2,7 +2,11 @@ import { lazy, Suspense } from "react";
 import type { NextPage } from "next";
 import styled from "@emotion/styled";
 
-import { WhyQueryDocument, WhyQueryQuery } from "../src/graphql/why.generated";
+import {
+  WhyQueryDocument,
+  WhyQueryQuery,
+  WhyQueryQueryVariables,
+} from "../src/graphql/why.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 import Seo from "../src/Components/Seo";
@@ -57,7 +61,11 @@ const Home: NextPage<PageProps> = (props) => {
 
 export async function getStaticProps() {
   const queryResults = await urlQlient
-    .query<WhyQueryQuery>(WhyQueryDocument)
+    .query<WhyQueryQuery, WhyQueryQueryVariables>(WhyQueryDocument, {
+      id: "7rT5EZIWOXMxoy8151P9WL",
+      locale: "es-CL",
+      isPreview: Boolean(process.env.NEXT_PUBLIC_CONTENTFUL_IS_PREVIEW),
+    })
     .toPromise();
   const page = queryResults.data?.page as Page;
   const props: PageProps = {

@@ -6,6 +6,8 @@ const Picture = styled(motion.picture)`
   object-fit: cover;
   overflow: hidden;
   width: 100%;
+  display: flex;
+  justify-content: center;
   > img {
   }
 `;

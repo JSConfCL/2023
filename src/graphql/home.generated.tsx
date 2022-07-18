@@ -145,6 +145,26 @@ export type HomeQueryQuery = {
       __typename?: "SubscribeBlock";
       title?: string | null;
     } | null;
+    teamBlock?: {
+      __typename?: "TeamBlock";
+      title?: string | null;
+      membersCollection?: {
+        __typename?: "TeamBlockMembersCollection";
+        items: Array<{
+          __typename?: "Member";
+          name?: string | null;
+          type?: string | null;
+          twitter?: string | null;
+          photo?: { __typename?: "Asset"; url?: string | null } | null;
+        } | null>;
+      } | null;
+      description?: { __typename?: "TeamBlockDescription"; json: any } | null;
+      callToAction?: {
+        __typename?: "LinkItem";
+        contenido?: string | null;
+        link?: string | null;
+      } | null;
+    } | null;
   } | null;
 };
 
@@ -233,12 +253,12 @@ export const HomeQueryDocument = gql`
           }
         }
       }
-      speakersBlock {
+      speakersBlock(preview: $isPreview) {
         title
         description {
           json
         }
-        speakersCollection {
+        speakersCollection(preview: $isPreview) {
           items {
             name
             position
@@ -264,6 +284,26 @@ export const HomeQueryDocument = gql`
       }
       subscribeBlock {
         title
+      }
+      teamBlock {
+        membersCollection {
+          items {
+            name
+            type
+            twitter
+            photo {
+              url
+            }
+          }
+        }
+        title
+        description {
+          json
+        }
+        callToAction {
+          contenido
+          link
+        }
       }
     }
   }

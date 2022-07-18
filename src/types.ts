@@ -1217,6 +1217,7 @@ export type LinkItemLinkingCollections = {
   heroBlockCollection?: Maybe<HeroBlockCollection>;
   lineBlockCollection?: Maybe<LineBlockCollection>;
   navigationBarCollection?: Maybe<NavigationBarCollection>;
+  teamBlockCollection?: Maybe<TeamBlockCollection>;
 };
 
 export type LinkItemLinkingCollectionsEntryCollectionArgs = {
@@ -1254,6 +1255,13 @@ export type LinkItemLinkingCollectionsNavigationBarCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
+export type LinkItemLinkingCollectionsTeamBlockCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
 export enum LinkItemOrder {
   ContenidoAsc = "contenido_ASC",
   ContenidoDesc = "contenido_DESC",
@@ -1285,6 +1293,7 @@ export type Member = Entry & {
   name?: Maybe<Scalars["String"]>;
   photo?: Maybe<Asset>;
   sys: Sys;
+  twitter?: Maybe<Scalars["String"]>;
   type?: Maybe<Scalars["String"]>;
 };
 
@@ -1302,6 +1311,11 @@ export type MemberNameArgs = {
 export type MemberPhotoArgs = {
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/member) */
+export type MemberTwitterArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/member) */
@@ -1330,6 +1344,13 @@ export type MemberFilter = {
   name_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   photo_exists?: InputMaybe<Scalars["Boolean"]>;
   sys?: InputMaybe<SysFilter>;
+  twitter?: InputMaybe<Scalars["String"]>;
+  twitter_contains?: InputMaybe<Scalars["String"]>;
+  twitter_exists?: InputMaybe<Scalars["Boolean"]>;
+  twitter_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  twitter_not?: InputMaybe<Scalars["String"]>;
+  twitter_not_contains?: InputMaybe<Scalars["String"]>;
+  twitter_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   type?: InputMaybe<Scalars["String"]>;
   type_contains?: InputMaybe<Scalars["String"]>;
   type_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -1370,6 +1391,8 @@ export enum MemberOrder {
   SysPublishedAtDesc = "sys_publishedAt_DESC",
   SysPublishedVersionAsc = "sys_publishedVersion_ASC",
   SysPublishedVersionDesc = "sys_publishedVersion_DESC",
+  TwitterAsc = "twitter_ASC",
+  TwitterDesc = "twitter_DESC",
   TypeAsc = "type_ASC",
   TypeDesc = "type_DESC",
 }
@@ -1534,6 +1557,7 @@ export type Page = Entry & {
   sponsorTypeCollection?: Maybe<PageSponsorTypeCollection>;
   subscribeBlock?: Maybe<SubscribeBlock>;
   sys: Sys;
+  teamBlock?: Maybe<TeamBlock>;
   whyBlockCollection?: Maybe<PageWhyBlockCollection>;
 };
 
@@ -1606,6 +1630,12 @@ export type PageSubscribeBlockArgs = {
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
+export type PageTeamBlockArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
 export type PageWhyBlockCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
@@ -1649,6 +1679,8 @@ export type PageFilter = {
   subscribeBlock?: InputMaybe<CfSubscribeBlockNestedFilter>;
   subscribeBlock_exists?: InputMaybe<Scalars["Boolean"]>;
   sys?: InputMaybe<SysFilter>;
+  teamBlock?: InputMaybe<CfTeamBlockNestedFilter>;
+  teamBlock_exists?: InputMaybe<Scalars["Boolean"]>;
   whyBlockCollection_exists?: InputMaybe<Scalars["Boolean"]>;
 };
 
@@ -3096,12 +3128,19 @@ export enum TalkOrder {
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/teamBlock) */
 export type TeamBlock = Entry & {
   __typename?: "TeamBlock";
+  callToAction?: Maybe<LinkItem>;
   contentfulMetadata: ContentfulMetadata;
   description?: Maybe<TeamBlockDescription>;
   linkedFrom?: Maybe<TeamBlockLinkingCollections>;
   membersCollection?: Maybe<TeamBlockMembersCollection>;
   sys: Sys;
   title?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/teamBlock) */
+export type TeamBlockCallToActionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/teamBlock) */
@@ -3163,6 +3202,8 @@ export type TeamBlockDescriptionLinks = {
 export type TeamBlockFilter = {
   AND?: InputMaybe<Array<InputMaybe<TeamBlockFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<TeamBlockFilter>>>;
+  callToAction?: InputMaybe<CfLinkItemNestedFilter>;
+  callToAction_exists?: InputMaybe<Scalars["Boolean"]>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
   description_contains?: InputMaybe<Scalars["String"]>;
   description_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -3181,9 +3222,17 @@ export type TeamBlockFilter = {
 export type TeamBlockLinkingCollections = {
   __typename?: "TeamBlockLinkingCollections";
   entryCollection?: Maybe<EntryCollection>;
+  pageCollection?: Maybe<PageCollection>;
 };
 
 export type TeamBlockLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type TeamBlockLinkingCollectionsPageCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
@@ -3693,6 +3742,25 @@ export type CfSubscribeBlockNestedFilter = {
   AND?: InputMaybe<Array<InputMaybe<CfSubscribeBlockNestedFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<CfSubscribeBlockNestedFilter>>>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  sys?: InputMaybe<SysFilter>;
+  title?: InputMaybe<Scalars["String"]>;
+  title_contains?: InputMaybe<Scalars["String"]>;
+  title_exists?: InputMaybe<Scalars["Boolean"]>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  title_not?: InputMaybe<Scalars["String"]>;
+  title_not_contains?: InputMaybe<Scalars["String"]>;
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+export type CfTeamBlockNestedFilter = {
+  AND?: InputMaybe<Array<InputMaybe<CfTeamBlockNestedFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<CfTeamBlockNestedFilter>>>;
+  callToAction_exists?: InputMaybe<Scalars["Boolean"]>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  description_contains?: InputMaybe<Scalars["String"]>;
+  description_exists?: InputMaybe<Scalars["Boolean"]>;
+  description_not_contains?: InputMaybe<Scalars["String"]>;
+  membersCollection_exists?: InputMaybe<Scalars["Boolean"]>;
   sys?: InputMaybe<SysFilter>;
   title?: InputMaybe<Scalars["String"]>;
   title_contains?: InputMaybe<Scalars["String"]>;

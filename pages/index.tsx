@@ -15,6 +15,9 @@ import Hero from "../src/Components/sections/Hero";
 
 const WhySection = lazy(() => import("../src/Components/sections/WhySection"));
 const HowSection = lazy(() => import("../src/Components/sections/HowSection"));
+const TeamSection = lazy(
+  () => import("../src/Components/sections/TeamSection")
+);
 const SpeakerSection = lazy(
   () => import("../src/Components/sections/SpeakerSection")
 );
@@ -28,6 +31,7 @@ export type PageProps = {
   heroData: Page["heroBlock"];
   speakerData: Page["speakersBlock"];
   seo: Page["seo"];
+  teamData: Page["teamBlock"];
 };
 const Container = styled.section`
   display: flex;
@@ -59,6 +63,9 @@ const Home: NextPage<PageProps> = (props) => {
         <Suspense fallback={null}>
           {props.speakerData && <SpeakerSection page={props.speakerData} />}
         </Suspense>
+        <Suspense fallback={null}>
+          {props.teamData && <TeamSection page={props.teamData} />}
+        </Suspense>
       </StyledBlackWrapp>
     </Container>
   );
@@ -80,6 +87,7 @@ export async function getStaticProps() {
     howItems: page?.howBlockCollection,
     speakerData: page?.speakersBlock,
     seo: page?.seo,
+    teamData: page?.teamBlock,
   };
 
   return {

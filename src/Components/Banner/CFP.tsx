@@ -16,6 +16,7 @@ const Container = styled.section`
   max-width: 1440px;
   height: 100vh;
   padding: 16px;
+  min-height: 916px;
   align-items: flex-start;
   max-height: 1000px;
 
@@ -29,7 +30,8 @@ const Container = styled.section`
   }
 
   .principal img {
-    top: 140px;
+    top: 60px;
+    right: 0px;
   }
 
   @media (min-width: 500px) {
@@ -54,6 +56,11 @@ const Container = styled.section`
       right: 48px;
       width: 100%;
       object-position: center center;
+    }
+
+    .principal img {
+      top: 140px;
+      right: 0px;
     }
   }
 
@@ -177,6 +184,7 @@ const BannerCFP = (props: PageProps["heroData"]) => {
             style={{
               position: "absolute",
               maxWidth: "864px",
+              width: "100vw",
               borderRadius: "0px 32px 0px 0px",
               aspectRatio: "830 / 365",
               objectFit: "cover",
