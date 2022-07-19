@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import dynamic from "next/dynamic";
 import { GlobalStyles } from "../styles/globalStyles";
 import { Provider } from "urql";
 import type { AppProps } from "next/app";
@@ -6,7 +7,10 @@ import { CacheProvider, ThemeProvider } from "@emotion/react";
 import { jsconfTheme } from "../styles/theme";
 import createCache from "@emotion/cache";
 import { urlQlient } from "../src/graphql/urql";
-import WebSchema from "../src/Components/schema/webpage";
+
+const WebSchema = dynamic(() => import("../src/Components/schema/webpage"), {
+  ssr: false,
+});
 
 const ExtendedFooter = lazy(() => import("../src/Components/ExtendedFooter"));
 
@@ -19,8 +23,8 @@ function MyApp(appProps: AppProps) {
     <CacheProvider value={cache}>
       <Provider value={urlQlient}>
         <ThemeProvider theme={jsconfTheme}>
-          <WebSchema />
           <GlobalStyles />
+          <WebSchema />
           <Component {...pageProps} />
           <Suspense fallback={null}>
             <ExtendedFooter />
