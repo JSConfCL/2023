@@ -16,7 +16,7 @@ const Container = styled.section`
   max-width: 1440px;
   height: 100vh;
   padding: 16px;
-  min-height: 916px;
+  min-height: 1000px;
   align-items: flex-start;
   max-height: 1000px;
 
