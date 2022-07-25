@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import type { NextPage } from "next";
+import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
 
 import {
@@ -11,7 +12,9 @@ import { urlQlient } from "../src/graphql/urql";
 import Seo from "../src/Components/Seo";
 import { ParseQuery } from "../src/helpers/types";
 
-const NavBar = lazy(() => import("../src/Components/NavBar/NavBar"));
+const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
+  ssr: false,
+});
 const BannerSponsor = lazy(() => import("../src/Components/Banner/Sponsor"));
 const SponsorCard = lazy(() => import("../src/Components/Card/Sponsor"));
 
