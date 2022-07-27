@@ -7,6 +7,7 @@ import {
 } from "../graphql/footer.generated";
 
 import { ParseQuery } from "../helpers/types";
+import { ViewportSizes } from "../../styles/theme";
 
 const Footer = lazy(() => import("../Components/Footer/Footer"));
 const SubscribeSection = lazy(
@@ -34,7 +35,7 @@ const FlexRow = styled.div`
   padding: 16px;
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     flex-direction: row;
     align-self: center;
     padding: 48px;

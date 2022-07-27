@@ -23,12 +23,12 @@ const StyledWrapper = styled.section(({ theme }) => ({
   [theme.breakpoints.phoneOnly]: {
     minHeight: 800,
   },
-  [theme.breakpoints.smallDesktopOnly]: {
+  [theme.breakpoints.tabletLandscapeOnly]: {
     height: "unset",
     maxHeight: "unset",
   },
 
-  [theme.breakpoints.tabletPortraitOnly]: {
+  [theme.breakpoints.phoneOnly]: {
     minHeight: 800,
   },
 }));
@@ -40,7 +40,7 @@ const StyledBackground = styled.img(({ theme }) => ({
   aspectRatio: "1366 / 680",
   width: "100%",
   objectFit: "fill",
-  [theme.breakpoints.smallDesktopOnly]: {
+  [theme.breakpoints.tabletLandscapeOnly]: {
     objectFit: "cover",
   },
 }));
@@ -58,23 +58,13 @@ const StyledForegroundWrapper = styled.section(({ theme }) => ({
   gap: 32,
   maxWidth: 1440,
   alignItems: "center",
-  // [theme.breakpoints.desktopOnly]: {
-  //   justifyContent: "center",
-  // },
-  // [theme.breakpoints.tabletLandscapeOnly]: {
-  //   justifyContent: "flex-end",
-  // },
-  [theme.breakpoints.smallDesktopOnly]: {},
-  // [theme.breakpoints.tabletPortraitOnly]: {
-  //   justifyContent: "flex-end",
-  // },
-  [theme.breakpoints.tabletPortraitOnly]: {
-    padding: 16,
-    gap: 32,
-  },
   [theme.breakpoints.phoneOnly]: {
     padding: 16,
-    gap: 8,
+    gap: 32,
+    //
+    // flexDirection: "column",
+    // padding: 16,
+    // gap: 8,
   },
 }));
 
@@ -84,13 +74,10 @@ const StyledLeftSide = styled.section(({ theme }) => ({
   gap: "1.5rem",
   width: 400,
   transition: "all 200ms ease-in-out",
-  [theme.breakpoints.smallDesktopOnly]: {
+  [theme.breakpoints.tabletLandscapeOnly]: {
     width: 500,
   },
   [theme.breakpoints.phoneOnly]: {
-    width: "100%",
-  },
-  [theme.breakpoints.tabletPortraitOnly]: {
     alignSelf: "flex-start",
     width: "50%",
   },
@@ -104,12 +91,11 @@ const StyledTitle = styled.h1(({ theme }) => ({
   lineHeight: "1em",
   margin: 0,
   wordSpacing: "100vw",
-  [theme.breakpoints.tabletPortraitOnly]: {
-    fontSize: "80px",
-  },
+  // [theme.breakpoints.phoneOnly]: {
+  //   fontSize: "80px",
+  // },
   [theme.breakpoints.phoneOnly]: {
-    fontSize: "40px",
-    lineHeight: "40px",
+    fontSize: "clamp(51.61px, 12vw, 90px)",
   },
 }));
 
@@ -134,11 +120,12 @@ const StyledRightSide = styled.section(({ theme }) => ({
   gap: "1.5rem",
   width: 506,
   transition: "all 200ms ease-in-out",
-  [theme.breakpoints.smallDesktopOnly]: {
+  [theme.breakpoints.tabletLandscapeOnly]: {
     width: 600,
   },
   [theme.breakpoints.phoneOnly]: {
-    width: 200,
+    width: 300,
+    textAlign: "right",
   },
 }));
 
@@ -152,7 +139,7 @@ const StyledSecondaryTextWrapper = styled.section(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   gap: "1.5rem",
-  [theme.breakpoints.tabletPortraitOnly]: {
+  [theme.breakpoints.phoneOnly]: {
     display: "none",
   },
 }));
@@ -164,22 +151,31 @@ const StyledSecondaryTitle = styled(StyledTitle)(({ theme }) => ({
   },
 }));
 
-const StyledWrapperLink = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  @media (min-width: 769px) {
-    flex-direction: row;
-  }
-
-  @media (max-width: 900px) {
-    margin: 0px 16px;
-    position: absolute;
-    bottom: 16px;
-    left: 0px;
-  }
-`;
+const StyledWrapperLink = styled.section(({ theme }) => ({
+  display: "flex",
+  flexDirection: "row",
+  gap: "16px",
+  transitionProperty: "all",
+  transitionDuration: "250ms",
+  [theme.breakpoints.tabletLandscapeOnly]: {
+    flexDirection: "column",
+  },
+  [theme.breakpoints.phoneOnly]: {
+    display: "none",
+  },
+}));
+const StyledWrapperLinkMobile = styled(StyledWrapperLink)(({ theme }) => ({
+  display: "none",
+  [theme.breakpoints.phoneOnly]: {
+    position: "absolute",
+    bottom: 0,
+    gap: 16,
+    padding: 16,
+    paddingBottom: 8,
+    display: "flex",
+    alignSelf: "flex-start",
+  },
+}));
 
 export const Hero = ({
   heroData,
@@ -188,50 +184,64 @@ export const Hero = ({
   heroData: PageProps["heroData"];
   navData: PageProps["navData"];
 }) => {
+  const Buttons = () => {
+    return (
+      <>
+        {heroData.ctaUrl && (
+          <SecondaryStyledLink href={heroData.ctaUrl}>
+            {heroData.ctaText}
+          </SecondaryStyledLink>
+        )}
+        {heroData.secondButton && (
+          <TertiaryStyledLink href={heroData.secondButton.link}>
+            {heroData.secondButton.contenido}
+          </TertiaryStyledLink>
+        )}
+      </>
+    );
+  };
   return (
-    <StyledWrapper>
-      <Suspense fallback={null}>
-        <StyledBackground
-          src={`${heroData.background.url}?fm=webp`}
-          alt={heroData.background.title}
-        />
-      </Suspense>
-      <Suspense fallback={null}>
-        <NavBar {...navData} />
-      </Suspense>
-      <Suspense>
-        <Particles />
-      </Suspense>
-      <StyledForegroundWrapper>
-        <StyledLeftSide>
-          <StyledTitle>{heroData.tile}</StyledTitle>
-          <StyledParagraph>{heroData.firstSubtitle}</StyledParagraph>
-          <StyledHr />
-        </StyledLeftSide>
-        <StyledRightSide>
-          <StyledSecondaryTextWrapper>
-            <StyledParagraph>{heroData.secondSubtitle}</StyledParagraph>
+    <>
+      <StyledWrapper>
+        <Suspense fallback={null}>
+          <StyledBackground
+            src={`${heroData.background.url}?fm=webp`}
+            alt={heroData.background.title}
+          />
+        </Suspense>
+        <Suspense fallback={null}>
+          <NavBar {...navData} />
+        </Suspense>
+        <Suspense>
+          <Particles />
+        </Suspense>
+        <StyledForegroundWrapper>
+          <StyledLeftSide>
+            <StyledTitle>{heroData.tile}</StyledTitle>
+            <StyledParagraph>{heroData.firstSubtitle}</StyledParagraph>
             <StyledHr />
-          </StyledSecondaryTextWrapper>
-          <StyledTitlesWrapper>
-            <StyledSecondaryTitle as="h2">{heroData.date}</StyledSecondaryTitle>
-            <StyledTitle as="h2">Santiago</StyledTitle>
-          </StyledTitlesWrapper>
-          <StyledWrapperLink>
-            {heroData.ctaUrl && (
-              <SecondaryStyledLink href={heroData.ctaUrl}>
-                {heroData.ctaText}
-              </SecondaryStyledLink>
-            )}
-            {heroData.secondButton && (
-              <TertiaryStyledLink href={heroData.secondButton.link}>
-                {heroData.secondButton.contenido}
-              </TertiaryStyledLink>
-            )}
-          </StyledWrapperLink>
-        </StyledRightSide>
-      </StyledForegroundWrapper>
-    </StyledWrapper>
+          </StyledLeftSide>
+          <StyledRightSide>
+            <StyledSecondaryTextWrapper>
+              <StyledParagraph>{heroData.secondSubtitle}</StyledParagraph>
+              <StyledHr />
+            </StyledSecondaryTextWrapper>
+            <StyledTitlesWrapper>
+              <StyledSecondaryTitle as="h2">
+                {heroData.date}
+              </StyledSecondaryTitle>
+              <StyledTitle as="h2">Santiago</StyledTitle>
+            </StyledTitlesWrapper>
+            <StyledWrapperLink>
+              <Buttons />
+            </StyledWrapperLink>
+          </StyledRightSide>
+        </StyledForegroundWrapper>
+        <StyledWrapperLinkMobile>
+          <Buttons />
+        </StyledWrapperLinkMobile>
+      </StyledWrapper>
+    </>
   );
 };
 

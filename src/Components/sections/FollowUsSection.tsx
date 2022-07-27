@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { Get } from "type-fest";
 import { FooterQueryQuery } from "../../graphql/footer.generated";
 import { H2 } from "../core/Typography";
+import { ViewportSizes } from "../../../styles/theme";
 
 const Image = lazy(() => import("../core/Image"));
 
@@ -26,12 +27,12 @@ const Container = styled.section`
     line-height: 58px;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     width: 50%;
     min-height: 280px;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
     min-height: 240px;
   }
 `;
@@ -43,11 +44,11 @@ const Flex = styled.section`
   align-items: center;
   gap: 32px;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     padding-bottom: 46px;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
     padding-bottom: 6px;
   }
 `;

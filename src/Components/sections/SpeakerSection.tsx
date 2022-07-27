@@ -5,6 +5,7 @@ import { H2 } from "../core/Typography";
 import { PageProps } from "../../../pages";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { PrimaryStyledLink } from "../Links/index";
+import { ViewportSizes } from "../../../styles/theme";
 
 const Description = lazy(() => import("../core/Description"));
 const Card = lazy(() => import("../Card"));
@@ -24,7 +25,7 @@ const Container = styled.section`
     padding: 48px 0px;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     padding: 48px;
     gap: 32px 32px;
     justify-content: flex-start;
@@ -57,7 +58,7 @@ const Column = styled(motion.section)<{ index: number }>`
   a {
     display: none;
   }
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     width: fit-content;
     top: 0px;
     > section {
@@ -143,7 +144,7 @@ const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
         }
         return (
           <Suspense key={`speaker-${index}`} fallback={null}>
-            <Card key={`speaker-${index}`} {...item} index={index} />
+            <Card key={`speaker-${index}`} {...item} />
           </Suspense>
         );
       })}

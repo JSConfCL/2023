@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { Get } from "type-fest";
 import { H2, H3 } from "../core/Typography";
 import { FooterQueryQuery } from "../../graphql/footer.generated";
+import { ViewportSizes } from "../../../styles/theme";
 
 type Props = {
   page: Get<FooterQueryQuery, "page.subscribeBlock">;
@@ -26,7 +27,7 @@ const Container = styled.section`
     line-height: 58px;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     width: 50%;
     justify-content: flex-start;
   }
@@ -48,7 +49,7 @@ const Form = styled.form(
   border-top-color: transparent;
   border-bottom-color: ${theme.colors.jsconfYellow};
 
-  @media (min-width: 1024px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
     max-width: 40vw;
   }
 `
@@ -85,7 +86,7 @@ const SubmitButton = styled(motion.input)(
   font-weight: bold;
   border-radius: 0 24px 0 0;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     min-width: ${buttonWidth}px;
   }
 `

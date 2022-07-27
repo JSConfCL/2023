@@ -4,6 +4,7 @@ import { PageProps } from "../../../pages/cfp";
 import { H1 } from "../core/Typography";
 
 import { PrimaryStyledLink } from "../Links";
+import { ViewportSizes } from "../../../styles/theme";
 
 const Description = lazy(() => import("../core/Description"));
 const Image = lazy(() => import("../core/Image"));
@@ -38,7 +39,7 @@ const Container = styled.section`
     margin-bottom: 100px;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     max-height: 240px;
     padding: 48px;
     flex-direction: column;
@@ -64,7 +65,7 @@ const Container = styled.section`
     }
   }
 
-  @media (min-width: 1140px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
     > h1 {
       width: 50%;
     }
@@ -95,7 +96,7 @@ const ImageContainer = styled.section`
     z-index: 3;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     position: absolute;
     right: 0px;
     top: 0px;
@@ -126,7 +127,7 @@ const Text = styled.p`
   bottom: 16px;
   right: 0px;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 80px;
     line-height: 145px;
     top: 530px;
@@ -144,7 +145,7 @@ const WrapperDescription = styled.section`
   }
   z-index: 3;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     max-width: 600px;
 
     > section {

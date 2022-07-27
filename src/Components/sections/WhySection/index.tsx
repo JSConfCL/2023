@@ -5,6 +5,7 @@ import useMediaQuery from "../../../helpers/useMediaQuery";
 import { H2 } from "../../core/Typography";
 import { PageProps } from "../../../../pages";
 import Description from "./Description";
+import { ViewportSizes } from "../../../../styles/theme";
 
 const Image = lazy(() => import("../../core/Image"));
 
@@ -22,11 +23,11 @@ const Container = styled.section`
     padding: 48px 0px;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     padding: 48px;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
     flex-direction: row;
   }
 `;
@@ -37,7 +38,7 @@ const BlockContainer = styled.section`
   gap: 20px 20px;
   width: 100%;
   justify-content: flex-start;
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     flex-direction: row;
     width: fit-content;
   }
@@ -76,7 +77,7 @@ const Block = styled(motion.section)`
   border-radius: 0px 32px 0px 0px;
   background-color: rgba(30, 32, 25, 0.5);
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     background-color: rgba(240, 224, 64, 0.2);
   }
 `;
@@ -89,11 +90,11 @@ export const H3 = styled(motion.h3)`
   line-height: 24px;
   letter-spacing: 0.5px;
   color: #ffffff;
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 24px;
     line-height: 43px;
   }
-  @media (min-width: 1025px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
     font-size: 36px;
   }
 `;
