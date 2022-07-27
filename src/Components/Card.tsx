@@ -30,7 +30,7 @@ const Container = styled(motion.section)<{ type: string; index: number }>`
     top: 0px;
   }
 
-  @media (min-width: 1362px) {
+  @media (min-width: 1352px) {
     display: inherit;
   }
 `;

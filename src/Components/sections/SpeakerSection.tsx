@@ -65,11 +65,6 @@ const Column = styled(motion.section)<{ index: number }>`
       width: fit-content;
     }
   }
-  @media (min-width: 1247px) {
-    a {
-      display: inherit;
-    }
-  }
 `;
 
 const HR = styled.hr`
@@ -82,7 +77,7 @@ const HR = styled.hr`
 
 const ContainerButton = styled.section`
   display: inherit;
-  @media (min-width: 1247px) {
+  @media (min-width: 1362px) {
     display: none;
   }
 `;

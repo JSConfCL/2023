@@ -95,7 +95,7 @@ const StyledTitle = styled.h1(({ theme }) => ({
   //   fontSize: "80px",
   // },
   [theme.breakpoints.phoneOnly]: {
-    fontSize: "clamp(51.61px, 12vw, 90px)",
+    fontSize: "clamp(40.61px, 11vw, 90px)",
   },
 }));
 
