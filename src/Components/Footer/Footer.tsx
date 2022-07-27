@@ -42,8 +42,10 @@ const StyledWrapper = styled.div(({ theme }) => ({
     flexDirection: "column",
     height: "100%",
   },
-  [theme.breakpoints.tabletPortraitOnly]: {
+  [`@media (max-width: 769px)`]: {
+    flexDirection: "column",
     padding: "32px 16px",
+    height: "100%",
   },
 }));
 
