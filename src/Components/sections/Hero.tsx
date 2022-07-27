@@ -201,47 +201,43 @@ export const Hero = ({
     );
   };
   return (
-    <>
-      <StyledWrapper>
-        <Suspense fallback={null}>
-          <StyledBackground
-            src={`${heroData.background.url}?fm=webp`}
-            alt={heroData.background.title}
-          />
-        </Suspense>
-        <Suspense fallback={null}>
-          <NavBar {...navData} />
-        </Suspense>
-        <Suspense>
-          <Particles />
-        </Suspense>
-        <StyledForegroundWrapper>
-          <StyledLeftSide>
-            <StyledTitle>{heroData.tile}</StyledTitle>
-            <StyledParagraph>{heroData.firstSubtitle}</StyledParagraph>
+    <StyledWrapper>
+      <Suspense fallback={null}>
+        <StyledBackground
+          src={`${heroData.background.url}?fm=webp`}
+          alt={heroData.background.title}
+        />
+      </Suspense>
+      <Suspense fallback={null}>
+        <NavBar {...navData} />
+      </Suspense>
+      <Suspense>
+        <Particles />
+      </Suspense>
+      <StyledForegroundWrapper>
+        <StyledLeftSide>
+          <StyledTitle>{heroData.tile}</StyledTitle>
+          <StyledParagraph>{heroData.firstSubtitle}</StyledParagraph>
+          <StyledHr />
+        </StyledLeftSide>
+        <StyledRightSide>
+          <StyledSecondaryTextWrapper>
+            <StyledParagraph>{heroData.secondSubtitle}</StyledParagraph>
             <StyledHr />
-          </StyledLeftSide>
-          <StyledRightSide>
-            <StyledSecondaryTextWrapper>
-              <StyledParagraph>{heroData.secondSubtitle}</StyledParagraph>
-              <StyledHr />
-            </StyledSecondaryTextWrapper>
-            <StyledTitlesWrapper>
-              <StyledSecondaryTitle as="h2">
-                {heroData.date}
-              </StyledSecondaryTitle>
-              <StyledTitle as="h2">Santiago</StyledTitle>
-            </StyledTitlesWrapper>
-            <StyledWrapperLink>
-              <Buttons />
-            </StyledWrapperLink>
-          </StyledRightSide>
-        </StyledForegroundWrapper>
-        <StyledWrapperLinkMobile>
-          <Buttons />
-        </StyledWrapperLinkMobile>
-      </StyledWrapper>
-    </>
+          </StyledSecondaryTextWrapper>
+          <StyledTitlesWrapper>
+            <StyledSecondaryTitle as="h2">{heroData.date}</StyledSecondaryTitle>
+            <StyledTitle as="h2">Santiago</StyledTitle>
+          </StyledTitlesWrapper>
+          <StyledWrapperLink>
+            <Buttons />
+          </StyledWrapperLink>
+        </StyledRightSide>
+      </StyledForegroundWrapper>
+      <StyledWrapperLinkMobile>
+        <Buttons />
+      </StyledWrapperLinkMobile>
+    </StyledWrapper>
   );
 };
 
