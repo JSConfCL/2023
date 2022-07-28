@@ -201,7 +201,7 @@ const JSConfLogoWrapper = styled.div`
 const MobileMenu = (props: Props) => {
   const controls = useAnimation();
   const height = use100vh();
-  const finalHeight = height ? `${height}px` : "50vh";
+  const viewportHeight = height ? `${height}px` : "100vh";
 
   const isMobile = useMediaQuery(`(max-width: ${ViewportSizes.Phone}px)`);
   const [isOpen, setIsOpen] = React.useState(false);
@@ -245,7 +245,7 @@ const MobileMenu = (props: Props) => {
         <FeatherIcon icon="menu" />
       </MobileFeatherIconWrapper>
       <Portal>
-        <StyledPortalWrapper height={finalHeight} animate={controls}>
+        <StyledPortalWrapper height={viewportHeight} animate={controls}>
           <MobileTopAreaWrapper>
             <Suspense fallback={null}>
               <JSConfLogoWrapper>
