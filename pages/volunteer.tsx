@@ -1,16 +1,19 @@
 import type { NextPage } from "next";
+import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
 
 import {
   VolunteerQueryDocument,
   VolunteerQueryQuery,
+  VolunteerQueryQueryVariables,
 } from "../src/graphql/volunteer.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
-import { NavBar } from "../src/Components/NavBar/NavBar";
-import WhyBanner from "../src/Components/Banner/Why";
-import WhyCard from "../src/Components/Card/Why";
 import BannerVolunteer from "../src/Components/Banner/Volunteer";
+
+const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
+  ssr: false,
+});
 
 type Page = ParseQuery<VolunteerQueryQuery["page"]>;
 
@@ -34,7 +37,6 @@ const StyledBlackWrapp = styled.section`
 `;
 
 const VolunteerPage: NextPage<PageProps> = (props) => {
-  console.log(props);
   return (
     <StyledBlackWrapp>
       <Container>
@@ -47,7 +49,14 @@ const VolunteerPage: NextPage<PageProps> = (props) => {
 
 export async function getStaticProps() {
   const queryResults = await urlQlient
-    .query<VolunteerQueryQuery>(VolunteerQueryDocument)
+    .query<VolunteerQueryQuery, VolunteerQueryQueryVariables>(
+      VolunteerQueryDocument,
+      {
+        id: "2X6aesEoId54kb4oEw4QCb",
+        locale: "es-CL",
+        isPreview: Boolean(process.env.NEXT_PUBLIC_CONTENTFUL_IS_PREVIEW),
+      }
+    )
     .toPromise();
   const page = queryResults.data?.page as Page;
   const props: PageProps = {

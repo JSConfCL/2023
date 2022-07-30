@@ -1,5 +1,9 @@
-query VolunteerQuery {
-  page(id: "2X6aesEoId54kb4oEw4QCb", locale: "es-CL") {
+query VolunteerQuery(
+  $id: String!
+  $locale: String!
+  $isPreview: Boolean = false
+) {
+  page(id: $id, locale: $locale, preview: $isPreview) {
     navBar {
       linksCollection(limit: 20) {
         items {
@@ -34,22 +38,6 @@ query VolunteerQuery {
       background {
         title
         url
-      }
-    }
-    whyBlockCollection {
-      items {
-        title
-        description {
-          json
-        }
-        icon {
-          url
-          description
-        }
-        fullImage {
-          url
-          description
-        }
       }
     }
     followUsBlock {

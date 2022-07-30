@@ -4,7 +4,9 @@ import gql from "graphql-tag";
 import * as Urql from "urql";
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type VolunteerQueryQueryVariables = Types.Exact<{
-  [key: string]: never;
+  id: Types.Scalars["String"];
+  locale: Types.Scalars["String"];
+  isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
 
 export type VolunteerQueryQuery = {
@@ -51,24 +53,6 @@ export type VolunteerQueryQuery = {
         url?: string | null;
       } | null;
     } | null;
-    whyBlockCollection?: {
-      __typename?: "PageWhyBlockCollection";
-      items: Array<{
-        __typename?: "WhyBlock";
-        title?: string | null;
-        description?: { __typename?: "WhyBlockDescription"; json: any } | null;
-        icon?: {
-          __typename?: "Asset";
-          url?: string | null;
-          description?: string | null;
-        } | null;
-        fullImage?: {
-          __typename?: "Asset";
-          url?: string | null;
-          description?: string | null;
-        } | null;
-      } | null>;
-    } | null;
     followUsBlock?: {
       __typename?: "FollowUsBlock";
       title?: string | null;
@@ -98,8 +82,12 @@ export type VolunteerQueryQuery = {
 };
 
 export const VolunteerQueryDocument = gql`
-  query VolunteerQuery {
-    page(id: "2X6aesEoId54kb4oEw4QCb", locale: "es-CL") {
+  query VolunteerQuery(
+    $id: String!
+    $locale: String!
+    $isPreview: Boolean = false
+  ) {
+    page(id: $id, locale: $locale, preview: $isPreview) {
       navBar {
         linksCollection(limit: 20) {
           items {
@@ -136,22 +124,6 @@ export const VolunteerQueryDocument = gql`
           url
         }
       }
-      whyBlockCollection {
-        items {
-          title
-          description {
-            json
-          }
-          icon {
-            url
-            description
-          }
-          fullImage {
-            url
-            description
-          }
-        }
-      }
       followUsBlock {
         title
         socialNetworksCollection(limit: 20) {
@@ -180,7 +152,7 @@ export const VolunteerQueryDocument = gql`
 `;
 
 export function useVolunteerQueryQuery(
-  options?: Omit<Urql.UseQueryArgs<VolunteerQueryQueryVariables>, "query">
+  options: Omit<Urql.UseQueryArgs<VolunteerQueryQueryVariables>, "query">
 ) {
   return Urql.useQuery<VolunteerQueryQuery>({
     query: VolunteerQueryDocument,

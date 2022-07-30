@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import { use100vh } from "react-div-100vh";
 import { lazy, Suspense } from "react";
-import { useLockBodyScroll, useToggle } from "react-use";
+import { useLockBodyScroll } from "react-use";
 import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
-import React, { useEffect } from "react";
+import React from "react";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
