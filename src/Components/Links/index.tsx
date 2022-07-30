@@ -84,6 +84,7 @@ const BaseTertiaryExternalLink = styled.a(({ theme }) => ({
   borderStyle: theme.elements.buttons.variants.tertiary.borderStyle,
   minWidth: theme.elements.buttons.variants.tertiary.minWidth,
 
+  backdropFilter: "blur(3px)",
   // boxShadow: `0 2px 10px ${lighten(0.55, theme.colors.black)}`,
   "&:hover": { background: lighten(0.1, theme.colors.jsconfYellow) },
   "&:focus": { boxShadow: `0 0 0 2px ${theme.colors.black}` },
@@ -147,7 +148,7 @@ export const TertiaryStyledLink = (props: {
       rel={isExternal ? "noopener noreferrer" : undefined}
       href={props.href}
     >
-      {props.children}
+      <div>{props.children}</div>
       <StyledIconWrapper>
         <ArrowIcon color="black" />
       </StyledIconWrapper>

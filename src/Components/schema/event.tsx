@@ -37,9 +37,10 @@ const eventSctructuredData = {
 
 const EventSchema = () => {
   return (
-    <script type="application/ld+json">
-      {JSON.stringify(eventSctructuredData)}
-    </script>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSctructuredData) }}
+    />
   );
 };
 

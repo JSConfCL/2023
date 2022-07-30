@@ -11,6 +11,7 @@ import {
   MARKS,
 } from "@contentful/rich-text-types";
 import { UL, B } from "../../core/Typography";
+import { ViewportSizes } from "../../../../styles/theme";
 
 export const P = styled(motion.p)`
   font-family: "Barlow";
@@ -21,10 +22,10 @@ export const P = styled(motion.p)`
   letter-spacing: 0.5px;
   line-height: 25px;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 16px;
   }
-  @media (min-width: 1025px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
     font-size: 18px;
   }
 `;

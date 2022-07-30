@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import { H3, P } from "./core/Typography";
 import useMediaQuery from "../helpers/useMediaQuery";
+import { ViewportSizes } from "../../styles/theme";
 
 const Image = lazy(() => import("./core/Image"));
 
@@ -23,13 +24,13 @@ const Container = styled(motion.section)<{ type: string; index: number }>`
   height: 300px;
   display: ${({ type }) => (type === "blank" ? "none" : "inherit")};
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     width: fit-content;
     height: fit-content;
     top: 0px;
   }
 
-  @media (min-width: 1362px) {
+  @media (min-width: 1352px) {
     display: inherit;
   }
 `;
@@ -41,7 +42,7 @@ const BlockColor = styled.section<{ type: string }>`
   height: 100%;
   width: 100%;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     max-height: ${({ type }) => (type === "keynote" ? "390px" : "240px")};
   }
 `;
@@ -70,7 +71,7 @@ const BlockDescription = styled(motion.section)<{ type: string }>`
     line-height: 27px;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     padding: 16px;
     > p {
       font-size: ${({ type }) => (type === "normal" ? "14px" : "16px")};

@@ -5,6 +5,7 @@ import { H2 } from "../core/Typography";
 import { PageProps } from "../../../pages";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { PrimaryStyledLink } from "../Links/index";
+import { ViewportSizes } from "../../../styles/theme";
 
 const Description = lazy(() => import("../core/Description"));
 const Card = lazy(() => import("../Card"));
@@ -28,7 +29,7 @@ const Container = styled.section`
     font-size: 24px !important;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     padding: 48px;
     gap: 32px 32px;
     justify-content: flex-start;
@@ -61,14 +62,14 @@ const Column = styled(motion.section)<{ index: number }>`
   a {
     display: none;
   }
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     width: fit-content;
     top: 0px;
     > section {
       width: fit-content;
     }
   }
-  @media (min-width: 1247px) {
+  @media (min-width: 1362px) {
     a {
       display: inherit;
     }
@@ -85,7 +86,7 @@ const HR = styled.hr`
 
 const ContainerButton = styled.section`
   display: inherit;
-  @media (min-width: 1247px) {
+  @media (min-width: 1362px) {
     display: none;
   }
 `;

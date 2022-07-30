@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { PageProps } from "../../../pages/sponsor";
 import { H1 } from "../core/Typography";
+import { ViewportSizes } from "../../../styles/theme";
 
 const Description = lazy(() => import("../core/Description"));
 const Image = lazy(() => import("../core/Image"));
@@ -15,11 +16,11 @@ const Container = styled.section`
   padding: 16px;
   align-items: flex-start;
 
-  > section:nth-last-child() {
+  > section:nth-last-of-type() {
     width: 100%;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     padding: 48px;
     align-items: center;
     > section:last-child {
@@ -63,7 +64,7 @@ const Block = styled.section`
     margin-bottom: 16px;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     padding: 48px;
     align-items: center;
     min-height: 420px;
@@ -82,7 +83,7 @@ const Block = styled.section`
     }
   }
 
-  @media (min-width: 1140px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
     img {
       right: 153px;
     }

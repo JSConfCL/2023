@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Get } from "type-fest";
 import { JSConfLogo } from "../svgs/logo";
 import { FooterQueryQuery } from "../../graphql/footer.generated";
+import { ViewportSizes } from "../../../styles/theme";
 
 type Props = {
   page: Get<FooterQueryQuery, "page.footer">;
@@ -23,7 +24,7 @@ const StyledFooter = styled.footer(
   display: flex;
   flex-direction: column;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
    
   }
 
@@ -41,11 +42,7 @@ const StyledWrapper = styled.div(({ theme }) => ({
   [theme.breakpoints.phoneOnly]: {
     flexDirection: "column",
     height: "100%",
-  },
-  [`@media (max-width: 769px)`]: {
-    flexDirection: "column",
     padding: "32px 16px",
-    height: "100%",
   },
 }));
 
@@ -56,7 +53,7 @@ const StyledLinksContainer = styled.ul`
   align-items: center;
   gap: 20px;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     flex-direction: row;
   }
 `;

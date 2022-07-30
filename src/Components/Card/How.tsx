@@ -4,6 +4,7 @@ import { Document } from "@contentful/rich-text-types";
 import { PrimaryStyledLink } from "../Links";
 import { H2 } from "../core/Typography";
 import { JSConfLogo } from "../svgs/logo";
+import { ViewportSizes } from "../../../styles/theme";
 
 const Description = lazy(() => import("../core/Description"));
 const Image = lazy(() => import("../core/Image"));
@@ -45,14 +46,12 @@ const Container = styled.section<{ direction: boolean }>`
   flex-direction: column-reverse;
   overflow: hidden;
   margin-bottom: 24px;
-  @media (min-width: 769px) {
+  overflow: visible;
+
+  @media (min-width: ${ViewportSizes.Phone}px) {
     flex-wrap: nowrap;
     padding: 48px;
     flex-direction: ${({ direction }) => (!direction ? "row" : "row-reverse")};
-  }
-
-  @media (min-width: 1560px) {
-    overflow: visible;
   }
 `;
 
@@ -74,7 +73,7 @@ const WrapperDescription = styled.section`
     margin: 16px 0px;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     max-width: 400px;
     min-width: 400px;
   }
@@ -100,7 +99,7 @@ const ImageContainer = styled.section`
     right: calc(50% - 40px);
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     height: 450px;
     width: calc(100% - 400px);
     svg {
@@ -125,7 +124,7 @@ const WhiteBlock = styled.section<{ isClickeable: boolean }>`
     height: 300px;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     img {
       height: 460px;
       max-width: 830px;
@@ -148,7 +147,7 @@ const Text = styled.p`
   bottom: -48px;
   right: 0px;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 80px;
     line-height: 145px;
     bottom: -90px;

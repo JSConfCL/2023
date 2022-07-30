@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { H2, H3 } from "../core/Typography";
 import { PageProps } from "../../../pages";
 import useMediaQuery from "../../helpers/useMediaQuery";
+import { ViewportSizes } from "../../../styles/theme";
 
 const Description = lazy(() => import("../core/Description"));
 const Image = lazy(() => import("../core/Image"));
@@ -22,11 +23,11 @@ const Container = styled.section`
     padding: 48px 0px;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     padding: 48px;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
     flex-direction: column;
   }
 `;
@@ -41,7 +42,7 @@ const BlockContainer = styled.section`
   max-width: 1440px;
   overflow: hidden;
 
-  @media (min-width: 1024px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
     flex-direction: row;
   }
 `;
@@ -56,7 +57,7 @@ const Block = styled(motion.section)`
   border-radius: 0px 32px 0px 0px;
   height: 257px;
   overflow: hidden;
-  @media (min-width: 1024px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
     max-width: 50%;
   }
 `;
@@ -81,7 +82,7 @@ const BlockDescription = styled(motion.section)`
     }
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     width: 50%;
     height: 100%;
   }

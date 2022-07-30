@@ -11,6 +11,7 @@ import {
 import { urlQlient } from "../src/graphql/urql";
 import Seo from "../src/Components/Seo";
 import { ParseQuery } from "../src/helpers/types";
+import { ViewportSizes } from "../styles/theme";
 
 const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
   ssr: false,
@@ -33,8 +34,22 @@ const Container = styled.section`
   flex-direction: column;
   width: 100vw;
   max-width: 1440px;
-  min-height: 100vh;
+  gap: 32px;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    gap: 32px;
+  }
 `;
+
+const SponsorWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 64px;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    gap: 32px;
+  }
+`;
+
 const StyledBlackWrapp = styled.section`
   display: flex;
   flex-direction: column;
@@ -57,15 +72,19 @@ const OnSitePage: NextPage<PageProps> = (props) => {
             <BannerSponsor {...props.heroData} />
           </Suspense>
         )}
-        {props.sponsors?.items?.map((elem, index) => (
-          <Suspense key={`sponsor-${index}`} fallback={null}>
-            <SponsorCard
-              {...elem}
-              number={index + 1}
-              key={`sponsor-${index}`}
-            />
-          </Suspense>
-        ))}
+        {props.sponsors?.items?.length && (
+          <SponsorWrapper>
+            {props.sponsors?.items?.map((elem, index) => (
+              <Suspense key={`sponsor-${index}`} fallback={null}>
+                <SponsorCard
+                  {...elem}
+                  number={index + 1}
+                  key={`sponsor-${index}`}
+                />
+              </Suspense>
+            ))}
+          </SponsorWrapper>
+        )}
       </Container>
     </StyledBlackWrapp>
   );

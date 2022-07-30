@@ -29,8 +29,6 @@ declare module "@emotion/react" {
     breakpoints: {
       desktopOnly: string;
       tabletLandscapeOnly: string;
-      smallDesktopOnly: string;
-      tabletPortraitOnly: string;
       phoneOnly: string;
     };
     fonts: {

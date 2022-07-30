@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { Document } from "@contentful/rich-text-types";
 import { H2 } from "../core/Typography";
+import { ViewportSizes } from "../../../styles/theme";
 
 const Description = lazy(() => import("../core/Description"));
 const Image = lazy(() => import("../core/Image"));
@@ -51,7 +52,7 @@ const Container = styled.section<{ direction: boolean }>`
     max-height: 300px;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     flex-wrap: nowrap;
     justify-content: space-between;
     flex-direction: ${({ direction }) => (!direction ? "row" : "row-reverse")};
@@ -71,7 +72,7 @@ const Container = styled.section<{ direction: boolean }>`
     }
   }
 
-  @media (min-width: 1100px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
     picture {
       min-width: 600px;
     }
@@ -79,7 +80,7 @@ const Container = styled.section<{ direction: boolean }>`
       min-width: 600px;
     }
   }
-  @media (min-width: 1560px) {
+  @media (min-width: ${ViewportSizes.Desktop}px) {
     overflow: visible;
   }
 `;
@@ -100,7 +101,7 @@ const WrapperDescription = styled.section`
   gap: 32px 0px;
   order: 2;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     max-width: 450px;
   }
 `;
@@ -120,7 +121,7 @@ const Number = styled.section<{ direction: boolean }>`
   margin-left: ${({ direction }) => (direction ? "-30px" : "0px")};
   order: 1;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     min-width: 300px;
     order: 3;
     font-size: 341.766px;

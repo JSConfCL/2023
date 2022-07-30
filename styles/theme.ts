@@ -30,11 +30,9 @@ const fonts = {
 };
 
 export enum ViewportSizes {
-  Desktop = 1800,
-  TabletLandscape = 1200,
-  SmallDesktop = 960,
-  TabletPortrait = 900,
-  Phone = 600,
+  Desktop = 1440,
+  TabletLandscape = 1024,
+  Phone = 768,
 }
 
 function generateMediaQueryString(viewportSize: ViewportSizes): string {
@@ -44,9 +42,7 @@ function generateMediaQueryString(viewportSize: ViewportSizes): string {
 const breakpoints = {
   desktopOnly: generateMediaQueryString(ViewportSizes.Desktop),
   phoneOnly: generateMediaQueryString(ViewportSizes.Phone),
-  smallDesktopOnly: generateMediaQueryString(ViewportSizes.SmallDesktop),
   tabletLandscapeOnly: generateMediaQueryString(ViewportSizes.TabletLandscape),
-  tabletPortraitOnly: generateMediaQueryString(ViewportSizes.TabletPortrait),
 };
 
 export const jsconfTheme: Theme = {

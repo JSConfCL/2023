@@ -165,7 +165,13 @@ export const GlobalStyles = () => {
             font-family: ${theme.elements.global.fontFamily};
             color: ${theme.elements.global.color};
             background-color: ${theme.elements.global.backgroundColor};
-            max-height: 100vh;
+          }
+          body {
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+          }
+          html {
+            height: -webkit-fill-available;
           }
           h1,
           h2,

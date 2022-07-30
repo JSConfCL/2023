@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { Document } from "@contentful/rich-text-types";
 import { H2 } from "../core/Typography";
 import { PrimaryStyledLink } from "../Links";
+import { ViewportSizes } from "../../../styles/theme";
 
 const Description = lazy(() => import("../core/Description"));
 
@@ -27,12 +28,9 @@ const Container = styled.section`
   padding: 16px;
   width: 100vw;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     gap: 32px;
     padding: 48px 0px;
-  }
-  @media (min-width: 1560px) {
-    overflow: visible;
   }
 `;
 
@@ -51,7 +49,7 @@ const WrapperDescription = styled.section`
     padding: 40px 16px;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     max-width: 615px;
     padding-top: 64px;
   }
@@ -71,14 +69,14 @@ const Number = styled.section<{ number: number }>`
   width: 130px;
   margin-left: -46px;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     min-width: 300px;
     font-size: 341.766px;
     line-height: 342px;
     margin-left: ${({ number }) => `${number * 60}px`};
   }
 
-  @media (min-width: 1025px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
     margin-left: ${({ number }) => `${number * 150}px`};
   }
 `;

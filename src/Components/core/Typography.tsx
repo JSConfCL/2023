@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
+import { ViewportSizes } from "../../../styles/theme";
 
 export const H1 = styled(motion.h1)<{ color?: string }>`
   font-family: "Koulen";
@@ -22,7 +23,7 @@ export const H2 = styled(motion.h2)`
   font-size: 40px;
   line-height: 40px;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 80px;
     line-height: 80px;
   }
@@ -36,7 +37,7 @@ export const H3 = styled(motion.h3)`
   line-height: 24px;
   letter-spacing: 0.5px;
   color: #ffffff;
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 32px;
     line-height: 43px;
   }
@@ -51,7 +52,7 @@ export const P = styled(motion.p)`
   letter-spacing: 0.5px;
   line-height: 25px;
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 20px;
   }
 `;

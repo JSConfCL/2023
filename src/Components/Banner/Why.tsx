@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { PageProps } from "../../../pages/why";
 import { H1 } from "../core/Typography";
+import { ViewportSizes } from "../../../styles/theme";
 
 const Image = lazy(() => import("../core/Image"));
 
@@ -35,7 +36,7 @@ const Container = styled.section`
     margin-bottom: 100px;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     padding: 48px;
     align-items: center;
     max-height: 420px;
@@ -54,7 +55,7 @@ const Container = styled.section`
     }
   }
 
-  @media (min-width: 1140px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
     img {
       right: 153px;
     }

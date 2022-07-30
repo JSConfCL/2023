@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { use100vh } from "react-div-100vh";
 import { lazy, Suspense } from "react";
 import { useLockBodyScroll, useToggle } from "react-use";
 import dynamic from "next/dynamic";
@@ -14,6 +15,7 @@ import { Portal } from "react-portal";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { PageProps } from "../../../pages";
 import { SecondaryStyledLink } from "../Links";
+import { ViewportSizes } from "../../../styles/theme";
 
 const FeatherIcon = lazy(() => import("feather-icons-react"));
 const JSConfLogo = dynamic(() => import("../svgs/logo"));
@@ -38,7 +40,7 @@ const StyledWrapper = styled.div(({ theme }) => ({
   height: 100,
   width: "100%",
   maxWidth: 1440,
-  [theme.breakpoints.tabletPortraitOnly]: {
+  [theme.breakpoints.phoneOnly]: {
     padding: "32px 16px",
   },
 }));
@@ -49,7 +51,7 @@ const StyledLinksContainer = styled.ul`
   flex-direction: row;
   align-items: center;
   gap: 20px;
-  @media (max-width: 769px) {
+  @media (max-width: ${ViewportSizes.Phone}px) {
     display: none;
   }
 `;
@@ -58,12 +60,13 @@ const MobileStyledLinksContainer = styled.ul`
   width: fit-content;
   list-style: none;
   padding: 29px 16px;
-  height: 100%;
   flex-direction: row;
   align-items: center;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  flex-grow: 1;
+  flex-shrink: 0;
   z-index: 100;
 `;
 
@@ -74,7 +77,7 @@ const StyledLink = styled.li<{ isActive: string }>`
   cursor: pointer;
   border: 0px solid #f45b69;
   color: ${({ isActive }) => (isActive === "active" ? "#F45B69" : "#1E2019")};
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     border-width: ${({ isActive }) =>
       isActive === "active" ? "0px 0px 2px 0px" : "0px"};
     color: inherit;
@@ -92,9 +95,9 @@ const StyledJSConfLogoWrapper = styled.button`
   cursor: pointer;
 `;
 
-const StyledPortalWrapper = styled(motion.section)`
+const StyledPortalWrapper = styled(motion.section)<{ height: number | string }>`
   width: 100vw;
-  height: 100vh;
+  height: ${({ height }) => height};
   display: flex;
   position: fixed;
   z-index: 9999;
@@ -113,7 +116,7 @@ const StyledPortalWrapper = styled(motion.section)`
   svg {
     align-self: flex-end;
   }
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     display: none;
   }
 `;
@@ -162,7 +165,7 @@ const MobileFeatherIconWrapper = styled.span`
   cursor: pointer;
   position: relative;
   height: fit-content;
-  @media (min-width: 769px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     display: none;
   }
 `;
@@ -197,8 +200,10 @@ const JSConfLogoWrapper = styled.div`
 `;
 const MobileMenu = (props: Props) => {
   const controls = useAnimation();
+  const height = use100vh();
+  const viewportHeight = height ? `${height}px` : "100vh";
 
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery(`(max-width: ${ViewportSizes.Phone}px)`);
   const [isOpen, setIsOpen] = React.useState(false);
 
   useLockBodyScroll(isOpen);
@@ -240,7 +245,7 @@ const MobileMenu = (props: Props) => {
         <FeatherIcon icon="menu" />
       </MobileFeatherIconWrapper>
       <Portal>
-        <StyledPortalWrapper animate={controls}>
+        <StyledPortalWrapper height={viewportHeight} animate={controls}>
           <MobileTopAreaWrapper>
             <Suspense fallback={null}>
               <JSConfLogoWrapper>
