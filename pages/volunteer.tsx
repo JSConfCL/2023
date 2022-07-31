@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
@@ -10,6 +11,7 @@ import {
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 import BannerVolunteer from "../src/Components/Banner/Volunteer";
+import VolunteerForm from "../src/Components/Form/Volunteer";
 
 const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
   ssr: false,
@@ -40,8 +42,13 @@ const VolunteerPage: NextPage<PageProps> = (props) => {
   return (
     <StyledBlackWrapp>
       <Container>
-        <NavBar {...props.navData} />
+        {props.navData && (
+          <Suspense fallback={null}>
+            <NavBar {...props.navData} />
+          </Suspense>
+        )}
         <BannerVolunteer {...props.heroData} />
+        <VolunteerForm />
       </Container>
     </StyledBlackWrapp>
   );

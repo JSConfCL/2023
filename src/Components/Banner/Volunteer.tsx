@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { PageProps } from "../../../pages/volunteer";
 import { H1, P } from "../core/Typography";
 import { ViewportSizes } from "../../../styles/theme";
+
 const JSConfLogo = lazy(() => import("../svgs/logo"));
 
 const Description = lazy(() => import("../core/Description"));
