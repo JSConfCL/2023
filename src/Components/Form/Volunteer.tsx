@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
+import { motion, useAnimation } from "framer-motion";
 import { useForm } from "react-hook-form";
+import { BeatLoader } from "react-spinners";
 
 import { ViewportSizes } from "../../../styles/theme";
 import { H2 } from "../core/Typography";
@@ -24,7 +26,11 @@ const StyledH2 = styled(H2)`
   line-height: 80px;
   color: #f45b69;
   padding: 32px 0px;
-  margin-left: -35%;
+  margin-left: -25%;
+
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    margin-left: -35%;
+  }
 `;
 
 const Container = styled.section`
@@ -82,26 +88,71 @@ const Textarea = styled.textarea<{ error: boolean }>`
   border-bottom-width: 1px;
 `;
 
-const ErrorMessage = styled.section`
+const ErrorMessage = styled.section<{ color?: string }>`
   height: 20px;
   font-size: 16px;
-  color: #f45b69;
+  color: ${({ color }) => (color ? color : "#f45b69")};
   padding-bottom: 32px;
 `;
 
-const Error = (props: { type?: any; message?: any }) => {
-  const { message } = props;
-  return <ErrorMessage>{message}</ErrorMessage>;
+const Error = (props: { message?: any; color?: string }) => {
+  const { message, color } = props;
+  return <ErrorMessage color={color}>{message}</ErrorMessage>;
 };
 
 const VolunteerForm = () => {
+  const textControls = useAnimation();
+  const loadingControls = useAnimation();
+  const [submitMessage, setSubmitMessage] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors, touchedFields },
-    getValues,
   } = useForm<FormData>({ mode: "onChange" });
-  const onSubmit = handleSubmit((data) => {});
+  const onSubmit = handleSubmit(async (data) => {
+    setSubmitMessage("");
+    textControls.start({
+      opacity: 0,
+      y: -2,
+      transition: { duration: 0.2 },
+    });
+    await loadingControls.start({
+      y: 0,
+      x: 20,
+      opacity: 1,
+      transition: { duration: 0.3, delay: 0.2 },
+    });
+
+    textControls.start({
+      x: "100vw",
+      transition: { duration: 1 },
+    });
+    try {
+      setSubmitMessage("Inscripción Completada.");
+    } catch (e) {
+      setSubmitMessage("Error en la inscripción, vuelve a intentar más tarde.");
+    } finally {
+      await loadingControls.start({
+        y: 0,
+        x: "-100vw",
+        opacity: 0,
+        transition: { duration: 0.4, delay: 0.4 },
+      });
+
+      await textControls.start({
+        zIndex: 1,
+        y: 0,
+        opacity: 1,
+        transition: { duration: 0.3, delay: 0.0 },
+      });
+
+      await textControls.start({
+        y: 0,
+        x: -20,
+        transition: { duration: 0.25 },
+      });
+    }
+  });
 
   return (
     <Container>
@@ -141,8 +192,22 @@ const VolunteerForm = () => {
             Object.entries(touchedFields).length !== 4
           }
         >
-          Enviar
+          <motion.div
+            initial={{ opacity: 0, x: "-100vw", y: 0 }}
+            animate={loadingControls}
+            className="loader-wrapper"
+          >
+            <BeatLoader color="black" size={6} />
+          </motion.div>
+          <motion.span initial={{ opacity: 1, x: -20 }} animate={textControls}>
+            {" "}
+            Enviar
+          </motion.span>
         </SubmitButton>
+        <Error
+          message={submitMessage}
+          color={submitMessage.includes("Error") ? "red" : "white"}
+        />
       </form>
     </Container>
   );
