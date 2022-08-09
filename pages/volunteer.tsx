@@ -22,6 +22,7 @@ type Page = ParseQuery<VolunteerQueryQuery["page"]>;
 export type PageProps = {
   navData: Page["navBar"];
   heroData: Page["heroBlock"];
+  url: string;
 };
 
 const Container = styled.section`
@@ -48,7 +49,7 @@ const VolunteerPage: NextPage<PageProps> = (props) => {
           </Suspense>
         )}
         <BannerVolunteer {...props.heroData} />
-        <VolunteerForm />
+        <VolunteerForm url={props.url} />
       </Container>
     </StyledBlackWrapp>
   );
@@ -69,6 +70,7 @@ export async function getStaticProps() {
   const props: PageProps = {
     navData: page?.navBar,
     heroData: page?.heroBlock,
+    url: process.env.NEXT_PUBLIC_DATA_API || "",
   };
   return {
     props,

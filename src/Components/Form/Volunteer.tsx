@@ -6,6 +6,7 @@ import { BeatLoader } from "react-spinners";
 
 import { ViewportSizes } from "../../../styles/theme";
 import { H2 } from "../core/Typography";
+import { fetchPost } from "../../services/fetch";
 import {
   nameValidation,
   lastNameValidation,
@@ -14,7 +15,7 @@ import {
 } from "./schema";
 
 type FormData = {
-  firstName: string;
+  name: string;
   lastName: string;
   email: string;
   description: string;
@@ -100,7 +101,7 @@ const Error = (props: { message?: any; color?: string }) => {
   return <ErrorMessage color={color}>{message}</ErrorMessage>;
 };
 
-const VolunteerForm = () => {
+const VolunteerForm = (props: { url: string }) => {
   const textControls = useAnimation();
   const loadingControls = useAnimation();
   const [submitMessage, setSubmitMessage] = useState("");
@@ -128,6 +129,10 @@ const VolunteerForm = () => {
       transition: { duration: 1 },
     });
     try {
+      const response = await fetchPost({
+        url: `${props.url}/volunteer`,
+        body: JSON.stringify(data),
+      });
       setSubmitMessage("Inscripción Completada.");
     } catch (e) {
       setSubmitMessage("Error en la inscripción, vuelve a intentar más tarde.");
@@ -159,11 +164,11 @@ const VolunteerForm = () => {
       <StyledH2>Registro</StyledH2>
       <form onSubmit={onSubmit}>
         <InputC
-          {...register("firstName", nameValidation)}
+          {...register("name", nameValidation)}
           placeholder="Nombre"
-          error={Boolean(errors.firstName?.type)}
+          error={Boolean(errors.name?.type)}
         />
-        <Error {...errors.firstName} />
+        <Error {...errors.name} />
 
         <InputC
           {...register("lastName", lastNameValidation)}
