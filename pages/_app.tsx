@@ -24,7 +24,9 @@ function MyApp(appProps: AppProps) {
       <Provider value={urlQlient}>
         <ThemeProvider theme={jsconfTheme}>
           <GlobalStyles />
-          <WebSchema />
+          <Suspense fallback={null}>
+            <WebSchema />
+          </Suspense>
           <Component {...pageProps} />
           <Suspense fallback={null}>
             <ExtendedFooter />
