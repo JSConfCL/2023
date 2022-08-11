@@ -57,11 +57,12 @@ const BlockDescription = styled(motion.section)<{ type: string }>`
   padding: 8px;
   width: 100%;
   height: 100%;
-  gap: 8px 8px;
+  gap: 0px 8px;
   background-color: transparent;
 
   > p {
     font-size: 14px;
+    margin: 0px;
   }
 
   > h3 {
@@ -72,7 +73,7 @@ const BlockDescription = styled(motion.section)<{ type: string }>`
   }
 
   @media (min-width: ${ViewportSizes.Phone}px) {
-    padding: 16px;
+    padding: 8px;
     > p {
       font-size: ${({ type }) => (type === "normal" ? "14px" : "16px")};
     }
@@ -129,6 +130,7 @@ const styleProps = (cardType: string, type: string) => {
     default:
       return {
         width: "170px",
+        height: "240px",
       };
   }
 };
@@ -139,7 +141,7 @@ const containerVariants = {
 
 const mobileStyle = {
   width: "100%",
-  height: "100%",
+  height: "400px",
   aspectRatio: "390 / 400",
 };
 
