@@ -124,27 +124,27 @@ const TeamSection = (props: { page: PageProps["teamData"] }) => {
         )}
       </ContainerButton>
 
-      {items.map((item: any, index: number) => {
+      {items?.map((item: any, index: number) => {
         if (index === 6) {
           return (
             <Column index={index}>
               {callToAction && (
-                <PrimaryStyledLink href={callToAction.link}>
-                  {callToAction.contenido}
+                <PrimaryStyledLink href={callToAction?.link}>
+                  {callToAction?.contenido}
                 </PrimaryStyledLink>
               )}
               <Suspense key={`team-${index}`} fallback={null}>
                 <Card
                   key={`team-${index}`}
                   {...item}
-                  type={item.type !== "blank" ? "normal-simple" : "blank"}
+                  type={item?.type !== "blank" ? "normal-simple" : "blank"}
                   position={
                     <a
-                      href={`https://twitter.com/${item.twitter}`}
+                      href={`https://twitter.com/${item?.twitter}`}
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {item.twitter}
+                      {item?.twitter}
                     </a>
                   }
                 />
@@ -158,14 +158,14 @@ const TeamSection = (props: { page: PageProps["teamData"] }) => {
             <Card
               key={`speaker-${index}`}
               {...item}
-              type={item.type !== "blank" ? "normal-simple" : "blank"}
+              type={item?.type !== "blank" ? "normal-simple" : "blank"}
               position={
                 <a
-                  href={`https://twitter.com/${item.twitter}`}
+                  href={`https://twitter.com/${item?.twitter}`}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {item.twitter}
+                  {item?.twitter}
                 </a>
               }
             />
