@@ -4,6 +4,10 @@ const withPurgeCss = require("next-purgecss");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
+
+/**
+ * @type { import('next').NextConfig }
+ */
 const nextConfig = {
   webpack(config) {
     config.module.rules.push({
@@ -14,13 +18,10 @@ const nextConfig = {
     return config;
   },
   reactStrictMode: false,
-  experimental: {
+  compiler: {
     emotion: true,
   },
   optimizeFonts: false,
-  optimization: {
-    mergeDuplicateChunks: true,
-  },
 };
 
 const MinimizeConfig = { ...withCss(withPurgeCss()), ...nextConfig };
