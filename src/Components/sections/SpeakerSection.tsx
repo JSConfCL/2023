@@ -126,19 +126,19 @@ const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
       {speakers.map((item, index) => {
         if (index === 6) {
           return (
-            <Column key={index} index={index}>
+            <Column key={item.sys.id} index={index}>
               <PrimaryStyledLink href="/cfp">
                 CFP Registration
               </PrimaryStyledLink>
-              <Suspense key={`speaker-${index}`} fallback={null}>
-                <Card key={`speaker-${index}`} {...item} />
+              <Suspense fallback={null}>
+                <Card {...item} />
               </Suspense>
             </Column>
           );
         }
         return (
-          <Suspense key={`speaker-${index}`} fallback={null}>
-            <Card key={`speaker-${index}`} {...item} />
+          <Suspense key={item.sys.id} fallback={null}>
+            <Card {...item} />
           </Suspense>
         );
       })}

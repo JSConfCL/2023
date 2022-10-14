@@ -7,6 +7,14 @@ import { CacheProvider, ThemeProvider } from "@emotion/react";
 import { jsconfTheme } from "../styles/theme";
 import createCache from "@emotion/cache";
 import { urlQlient } from "../src/graphql/urql";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { queryClient } from "../src/helpers/API";
 
 const WebSchema = dynamic(() => import("../src/Components/schema/webpage"), {
   ssr: false,
@@ -22,16 +30,18 @@ function MyApp(appProps: AppProps) {
   return (
     <CacheProvider value={cache}>
       <Provider value={urlQlient}>
-        <ThemeProvider theme={jsconfTheme}>
-          <GlobalStyles />
-          <Suspense fallback={null}>
-            <WebSchema />
-          </Suspense>
-          <Component {...pageProps} />
-          <Suspense fallback={null}>
-            <ExtendedFooter />
-          </Suspense>
-        </ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={jsconfTheme}>
+            <GlobalStyles />
+            <Suspense fallback={null}>
+              <WebSchema />
+            </Suspense>
+            <Component {...pageProps} />
+            <Suspense fallback={null}>
+              <ExtendedFooter />
+            </Suspense>
+          </ThemeProvider>
+        </QueryClientProvider>
       </Provider>
     </CacheProvider>
   );

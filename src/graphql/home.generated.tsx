@@ -121,6 +121,7 @@ export type HomeQueryQuery = {
           position?: string | null;
           cardType?: string | null;
           type?: string | null;
+          sys: { __typename?: "Sys"; id: string };
           photo?: {
             __typename?: "Asset";
             url?: string | null;
@@ -260,6 +261,9 @@ export const HomeQueryDocument = gql`
         }
         speakersCollection(preview: $isPreview) {
           items {
+            sys {
+              id
+            }
             name
             position
             photo {
