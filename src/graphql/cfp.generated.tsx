@@ -1,4 +1,4 @@
-import * as Types from "../types";
+import * as Types from "../types.js";
 
 import gql from "graphql-tag";
 import * as Urql from "urql";
@@ -168,5 +168,8 @@ export const CfpQueryDocument = gql`
 export function useCfpQueryQuery(
   options: Omit<Urql.UseQueryArgs<CfpQueryQueryVariables>, "query">
 ) {
-  return Urql.useQuery<CfpQueryQuery>({ query: CfpQueryDocument, ...options });
+  return Urql.useQuery<CfpQueryQuery, CfpQueryQueryVariables>({
+    query: CfpQueryDocument,
+    ...options,
+  });
 }

@@ -1,4 +1,4 @@
-import * as Types from "../types";
+import * as Types from "../types.js";
 
 import gql from "graphql-tag";
 import * as Urql from "urql";
@@ -186,7 +186,7 @@ export const SponsorQueryDocument = gql`
 export function useSponsorQueryQuery(
   options: Omit<Urql.UseQueryArgs<SponsorQueryQueryVariables>, "query">
 ) {
-  return Urql.useQuery<SponsorQueryQuery>({
+  return Urql.useQuery<SponsorQueryQuery, SponsorQueryQueryVariables>({
     query: SponsorQueryDocument,
     ...options,
   });
