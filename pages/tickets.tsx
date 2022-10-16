@@ -1,137 +1,142 @@
-import { useState, useEffect } from "react";
 import { lazy, Suspense } from "react";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
+import { useQuery } from "@tanstack/react-query";
+
 import {
-  TicketsQueryDocument,
-  TicketsQueryQuery,
-  TicketsQueryQueryVariables,
-} from "../src/graphql/tickets.generated";
+  SponsorQueryDocument,
+  SponsorQueryQuery,
+  SponsorQueryQueryVariables,
+} from "../src/graphql/sponsor.generated";
 import { urlQlient } from "../src/graphql/urql";
-import { ParseQuery } from "../src/helpers/types";
 import Seo from "../src/Components/Seo";
-import EventSchema from "../src/Components/schema/event";
-import Hero from "../src/Components/sections/Hero";
+import { ParseQuery } from "../src/helpers/types";
 import { ViewportSizes } from "../styles/theme";
+import { fetchTickets } from "../src/helpers/API";
+
+type Page = ParseQuery<SponsorQueryQuery["page"]>;
 
 const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
   ssr: false,
 });
 
-const TicketBanner = lazy(() => import("../src/Components/Banner/Ticket"));
-const TicketCard = lazy(() => import("../src/Components/Card/Ticket"));
-const TicketCart = lazy(() => import("../src/Components/Cart/CartContainer"));
-const UnShoppedTicket = lazy(
-  () => import("../src/Components/Card/UnShoppedTicket")
-);
-const ShoppedTicket = lazy(
-  () => import("../src/Components/Card/ShoppedTicket")
-);
-
-type Page = ParseQuery<TicketsQueryQuery["page"]>;
-
 export type PageProps = {
-  navData: Page["navBar"];
-  whyItems: Page["whyBlockCollection"];
-  heroData: Page["heroBlock"]; //
-
-  //seo: Page["seo"];
+  seo: Page["seo"];
 };
 
-const Container = styled.section`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100vw;
   max-width: 1440px;
-  min-height: calc(100vh - 100px);
+  gap: 32px;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    gap: 32px;
+  }
 `;
-const StyledBlackWrapp = styled.section`
+
+const Section = styled.section`
+  padding: 16px 0px;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 100%;
+  width: 100vw;
+`;
+
+const StyledBlackWrapp = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 
-const Title = styled.h1`
-  line-height: 80px;
-  text-align: center;
-  @media (max-width: ${ViewportSizes.Phone}px) {
-    font-size: 32px;
+const Number = styled.span`
+  /* identical to box height, or 100% */
+  color: #f0e040;
+`;
+const Text = styled.span`
+  color: white;
+`;
+
+const Title = styled.h2<{ status: "active" | "inactive" }>`
+  font-family: "Koulen";
+  font-style: normal;
+  font-weight: 400;
+  gap: 1rem;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 20.914px;
+  font-size: 2.5rem;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    font-size: 5rem;
   }
-  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
+  ${Number} {
+    opacity: ${({ status }) => (status === "inactive" ? 0.5 : 1)};
+    text-decoration: ${({ status }) =>
+      status === "inactive" ? "line-through" : "none"};
   }
-  @media (min-width: ${ViewportSizes.Desktop}px) {
-    font-size: 80px;
+  ${Text} {
+    opacity: ${({ status }) => (status === "inactive" ? 0.5 : 1)};
+    text-decoration: ${({ status }) =>
+      status === "inactive" ? "line-through" : "none"};
   }
 `;
 
-const Grid = styled.div`
-  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
-  }
-  @media (min-width: ${ViewportSizes.Desktop}px) {
-  }
-`;
+const Paragraph = styled.p``;
 
-const Ticket: NextPage<PageProps> = (props) => {
-  const [login, setLogin] = useState(true);
-  const [ticketAvailability, setTicketAvailability] = useState(true);
-  const [buyedTicket, setBuyedTicket] = useState(false);
-
+const OnSitePage: NextPage<PageProps> = (props) => {
+  const { isLoading, isError, data } = useQuery(["tickets"], fetchTickets);
+  // TODO: Usar isLoading y isError para mostrar UIs de error o loading.
+  // TODO: Usar el array "data" para mostrar los tickets
+  console.log({ data });
   return (
     <StyledBlackWrapp>
+      <Suspense fallback={null}>
+        <NavBar
+          // TODO: Cambiar estas props por una nav-bar de verdad en contentful
+          __typename="NavigationBar"
+          buttonsCollection={{
+            __typename: "NavigationBarButtonsCollection",
+            items: [],
+          }}
+          description={{
+            __typename: "NavigationBarDescription",
+            json: "",
+          }}
+          linksCollection={{
+            __typename: "NavigationBarLinksCollection",
+            // TODO: Hacer q se muestre /settings solo cuando el usuario este logueado
+            items: [
+              {
+                __typename: "LinkItem",
+                contenido: "Settings",
+                isBlank: false,
+                link: "settings",
+                sys: { id: "settings", __typename: "Sys" },
+              },
+            ],
+          }}
+        />
+      </Suspense>
+      <Seo {...props.seo} />
       <Container>
-        <Suspense fallback={null}>
-          <NavBar {...props.navData} />
-        </Suspense>
-        <Suspense fallback={null}>
-          <TicketBanner {...props.heroData} />
-        </Suspense>
-        {/* {props.whyItems.items.map((elem, index) => {
-          return (
-            <Suspense key={`why-card-${index}`} fallback={null}>
-              <TicketCard
-                number={index + 1}
-                {...elem}
-                key={`why-card-${index}`}
-              />
-            </Suspense>
-          );
-        })} */}
-        {props.whyItems.items.map((elem: any, index: any) => {
-          console.log(elem);
-          const LogState = JSON.parse(
-            elem.extendedDescription.json.content[0].content[0].value
-          );
-          console.log(LogState);
-          if (
-            login === LogState.loggedin &&
-            ticketAvailability === LogState.ticket
-          ) {
-            return (
-              <Suspense key={`why-card-${index}`} fallback={null}>
-                <TicketCard
-                  number={index + 1}
-                  {...elem}
-                  key={`why-card-${index}`}
-                />
-              </Suspense>
-            );
-          } else {
-            return null;
-          }
-        })}
-        <TicketCart />
-        {/* <Suspense>
-          <UnShoppedTicket />
-          <StyledBlackWrapp>
-                <Title>TUS TICKETS</Title>
-                <Grid>
-                   <ShoppedTicket />
-                   <ShoppedTicket />
-                </Grid>
-          </StyledBlackWrapp>
-        </Suspense> */}
+        <Section>
+          <Title status="inactive">
+            <Number>01.</Number>
+            <Text>Obten tus tickets</Text>
+          </Title>
+        </Section>
+        <Section>
+          {/* TODO: Esta seccion **NO** se tiene q mostrar si el usuario esta logueado */}
+          <Title status="active">
+            <Number>02.</Number>
+            <Text>Crea tu Cuenta</Text>
+          </Title>
+        </Section>
       </Container>
     </StyledBlackWrapp>
   );
@@ -139,26 +144,23 @@ const Ticket: NextPage<PageProps> = (props) => {
 
 export async function getStaticProps() {
   const queryResults = await urlQlient
-    .query<TicketsQueryQuery, TicketsQueryQueryVariables>(
-      TicketsQueryDocument,
+    .query<SponsorQueryQuery, SponsorQueryQueryVariables>(
+      SponsorQueryDocument,
       {
-        id: "2izkVq9L0r7BEeoZbEAEsC",
+        id: "1S7E2fm8TuIuOZY5jMAY8K",
         locale: "es-CL",
         isPreview: Boolean(process.env.NEXT_PUBLIC_CONTENTFUL_IS_PREVIEW),
       }
     )
     .toPromise();
-
   const page = queryResults.data?.page as Page;
+  if (!page) return { props: {} };
   const props: PageProps = {
-    navData: page?.navBar,
-    heroData: page?.heroBlock,
-    whyItems: page?.whyBlockCollection,
+    seo: page?.seo,
   };
-
   return {
     props,
   };
 }
 
-export default Ticket;
+export default OnSitePage;
