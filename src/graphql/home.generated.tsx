@@ -1,4 +1,4 @@
-import * as Types from "../types";
+import * as Types from "../types.js";
 
 import gql from "graphql-tag";
 import * as Urql from "urql";
@@ -312,7 +312,7 @@ export const HomeQueryDocument = gql`
 export function useHomeQueryQuery(
   options: Omit<Urql.UseQueryArgs<HomeQueryQueryVariables>, "query">
 ) {
-  return Urql.useQuery<HomeQueryQuery>({
+  return Urql.useQuery<HomeQueryQuery, HomeQueryQueryVariables>({
     query: HomeQueryDocument,
     ...options,
   });

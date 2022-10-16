@@ -1,4 +1,4 @@
-import * as Types from "../types";
+import * as Types from "../types.js";
 
 import gql from "graphql-tag";
 import * as Urql from "urql";
@@ -154,7 +154,7 @@ export const VolunteerQueryDocument = gql`
 export function useVolunteerQueryQuery(
   options: Omit<Urql.UseQueryArgs<VolunteerQueryQueryVariables>, "query">
 ) {
-  return Urql.useQuery<VolunteerQueryQuery>({
+  return Urql.useQuery<VolunteerQueryQuery, VolunteerQueryQueryVariables>({
     query: VolunteerQueryDocument,
     ...options,
   });

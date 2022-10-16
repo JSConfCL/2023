@@ -127,7 +127,7 @@ const TeamSection = (props: { page: PageProps["teamData"] }) => {
       {items?.map((item: any, index: number) => {
         if (index === 6) {
           return (
-            <Column index={index}>
+            <Column key={index} index={index}>
               {callToAction && (
                 <PrimaryStyledLink href={callToAction?.link}>
                   {callToAction?.contenido}

@@ -127,7 +127,7 @@ const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
       {speakers.map((item: any, index: number) => {
         if (index === 6) {
           return (
-            <Column index={index}>
+            <Column key={index} index={index}>
               <PrimaryStyledLink href="/cfp">
                 CFP Registration
               </PrimaryStyledLink>

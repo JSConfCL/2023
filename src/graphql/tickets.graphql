@@ -1,0 +1,88 @@
+query TicketsQuery(
+  $id: String!
+  $locale: String!
+  $isPreview: Boolean = false
+) {
+  page(id: $id, locale: $locale, preview: $isPreview) {
+    navBar {
+      linksCollection(limit: 20) {
+        items {
+          sys {
+            id
+          }
+          contenido
+          link
+          isBlank
+        }
+      }
+      buttonsCollection(limit: 20) {
+        items {
+          contenido
+          link
+        }
+      }
+      description {
+        json
+      }
+    }
+    seo {
+      title
+      description
+      metadata
+    }
+    heroBlock {
+      tile
+      firstSubtitle
+      secondSubtitle
+      date
+      ctaUrl
+      ctaText
+      background {
+        title
+        url
+      }
+    }
+    whyBlockCollection {
+      items {
+        title
+        description {
+          json
+        }
+        extendedDescription {
+          json
+        }
+        icon {
+          url
+          description
+        }
+        fullImage {
+          url
+          description
+        }
+      }
+    }
+    followUsBlock {
+      title
+      socialNetworksCollection(limit: 20) {
+        items {
+          name
+          url
+          icon {
+            url
+          }
+        }
+      }
+    }
+    footer {
+      linksCollection(limit: 20) {
+        items {
+          sys {
+            id
+          }
+          contenido
+          link
+        }
+      }
+    }
+  }
+}

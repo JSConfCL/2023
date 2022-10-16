@@ -3,13 +3,13 @@ import * as Types from "../types.js";
 import gql from "graphql-tag";
 import * as Urql from "urql";
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type HowQueryQueryVariables = Types.Exact<{
+export type TicketsQueryQueryVariables = Types.Exact<{
   id: Types.Scalars["String"];
   locale: Types.Scalars["String"];
   isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
 
-export type HowQueryQuery = {
+export type TicketsQueryQuery = {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
@@ -44,44 +44,39 @@ export type HowQueryQuery = {
       description?: string | null;
       metadata?: any | null;
     } | null;
-    howBlockCollection?: {
-      __typename?: "PageHowBlockCollection";
-      items: Array<{
-        __typename?: "HowBlock";
+    heroBlock?: {
+      __typename?: "HeroBlock";
+      tile?: string | null;
+      firstSubtitle?: string | null;
+      secondSubtitle?: string | null;
+      date?: string | null;
+      ctaUrl?: string | null;
+      ctaText?: string | null;
+      background?: {
+        __typename?: "Asset";
         title?: string | null;
-        description?: { __typename?: "HowBlockDescription"; json: any } | null;
-        image?: {
+        url?: string | null;
+      } | null;
+    } | null;
+    whyBlockCollection?: {
+      __typename?: "PageWhyBlockCollection";
+      items: Array<{
+        __typename?: "WhyBlock";
+        title?: string | null;
+        description?: { __typename?: "WhyBlockDescription"; json: any } | null;
+        extendedDescription?: {
+          __typename?: "WhyBlockExtendedDescription";
+          json: any;
+        } | null;
+        icon?: {
           __typename?: "Asset";
           url?: string | null;
           description?: string | null;
         } | null;
-        sectionsCollection?: {
-          __typename?: "HowBlockSectionsCollection";
-          items: Array<{
-            __typename?: "LineBlock";
-            title?: string | null;
-            subtext?: string | null;
-            url?: string | null;
-            description?: {
-              __typename?: "LineBlockDescription";
-              json: any;
-            } | null;
-            button?: {
-              __typename?: "LinkItem";
-              link?: string | null;
-              contenido?: string | null;
-            } | null;
-            mapa?: {
-              __typename?: "Location";
-              lat?: number | null;
-              lon?: number | null;
-            } | null;
-            image?: {
-              __typename?: "Asset";
-              url?: string | null;
-              title?: string | null;
-            } | null;
-          } | null>;
+        fullImage?: {
+          __typename?: "Asset";
+          url?: string | null;
+          description?: string | null;
         } | null;
       } | null>;
     } | null;
@@ -113,8 +108,12 @@ export type HowQueryQuery = {
   } | null;
 };
 
-export const HowQueryDocument = gql`
-  query HowQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {
+export const TicketsQueryDocument = gql`
+  query TicketsQuery(
+    $id: String!
+    $locale: String!
+    $isPreview: Boolean = false
+  ) {
     page(id: $id, locale: $locale, preview: $isPreview) {
       navBar {
         linksCollection(limit: 20) {
@@ -142,41 +141,34 @@ export const HowQueryDocument = gql`
         description
         metadata
       }
-      howBlockCollection(limit: 10) {
+      heroBlock {
+        tile
+        firstSubtitle
+        secondSubtitle
+        date
+        ctaUrl
+        ctaText
+        background {
+          title
+          url
+        }
+      }
+      whyBlockCollection {
         items {
           title
           description {
             json
           }
-          image {
+          extendedDescription {
+            json
+          }
+          icon {
             url
             description
           }
-          sectionsCollection(limit: 20) {
-            items {
-              title
-              subtext
-              description {
-                json
-              }
-              button {
-                link
-                contenido
-              }
-              mapa {
-                lat
-                lon
-              }
-              url
-              image {
-                url
-                title
-              }
-              mapa {
-                lat
-                lon
-              }
-            }
+          fullImage {
+            url
+            description
           }
         }
       }
@@ -207,11 +199,11 @@ export const HowQueryDocument = gql`
   }
 `;
 
-export function useHowQueryQuery(
-  options: Omit<Urql.UseQueryArgs<HowQueryQueryVariables>, "query">
+export function useTicketsQueryQuery(
+  options: Omit<Urql.UseQueryArgs<TicketsQueryQueryVariables>, "query">
 ) {
-  return Urql.useQuery<HowQueryQuery, HowQueryQueryVariables>({
-    query: HowQueryDocument,
+  return Urql.useQuery<TicketsQueryQuery, TicketsQueryQueryVariables>({
+    query: TicketsQueryDocument,
     ...options,
   });
 }

@@ -1,4 +1,4 @@
-import * as Types from "../types";
+import * as Types from "../types.js";
 
 import gql from "graphql-tag";
 import * as Urql from "urql";
@@ -191,5 +191,8 @@ export const WhyQueryDocument = gql`
 export function useWhyQueryQuery(
   options: Omit<Urql.UseQueryArgs<WhyQueryQueryVariables>, "query">
 ) {
-  return Urql.useQuery<WhyQueryQuery>({ query: WhyQueryDocument, ...options });
+  return Urql.useQuery<WhyQueryQuery, WhyQueryQueryVariables>({
+    query: WhyQueryDocument,
+    ...options,
+  });
 }
