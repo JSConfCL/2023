@@ -21,6 +21,9 @@ const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
 const TicketBanner = lazy(() => import("../src/Components/Banner/Ticket"));
 const TicketCard = lazy(() => import("../src/Components/Card/Ticket"));
 const TicketCart = lazy(() => import("../src/Components/Cart/CartContainer"));
+const UnShoppedTicket = lazy(
+  () => import("../src/Components/Card/UnShoppedTicket")
+);
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
 
@@ -90,6 +93,9 @@ const Ticket: NextPage<PageProps> = (props) => {
           }
         })}
         <TicketCart />
+        <Suspense>
+          <UnShoppedTicket />
+        </Suspense>
       </Container>
     </StyledBlackWrapp>
   );

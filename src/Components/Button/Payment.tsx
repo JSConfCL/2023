@@ -27,7 +27,7 @@ const TertiaryButton = styled.button`
   justify-content: center;
 
   img {
-    width: 30% !important;
+    width: 50% !important;
     margin: 0.5rem 0;
     height: unset !important;
   }
@@ -37,6 +37,12 @@ const TertiaryButton = styled.button`
   @media (min-width: ${ViewportSizes.TabletLandscape}) {
   }
   @media (min-width: ${ViewportSizes.Desktop}px) {
+    img {
+      width: 30% !important;
+    }
+    :active {
+      background-color: #F0E040 "important;
+    }
   }
 `;
 
