@@ -24,6 +24,9 @@ const TicketCart = lazy(() => import("../src/Components/Cart/CartContainer"));
 const UnShoppedTicket = lazy(
   () => import("../src/Components/Card/UnShoppedTicket")
 );
+const ShoppedTicket = lazy(
+  () => import("../src/Components/Card/ShoppedTicket")
+);
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
 
@@ -95,6 +98,7 @@ const Ticket: NextPage<PageProps> = (props) => {
         <TicketCart />
         <Suspense>
           <UnShoppedTicket />
+          <ShoppedTicket />
         </Suspense>
       </Container>
     </StyledBlackWrapp>
