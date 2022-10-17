@@ -14,7 +14,6 @@ const Container = styled.div`
   }
   @media (max-width: ${ViewportSizes.TabletLandscape}px) {
     max-width: 750px;
-    padding: 0 65px !important;
   }
   @media (min-width: ${ViewportSizes.Desktop}px) {
     position: absolute;
