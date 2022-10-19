@@ -5,9 +5,6 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [13.x]
     steps:
       - uses: actions/checkout@v3
 
@@ -29,5 +26,6 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+
       - name: Typecheck
         uses: andoshin11/typescript-error-reporter-action@v1.0.2
