@@ -38,7 +38,7 @@ const TertiaryButton = styled.button`
   }
   @media (min-width: ${ViewportSizes.Desktop}px) {
     img {
-      width: 30% !important;
+      width: 35% !important;
     }
     :active {
       background-color: #F0E040 "important;

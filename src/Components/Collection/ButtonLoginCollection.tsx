@@ -22,6 +22,10 @@ const ButtonWrapper = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @media (min-width: ${ViewportSizes.Desktop}px) {
+    margin: 1rem 0 5rem 0;
+  }
 `;
 
 const ButtonLoginCollection = () => {

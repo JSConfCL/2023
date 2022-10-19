@@ -9,16 +9,21 @@ const CartItem = lazy(() => import("./CartItem"));
 const CartItemsWrapper = styled.div``;
 
 const Container = styled.div`
+  max-width: 750px;
+
   @media (max-width: ${ViewportSizes.Phone}px) {
     margin: 1rem;
   }
-  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
-    max-width: 750px;
+
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    padding: 0 4.2rem;
   }
+
   @media (min-width: ${ViewportSizes.Desktop}px) {
     position: absolute;
-    top: 75%;
-    max-width: 750px;
+    top: 84%;
+    margin: auto;
+    padding: 0 0 0 0.5rem;
   }
 `;
 
@@ -86,7 +91,7 @@ const CartPaymentMethodContainer = styled.div`
   @media (min-width: ${ViewportSizes.Desktop}px) {
     h2,
     p {
-      margin: 1rem 1rem 1rem 4rem;
+      margin: 0.5rem 1rem 0.5rem 4rem;
     }
   }
 `;
@@ -99,9 +104,10 @@ const TotalWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
   }
-  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     justify-content: space-between;
     flex-direction: row-reverse;
+    align-items: center;
     margin-bottom: 1.5rem;
   }
   @media (min-width: ${ViewportSizes.Desktop}px) {

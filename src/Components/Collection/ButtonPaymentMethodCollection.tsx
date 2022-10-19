@@ -17,14 +17,16 @@ const ButtonData: { id: number; icon: string }[] = [
 const ButtonWrapper = styled.section`
   display: flex;
   width: 100%;
+  gap: 50px;
+  margin: 1rem 0;
 
   @media (max-width: ${ViewportSizes.Phone}px) {
-    gap: 50px;
-    margin: 1rem 0;
+  }
+
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
   }
 
   @media (min-width: ${ViewportSizes.Desktop}px) {
-    gap: 50px;
     padding: 0 4rem 0 0;
     margin: 1.5rem 0 0 4rem;
   }
