@@ -109,14 +109,28 @@ const CardContainer = styled.section`
       display: none;
     }
   }
-  &:nth-of-type(4) {
+  &:nth-of-type(4), &:nth-of-type(6) {
     picture,
     button {
       display: none;
     }
+
+    h2 {
+      color: #A5A6A3;
+      text-decoration: line-through;
+    }
   }
   &:nth-of-type(5),
   &:nth-of-type(7) {
+    div {
+       &:after {
+        content: "✅";
+        font-size: 2rem;
+        margin: 0 1rem;
+        display: flex;
+        align-self: baseline;
+      }
+    }
     h2 {
       text-decoration: line-through;
     }
@@ -128,10 +142,21 @@ const CardContainer = styled.section`
         display: flex;
       }
     }
+
   }
-  @media (min-width: ${ViewportSizes.Phone}px) {
-    padding: 0 48px;
+  @media (max-width: ${ViewportSizes.Phone}px) {
+    padding: 0 16px;
     margin-bottom: 0 !important;
+    picture {
+      width: 100%;
+      margin-top: 1rem;
+    }
+    img {
+      aspect-ratio: 0 !important;
+      img {
+        width: 100%;
+      }
+    }
   }
   @media (min-width: ${ViewportSizes.TabletLandscape}) {
     padding: 0 48px;
@@ -150,6 +175,25 @@ const CardContainer = styled.section`
         display: none;
       }
     }
+    &:nth-of-type(4),
+    &:nth-of-type(6),
+    &:nth-of-type(8) {
+      button {
+        display: none;
+      }
+      picture {
+        display: block;
+        width: 100%;
+        border-radius: 0px 32px 0px 0px !important;
+        aspect-ratio: 611 / 390 !important;
+        object-fit: cover;
+        object-position: center center;
+        opacity: 1;
+        clip-path: polygon(100% 0%, 100% 69%, 0% 69%, 0% 0%);
+        margin-top: 1rem;
+        height: 73vh;
+      }
+    }
   }
   @media (min-width: ${ViewportSizes.Desktop}px) {
     display: grid;
@@ -164,6 +208,7 @@ const CardContainer = styled.section`
       aspect-ratio: 0 !important;
     }
 
+    
     &:nth-of-type(2),
     &:nth-of-type(4),
     &:nth-of-type(6),
@@ -190,6 +235,18 @@ const CardContainer = styled.section`
         display: none;
       }
     }
+
+    &:nth-of-type(5),
+    &:nth-of-type(7) {
+      div {
+        &:after {
+          content: "✅";
+          font-size: 4rem;
+          margin: 0 1rem;
+          display: flex;
+          align-self: baseline;
+        }
+      }
   }
 `;
 
@@ -199,7 +256,7 @@ const HR = styled.hr`
   border-style: solid;
   width: 25%;
   background-color: #f45b69;
-  margin-top: 1.5rem;
+  margin-top: 1.2rem;
 }
 `;
 
@@ -213,6 +270,7 @@ const WrapperDescription = styled.section`
     max-width: 100%;
     margin-bottom: 0.7rem;
     font-size: 1rem;
+    line-height: 19.2px;
   }
   @media (max-width: ${ViewportSizes.Phone}px) {
     margin-bottom: 0;
@@ -226,9 +284,11 @@ const WrapperDescription = styled.section`
     }
   }
   @media (min-width: ${ViewportSizes.Desktop}px) {
-    padding-top: 5rem;
+    padding-top: 3rem;
     p {
       width: 60%;
+      font-size: 1.2rem;
+      line-height: 25px;
     }
   }
 `;
@@ -267,6 +327,7 @@ const Title = styled.div`
   @media (min-width: ${ViewportSizes.Desktop}px) {
     h2 {
       font-size: 80px;
+      margin: 0 0 3rem 0;
     }
   }
 `;
@@ -302,6 +363,7 @@ const TicketCard = (props: TicketCardProps) => {
         </Suspense>
         <HR />
       </WrapperDescription>
+
       <Suspense fallback={null}>
         <Image
           desktop={props?.fullImage?.url!}

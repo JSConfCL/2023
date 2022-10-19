@@ -1,9 +1,13 @@
 import { lazy, Suspense } from "react";
+import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
 import { Document } from "@contentful/rich-text-types";
 import { B, H2 } from "../core/Typography";
 import { ViewportSizes } from "../../../styles/theme";
-import QRCode from "react-qr-code";
+
+const QRCode = lazy(() => import("react-qr-code"));
+const FeatherIcon = lazy(() => import("feather-icons-react"));
+const JSConfLogo = dynamic(() => import("../svgs/logo"));
 
 const Container = styled.section`
   display: flex;
@@ -18,19 +22,6 @@ const StyledBlackWrapp = styled.section`
   flex-direction: column;
   align-items: center;
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
-`;
-
-const Title = styled.h1`
-  line-height: 80px;
-  text-align: center;
-  @media (max-width: ${ViewportSizes.Phone}px) {
-    font-size: 32px;
-  }
-  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
-  }
-  @media (min-width: ${ViewportSizes.Desktop}px) {
-    font-size: 80px;
-  }
 `;
 
 const TicketDescription = styled.div`
@@ -86,58 +77,76 @@ const TicketFooter = styled.div`
   border-top: 1px dashed #a6a6a6;
 `;
 
-const Grid = styled.div``;
+const LogoWrapper = styled.div`
+  background-color: #f0e040;
+  border-radius: 50%;
+  width: 27px;
+  height: 27px;
+  padding: 4px;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+`;
+
+const LogoColor = {
+  color: "#000",
+};
 
 const ShoppedTicket = () => {
   return (
     <>
       <Container>
         <StyledBlackWrapp>
-          <Title>TUS TICKETS</Title>
-          <Grid>
-            <TicketDescription>
-              <TicketHeader>
-                <div></div>
-                <InfoTitle>
-                  <p>JSConf Chile</p>
-                  <p>Muestra este ticket en la entrada</p>
-                </InfoTitle>
-              </TicketHeader>
-              <TicketMain>
+          <TicketDescription>
+            <TicketHeader>
+              <IconWrapper>
+                <LogoWrapper>
+                  <JSConfLogo />
+                </LogoWrapper>
+                <FeatherIcon icon="share" size={24} stroke="#000" />
+              </IconWrapper>
+              <InfoTitle>
+                <p>JSConf Chile</p>
+                <p>Muestra este ticket en la entrada</p>
+              </InfoTitle>
+            </TicketHeader>
+            <TicketMain>
+              <Info>
+                <p>Lugar</p>
+                <p>Santiago, Chile, Matucana 100</p>
+              </Info>
+              <InfoWrapper>
                 <Info>
-                  <p>Lugar</p>
-                  <p>Santiago, Chile, Matucana 100</p>
+                  <p>Fecha</p>
+                  <p>3 y4 de Feb. 2023</p>
                 </Info>
-                <InfoWrapper>
-                  <Info>
-                    <p>Fecha</p>
-                    <p>3 y4 de Feb. 2023</p>
-                  </Info>
-                  <Info>
-                    <p>Hora</p>
-                    <p>8:00 AM</p>
-                  </Info>
-                </InfoWrapper>
                 <Info>
-                  <p>Tipo de Entrada</p>
-                  <p>Estudiante</p>
+                  <p>Hora</p>
+                  <p>8:00 AM</p>
                 </Info>
-              </TicketMain>
-              <TicketFooter>
-                <QRCode
-                  size={250}
-                  style={{
-                    height: "auto",
-                    maxWidth: "100%",
-                    width: "100%",
-                    margin: "auto",
-                  }}
-                  value={"hola"}
-                  viewBox={`0 0 256 256`}
-                />
-              </TicketFooter>
-            </TicketDescription>
-          </Grid>
+              </InfoWrapper>
+              <Info>
+                <p>Tipo de Entrada</p>
+                <p>Estudiante</p>
+              </Info>
+            </TicketMain>
+            <TicketFooter>
+              <QRCode
+                size={250}
+                style={{
+                  height: "auto",
+                  maxWidth: "100%",
+                  width: "100%",
+                  margin: "auto",
+                }}
+                value={"hola"}
+                viewBox={`0 0 256 256`}
+              />
+            </TicketFooter>
+          </TicketDescription>
         </StyledBlackWrapp>
       </Container>
     </>

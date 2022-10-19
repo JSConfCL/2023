@@ -8,24 +8,20 @@ type ButtonInfo = {
 };
 
 const IconLogin = styled.img`
-  width: 30% !important;
-  height: 19.51px;
-
-  @media (max-width: ${ViewportSizes.Phone}px) {
-    width: 40% !important;
-  }
+  width: 40% !important;
+  height: 20px;
 `;
 
 const TertiaryButton = styled.button`
   display: flex;
-  flex-direction: row;
-  height: 43px;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem auto;
+  width: 100%;
+  height: 50px;
   background-color: #fff !important;
   border: 1px solid #000;
   border-radius: 5px;
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
-  width: 100%;
 
   p {
     font-size: 1rem;

@@ -13,6 +13,7 @@ import { ParseQuery } from "../src/helpers/types";
 import Seo from "../src/Components/Seo";
 import EventSchema from "../src/Components/schema/event";
 import Hero from "../src/Components/sections/Hero";
+import { ViewportSizes } from "../styles/theme";
 
 const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
   ssr: false,
@@ -52,6 +53,26 @@ const StyledBlackWrapp = styled.section`
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 
+const Title = styled.h1`
+  line-height: 80px;
+  text-align: center;
+  @media (max-width: ${ViewportSizes.Phone}px) {
+    font-size: 32px;
+  }
+  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
+  }
+  @media (min-width: ${ViewportSizes.Desktop}px) {
+    font-size: 80px;
+  }
+`;
+
+const Grid = styled.div`
+  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
+  }
+  @media (min-width: ${ViewportSizes.Desktop}px) {
+  }
+`;
+
 const Ticket: NextPage<PageProps> = (props) => {
   const [login, setLogin] = useState(true);
   const [ticketAvailability, setTicketAvailability] = useState(true);
@@ -66,14 +87,18 @@ const Ticket: NextPage<PageProps> = (props) => {
         <Suspense fallback={null}>
           <TicketBanner {...props.heroData} />
         </Suspense>
-        {/* {props.whyItems.items.map((elem, index) => {
-       return(
-          <Suspense key={`why-card-${index}`} fallback={null}>
-               <TicketCard number={index + 1} {...elem} key={`why-card-${index}`} />
-           </Suspense>)
-         
-        })} */}
         {props.whyItems.items.map((elem, index) => {
+          return (
+            <Suspense key={`why-card-${index}`} fallback={null}>
+              <TicketCard
+                number={index + 1}
+                {...elem}
+                key={`why-card-${index}`}
+              />
+            </Suspense>
+          );
+        })}
+        {/* {props.whyItems.items.map((elem, index) => {
           const LogState = JSON.parse(
             elem.extendedDescription.json.content[0].content[0].value
           );
@@ -94,12 +119,18 @@ const Ticket: NextPage<PageProps> = (props) => {
           } else {
             return null;
           }
-        })}
-        <TicketCart />
-        <Suspense>
+        })} */}
+        {/* <TicketCart /> */}
+        {/* <Suspense>
           <UnShoppedTicket />
-          <ShoppedTicket />
-        </Suspense>
+          <StyledBlackWrapp>
+                <Title>TUS TICKETS</Title>
+                <Grid>
+                   <ShoppedTicket />
+                   <ShoppedTicket />
+                </Grid>
+          </StyledBlackWrapp>
+        </Suspense> */}
       </Container>
     </StyledBlackWrapp>
   );
