@@ -12,16 +12,23 @@ const Container = styled.div`
   max-width: 750px;
 
   @media (max-width: ${ViewportSizes.Phone}px) {
-    margin: 1rem;
+    margin: 1.7rem;
   }
 
   @media (min-width: ${ViewportSizes.Phone}px) {
     padding: 0 4.2rem;
   }
 
-  @media (min-width: ${ViewportSizes.Desktop}px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     position: absolute;
     top: 84%;
+    margin: auto;
+    padding: 0 4.2rem;
+  }
+
+  @media (min-width: ${ViewportSizes.Desktop}px) {
+    position: absolute;
+    top: 90%;
     margin: auto;
     padding: 0 0 0 0.5rem;
   }
@@ -98,18 +105,11 @@ const CartPaymentMethodContainer = styled.div`
 
 const TotalWrapper = styled.div`
   display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
 
-  @media (max-width: ${ViewportSizes.Phone}px) {
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    align-items: center;
-  }
-  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
-    justify-content: space-between;
-    flex-direction: row-reverse;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
   @media (min-width: ${ViewportSizes.Desktop}px) {
     flex-direction: column;
     align-items: flex-end;
