@@ -96,12 +96,12 @@ const Container = styled.section<{ direction: boolean }>`
 
 const CardContainer = styled.section`
   margin: 0 16px;
-  font-size: 40px;
   picture {
     width: 100% !important;
   }
   img {
     aspect-ratio: 0 !important;
+    width: 100%;
   }
   &:nth-of-type(2) {
     picture,
@@ -109,7 +109,7 @@ const CardContainer = styled.section`
       display: none;
     }
   }
-  &:nth-of-type(4), &:nth-of-type(6) {
+  &:nth-of-type(4), &:nth-of-type(6), &:nth-of-type(8) {
     picture,
     button {
       display: none;
@@ -127,8 +127,6 @@ const CardContainer = styled.section`
         content: "✅";
         font-size: 2rem;
         margin: 0 1rem;
-        display: flex;
-        align-self: baseline;
       }
     }
     h2 {
@@ -153,54 +151,18 @@ const CardContainer = styled.section`
     }
     img {
       aspect-ratio: 0 !important;
-      img {
-        width: 100%;
-      }
-    }
-  }
-  @media (min-width: ${ViewportSizes.TabletLandscape}) {
-    padding: 0 48px;
-    picture {
       width: 100%;
-      margin-top: 1rem;
-    }
-    img {
-      aspect-ratio: 0 !important;
-      img {
-        width: 100%;
-      }
-    }
-    &:nth-of-type(2) {
-      img {
-        display: none;
-      }
-    }
-    &:nth-of-type(4),
-    &:nth-of-type(6),
-    &:nth-of-type(8) {
-      button {
-        display: none;
-      }
-      picture {
-        display: block;
-        width: 100%;
-        border-radius: 0px 32px 0px 0px !important;
-        aspect-ratio: 611 / 390 !important;
-        object-fit: cover;
-        object-position: center center;
-        opacity: 1;
-        clip-path: polygon(100% 0%, 100% 69%, 0% 69%, 0% 0%);
-        margin-top: 1rem;
-        height: 73vh;
-      }
     }
   }
-  @media (min-width: ${ViewportSizes.Desktop}px) {
+  @media (min-width: ${ViewportSizes.Phone}px) and (max-width: ${ViewportSizes.TabletLandscape}px){
+    padding: 0 3rem;
+  }
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    padding: 0 48px;
     display: grid;
     grid-template-columns: 70% 30%;
     /*height: 60vh;*/
-    padding-left: 48px;
-    padding-right: 48px;
+    padding: 0 48px;
 
     img {
       width: 100%;
@@ -226,7 +188,7 @@ const CardContainer = styled.section`
         opacity: 1;
         clip-path: polygon(100% 0%, 100% 69%, 0% 69%, 0% 0%);
         margin-top: 1rem;
-        height: 73vh;
+        height: 75vh;
       }
     }
 
@@ -274,14 +236,11 @@ const WrapperDescription = styled.section`
   }
   @media (max-width: ${ViewportSizes.Phone}px) {
     margin-bottom: 0;
+    max-width: 100%;
   }
   @media (max-width: ${ViewportSizes.TabletLandscape}px) {
     max-width: 100%;
     margin-bottom: 2rem;
-
-    h2 {
-      font-size: 65px;
-    }
   }
   @media (min-width: ${ViewportSizes.Desktop}px) {
     padding-top: 3rem;
@@ -314,14 +273,18 @@ const Title = styled.div`
   align-items: center;
   gap: 10px;
 
-  @media (max-width: ${ViewportSizes.Phone}px) {
+  h2 {
+    font-size: 31px;
+  }
+
+  @media (min-width: ${ViewportSizes.Phone}px) {
     h2 {
-      font-size: 40px !important;
+      font-size: 40px;
     }
   }
-  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     h2 {
-      font-size: 65px;
+      font-size: 40px;
     }
   }
   @media (min-width: ${ViewportSizes.Desktop}px) {
@@ -331,24 +294,6 @@ const Title = styled.div`
     }
   }
 `;
-
-const LoginButtonInfo = [
-  {
-    id: 1,
-    text: "Ingresa con Github",
-    image: "/images/github-icon.svg",
-  },
-  {
-    id: 2,
-    text: "Ingresa con Gmail",
-    image: "/images/gmail-icon.svg",
-  },
-  {
-    id: 3,
-    text: "Ingresa con tu Email",
-    image: "/images/email-icon.svg",
-  },
-];
 
 const TicketCard = (props: TicketCardProps) => {
   return (
