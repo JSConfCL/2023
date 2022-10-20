@@ -87,7 +87,7 @@ const Ticket: NextPage<PageProps> = (props) => {
         <Suspense fallback={null}>
           <TicketBanner {...props.heroData} />
         </Suspense>
-        {/* {props.whyItems.items.map((elem, index) => {
+        {props.whyItems.items.map((elem, index) => {
           return (
             <Suspense key={`why-card-${index}`} fallback={null}>
               <TicketCard
@@ -97,8 +97,8 @@ const Ticket: NextPage<PageProps> = (props) => {
               />
             </Suspense>
           );
-        })} */}
-        {props.whyItems.items.map((elem, index) => {
+        })}
+        {/* {props.whyItems.items.map((elem, index) => {
           const LogState = JSON.parse(
             elem.extendedDescription.json.content[0].content[0].value
           );
@@ -119,8 +119,8 @@ const Ticket: NextPage<PageProps> = (props) => {
           } else {
             return null;
           }
-        })}
-        <TicketCart />
+        })} */}
+        {/* <TicketCart /> */}
         {/* <Suspense>
           <UnShoppedTicket />
           <StyledBlackWrapp>
