@@ -1,4 +1,5 @@
 import { Suspense, lazy } from "react";
+import ReactMarkdown from "react-markdown";
 import styled from "@emotion/styled";
 import { PageProps } from "../../../pages/volunteer";
 import { H1, P } from "../core/Typography";
@@ -76,13 +77,28 @@ const ImageBlock = styled.section`
   }
 `;
 
+const PMarkdown = styled(P)`
+  strong {
+    font-weight: 600;
+  }
+  p {
+    padding: 16px 0px;
+  }
+  ul {
+    list-style: disc;
+    margin-inline-start: 1em;
+  }
+`;
+
 const BannerVolunteer = (props: PageProps["heroData"]) => {
   return (
     <Container>
       <Block width="38%">
         <StyledH1>{props?.tile}</StyledH1>
         <P>{props?.firstSubtitle!}</P>
-        <P>{props?.secondSubtitle!}</P>
+        <PMarkdown>
+          <ReactMarkdown>{props?.secondSubtitle!}</ReactMarkdown>
+        </PMarkdown>
       </Block>
       <Block width="60%">
         <ImageBlock>
