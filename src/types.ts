@@ -16,24 +16,12 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** The Circle scalar type represents a circle, defined by the coordinates of its center and a radius. The Circle type is used to represent a searchable area together with the '_within_circle' filter. */
   Circle: any;
-  /**
-   * A date-time string at UTC, such as 2007-12-03T10:15:30Z,
-   *     compliant with the 'date-time' format outlined in section 5.6 of
-   *     the RFC 3339 profile of the ISO 8601 standard for representation
-   *     of dates and times using the Gregorian calendar.
-   */
   DateTime: any;
-  /** The 'Dimension' type represents dimensions as whole numeric values between `1` and `4000`. */
   Dimension: any;
-  /** The 'HexColor' type represents color in `rgb:ffffff` string format. */
   HexColor: any;
-  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
-  /** The 'Quality' type represents quality as whole numeric values between `1` and `100`. */
   Quality: any;
-  /** The Rectangle scalar type represents a rectangle, defined by the coordinates of its top left and bottom right corners. The Rectangle type is used to represent a searchable area together with the '_within_rectangle' filter. */
   Rectangle: any;
 };
 
@@ -186,6 +174,7 @@ export type AssetLinkingCollections = {
   socialNetworkCollection?: Maybe<SocialNetworkCollection>;
   speakerCollection?: Maybe<SpeakerCollection>;
   sponsorCollection?: Maybe<SponsorCollection>;
+  ticketBlockCollection?: Maybe<TicketBlockCollection>;
   volunteerBlockCollection?: Maybe<VolunteerBlockCollection>;
   whyBlockCollection?: Maybe<WhyBlockCollection>;
 };
@@ -240,6 +229,13 @@ export type AssetLinkingCollectionsSpeakerCollectionArgs = {
 };
 
 export type AssetLinkingCollectionsSponsorCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type AssetLinkingCollectionsTicketBlockCollectionArgs = {
   limit?: InputMaybe<Scalars["Int"]>;
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
@@ -1774,6 +1770,8 @@ export type Query = {
   talkCollection?: Maybe<TalkCollection>;
   teamBlock?: Maybe<TeamBlock>;
   teamBlockCollection?: Maybe<TeamBlockCollection>;
+  ticketBlock?: Maybe<TicketBlock>;
+  ticketBlockCollection?: Maybe<TicketBlockCollection>;
   volunteerBlock?: Maybe<VolunteerBlock>;
   volunteerBlockCollection?: Maybe<VolunteerBlockCollection>;
   whyBlock?: Maybe<WhyBlock>;
@@ -2072,6 +2070,21 @@ export type QueryTeamBlockCollectionArgs = {
   preview?: InputMaybe<Scalars["Boolean"]>;
   skip?: InputMaybe<Scalars["Int"]>;
   where?: InputMaybe<TeamBlockFilter>;
+};
+
+export type QueryTicketBlockArgs = {
+  id: Scalars["String"];
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+export type QueryTicketBlockCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  order?: InputMaybe<Array<InputMaybe<TicketBlockOrder>>>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<TicketBlockFilter>;
 };
 
 export type QueryVolunteerBlockArgs = {
@@ -3248,6 +3261,156 @@ export type TeamBlockMembersCollection = {
 };
 
 export enum TeamBlockOrder {
+  SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
+  SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
+  SysIdAsc = "sys_id_ASC",
+  SysIdDesc = "sys_id_DESC",
+  SysPublishedAtAsc = "sys_publishedAt_ASC",
+  SysPublishedAtDesc = "sys_publishedAt_DESC",
+  SysPublishedVersionAsc = "sys_publishedVersion_ASC",
+  SysPublishedVersionDesc = "sys_publishedVersion_DESC",
+  TitleAsc = "title_ASC",
+  TitleDesc = "title_DESC",
+}
+
+/** Ticket Card [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/ticketBlock) */
+export type TicketBlock = Entry & {
+  __typename?: "TicketBlock";
+  contentfulMetadata: ContentfulMetadata;
+  description?: Maybe<TicketBlockDescription>;
+  extendedDescription?: Maybe<TicketBlockExtendedDescription>;
+  fullImage?: Maybe<Asset>;
+  icon?: Maybe<Asset>;
+  linkedFrom?: Maybe<TicketBlockLinkingCollections>;
+  sys: Sys;
+  title?: Maybe<Scalars["String"]>;
+};
+
+/** Ticket Card [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/ticketBlock) */
+export type TicketBlockDescriptionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** Ticket Card [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/ticketBlock) */
+export type TicketBlockExtendedDescriptionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** Ticket Card [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/ticketBlock) */
+export type TicketBlockFullImageArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** Ticket Card [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/ticketBlock) */
+export type TicketBlockIconArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** Ticket Card [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/ticketBlock) */
+export type TicketBlockLinkedFromArgs = {
+  allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** Ticket Card [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/ticketBlock) */
+export type TicketBlockTitleArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+export type TicketBlockCollection = {
+  __typename?: "TicketBlockCollection";
+  items: Array<Maybe<TicketBlock>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export type TicketBlockDescription = {
+  __typename?: "TicketBlockDescription";
+  json: Scalars["JSON"];
+  links: TicketBlockDescriptionLinks;
+};
+
+export type TicketBlockDescriptionAssets = {
+  __typename?: "TicketBlockDescriptionAssets";
+  block: Array<Maybe<Asset>>;
+  hyperlink: Array<Maybe<Asset>>;
+};
+
+export type TicketBlockDescriptionEntries = {
+  __typename?: "TicketBlockDescriptionEntries";
+  block: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  inline: Array<Maybe<Entry>>;
+};
+
+export type TicketBlockDescriptionLinks = {
+  __typename?: "TicketBlockDescriptionLinks";
+  assets: TicketBlockDescriptionAssets;
+  entries: TicketBlockDescriptionEntries;
+};
+
+export type TicketBlockExtendedDescription = {
+  __typename?: "TicketBlockExtendedDescription";
+  json: Scalars["JSON"];
+  links: TicketBlockExtendedDescriptionLinks;
+};
+
+export type TicketBlockExtendedDescriptionAssets = {
+  __typename?: "TicketBlockExtendedDescriptionAssets";
+  block: Array<Maybe<Asset>>;
+  hyperlink: Array<Maybe<Asset>>;
+};
+
+export type TicketBlockExtendedDescriptionEntries = {
+  __typename?: "TicketBlockExtendedDescriptionEntries";
+  block: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  inline: Array<Maybe<Entry>>;
+};
+
+export type TicketBlockExtendedDescriptionLinks = {
+  __typename?: "TicketBlockExtendedDescriptionLinks";
+  assets: TicketBlockExtendedDescriptionAssets;
+  entries: TicketBlockExtendedDescriptionEntries;
+};
+
+export type TicketBlockFilter = {
+  AND?: InputMaybe<Array<InputMaybe<TicketBlockFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<TicketBlockFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  description_contains?: InputMaybe<Scalars["String"]>;
+  description_exists?: InputMaybe<Scalars["Boolean"]>;
+  description_not_contains?: InputMaybe<Scalars["String"]>;
+  extendedDescription_contains?: InputMaybe<Scalars["String"]>;
+  extendedDescription_exists?: InputMaybe<Scalars["Boolean"]>;
+  extendedDescription_not_contains?: InputMaybe<Scalars["String"]>;
+  fullImage_exists?: InputMaybe<Scalars["Boolean"]>;
+  icon_exists?: InputMaybe<Scalars["Boolean"]>;
+  sys?: InputMaybe<SysFilter>;
+  title?: InputMaybe<Scalars["String"]>;
+  title_contains?: InputMaybe<Scalars["String"]>;
+  title_exists?: InputMaybe<Scalars["Boolean"]>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  title_not?: InputMaybe<Scalars["String"]>;
+  title_not_contains?: InputMaybe<Scalars["String"]>;
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+export type TicketBlockLinkingCollections = {
+  __typename?: "TicketBlockLinkingCollections";
+  entryCollection?: Maybe<EntryCollection>;
+};
+
+export type TicketBlockLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export enum TicketBlockOrder {
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",

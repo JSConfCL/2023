@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { text } from "node:stream/consumers";
 import { darken, lighten, opacify } from "polished";
 
 const baseStyling = {
@@ -41,6 +42,22 @@ export const BasePrimaryButton = styled.button(({ theme }) => ({
 }));
 
 export const SecondaryButton = styled.button(({ theme }) => ({
+  ...baseStyling,
+  backgroundColor: theme.elements.buttons.variants.secondary.backgroundColor,
+  background: theme.elements.buttons.variants.secondary.backgroundFallbackColor,
+  color: theme.elements.buttons.variants.secondary.textColor,
+  borderColor: theme.elements.buttons.variants.secondary.borderColor,
+  borderWidth: theme.elements.buttons.variants.secondary.borderWidth,
+  borderStyle: theme.elements.buttons.variants.secondary.borderStyle,
+
+  backgroundImage: theme.elements.buttons.variants.secondary.borderColor,
+
+  // boxShadow: `0 2px 4px ${lighten(0.55, theme.colors.black)}`,
+  "&:hover": { backgroundColor: lighten(0.7, theme.colors.black) },
+  "&:focus": { boxShadow: `0 0 0 2px ${theme.colors.black}` },
+}));
+
+export const TertiaryButton = styled.button(({ theme }) => ({
   ...baseStyling,
   backgroundColor: theme.elements.buttons.variants.secondary.backgroundColor,
   background: theme.elements.buttons.variants.secondary.backgroundFallbackColor,

@@ -1,4 +1,4 @@
-import * as Types from "../../types";
+import * as Types from "../../types.js";
 
 import gql from "graphql-tag";
 import * as Urql from "urql";
@@ -49,7 +49,7 @@ export const AssetCollectionDocument = gql`
 export function useAssetCollectionQuery(
   options?: Omit<Urql.UseQueryArgs<AssetCollectionQueryVariables>, "query">
 ) {
-  return Urql.useQuery<AssetCollectionQuery>({
+  return Urql.useQuery<AssetCollectionQuery, AssetCollectionQueryVariables>({
     query: AssetCollectionDocument,
     ...options,
   });
