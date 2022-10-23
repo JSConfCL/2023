@@ -246,11 +246,7 @@ const WrapperDescription = styled.section`
     padding-top: 3rem;
     p {
       width: 60%;
-<<<<<<< HEAD
       font-size: 1.25rem;
-=======
-      font-size: 1.2rem;
->>>>>>> cdb519d0ef5f543c1e597d7419e3b2a62452a82b
       line-height: 25px;
     }
   }
