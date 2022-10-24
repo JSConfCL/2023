@@ -12,6 +12,8 @@ import { ParseQuery } from "../src/helpers/types";
 import Seo from "../src/Components/Seo";
 import EventSchema from "../src/Components/schema/event";
 import Hero from "../src/Components/sections/Hero";
+import { NavBarProps } from "../src/Components/NavBar/NavBar";
+import { parseNavBarData } from "../src/Components/NavBar/helper";
 
 const WhySection = lazy(() => import("../src/Components/sections/WhySection"));
 const HowSection = lazy(() => import("../src/Components/sections/HowSection"));
@@ -25,7 +27,7 @@ const SpeakerSection = lazy(
 type Page = ParseQuery<HomeQueryQuery["page"]>;
 
 export type PageProps = {
-  navData: Page["navBar"];
+  navData: NavBarProps;
   whyItems: Page["whyBlockCollection"];
   howItems: Page["howBlockCollection"];
   heroData: Page["heroBlock"];
@@ -81,7 +83,7 @@ export async function getStaticProps() {
 
   const page = queryResults.data?.page as Page;
   const props: PageProps = {
-    navData: page?.navBar,
+    navData: parseNavBarData(page?.navBar),
     heroData: page?.heroBlock,
     whyItems: page?.whyBlockCollection,
     howItems: page?.howBlockCollection,

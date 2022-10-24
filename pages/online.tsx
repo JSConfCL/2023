@@ -13,6 +13,9 @@ import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 import Seo from "../src/Components/Seo";
 
+import { NavBarProps } from "../src/Components/NavBar/NavBar";
+import { parseNavBarData } from "../src/Components/NavBar/helper";
+
 const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
   ssr: false,
 });
@@ -21,7 +24,7 @@ const HowCard = lazy(() => import("../src/Components/Card/How"));
 type Page = ParseQuery<HowQueryQuery["page"]>;
 
 export type PageProps = {
-  navData: Page["navBar"];
+  navData: NavBarProps;
   howItems: Page["howBlockCollection"];
   seo: Page["seo"];
 };
@@ -79,7 +82,7 @@ export async function getStaticProps() {
   const page = queryResults.data?.page as Page;
   if (!page) return { props: {} };
   const props: PageProps = {
-    navData: page?.navBar,
+    navData: parseNavBarData(page?.navBar),
     howItems: page?.howBlockCollection,
     seo: page?.seo,
   };

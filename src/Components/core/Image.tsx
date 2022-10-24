@@ -31,9 +31,21 @@ const Image = (props: {
         srcSet={`${props.mobile}?fm=webp${params}`}
       />
       <source
-        media="(min-width: 769px)"
-        srcSet={`${props.desktop || props.mobile}?fm=webp${params}`}
+        media="(max-width: 768px)"
+        srcSet={`${props.mobile}?fm=jpeg${params}`}
       />
+      {props.desktop && (
+        <>
+          <source
+            media="(min-width: 769px)"
+            srcSet={`${props.desktop}?fm=webp${params}`}
+          />
+          <source
+            media="(min-width: 769px)"
+            srcSet={`${props.desktop}?fm=jpeg${params}`}
+          />
+        </>
+      )}
       <Img
         loading={loading}
         src={`${props.desktop || props.mobile}?fm=webp${params}`}

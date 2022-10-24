@@ -11,16 +11,18 @@ import {
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 import Seo from "../src/Components/Seo";
+import { NavBarProps } from "../src/Components/NavBar/NavBar";
+import { parseNavBarData } from "../src/Components/NavBar/helper";
 
 const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
   ssr: false,
 });
-const BannerCFP = lazy(() => import("../src/Components/Banner/CFP"));
+const BannerCFP = dynamic(() => import("../src/Components/Banner/CFP"));
 
 type Page = ParseQuery<CfpQueryQuery["page"]>;
 
 export type PageProps = {
-  navData: Page["navBar"];
+  navData: NavBarProps;
   heroData: Page["heroBlock"];
   seo: Page["seo"];
 };
@@ -70,7 +72,7 @@ export async function getStaticProps() {
   const page = queryResults.data?.page as Page;
   if (!page) return { props: {} };
   const props: PageProps = {
-    navData: page?.navBar,
+    navData: parseNavBarData(page?.navBar),
     heroData: page?.heroBlock,
     seo: page?.seo,
   };

@@ -15,3 +15,39 @@ export const Paragraph = styled.p`
     font-size: 28px;
   }
 `;
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  @media (max-width: ${ViewportSizes.Phone}px) {
+    gap: 1rem;
+  }
+
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    gap: 2rem;
+  }
+
+  @media (min-width: ${ViewportSizes.Desktop}px) {
+    gap: 2rem;
+  }
+`;
+
+export const SideContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  @media (max-width: ${ViewportSizes.Phone}px) {
+    gap: 1rem;
+  }
+
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    flex-direction: row;
+    gap: 5rem;
+  }
+
+  @media (min-width: ${ViewportSizes.Desktop}px) {
+    flex-direction: row;
+    gap: 9rem;
+  }
+`;

@@ -29,6 +29,7 @@ const descriptionRichTextOptions = {
   renderText: (text: string) => text,
 };
 const Description = (props: { data: Document; animationVariants?: any }) => {
+  console.log({ props });
   return (
     <Block variants={props.animationVariants}>
       {documentToReactComponents(props.data, descriptionRichTextOptions)}

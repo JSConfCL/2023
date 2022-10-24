@@ -1,27 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
-import { use100vh } from "react-div-100vh";
-import { lazy, Suspense } from "react";
-import { useLockBodyScroll } from "react-use";
-import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
-import React from "react";
-
-import { useRouter } from "next/router";
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
+import dynamic from "next/dynamic";
 import Link from "next/link";
-
-import { motion, useAnimation, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/router";
+import React, { lazy, Suspense } from "react";
+import { use100vh } from "react-div-100vh";
 import { Portal } from "react-portal";
-
-import useMediaQuery from "../../helpers/useMediaQuery";
-import { PageProps } from "../../../pages";
-import { SecondaryStyledLink } from "../Links";
+import { useLockBodyScroll } from "react-use";
+import { Simplify } from "type-fest";
 import { ViewportSizes } from "../../../styles/theme";
+import useMediaQuery from "../../helpers/useMediaQuery";
+import { SecondaryStyledButton, SecondaryStyledLink } from "../Links";
 
 const FeatherIcon = lazy(() => import("feather-icons-react"));
 const JSConfLogo = dynamic(() => import("../svgs/logo"));
 const Description = lazy(() => import("../core/Description"));
-
-type Props = PageProps["navData"];
 
 const StyledNav = styled(motion.nav)`
   z-index: 100;
@@ -170,27 +164,61 @@ const MobileFeatherIconWrapper = styled.span`
   }
 `;
 
-const Menu = (props: Props) => {
+type MenuItem = {
+  id: string;
+  link: string;
+  onClick?: never;
+  isBlank: boolean;
+  contenido: string;
+};
+type MenuItemOnClick = {
+  id: string;
+  link?: never;
+  onClick: () => void;
+  contenido: string;
+};
+
+type ButtonItem = {
+  link: string;
+  onClick?: never;
+  contenido: string;
+};
+type ButtonItemOnClick = {
+  link?: never;
+  onClick: () => void;
+  contenido: string;
+};
+
+export type NavBarProps = Simplify<{
+  items: Simplify<MenuItem | MenuItemOnClick>[];
+  description?: any;
+  buttonsCollection?: Simplify<ButtonItem | ButtonItemOnClick>[];
+}>;
+
+const FakeButton = styled.div``;
+const Menu = ({ items }: { items: NavBarProps["items"] }) => {
   const { pathname } = useRouter();
 
   return (
     <>
-      {props.linksCollection.items.map((item) => {
-        return (
-          <StyledLink
-            key={item.sys.id}
-            isActive={item.link === pathname ? "active" : ""}
-          >
-            {item.isBlank ? (
-              <Link rel="preconnect" href={item.link!} passHref>
-                <a target="_blank">{item.contenido}</a>
-              </Link>
-            ) : (
-              <Link href={item.link!}>{item.contenido}</Link>
-            )}
-          </StyledLink>
-        );
-      })}
+      {items?.map((item) => (
+        <StyledLink
+          key={item.id}
+          isActive={item?.link === pathname ? "active" : ""}
+        >
+          {item.onClick ? (
+            <FakeButton as="button" onClick={item.onClick}>
+              {item.contenido}
+            </FakeButton>
+          ) : item.isBlank ? (
+            <Link rel="preconnect" href={item.link!} passHref>
+              <a target="_blank">{item.contenido}</a>
+            </Link>
+          ) : (
+            <Link href={item.link!}>{item.contenido}</Link>
+          )}
+        </StyledLink>
+      ))}
     </>
   );
 };
@@ -198,7 +226,8 @@ const Menu = (props: Props) => {
 const JSConfLogoWrapper = styled.div`
   height: fit-content;
 `;
-const MobileMenu = (props: Props) => {
+
+const MobileMenu = ({ items, description, buttonsCollection }: NavBarProps) => {
   const controls = useAnimation();
   const height = use100vh();
   const viewportHeight = height ? `${height}px` : "100vh";
@@ -258,18 +287,31 @@ const MobileMenu = (props: Props) => {
           </MobileTopAreaWrapper>
 
           <MobileStyledLinksContainer>
-            <Menu {...props} />
+            <Menu items={items} />
           </MobileStyledLinksContainer>
           <StyledBottom>
-            <Description data={props?.description?.json!} />
-            {props.buttonsCollection?.items.map((button, index) => (
-              <SecondaryStyledLink
-                key={`button-mobile-${index}`}
-                href={button?.link!}
-              >
-                {button?.contenido!}
-              </SecondaryStyledLink>
-            ))}
+            <Description data={description} />
+            {buttonsCollection?.map((button, index) => {
+              if (button.onClick) {
+                return (
+                  <SecondaryStyledButton
+                    key={`button-mobile-${index}`}
+                    onClick={button.onClick}
+                  >
+                    {button.contenido}
+                  </SecondaryStyledButton>
+                );
+              } else {
+                return (
+                  <SecondaryStyledLink
+                    key={`button-mobile-${index}`}
+                    href={button.link}
+                  >
+                    {button.contenido}
+                  </SecondaryStyledLink>
+                );
+              }
+            })}
           </StyledBottom>
         </StyledPortalWrapper>
       </Portal>
@@ -280,14 +322,16 @@ const MobileMenu = (props: Props) => {
 const NavVariant = {
   initial: {
     opacity: 0,
+    height: 0,
   },
   animate: {
     opacity: 1,
-    transition: { duration: 1 },
+    height: "auto",
+    transition: { duration: 0.5 },
   },
 };
 
-export const NavBar = (props: Props) => {
+const NavBar = (props: NavBarProps) => {
   const router = useRouter();
   return (
     <StyledNav variants={NavVariant} animate="animate" initial="initial">
@@ -299,7 +343,11 @@ export const NavBar = (props: Props) => {
           <StyledLinksContainer>
             <Menu {...props} />
           </StyledLinksContainer>
-          <MobileMenu {...props} />
+          <MobileMenu
+            items={props.items}
+            buttonsCollection={props.buttonsCollection}
+            description={props.description}
+          />
         </StyledWrapper>
       </AnimatePresence>
     </StyledNav>

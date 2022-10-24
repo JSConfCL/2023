@@ -1,21 +1,26 @@
-import { lazy, Suspense } from "react";
+import { Suspense, useMemo } from "react";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
-
 import {
-  SponsorQueryDocument,
-  SponsorQueryQuery,
-  SponsorQueryQueryVariables,
-} from "../src/graphql/sponsor.generated";
+  TicketsQueryDocument,
+  TicketsQueryQuery,
+  TicketsQueryQueryVariables,
+} from "../src/graphql/tickets.generated";
 import { urlQlient } from "../src/graphql/urql";
 import Seo from "../src/Components/Seo";
 import { ParseQuery } from "../src/helpers/types";
 import { ViewportSizes } from "../styles/theme";
 import { fetchTickets } from "../src/helpers/API";
+import NoTickets from "../src/Components/TicketSection/NoTickets";
+import { accessTokenAtom, isAuthenticatedAtom } from "../src/helpers/auth";
+import { useAtom, useAtomValue } from "jotai";
+import CuentaCreada from "../src/Components/TicketSection/CuentaCreada";
+import { NavBarProps } from "../src/Components/NavBar/NavBar";
+import { parseNavBarData } from "../src/Components/NavBar/helper";
 
-type Page = ParseQuery<SponsorQueryQuery["page"]>;
+type Page = ParseQuery<TicketsQueryQuery["page"]>;
 const TicketCart = dynamic(
   () => import("../src/Components/Cart/CartContainer")
 );
@@ -27,6 +32,9 @@ const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
 });
 
 export type PageProps = {
+  navData: NavBarProps;
+  whyItems: Page["whyBlockCollection"];
+  heroData: Page["heroBlock"]; //
   seo: Page["seo"];
 };
 
@@ -68,90 +76,58 @@ const StyledBlackWrapp = styled.div`
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 
-const Number = styled.span`
-  /* identical to box height, or 100% */
-  color: #f0e040;
-`;
-const Text = styled.span`
-  color: white;
-`;
+const image =
+  "https://images.ctfassets.net/1kfhsqlc8ewi/EAE7GIGq6Uk26KmdTC9T6/00be1cabc2d9b1dea800dbdb7e31c1bd/ticket.png";
 
-const Title = styled.h2<{ status: "active" | "inactive" }>`
-  font-family: "Koulen";
-  font-style: normal;
-  font-weight: 400;
-  gap: 1rem;
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  font-size: 20.914px;
-  font-size: 2.5rem;
-  @media (min-width: ${ViewportSizes.Phone}px) {
-    font-size: 5rem;
-  }
-  ${Number} {
-    opacity: ${({ status }) => (status === "inactive" ? 0.5 : 1)};
-    text-decoration: ${({ status }) =>
-      status === "inactive" ? "line-through" : "none"};
-  }
-  ${Text} {
-    opacity: ${({ status }) => (status === "inactive" ? 0.5 : 1)};
-    text-decoration: ${({ status }) =>
-      status === "inactive" ? "line-through" : "none"};
-  }
-`;
-
-const TiicketPage: NextPage<PageProps> = (props) => {
+const Tickets: NextPage<PageProps> = (props) => {
   const { isLoading, isError, data } = useQuery(["tickets"], fetchTickets);
   // TODO: Cambiar esta variable a estar basada en el estado del usuario
-  const isLoggedIn = false;
+  const isLoggedIn = useAtomValue(isAuthenticatedAtom);
+  const [, setAccessToken] = useAtom(accessTokenAtom);
+
+  const areThereTickets = false;
   // TODO: Usar isLoading y isError para mostrar UIs de error o loading.
   // TODO: Usar el array "data" para mostrar los tickets
   console.log({ data });
+  const items = useMemo(() => {
+    if (isLoggedIn) {
+      return [
+        {
+          contenido: "Settings",
+          id: "Settings",
+          isBlank: false,
+          link: "/settings",
+          onClick: undefined,
+        },
+        {
+          contenido: "Log Out",
+          id: "Log Out",
+          onClick: () => {
+            setAccessToken(null);
+          },
+        },
+      ];
+    }
+    return [];
+  }, [isLoggedIn, setAccessToken]);
   return (
     <StyledBlackWrapp>
       <Suspense fallback={null}>
-        <NavBar
-          // TODO: Cambiar estas props por una nav-bar de verdad en contentful
-          __typename="NavigationBar"
-          buttonsCollection={{
-            __typename: "NavigationBarButtonsCollection",
-            items: [],
-          }}
-          description={{
-            __typename: "NavigationBarDescription",
-            json: "",
-          }}
-          linksCollection={{
-            __typename: "NavigationBarLinksCollection",
-            // TODO: Hacer q se muestre /settings solo cuando el usuario este logueado
-            items: [
-              {
-                __typename: "LinkItem",
-                contenido: "Settings",
-                isBlank: false,
-                link: "settings",
-                sys: { id: "settings", __typename: "Sys" },
-              },
-            ],
-          }}
-        />
+        <NavBar items={items} />
       </Suspense>
       <Seo {...props.seo} />
       <Container>
         <Section>
-          <Title status="inactive">
-            <Number>01.</Number>
-            <Text>Obten tus tickets</Text>
-          </Title>
+          {areThereTickets ? <TicketCart /> : <NoTickets imageUrl={image} />}
         </Section>
         <Section>
-          {/* TODO: Esta seccion **NO** se tiene q mostrar si el usuario esta logueado */}
-          <Title status="active">
-            <Number>02.</Number>
-            <Text>Crea tu Cuenta</Text>
-          </Title>
-          {isLoggedIn ? <TicketCart /> : <CreaTuCuenta />}
+          {isLoggedIn ? (
+            areThereTickets ? null : (
+              <CuentaCreada />
+            )
+          ) : (
+            <CreaTuCuenta />
+          )}
         </Section>
       </Container>
     </StyledBlackWrapp>
@@ -160,10 +136,10 @@ const TiicketPage: NextPage<PageProps> = (props) => {
 
 export async function getStaticProps() {
   const queryResults = await urlQlient
-    .query<SponsorQueryQuery, SponsorQueryQueryVariables>(
-      SponsorQueryDocument,
+    .query<TicketsQueryQuery, TicketsQueryQueryVariables>(
+      TicketsQueryDocument,
       {
-        id: "1S7E2fm8TuIuOZY5jMAY8K",
+        id: "2izkVq9L0r7BEeoZbEAEsC",
         locale: "es-CL",
         isPreview: Boolean(process.env.NEXT_PUBLIC_CONTENTFUL_IS_PREVIEW),
       }
@@ -171,13 +147,16 @@ export async function getStaticProps() {
     .toPromise();
 
   const page = queryResults.data?.page as Page;
-  if (!page) return { props: {} };
   const props: PageProps = {
     seo: page?.seo,
+    navData: parseNavBarData(page?.navBar),
+    heroData: page?.heroBlock,
+    whyItems: page?.whyBlockCollection,
   };
+
   return {
     props,
   };
 }
 
-export default TiicketPage;
+export default Tickets;

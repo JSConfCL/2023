@@ -12,6 +12,8 @@ import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 import BannerVolunteer from "../src/Components/Banner/Volunteer";
 import VolunteerForm from "../src/Components/Form/Volunteer";
+import { NavBarProps } from "../src/Components/NavBar/NavBar";
+import { parseNavBarData } from "../src/Components/NavBar/helper";
 
 const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
   ssr: false,
@@ -20,7 +22,7 @@ const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
 type Page = ParseQuery<VolunteerQueryQuery["page"]>;
 
 export type PageProps = {
-  navData: Page["navBar"];
+  navData: NavBarProps;
   heroData: Page["heroBlock"];
   url: string;
 };
@@ -68,7 +70,7 @@ export async function getStaticProps() {
     .toPromise();
   const page = queryResults.data?.page as Page;
   const props: PageProps = {
-    navData: page?.navBar,
+    navData: parseNavBarData(page?.navBar),
     heroData: page?.heroBlock,
     url: process.env.NEXT_PUBLIC_DATA_API || "",
   };
