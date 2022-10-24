@@ -2,6 +2,7 @@
 
 import { HomeQueryQuery } from "../../graphql/home.generated";
 import { ParseQuery } from "../../helpers/types";
+import { NavBarProps } from "./NavBar";
 
 type Page = ParseQuery<HomeQueryQuery["page"]>;
 
