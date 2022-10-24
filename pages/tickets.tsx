@@ -13,10 +13,8 @@ import Seo from "../src/Components/Seo";
 import { ParseQuery } from "../src/helpers/types";
 import { ViewportSizes } from "../styles/theme";
 import { fetchTickets } from "../src/helpers/API";
-import NoTickets from "../src/Components/TicketSection/NoTickets";
 import { accessTokenAtom, isAuthenticatedAtom } from "../src/helpers/auth";
 import { useAtom, useAtomValue } from "jotai";
-import CuentaCreada from "../src/Components/TicketSection/CuentaCreada";
 import { NavBarProps } from "../src/Components/NavBar/NavBar";
 import { parseNavBarData } from "../src/Components/NavBar/helper";
 
@@ -26,6 +24,15 @@ const TicketCart = dynamic(
 );
 const CreaTuCuenta = dynamic(
   () => import("../src/Components/TicketSection/CreaTuCuenta")
+);
+const CuentaCreada = dynamic(
+  () => import("../src/Components/TicketSection/CuentaCreada")
+);
+const NoTickets = dynamic(
+  () => import("../src/Components/TicketSection/NoTickets")
+);
+const YesTicketsCreateAccount = dynamic(
+  () => import("../src/Components/TicketSection/YesTicketsCreateAccount")
 );
 const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
   ssr: false,
@@ -43,30 +50,17 @@ const Container = styled.div`
   flex-direction: column;
   width: 100vw;
   max-width: 1440px;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   @media (min-width: ${ViewportSizes.Phone}px) {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
-    padding-left: 2rem;
-    padding-right: 2rem;
   }
   @media (min-width: ${ViewportSizes.Desktop}px) {
-    padding: 0;
     gap: 32px;
   }
-`;
-
-const Section = styled.section`
-  padding: 16px 0px;
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 100%;
-  width: 100vw;
 `;
 
 const StyledBlackWrapp = styled.div`
@@ -79,14 +73,41 @@ const StyledBlackWrapp = styled.div`
 const image =
   "https://images.ctfassets.net/1kfhsqlc8ewi/EAE7GIGq6Uk26KmdTC9T6/00be1cabc2d9b1dea800dbdb7e31c1bd/ticket.png";
 
+const TicketContent = () => {
+  const { data } = useQuery(["tickets"], fetchTickets);
+  const areThereTickets = data && data.length >= 0;
+  const isLoggedIn = useAtomValue(isAuthenticatedAtom);
+  console.log("data", data);
+  return (
+    <>
+      <Suspense fallback={null}>
+        {areThereTickets && <TicketCart entradas={data} />}
+        {areThereTickets ? (
+          isLoggedIn ? (
+            <TicketCart entradas={data} />
+          ) : (
+            <YesTicketsCreateAccount imageUrl={image} />
+          )
+        ) : (
+          <NoTickets imageUrl={image} />
+        )}
+        {areThereTickets ? (
+          isLoggedIn ? null : (
+            <CreaTuCuenta />
+          )
+        ) : (
+          <CuentaCreada />
+        )}
+      </Suspense>
+    </>
+  );
+};
 const Tickets: NextPage<PageProps> = (props) => {
-  const { isLoading, isError, data } = useQuery(["tickets"], fetchTickets);
+  const { isLoading } = useQuery(["tickets"], fetchTickets);
   // TODO: Cambiar esta variable a estar basada en el estado del usuario
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
   const [, setAccessToken] = useAtom(accessTokenAtom);
 
-  const areThereTickets = !isLoading && data && data.length >= 0;
-  console.log({ data });
   const items = useMemo(() => {
     if (isLoggedIn) {
       return [
@@ -110,24 +131,11 @@ const Tickets: NextPage<PageProps> = (props) => {
   }, [isLoggedIn, setAccessToken]);
   return (
     <StyledBlackWrapp>
+      <Seo {...props.seo} />
       <Suspense fallback={null}>
         <NavBar items={items} />
       </Suspense>
-      <Seo {...props.seo} />
-      <Container>
-        <Section>
-          {areThereTickets ? <TicketCart /> : <NoTickets imageUrl={image} />}
-        </Section>
-        <Section>
-          {isLoggedIn ? (
-            areThereTickets ? null : (
-              <CuentaCreada />
-            )
-          ) : (
-            <CreaTuCuenta />
-          )}
-        </Section>
-      </Container>
+      <Container>{!isLoading && <TicketContent />}</Container>
     </StyledBlackWrapp>
   );
 };

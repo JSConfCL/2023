@@ -5,27 +5,21 @@ import { ViewportSizes } from "../../../styles/theme";
 const Ticket = styled.div`
   color: #fff;
   display: flex;
-  @media (max-width: ${ViewportSizes.Phone}px) {
-    margin: 1rem 0;
-  }
-  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
-  }
-  @media (min-width: ${ViewportSizes.Desktop}px) {
-    margin: 1.5rem 0 1.5rem 4rem;
-  }
+  flex-direction: column;
+  flex: 1;
 `;
 
-const TicketWrapper = styled.div`
-  width: 70%;
-`;
 const TicketControlWrapper = styled.div`
-  width: 30%;
+  width: 100px;
   display: flex;
-  justify-content: flex-end;
-  align-self: baseline;
+  justify-content: space-between;
 `;
 
-const TicketInfoWrapper = styled.div``;
+const TicketInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
 
 const TicketTitleWrapper = styled.div`
   display: flex;
@@ -36,6 +30,7 @@ const TicketTitleWrapper = styled.div`
 const TicketTitle = styled.h2`
   font-size: 1.125rem;
   font-weight: 500;
+  text-transform: uppercase;
 `;
 
 const TicketPrice = styled.p`
@@ -58,48 +53,68 @@ const TicketDescription = styled.p`
 
 const TicketAmount = styled.p`
   align-self: center;
-  margin: 0 1.5rem;
 `;
 
+const TicketHeader = styled.div`
+  display: flex;
+  width: 100%;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+`;
 const TicketAmountControl = styled.button`
   color: #000;
   background-color: #fff;
   height: 20px;
   width: 20px;
-  border-radius: 30px;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-self: center;
+  cursor: pointer;
 `;
 
 const TicketAvailability = styled.p``;
 
-const CartItem = () => {
+const CartItem = ({
+  description,
+  cantidad,
+  nombreEntrada,
+  precioEntrada,
+}: {
+  description: string;
+  nombreEntrada: string;
+  precioEntrada: number;
+  cantidad: number;
+}) => {
+  const noHayDisponibles = cantidad === 0;
   return (
-    <>
-      <Ticket>
-        <TicketWrapper>
-          <TicketTitle>Estudiante - $12.990 </TicketTitle>
-          <TicketInfoWrapper>
-            <TicketAvailability>(50 Disponibles)</TicketAvailability>
-            <TicketDescription>
-              Descripción – Descripción – Lorem xXXXXXxxx a;sdkjasdl kjasdklj
-              aljsk a;sdkjasdl kjasdklj aljsk; asjkld ja;kldj;kl sd;kl kjasdklj
-              aljsk; asjkld ja;kldj;kl sd;kl
-            </TicketDescription>
-          </TicketInfoWrapper>
-        </TicketWrapper>
+    <Ticket>
+      <TicketHeader>
+        <TicketTitle>
+          {nombreEntrada} —{" "}
+          {Intl.NumberFormat("es-CL", {
+            currency: "CLP",
+            style: "currency",
+          }).format(precioEntrada)}
+        </TicketTitle>
         <TicketControlWrapper>
           <TicketAmountControl>
             <p>+</p>
           </TicketAmountControl>
-          <TicketAmount>1</TicketAmount>
+          <TicketAmount>0</TicketAmount>
           <TicketAmountControl>
             <p>-</p>
           </TicketAmountControl>
         </TicketControlWrapper>
-      </Ticket>
-    </>
+      </TicketHeader>
+      <TicketInfoWrapper>
+        <TicketAvailability>
+          {noHayDisponibles ? `Agotadas` : `(${cantidad} Disponibles)`}
+        </TicketAvailability>
+        <TicketDescription>{description}</TicketDescription>
+      </TicketInfoWrapper>
+    </Ticket>
   );
 };
 

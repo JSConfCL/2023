@@ -11,24 +11,16 @@ import {
 } from "./shared";
 import { SectionTile } from "./Title";
 
-const NoTickets = ({ imageUrl }: { imageUrl: string }) => {
+const YesTicketsCreateAccount = ({ imageUrl }: { imageUrl: string }) => {
   return (
     <Container>
-      <SectionTile status="inactive" number="01." text="Obten tus tickets" />
+      <SectionTile status="active" number="01." text="Obten tus tickets!" />
       <SideContainer>
         <LeftSide>
-          <Paragraph>
-            Aún no tenemos tickets a la venta! 😢 (Pero falta poco!).
-          </Paragraph>
+          <Paragraph>Los tickets están disponibles! 🎉</Paragraph>
           <br />
           <Paragraph>
-            Mientras tanto, puedes crear tu cuenta JSConf Chile, así estarás
-            list@ para cuando salgan a la venta.
-          </Paragraph>
-          <br />
-          <Paragraph>
-            Mantente atento a nuestras redes sociales, estaremos avisando de
-            promociones, preventas y fechas de lanzamiento!
+            Crea una cuenta de JSConf Chile para comprarlos!
           </Paragraph>
         </LeftSide>
         <RigthSide>
@@ -44,4 +36,4 @@ const NoTickets = ({ imageUrl }: { imageUrl: string }) => {
   );
 };
 
-export default NoTickets;
+export default YesTicketsCreateAccount;

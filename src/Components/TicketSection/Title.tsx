@@ -13,10 +13,7 @@ const Title = styled.h2<{ status: "active" | "inactive" }>`
   font-family: "Koulen";
   font-style: normal;
   font-weight: 400;
-  gap: 1rem;
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
+  display: inline-block;
   font-size: 20.914px;
   font-size: 2.5rem;
   @media (min-width: ${ViewportSizes.Phone}px) {
@@ -24,6 +21,7 @@ const Title = styled.h2<{ status: "active" | "inactive" }>`
   }
   ${TitleNumber} {
     opacity: ${({ status }) => (status === "inactive" ? 0.6 : 1)};
+    margin-right: 0.666rem;
     text-decoration: ${({ status }) =>
       status === "inactive" ? "line-through" : "none"};
   }

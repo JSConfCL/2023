@@ -11,22 +11,22 @@ const customFetch = (
   return fetch(input, { ...init, headers: { ...init?.headers } });
 };
 
-export const fetchTickets = async (): Promise<
-  Array<{
-    createdAt: string;
-    description: string;
-    id: string;
-    name: string;
-    price: number;
-    priceUSD: number;
-    quantity: number;
-    season: string;
-    status: string;
-    stripePriceId: string;
-    type: string;
-    updatedAt: string;
-  }>
-> => {
+export type Entrada = {
+  createdAt: string;
+  description: string;
+  id: string;
+  name: string;
+  price: number;
+  priceUSD: number;
+  quantity: number;
+  season: string;
+  status: string;
+  stripePriceId: string;
+  type: string;
+  updatedAt: string;
+};
+
+export const fetchTickets = async (): Promise<Array<Entrada>> => {
   const res = await fetch(`${API_URL}/tickets`);
   return res.json();
 };
