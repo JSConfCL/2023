@@ -85,9 +85,7 @@ const Tickets: NextPage<PageProps> = (props) => {
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
   const [, setAccessToken] = useAtom(accessTokenAtom);
 
-  const areThereTickets = false;
-  // TODO: Usar isLoading y isError para mostrar UIs de error o loading.
-  // TODO: Usar el array "data" para mostrar los tickets
+  const areThereTickets = !isLoading && data && data.length >= 0;
   console.log({ data });
   const items = useMemo(() => {
     if (isLoggedIn) {

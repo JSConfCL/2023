@@ -196,9 +196,9 @@ export type NavBarProps = Simplify<{
 }>;
 
 const FakeButton = styled.div``;
+
 const Menu = ({ items }: { items: NavBarProps["items"] }) => {
   const { pathname } = useRouter();
-
   return (
     <>
       {items?.map((item) => (
