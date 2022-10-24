@@ -81,7 +81,6 @@ const TicketContent = () => {
   return (
     <>
       <Suspense fallback={null}>
-        {areThereTickets && <TicketCart entradas={data} />}
         {areThereTickets ? (
           isLoggedIn ? (
             <TicketCart entradas={data} />
