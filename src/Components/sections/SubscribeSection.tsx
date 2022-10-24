@@ -185,7 +185,7 @@ const SubscribeSection = (props: Props) => {
   return (
     <Container>
       <H2 whileHover={titleAnimation}>{props?.page?.title}</H2>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={null}>
         <AnimatePresence exitBeforeEnter>
           <Form onSubmit={handleSubmit(onSubmit)} ref={formElement}>
             <Fieldset>

@@ -16,7 +16,12 @@ import { ViewportSizes } from "../styles/theme";
 import { fetchTickets } from "../src/helpers/API";
 
 type Page = ParseQuery<SponsorQueryQuery["page"]>;
-
+const TicketCart = dynamic(
+  () => import("../src/Components/Cart/CartContainer")
+);
+const CreaTuCuenta = dynamic(
+  () => import("../src/Components/TicketSection/CreaTuCuenta")
+);
 const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
   ssr: false,
 });
@@ -30,8 +35,18 @@ const Container = styled.div`
   flex-direction: column;
   width: 100vw;
   max-width: 1440px;
-  gap: 32px;
+  padding-left: 2rem;
+  padding-right: 2rem;
   @media (min-width: ${ViewportSizes.Phone}px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  @media (min-width: ${ViewportSizes.Desktop}px) {
+    padding: 0;
     gap: 32px;
   }
 `;
@@ -86,10 +101,10 @@ const Title = styled.h2<{ status: "active" | "inactive" }>`
   }
 `;
 
-const Paragraph = styled.p``;
-
-const OnSitePage: NextPage<PageProps> = (props) => {
+const TiicketPage: NextPage<PageProps> = (props) => {
   const { isLoading, isError, data } = useQuery(["tickets"], fetchTickets);
+  // TODO: Cambiar esta variable a estar basada en el estado del usuario
+  const isLoggedIn = false;
   // TODO: Usar isLoading y isError para mostrar UIs de error o loading.
   // TODO: Usar el array "data" para mostrar los tickets
   console.log({ data });
@@ -136,6 +151,7 @@ const OnSitePage: NextPage<PageProps> = (props) => {
             <Number>02.</Number>
             <Text>Crea tu Cuenta</Text>
           </Title>
+          {isLoggedIn ? <TicketCart /> : <CreaTuCuenta />}
         </Section>
       </Container>
     </StyledBlackWrapp>
@@ -153,6 +169,7 @@ export async function getStaticProps() {
       }
     )
     .toPromise();
+
   const page = queryResults.data?.page as Page;
   if (!page) return { props: {} };
   const props: PageProps = {
@@ -163,4 +180,4 @@ export async function getStaticProps() {
   };
 }
 
-export default OnSitePage;
+export default TiicketPage;

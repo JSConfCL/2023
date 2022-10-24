@@ -1,6 +1,5 @@
-import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
-import { B, H2 } from "../core/Typography";
+import { lazy } from "react";
 import { ViewportSizes } from "../../../styles/theme";
 import ButtonPaymentMethodCollection from "../Collection/ButtonPaymentMethodCollection";
 
