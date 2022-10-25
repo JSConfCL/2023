@@ -109,21 +109,23 @@ const CardContainer = styled.section`
       display: none;
     }
   }
-  &:nth-of-type(4), &:nth-of-type(6), &:nth-of-type(8) {
+  &:nth-of-type(4),
+  &:nth-of-type(6),
+  &:nth-of-type(8) {
     picture,
     button {
       display: none;
     }
 
     h2 {
-      color: #A5A6A3;
+      color: #a5a6a3;
       text-decoration: line-through;
     }
   }
   &:nth-of-type(5),
   &:nth-of-type(7) {
     div {
-       &:after {
+      &:after {
         content: "✅";
         font-size: 2rem;
         margin: 0 1rem;
@@ -140,7 +142,6 @@ const CardContainer = styled.section`
         display: flex;
       }
     }
-
   }
   @media (max-width: ${ViewportSizes.Phone}px) {
     padding: 0 16px;
@@ -154,7 +155,7 @@ const CardContainer = styled.section`
       width: 100%;
     }
   }
-  @media (min-width: ${ViewportSizes.Phone}px) and (max-width: ${ViewportSizes.TabletLandscape}px){
+  @media (min-width: ${ViewportSizes.Phone}px) and (max-width: ${ViewportSizes.TabletLandscape}px) {
     padding: 0 3rem;
   }
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
@@ -170,7 +171,6 @@ const CardContainer = styled.section`
       aspect-ratio: 0 !important;
     }
 
-    
     &:nth-of-type(2),
     &:nth-of-type(4),
     &:nth-of-type(6),
@@ -209,6 +209,7 @@ const CardContainer = styled.section`
           align-self: baseline;
         }
       }
+    }
   }
 `;
 
@@ -219,7 +220,6 @@ const HR = styled.hr`
   width: 25%;
   background-color: #f45b69;
   margin-top: 1.2rem;
-}
 `;
 
 const WrapperDescription = styled.section`

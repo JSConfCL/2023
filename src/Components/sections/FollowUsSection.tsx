@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 import styled from "@emotion/styled";
 import { Get } from "type-fest";
 import { FooterQueryQuery } from "../../graphql/footer.generated";
@@ -70,7 +70,7 @@ const titleAnimation = {
 const FollowUsSection = (props: Props) => (
   <Container>
     <H2 whileHover={titleAnimation}>{props.page?.title}</H2>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense>
       <Flex>
         {props.page?.socialNetworksCollection?.items.map((props, index) => (
           <StyledA
@@ -79,7 +79,7 @@ const FollowUsSection = (props: Props) => (
             href={props?.url!}
             key={`social-${index}`}
           >
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense>
               <Image
                 key={`logo-${index}`}
                 mobile={props?.icon?.url!}

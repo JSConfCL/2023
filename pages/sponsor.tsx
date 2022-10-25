@@ -12,6 +12,8 @@ import { urlQlient } from "../src/graphql/urql";
 import Seo from "../src/Components/Seo";
 import { ParseQuery } from "../src/helpers/types";
 import { ViewportSizes } from "../styles/theme";
+import { NavBarProps } from "../src/Components/NavBar/NavBar";
+import { parseNavBarData } from "../src/Components/NavBar/helper";
 
 const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
   ssr: false,
@@ -22,7 +24,7 @@ const SponsorCard = lazy(() => import("../src/Components/Card/Sponsor"));
 type Page = ParseQuery<SponsorQueryQuery["page"]>;
 
 export type PageProps = {
-  navData: Page["navBar"];
+  navData: NavBarProps;
   followUsData: Page["followUsBlock"];
   heroData: Page["heroBlock"];
   sponsors: Page["sponsorTypeCollection"];
@@ -104,7 +106,7 @@ export async function getStaticProps() {
   const page = queryResults.data?.page as Page;
   if (!page) return { props: {} };
   const props: PageProps = {
-    navData: page?.navBar,
+    navData: parseNavBarData(page?.navBar),
     heroData: page?.heroBlock,
     followUsData: page?.followUsBlock,
     sponsors: page?.sponsorTypeCollection,

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { lazy, Suspense } from "react";
 import { PageProps } from "../../../pages";
 import { SecondaryStyledLink, TertiaryStyledLink } from "../Links";
+import { NavBarProps } from "../NavBar/NavBar";
 
 const Particles = lazy(() => import("../Particles"));
 
@@ -179,7 +180,7 @@ export const Hero = ({
   navData,
 }: {
   heroData: PageProps["heroData"];
-  navData: PageProps["navData"];
+  navData: NavBarProps;
 }) => {
   const Buttons = () => {
     return (
@@ -206,7 +207,11 @@ export const Hero = ({
         />
       </Suspense>
       <Suspense fallback={null}>
-        <NavBar {...navData} />
+        <NavBar
+          items={navData.items}
+          buttonsCollection={navData.buttonsCollection}
+          description={navData.description}
+        />
       </Suspense>
       <Suspense>
         <Particles />

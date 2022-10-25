@@ -1,12 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { Suspense } from "react";
 import styled from "@emotion/styled";
-import React from "react";
 import Link from "next/link";
 import { Get } from "type-fest";
-import { JSConfLogo } from "../svgs/logo";
-import { FooterQueryQuery } from "../../graphql/footer.generated";
 import { ViewportSizes } from "../../../styles/theme";
+import { FooterQueryQuery } from "../../graphql/footer.generated";
+import { JSConfLogo } from "../svgs/logo";
 
 type Props = {
   page: Get<FooterQueryQuery, "page.footer">;
@@ -20,14 +18,8 @@ const StyledFooter = styled.footer(
   justify-content: center;
   align-items: center;
   width: 100%;
- 
   display: flex;
   flex-direction: column;
-
-  @media (min-width: ${ViewportSizes.Phone}px) {
-   
-  }
-
 `
 );
 
@@ -44,6 +36,11 @@ const StyledWrapper = styled.div(({ theme }) => ({
     height: "100%",
     padding: "32px 16px",
   },
+  [theme.breakpoints.tabletLandscapeOnly]: {
+    flexDirection: "column",
+    height: "100%",
+    padding: "32px 16px",
+  },
 }));
 
 const StyledLinksContainer = styled.ul`
@@ -51,9 +48,16 @@ const StyledLinksContainer = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-
+  gap: 0px;
   @media (min-width: ${ViewportSizes.Phone}px) {
+    flex-direction: column;
+  }
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    gap: 15px;
+    flex-direction: row;
+  }
+  @media (min-width: ${ViewportSizes.Desktop}px) {
+    gap: 20px;
     flex-direction: row;
   }
 `;
@@ -79,26 +83,22 @@ export const Footer = (page: Props) => {
     <StyledFooter>
       <StyledWrapper>
         <StyledJSConfLogoWrapper>
-          <Suspense fallback={<div>Loading...</div>}>
-            <JSConfLogo />
-          </Suspense>
+          <JSConfLogo />
         </StyledJSConfLogoWrapper>
         <StyledLinksContainer>
-          <Suspense fallback={<div>Loading...</div>}>
-            {page.page?.linksCollection?.items.map((item) => {
-              return (
-                <StyledLink key={item?.sys.id}>
-                  {item?.isBlank ? (
-                    <Link rel="preconnect" href={item?.link!} passHref>
-                      <a target="_blank">{item?.contenido}</a>
-                    </Link>
-                  ) : (
-                    <Link href={item?.link!}>{item?.contenido}</Link>
-                  )}
-                </StyledLink>
-              );
-            })}
-          </Suspense>
+          {page.page?.linksCollection?.items.map((item) => {
+            return (
+              <StyledLink key={item?.sys.id}>
+                {item?.isBlank ? (
+                  <Link rel="preconnect" href={item?.link!} passHref>
+                    <a target="_blank">{item?.contenido}</a>
+                  </Link>
+                ) : (
+                  <Link href={item?.link!}>{item?.contenido}</Link>
+                )}
+              </StyledLink>
+            );
+          })}
         </StyledLinksContainer>
       </StyledWrapper>
     </StyledFooter>

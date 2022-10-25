@@ -1,138 +1,140 @@
-import { useState, useEffect } from "react";
-import { lazy, Suspense } from "react";
+import { Suspense, useMemo } from "react";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
+import { useQuery } from "@tanstack/react-query";
 import {
   TicketsQueryDocument,
   TicketsQueryQuery,
   TicketsQueryQueryVariables,
 } from "../src/graphql/tickets.generated";
 import { urlQlient } from "../src/graphql/urql";
-import { ParseQuery } from "../src/helpers/types";
 import Seo from "../src/Components/Seo";
-import EventSchema from "../src/Components/schema/event";
-import Hero from "../src/Components/sections/Hero";
+import { ParseQuery } from "../src/helpers/types";
 import { ViewportSizes } from "../styles/theme";
+import { fetchTickets } from "../src/helpers/API";
+import { accessTokenAtom, isAuthenticatedAtom } from "../src/helpers/auth";
+import { useAtom, useAtomValue } from "jotai";
+import { NavBarProps } from "../src/Components/NavBar/NavBar";
+import { parseNavBarData } from "../src/Components/NavBar/helper";
 
+type Page = ParseQuery<TicketsQueryQuery["page"]>;
+const TicketCart = dynamic(
+  () => import("../src/Components/Cart/CartContainer")
+);
+const CreaTuCuenta = dynamic(
+  () => import("../src/Components/TicketSection/CreaTuCuenta")
+);
+const CuentaCreada = dynamic(
+  () => import("../src/Components/TicketSection/CuentaCreada")
+);
+const NoTickets = dynamic(
+  () => import("../src/Components/TicketSection/NoTickets")
+);
+const YesTicketsCreateAccount = dynamic(
+  () => import("../src/Components/TicketSection/YesTicketsCreateAccount")
+);
 const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
   ssr: false,
 });
 
-const TicketBanner = lazy(() => import("../src/Components/Banner/Ticket"));
-const TicketCard = lazy(() => import("../src/Components/Card/Ticket"));
-const TicketCart = lazy(() => import("../src/Components/Cart/CartContainer"));
-const UnShoppedTicket = lazy(
-  () => import("../src/Components/Card/UnShoppedTicket")
-);
-const ShoppedTicket = lazy(
-  () => import("../src/Components/Card/ShoppedTicket")
-);
-
-type Page = ParseQuery<TicketsQueryQuery["page"]>;
-
 export type PageProps = {
-  navData: Page["navBar"];
+  navData: NavBarProps;
   whyItems: Page["whyBlockCollection"];
   heroData: Page["heroBlock"]; //
-
-  //seo: Page["seo"];
+  seo: Page["seo"];
 };
 
-const Container = styled.section`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100vw;
   max-width: 1440px;
-  min-height: calc(100vh - 100px);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+  }
+  @media (min-width: ${ViewportSizes.Desktop}px) {
+    gap: 32px;
+  }
 `;
-const StyledBlackWrapp = styled.section`
+
+const StyledBlackWrapp = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 
-const Title = styled.h1`
-  line-height: 80px;
-  text-align: center;
-  @media (max-width: ${ViewportSizes.Phone}px) {
-    font-size: 32px;
-  }
-  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
-  }
-  @media (min-width: ${ViewportSizes.Desktop}px) {
-    font-size: 80px;
-  }
-`;
+const image =
+  "https://images.ctfassets.net/1kfhsqlc8ewi/EAE7GIGq6Uk26KmdTC9T6/00be1cabc2d9b1dea800dbdb7e31c1bd/ticket.png";
 
-const Grid = styled.div`
-  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
-  }
-  @media (min-width: ${ViewportSizes.Desktop}px) {
-  }
-`;
+const TicketContent = () => {
+  const { data } = useQuery(["tickets"], fetchTickets);
+  const areThereTickets = data && data.length >= 0;
+  const isLoggedIn = useAtomValue(isAuthenticatedAtom);
+  console.log("data", data);
+  return (
+    <>
+      <Suspense fallback={null}>
+        {areThereTickets ? (
+          isLoggedIn ? (
+            <TicketCart entradas={data} />
+          ) : (
+            <YesTicketsCreateAccount imageUrl={image} />
+          )
+        ) : (
+          <NoTickets imageUrl={image} />
+        )}
+        {areThereTickets ? (
+          isLoggedIn ? null : (
+            <CreaTuCuenta />
+          )
+        ) : (
+          <CuentaCreada />
+        )}
+      </Suspense>
+    </>
+  );
+};
+const Tickets: NextPage<PageProps> = (props) => {
+  const { isLoading } = useQuery(["tickets"], fetchTickets);
+  // TODO: Cambiar esta variable a estar basada en el estado del usuario
+  const isLoggedIn = useAtomValue(isAuthenticatedAtom);
+  const [, setAccessToken] = useAtom(accessTokenAtom);
 
-const Ticket: NextPage<PageProps> = (props) => {
-  const [login, setLogin] = useState(true);
-  const [ticketAvailability, setTicketAvailability] = useState(true);
-  const [buyedTicket, setBuyedTicket] = useState(false);
-
+  const items = useMemo(() => {
+    if (isLoggedIn) {
+      return [
+        {
+          contenido: "Settings",
+          id: "Settings",
+          isBlank: false,
+          link: "/settings",
+          onClick: undefined,
+        },
+        {
+          contenido: "Log Out",
+          id: "Log Out",
+          onClick: () => {
+            setAccessToken(null);
+          },
+        },
+      ];
+    }
+    return [];
+  }, [isLoggedIn, setAccessToken]);
   return (
     <StyledBlackWrapp>
-      <Container>
-        <Suspense fallback={null}>
-          <NavBar {...props.navData} />
-        </Suspense>
-        <Suspense fallback={null}>
-          <TicketBanner {...props.heroData} />
-        </Suspense>
-        {/* {props.whyItems.items.map((elem, index) => {
-          return (
-            <Suspense key={`why-card-${index}`} fallback={null}>
-              <TicketCard
-                number={index + 1}
-                {...elem}
-                key={`why-card-${index}`}
-              />
-            </Suspense>
-          );
-        })} */}
-        {props.whyItems.items.map((elem: any, index: any) => {
-          console.log(elem);
-          const LogState = JSON.parse(
-            elem.extendedDescription.json.content[0].content[0].value
-          );
-          console.log(LogState);
-          if (
-            login === LogState.loggedin &&
-            ticketAvailability === LogState.ticket
-          ) {
-            return (
-              <Suspense key={`why-card-${index}`} fallback={null}>
-                <TicketCard
-                  number={index + 1}
-                  {...elem}
-                  key={`why-card-${index}`}
-                />
-              </Suspense>
-            );
-          } else {
-            return null;
-          }
-        })}
-        <TicketCart />
-        {/* <Suspense>
-          <UnShoppedTicket />
-          <StyledBlackWrapp>
-                <Title>TUS TICKETS</Title>
-                <Grid>
-                   <ShoppedTicket />
-                   <ShoppedTicket />
-                </Grid>
-          </StyledBlackWrapp>
-        </Suspense> */}
-      </Container>
+      <Seo {...props.seo} />
+      <Suspense fallback={null}>
+        <NavBar items={items} />
+      </Suspense>
+      <Container>{!isLoading && <TicketContent />}</Container>
     </StyledBlackWrapp>
   );
 };
@@ -151,7 +153,8 @@ export async function getStaticProps() {
 
   const page = queryResults.data?.page as Page;
   const props: PageProps = {
-    navData: page?.navBar,
+    seo: page?.seo,
+    navData: parseNavBarData(page?.navBar),
     heroData: page?.heroBlock,
     whyItems: page?.whyBlockCollection,
   };
@@ -161,4 +164,4 @@ export async function getStaticProps() {
   };
 }
 
-export default Ticket;
+export default Tickets;

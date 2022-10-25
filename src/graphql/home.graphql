@@ -89,6 +89,9 @@ query HomeQuery($locale: String!, $isPreview: Boolean = false) {
       }
       speakersCollection(preview: $isPreview) {
         items {
+          sys {
+            id
+          }
           name
           position
           photo {

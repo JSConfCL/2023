@@ -21,9 +21,8 @@ const TertiaryButton = styled.button`
   flex-direction: row;
   background-color: #fff !important;
   border: 1px solid #000;
-  margin-bottom: 0.5rem;
   padding: 0.5rem;
-  width: 100%;
+  width: 320px;
   justify-content: center;
 
   img {
@@ -31,17 +30,12 @@ const TertiaryButton = styled.button`
     margin: 0.5rem 0;
     height: unset !important;
   }
-  @media (max-width: ${ViewportSizes.Phone}px) {
-  }
-
-  @media (min-width: ${ViewportSizes.TabletLandscape}) {
-  }
   @media (min-width: ${ViewportSizes.Desktop}px) {
     img {
       width: 35% !important;
     }
     :active {
-      background-color: #F0E040 "important;
+      background-color: #f0e040 "important";
     }
   }
 `;

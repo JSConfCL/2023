@@ -256,7 +256,7 @@ export type AssetLinkingCollectionsWhyBlockCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum AssetOrder {
+export const enum AssetOrder {
   ContentTypeAsc = "contentType_ASC",
   ContentTypeDesc = "contentType_DESC",
   FileNameAsc = "fileName_ASC",
@@ -325,7 +325,7 @@ export type EntryFilter = {
   sys?: InputMaybe<SysFilter>;
 };
 
-export enum EntryOrder {
+export const enum EntryOrder {
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",
@@ -407,7 +407,7 @@ export type FollowUsBlockLinkingCollectionsPageCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum FollowUsBlockOrder {
+export const enum FollowUsBlockOrder {
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",
@@ -507,7 +507,7 @@ export type FooterLinksCollection = {
   total: Scalars["Int"];
 };
 
-export enum FooterOrder {
+export const enum FooterOrder {
   FooterNameAsc = "footerName_ASC",
   FooterNameDesc = "footerName_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
@@ -706,7 +706,7 @@ export type HeroBlockLinkingCollectionsPageCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum HeroBlockOrder {
+export const enum HeroBlockOrder {
   CtaTextAsc = "ctaText_ASC",
   CtaTextDesc = "ctaText_DESC",
   CtaUrlAsc = "ctaUrl_ASC",
@@ -863,7 +863,7 @@ export type HowBlockLinkingCollectionsPageCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum HowBlockOrder {
+export const enum HowBlockOrder {
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",
@@ -884,7 +884,7 @@ export type HowBlockSectionsCollection = {
   total: Scalars["Int"];
 };
 
-export enum ImageFormat {
+export const enum ImageFormat {
   Avif = "AVIF",
   /** JPG image format. */
   Jpg = "JPG",
@@ -906,7 +906,7 @@ export enum ImageFormat {
   Webp = "WEBP",
 }
 
-export enum ImageResizeFocus {
+export const enum ImageResizeFocus {
   /** Focus the resizing on the bottom. */
   Bottom = "BOTTOM",
   /** Focus the resizing on the bottom left. */
@@ -931,7 +931,7 @@ export enum ImageResizeFocus {
   TopRight = "TOP_RIGHT",
 }
 
-export enum ImageResizeStrategy {
+export const enum ImageResizeStrategy {
   /** Crops a part of the original image to fit into the specified dimensions. */
   Crop = "CROP",
   /** Resizes the image to the specified dimensions, cropping the image if needed. */
@@ -1126,7 +1126,7 @@ export type LineBlockLinkingCollectionsHowBlockCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum LineBlockOrder {
+export const enum LineBlockOrder {
   SubtextAsc = "subtext_ASC",
   SubtextDesc = "subtext_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
@@ -1258,7 +1258,7 @@ export type LinkItemLinkingCollectionsTeamBlockCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum LinkItemOrder {
+export const enum LinkItemOrder {
   ContenidoAsc = "contenido_ASC",
   ContenidoDesc = "contenido_DESC",
   IsBlankAsc = "isBlank_ASC",
@@ -1376,7 +1376,7 @@ export type MemberLinkingCollectionsTeamBlockCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum MemberOrder {
+export const enum MemberOrder {
   NameAsc = "name_ASC",
   NameDesc = "name_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
@@ -1524,7 +1524,7 @@ export type NavigationBarLinksCollection = {
   total: Scalars["Int"];
 };
 
-export enum NavigationBarOrder {
+export const enum NavigationBarOrder {
   NavbarNameAsc = "navbarName_ASC",
   NavbarNameDesc = "navbarName_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
@@ -1700,7 +1700,7 @@ export type PageLinkingCollectionsEntryCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum PageOrder {
+export const enum PageOrder {
   NameAsc = "name_ASC",
   NameDesc = "name_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
@@ -2198,7 +2198,7 @@ export type SeoLinkingCollectionsPageCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum SeoOrder {
+export const enum SeoOrder {
   DescriptionAsc = "description_ASC",
   DescriptionDesc = "description_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
@@ -2295,7 +2295,7 @@ export type SocialNetworkLinkingCollectionsFollowUsBlockCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum SocialNetworkOrder {
+export const enum SocialNetworkOrder {
   NameAsc = "name_ASC",
   NameDesc = "name_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
@@ -2495,7 +2495,7 @@ export type SpeakerBlockLinkingCollectionsPageCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum SpeakerBlockOrder {
+export const enum SpeakerBlockOrder {
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",
@@ -2622,7 +2622,7 @@ export type SpeakerLinkingCollectionsSpeakerBlockCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum SpeakerOrder {
+export const enum SpeakerOrder {
   CardTypeAsc = "cardType_ASC",
   CardTypeDesc = "cardType_DESC",
   CityAsc = "city_ASC",
@@ -2754,7 +2754,7 @@ export type SponsorLinkingCollectionsEntryCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum SponsorOrder {
+export const enum SponsorOrder {
   NameAsc = "name_ASC",
   NameDesc = "name_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
@@ -2877,7 +2877,7 @@ export type SponsorTypeLinkingCollectionsPageCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum SponsorTypeOrder {
+export const enum SponsorTypeOrder {
   NameAsc = "name_ASC",
   NameDesc = "name_DESC",
   PriceAsc = "price_ASC",
@@ -2953,7 +2953,7 @@ export type SubscribeBlockLinkingCollectionsPageCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum SubscribeBlockOrder {
+export const enum SubscribeBlockOrder {
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",
@@ -3123,7 +3123,7 @@ export type TalkLinkingCollectionsEntryCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum TalkOrder {
+export const enum TalkOrder {
   DurationAsc = "duration_ASC",
   DurationDesc = "duration_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
@@ -3260,7 +3260,7 @@ export type TeamBlockMembersCollection = {
   total: Scalars["Int"];
 };
 
-export enum TeamBlockOrder {
+export const enum TeamBlockOrder {
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",
@@ -3410,7 +3410,7 @@ export type TicketBlockLinkingCollectionsEntryCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum TicketBlockOrder {
+export const enum TicketBlockOrder {
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",
@@ -3560,7 +3560,7 @@ export type VolunteerBlockLinkingCollectionsEntryCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum VolunteerBlockOrder {
+export const enum VolunteerBlockOrder {
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",
@@ -3718,7 +3718,7 @@ export type WhyBlockLinkingCollectionsPageCollectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>;
 };
 
-export enum WhyBlockOrder {
+export const enum WhyBlockOrder {
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",

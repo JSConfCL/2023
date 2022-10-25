@@ -29,7 +29,7 @@ const fonts = {
   },
 };
 
-export enum ViewportSizes {
+export const enum ViewportSizes {
   Desktop = 1440,
   TabletLandscape = 1024,
   Phone = 768,

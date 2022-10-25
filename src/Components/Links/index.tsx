@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { lighten } from "polished";
+import { MouseEventHandler } from "react";
 import { ArrowIcon } from "../svgs/arrow";
 
 const baseStyling = {
@@ -129,6 +130,34 @@ export const SecondaryStyledLink = (props: {
       rel={isExternal ? "noopener noreferrer" : undefined}
       href={props.href}
     >
+      {props.children}
+      <StyledIconWrapper>
+        <ArrowIcon color="white" />
+      </StyledIconWrapper>
+    </BaseSecondaryExternalLink>
+  );
+};
+
+export const PrimaryStyledButton = (props: {
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
+  children: React.ReactNode;
+}) => {
+  return (
+    <BasePrimaryAnchor as="button" onClick={props.onClick}>
+      {props.children}
+      <StyledIconWrapper>
+        <ArrowIcon />
+      </StyledIconWrapper>
+    </BasePrimaryAnchor>
+  );
+};
+
+export const SecondaryStyledButton = (props: {
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
+  children: React.ReactNode;
+}) => {
+  return (
+    <BaseSecondaryExternalLink as="button" onClick={props.onClick}>
       {props.children}
       <StyledIconWrapper>
         <ArrowIcon color="white" />

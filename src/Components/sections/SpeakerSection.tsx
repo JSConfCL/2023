@@ -89,12 +89,17 @@ const LoadMoreButton = styled.button`
 `;
 
 const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
-  const [speakers, setSpeakers] = useState<any>([]);
-  const [loadCount, setLoadCount] = useState(6);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const {
     page: { title, description, speakersCollection },
   } = props;
+  const [speakers, setSpeakers] = useState(() => {
+    if (isMobile) {
+      return speakersCollection.items.slice(0, loadCount);
+    }
+    return speakersCollection.items;
+  });
+  const [loadCount, setLoadCount] = useState(6);
 
   const LoadMoreHandle = () => {
     setSpeakers(speakersCollection.items);
@@ -103,13 +108,7 @@ const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
 
   const isLoadMore = isMobile && speakersCollection.items.length !== loadCount;
 
-  useEffect(() => {
-    if (isMobile) {
-      setSpeakers(speakersCollection.items.slice(0, loadCount));
-      return;
-    }
-    setSpeakers(speakersCollection.items);
-  }, [isMobile, speakersCollection, loadCount]);
+  // useEffect(() => {}, [isMobile, speakersCollection, loadCount]);
 
   return (
     <Container>
@@ -124,22 +123,22 @@ const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
         <PrimaryStyledLink href="/cfp">CFP Registration</PrimaryStyledLink>
       </ContainerButton>
 
-      {speakers.map((item: any, index: number) => {
+      {speakers.map((item, index) => {
         if (index === 6) {
           return (
-            <Column key={index} index={index}>
+            <Column key={item.sys.id} index={index}>
               <PrimaryStyledLink href="/cfp">
                 CFP Registration
               </PrimaryStyledLink>
-              <Suspense key={`speaker-${index}`} fallback={null}>
-                <Card key={`speaker-${index}`} {...item} />
+              <Suspense fallback={null}>
+                <Card {...item} />
               </Suspense>
             </Column>
           );
         }
         return (
-          <Suspense key={`speaker-${index}`} fallback={null}>
-            <Card key={`speaker-${index}`} {...item} />
+          <Suspense key={item.sys.id} fallback={null}>
+            <Card {...item} />
           </Suspense>
         );
       })}
