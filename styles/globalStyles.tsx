@@ -166,12 +166,13 @@ export const GlobalStyles = () => {
             color: ${theme.elements.global.color};
             background-color: ${theme.elements.global.backgroundColor};
           }
-          body {
-            min-height: 100vh;
-            min-height: -webkit-fill-available;
-          }
+          body,
+          #__next,
           html {
-            height: -webkit-fill-available;
+            height: 100%;
+
+            display: flex;
+            flex-direction: column;
           }
           h1,
           h2,

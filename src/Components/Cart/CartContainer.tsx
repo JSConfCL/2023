@@ -1,15 +1,20 @@
 import styled from "@emotion/styled";
+import { AnimatePresence, motion } from "framer-motion";
+import { useAtom, useAtomValue } from "jotai";
+import { splitAtom } from "jotai/utils";
 import { ViewportSizes } from "../../../styles/theme";
-import { Entrada } from "../../helpers/API";
-import ButtonPaymentMethodCollection from "../Collection/ButtonPaymentMethodCollection";
 import {
   Container,
-  SideContainer,
   LeftSide,
+  Paragraph,
   RigthSide,
+  SideContainer,
 } from "../TicketSection/shared";
 import { SectionTile } from "../TicketSection/Title";
+import { subNavigationAtom, ticketsAtom, ticketsAtomsAtom } from "./CartAtom";
 import CartItem from "./CartItem";
+import PaymentMethod from "./PaymentMethod";
+import { Total } from "./Total";
 
 const CartItemsWrapper = styled.div`
   display: flex;
@@ -25,20 +30,11 @@ const HR = styled.hr`
   }
 `;
 
-const CartFooter = styled.div``;
-
-const GenericBtn = styled.button`
-  border: solid 1px #3182ce;
-  color: #3182ce;
-  font-weight: 700;
-  border-radius: 5px;
-  width: 100px;
-  height: 50px;
-  text-align: center;
-  align-self: flex-end;
+const CartFooter = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 `;
-
-const CartTotalizer = styled.div``;
 
 const CartPd = styled.p`
   opacity: 0.8;
@@ -46,25 +42,7 @@ const CartPd = styled.p`
   font-size: 0.9rem;
 `;
 
-const CartPaymentMethodContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const TotalWrapper = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  align-items: center;
-
-  @media (min-width: ${ViewportSizes.Desktop}px) {
-    flex-direction: column;
-    align-items: flex-end;
-  }
-`;
-
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   display: flex;
   flex-direction: column;
 `;
@@ -74,59 +52,71 @@ const CartWrapper = styled.div`
   flex-direction: column;
   gap: 1.5rem;
 `;
-
-const CartContainer = ({ entradas }: { entradas: Entrada[] }) => {
+const CartContainer = () => {
+  const ticketsAtom = useAtomValue(ticketsAtomsAtom);
+  const navigationAtom = useAtomValue(subNavigationAtom);
+  const githubAccountName = "";
   return (
     <Container>
       <SectionTile status="active" number="01." text="Obten tus tickets" />
-      <SideContainer>
-        <Wrapper>
-          <LeftSide>
-            <CartWrapper>
-              <CartItemsWrapper>
-                {entradas.map((entrada) => {
-                  return (
-                    <CartItem
-                      key={entrada.id}
-                      nombreEntrada="Estudiante"
-                      precioEntrada={12990}
-                      cantidad={50}
-                      description={entrada.description}
-                    />
-                  );
-                })}
-              </CartItemsWrapper>
-              <HR />
-              <CartPd>
-                * Durante la acreditación, portadores de tickets de estudiante
-                deberán presentar certificado de alumno regular y cédula de
-                identidad.
-              </CartPd>
-              <CartFooter>
-                <TotalWrapper>
-                  <CartTotalizer>
-                    <p>Total</p>
-                    <p>$15.990</p>
-                  </CartTotalizer>
-                  <GenericBtn>Continuar</GenericBtn>
-                </TotalWrapper>
-                <CartPaymentMethodContainer>
-                  <h2>Seleccione tu metodo de pago:</h2>
-                  <p>
-                    Selecciona Stripe para pagar en dólares, MercadoPago para
-                    pagar en pesos Chilenos.
-                  </p>
-                  <ButtonPaymentMethodCollection />
-                  <GenericBtn>Pagar</GenericBtn>
-                </CartPaymentMethodContainer>
-              </CartFooter>
-            </CartWrapper>
-          </LeftSide>
-          <RigthSide>
-            {/* TODO/IDEA: Podemos crear una animación cool aca */}
-          </RigthSide>
-        </Wrapper>
-      </SideContainer>
+      <AnimatePresence mode="popLayout" initial={false}>
+        {navigationAtom === "ticket_selection" && (
+          <Wrapper
+            key="ticket_selection"
+            layout="position"
+            initial={{ opacity: 0, translateY: 50 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            exit={{ opacity: 0, translateY: 50 }}
+          >
+            <SideContainer>
+              <LeftSide>
+                {githubAccountName && (
+                  <Paragraph>Hey @{githubAccountName}!</Paragraph>
+                )}
+                <Paragraph>
+                  Está todo listo para que puedas comprar tus tickets para la
+                  JSConf Chile 🎉. Tus tickets estarán asociados a tu cuenta de
+                  github.
+                </Paragraph>
+                <CartWrapper>
+                  <CartItemsWrapper>
+                    {ticketsAtom.map((entrada) => (
+                      <CartItem key={`${entrada}`} entrada={entrada} />
+                    ))}
+                  </CartItemsWrapper>
+                  <HR />
+                  <CartPd>
+                    * Importante: Los tickets {`"Estudiante"`} son precisamente
+                    para estudiantes. <br /> Durante la acreditación, los
+                    portadores de tickets de estudiante deberán presentar
+                    certificado de alumno regular y/o cédula de identidad.
+                  </CartPd>
+                  <CartFooter>
+                    <Total />
+                  </CartFooter>
+                </CartWrapper>
+              </LeftSide>
+              <RigthSide></RigthSide>
+            </SideContainer>
+          </Wrapper>
+        )}
+        {navigationAtom === "payment_selection" && (
+          <Wrapper
+            key="payment_selection"
+            layout="position"
+            initial={{ opacity: 0, translateY: -50 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            exit={{ opacity: 0, translateY: -50 }}
+          >
+            <SideContainer>
+              <LeftSide>
+                <PaymentMethod />
+              </LeftSide>
+              <RigthSide></RigthSide>
+            </SideContainer>
+          </Wrapper>
+        )}
+      </AnimatePresence>
     </Container>
   );
 };

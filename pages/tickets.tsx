@@ -1,39 +1,32 @@
-import { Suspense, useMemo } from "react";
-import type { NextPage } from "next";
-import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import type { NextPage } from "next";
+import dynamic from "next/dynamic";
+import { Suspense, useEffect, useMemo } from "react";
+import TicketCart from "../src/Components/Cart/CartContainer";
+import { parseNavBarData } from "../src/Components/NavBar/helper";
+import { NavBarProps } from "../src/Components/NavBar/NavBar";
+import Seo from "../src/Components/Seo";
 import {
   TicketsQueryDocument,
   TicketsQueryQuery,
   TicketsQueryQueryVariables,
 } from "../src/graphql/tickets.generated";
 import { urlQlient } from "../src/graphql/urql";
-import Seo from "../src/Components/Seo";
-import { ParseQuery } from "../src/helpers/types";
-import { ViewportSizes } from "../styles/theme";
 import { fetchTickets } from "../src/helpers/API";
 import { accessTokenAtom, isAuthenticatedAtom } from "../src/helpers/auth";
-import { useAtom, useAtomValue } from "jotai";
-import { NavBarProps } from "../src/Components/NavBar/NavBar";
-import { parseNavBarData } from "../src/Components/NavBar/helper";
+import { ParseQuery } from "../src/helpers/types";
+import { ViewportSizes } from "../styles/theme";
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
-const TicketCart = dynamic(
-  () => import("../src/Components/Cart/CartContainer")
-);
-const CreaTuCuenta = dynamic(
-  () => import("../src/Components/TicketSection/CreaTuCuenta")
-);
-const CuentaCreada = dynamic(
-  () => import("../src/Components/TicketSection/CuentaCreada")
-);
-const NoTickets = dynamic(
-  () => import("../src/Components/TicketSection/NoTickets")
-);
-const YesTicketsCreateAccount = dynamic(
-  () => import("../src/Components/TicketSection/YesTicketsCreateAccount")
-);
+// import CreaTuCuenta from "../src/Components/TicketSection/CreaTuCuenta"
+// import CuentaCreada from "../src/Components/TicketSection/CuentaCreada"
+import { hasticketsAtom, ticketsAtom } from "../src/Components/Cart/CartAtom";
+import NoTickets from "../src/Components/TicketSection/NoTickets";
+import YesTicketsCreateAccount from "../src/Components/TicketSection/YesTicketsCreateAccount";
+import { useSet } from "react-use";
+
 const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
   ssr: false,
 });
@@ -66,6 +59,9 @@ const Container = styled.div`
 const StyledBlackWrapp = styled.div`
   display: flex;
   flex-direction: column;
+  min-height: 60vh;
+  display: flex;
+  min-height: fit-content;
   align-items: center;
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
@@ -75,38 +71,28 @@ const image =
 
 const TicketContent = () => {
   const { data } = useQuery(["tickets"], fetchTickets);
-  const areThereTickets = data && data.length >= 0;
+  const setTicketsAtom = useSetAtom(ticketsAtom);
+  useEffect(() => {
+    if (data) {
+      setTicketsAtom(data.map((el) => ({ ...el, currentQuantity: 0 })));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const areThereTickets = useAtomValue(hasticketsAtom);
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
-  console.log("data", data);
-  return (
-    <>
-      <Suspense fallback={null}>
-        {areThereTickets ? (
-          isLoggedIn ? (
-            <TicketCart entradas={data} />
-          ) : (
-            <YesTicketsCreateAccount imageUrl={image} />
-          )
-        ) : (
-          <NoTickets imageUrl={image} />
-        )}
-        {areThereTickets ? (
-          isLoggedIn ? null : (
-            <CreaTuCuenta />
-          )
-        ) : (
-          <CuentaCreada />
-        )}
-      </Suspense>
-    </>
-  );
+  if (areThereTickets) {
+    if (isLoggedIn) {
+      return <TicketCart />;
+    }
+    return <YesTicketsCreateAccount imageUrl={image} />;
+  } else {
+    return <NoTickets imageUrl={image} />;
+  }
 };
 const Tickets: NextPage<PageProps> = (props) => {
   const { isLoading } = useQuery(["tickets"], fetchTickets);
-  // TODO: Cambiar esta variable a estar basada en el estado del usuario
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
-  const [, setAccessToken] = useAtom(accessTokenAtom);
-
+  const setAccessToken = useSetAtom(accessTokenAtom);
   const items = useMemo(() => {
     if (isLoggedIn) {
       return [

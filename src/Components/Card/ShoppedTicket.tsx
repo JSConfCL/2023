@@ -1,12 +1,9 @@
-import { lazy, Suspense } from "react";
-import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
-import { Document } from "@contentful/rich-text-types";
-import { B, H2 } from "../core/Typography";
-import { ViewportSizes } from "../../../styles/theme";
+import dynamic from "next/dynamic";
+import { lazy, Suspense } from "react";
+import { Share } from "react-feather";
 
 const QRCode = lazy(() => import("react-qr-code"));
-const FeatherIcon = lazy(() => import("feather-icons-react"));
 const JSConfLogo = dynamic(() => import("../svgs/logo"));
 
 const Container = styled.section`
@@ -106,7 +103,9 @@ const ShoppedTicket = () => {
                 <LogoWrapper>
                   <JSConfLogo />
                 </LogoWrapper>
-                <FeatherIcon icon="share" size={24} stroke="#000" />
+                <Suspense>
+                  <Share size={24} stroke="#000" />
+                </Suspense>
               </IconWrapper>
               <InfoTitle>
                 <p>JSConf Chile</p>

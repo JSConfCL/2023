@@ -66,7 +66,7 @@ const SubmitButton = styled.button<{ disabled: boolean }>`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  color: #1e2019;
+  color: ${({ theme }) => theme.colors.jsconfBlack};
   cursor: pointer;
   opacity: ${({ disabled }) => (disabled ? "0.5" : "1")};
 `;

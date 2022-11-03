@@ -9,12 +9,11 @@ import { use100vh } from "react-div-100vh";
 import { Portal } from "react-portal";
 import { useLockBodyScroll } from "react-use";
 import { Simplify } from "type-fest";
-import { ViewportSizes } from "../../../styles/theme";
+import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { SecondaryStyledButton, SecondaryStyledLink } from "../Links";
-
-const FeatherIcon = lazy(() => import("feather-icons-react"));
-const JSConfLogo = dynamic(() => import("../svgs/logo"));
+import JSConfLogo from "../svgs/logo";
+import { X, Menu as MenuIcon } from "react-feather";
 const Description = lazy(() => import("../core/Description"));
 
 const StyledNav = styled(motion.nav)`
@@ -56,6 +55,7 @@ const MobileStyledLinksContainer = styled.ul`
   padding: 29px 16px;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -69,8 +69,9 @@ const StyledLink = styled.li<{ isActive: string }>`
   font-weight: 400;
   font-family: "Koulen";
   cursor: pointer;
-  border: 0px solid #f45b69;
-  color: ${({ isActive }) => (isActive === "active" ? "#F45B69" : "#1E2019")};
+  border: 0px solid ${({ theme }) => theme.colors.jsconfRed};
+  color: ${({ isActive, theme }) =>
+    isActive === "active" ? theme.colors.jsconfRed : theme.colors.jsconfBlack};
   @media (min-width: ${ViewportSizes.Phone}px) {
     border-width: ${({ isActive }) =>
       isActive === "active" ? "0px 0px 2px 0px" : "0px"};
@@ -82,7 +83,7 @@ const StyledLink = styled.li<{ isActive: string }>`
   }
 `;
 
-const StyledJSConfLogoWrapper = styled.button`
+const StyledJSConfLogoWrapper = styled.a`
   height: 100%;
   max-height: 50px;
   aspect-ratio: 1/1;
@@ -95,7 +96,7 @@ const StyledPortalWrapper = styled(motion.section)<{ height: number | string }>`
   display: flex;
   position: fixed;
   z-index: 9999;
-  top: 0px;
+  top: -1000px;
   overflow: scroll;
   background-color: #f0e040;
   flex-direction: column;
@@ -120,8 +121,8 @@ const MobileTopAreaWrapper = styled.section`
   display: flex;
   flex-direction: row;
   position: absolute;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   width: 100%;
   justify-content: space-between;
   align-items: center;
@@ -244,18 +245,14 @@ const MobileMenu = ({ items, description, buttonsCollection }: NavBarProps) => {
           top: 3,
           opacity: 1,
           scale: 1,
-          transition: { duration: 0.5 },
+          transition: { duration: 0.35 },
         });
       } else {
         await controls.start({
-          opacity: 0,
-          scale: 0.0,
-          transition: { duration: 0.5 },
-        });
-        await controls.start({
-          zIndex: -1000,
+          opacity: 0.7,
+          scale: 0.5,
           top: -3000,
-          transition: { duration: 0.01 },
+          transition: { duration: 0.35 },
         });
       }
     };
@@ -268,21 +265,23 @@ const MobileMenu = ({ items, description, buttonsCollection }: NavBarProps) => {
     }
   }, [isMobile]);
 
+  const hasItems = items.length > 0;
+  if (!hasItems) {
+    return null;
+  }
   return (
     <>
       <MobileFeatherIconWrapper onClick={() => setIsOpen(true)}>
-        <FeatherIcon icon="menu" />
+        <MenuIcon />
       </MobileFeatherIconWrapper>
       <Portal>
         <StyledPortalWrapper height={viewportHeight} animate={controls}>
           <MobileTopAreaWrapper>
-            <Suspense fallback={null}>
-              <JSConfLogoWrapper>
-                <JSConfLogo />
-              </JSConfLogoWrapper>
-            </Suspense>
+            <JSConfLogoWrapper>
+              <JSConfLogo />
+            </JSConfLogoWrapper>
             <MobileFeatherIconWrapper onClick={() => setIsOpen(false)}>
-              <FeatherIcon icon="x" color="#1E2019" />
+              <X color={jsconfTheme.colors.jsconfBlack} />
             </MobileFeatherIconWrapper>
           </MobileTopAreaWrapper>
 
@@ -290,7 +289,9 @@ const MobileMenu = ({ items, description, buttonsCollection }: NavBarProps) => {
             <Menu items={items} />
           </MobileStyledLinksContainer>
           <StyledBottom>
-            <Description data={description} />
+            <Suspense>
+              <Description data={description} />
+            </Suspense>
             {buttonsCollection?.map((button, index) => {
               if (button.onClick) {
                 return (
@@ -332,14 +333,15 @@ const NavVariant = {
 };
 
 const NavBar = (props: NavBarProps) => {
-  const router = useRouter();
   return (
     <StyledNav variants={NavVariant} animate="animate" initial="initial">
       <AnimatePresence exitBeforeEnter>
         <StyledWrapper>
-          <StyledJSConfLogoWrapper onClick={() => router.push("/")}>
-            <JSConfLogo />
-          </StyledJSConfLogoWrapper>
+          <Link href="/" passHref legacyBehavior>
+            <StyledJSConfLogoWrapper>
+              <JSConfLogo />
+            </StyledJSConfLogoWrapper>
+          </Link>
           <StyledLinksContainer>
             <Menu {...props} />
           </StyledLinksContainer>
