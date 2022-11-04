@@ -1,6 +1,10 @@
 import styled from "@emotion/styled";
-import { B, H2 } from "../core/Typography";
+import { PrimitiveAtom, useAtom } from "jotai";
+import { Suspense, useCallback } from "react";
+import { Minus, Plus } from "react-feather";
 import { ViewportSizes } from "../../../styles/theme";
+import { SubTitle } from "../TicketSection/shared";
+import { Entrada } from "./CartAtom";
 
 const Ticket = styled.div`
   color: #fff;
@@ -13,6 +17,7 @@ const TicketControlWrapper = styled.div`
   width: 100px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const TicketInfoWrapper = styled.div`
@@ -21,38 +26,26 @@ const TicketInfoWrapper = styled.div`
   gap: 0.5rem;
 `;
 
-const TicketTitleWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: baseline;
-`;
-
-const TicketTitle = styled.h2`
-  font-size: 1.125rem;
-  font-weight: 500;
-  text-transform: uppercase;
-`;
-
-const TicketPrice = styled.p`
-  font-size: 1.125rem;
-  font-weight: 500;
-  padding-right: 0.5rem;
-`;
-
 const TicketDescription = styled.p`
-  font-size: 1rem;
-
   @media (max-width: ${ViewportSizes.Phone}px) {
   }
   @media (max-width: ${ViewportSizes.TabletLandscape}px) {
   }
   @media (min-width: ${ViewportSizes.Desktop}px) {
-    width: 330px;
   }
 `;
 
 const TicketAmount = styled.p`
-  align-self: center;
+  font-size: 1.5rem;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    font-size: 2rem;
+  }
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    font-size: 2rem;
+  }
+  @media (min-width: ${ViewportSizes.Desktop}px) {
+    font-size: 2rem;
+  }
 `;
 
 const TicketHeader = styled.div`
@@ -65,52 +58,72 @@ const TicketHeader = styled.div`
 const TicketAmountControl = styled.button`
   color: #000;
   background-color: #fff;
-  height: 20px;
-  width: 20px;
+  height: 26px;
+  aspect-ratio: 1/1;
   border-radius: 50%;
   display: flex;
   justify-content: center;
-  align-self: center;
+  align-items: center;
   cursor: pointer;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    height: 32px;
+  }
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    height: 32px;
+  }
+  @media (min-width: ${ViewportSizes.Desktop}px) {
+    height: 32px;
+  }
 `;
 
 const TicketAvailability = styled.p``;
 
-const CartItem = ({
-  description,
-  cantidad,
-  nombreEntrada,
-  precioEntrada,
-}: {
-  description: string;
-  nombreEntrada: string;
-  precioEntrada: number;
-  cantidad: number;
-}) => {
-  const noHayDisponibles = cantidad === 0;
+const CartItem = ({ entrada }: { entrada: PrimitiveAtom<Entrada> }) => {
+  const [ticket, setTicket] = useAtom(entrada);
+  const { description, name, price, quantity, currentQuantity } = ticket;
+  const noHayDisponibles = quantity === 0;
+  const isMin = currentQuantity === 0;
+  const isMax = currentQuantity === quantity;
+
+  const goUp = useCallback(() => {
+    if (isMax) {
+      return;
+    }
+    setTicket({ ...ticket, currentQuantity: currentQuantity + 1 });
+  }, [currentQuantity, isMax, setTicket, ticket]);
+  const goDown = useCallback(() => {
+    if (isMin) {
+      return;
+    }
+    setTicket({ ...ticket, currentQuantity: currentQuantity - 1 });
+  }, [currentQuantity, isMin, setTicket, ticket]);
   return (
     <Ticket>
       <TicketHeader>
-        <TicketTitle>
-          {nombreEntrada} —{" "}
+        <SubTitle>
+          {name} —{" "}
           {Intl.NumberFormat("es-CL", {
             currency: "CLP",
             style: "currency",
-          }).format(precioEntrada)}
-        </TicketTitle>
+          }).format(price)}
+        </SubTitle>
         <TicketControlWrapper>
-          <TicketAmountControl>
-            <p>+</p>
+          <TicketAmountControl onClick={goDown}>
+            <Suspense>
+              <Minus size={18} stroke="#000" />
+            </Suspense>
           </TicketAmountControl>
-          <TicketAmount>0</TicketAmount>
-          <TicketAmountControl>
-            <p>-</p>
+          <TicketAmount>{currentQuantity}</TicketAmount>
+          <TicketAmountControl onClick={goUp}>
+            <Suspense>
+              <Plus size={18} stroke="#000" />
+            </Suspense>
           </TicketAmountControl>
         </TicketControlWrapper>
       </TicketHeader>
       <TicketInfoWrapper>
         <TicketAvailability>
-          {noHayDisponibles ? `Agotadas` : `(${cantidad} Disponibles)`}
+          {noHayDisponibles ? `Agotadas` : `(${quantity} Disponibles)`}
         </TicketAvailability>
         <TicketDescription>{description}</TicketDescription>
       </TicketInfoWrapper>

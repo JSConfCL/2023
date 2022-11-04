@@ -1,14 +1,12 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState } from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import { H2 } from "../core/Typography";
 import { PageProps } from "../../../pages";
 import useMediaQuery from "../../helpers/useMediaQuery";
-import { PrimaryStyledLink } from "../Links/index";
 import { ViewportSizes } from "../../../styles/theme";
-
-const Description = lazy(() => import("../core/Description"));
-const Card = lazy(() => import("../Card"));
+import Description from "../core/Description";
+import Card from "../Card";
 
 const Container = styled.section`
   align-self: center;
@@ -38,32 +36,12 @@ const DescriptionContainer = styled(motion.section)`
   gap: 16px 0px;
   position: relative;
   width: 100%;
+
   max-width: 400px;
 
   p {
     color: #f0e040;
     font-weight: 400;
-  }
-`;
-
-const Column = styled(motion.section)<{ index: number }>`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: calc(50% - 16px);
-  top: ${({ index }) => (index % 2 === 1 ? "32px" : "0px")};
-  > section {
-    width: 100%;
-  }
-  a {
-    display: none;
-  }
-  @media (min-width: ${ViewportSizes.Phone}px) {
-    width: fit-content;
-    top: 0px;
-    > section {
-      width: fit-content;
-    }
   }
 `;
 
@@ -73,13 +51,6 @@ const HR = styled.hr`
   border-style: solid;
   width: 50%;
   background-color: #f45b69;
-`;
-
-const ContainerButton = styled.section`
-  display: inherit;
-  @media (min-width: 1362px) {
-    display: none;
-  }
 `;
 
 const LoadMoreButton = styled.button`
@@ -108,40 +79,17 @@ const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
 
   const isLoadMore = isMobile && speakersCollection.items.length !== loadCount;
 
-  // useEffect(() => {}, [isMobile, speakersCollection, loadCount]);
-
   return (
     <Container>
       <DescriptionContainer>
         <H2 whileHover={{ scale: 1.01 }}>{title}</H2>
-        <Suspense fallback={null}>
-          <Description data={description?.json!} />
-        </Suspense>
+        <Description data={description?.json!} />
         <HR />
       </DescriptionContainer>
-      <ContainerButton>
-        <PrimaryStyledLink href="/cfp">CFP Registration</PrimaryStyledLink>
-      </ContainerButton>
 
-      {speakers.map((item, index) => {
-        if (index === 6) {
-          return (
-            <Column key={item.sys.id} index={index}>
-              <PrimaryStyledLink href="/cfp">
-                CFP Registration
-              </PrimaryStyledLink>
-              <Suspense fallback={null}>
-                <Card {...item} />
-              </Suspense>
-            </Column>
-          );
-        }
-        return (
-          <Suspense key={item.sys.id} fallback={null}>
-            <Card {...item} />
-          </Suspense>
-        );
-      })}
+      {speakers.map((item, index) => (
+        <Card key={item.sys.id + index} {...item} />
+      ))}
       {isLoadMore && (
         <LoadMoreButton onClick={LoadMoreHandle}>Load More</LoadMoreButton>
       )}

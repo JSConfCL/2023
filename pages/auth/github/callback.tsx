@@ -29,12 +29,14 @@ const StyledBlackWrapp = styled.section`
 const ActuallyRun = () => {
   const { query, replace } = useRouter();
   const [error, setError] = useState(false);
-  const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
+  const [, setAccessToken] = useAtom(accessTokenAtom);
   const mutation = useMutation(finishGithubLogin, {
     onSuccess: ({ token }) => {
-      console.log("token", { token });
       setAccessToken(token);
       replace("/tickets");
+    },
+    onError: () => {
+      // TODO: Handle On Error.
     },
   });
 

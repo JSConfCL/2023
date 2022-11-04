@@ -8,6 +8,7 @@ import {
   ImageWrapper,
   Shadow,
   ImageContainer,
+  GithubButton,
 } from "./shared";
 import { SectionTile } from "./Title";
 
@@ -17,11 +18,15 @@ const YesTicketsCreateAccount = ({ imageUrl }: { imageUrl: string }) => {
       <SectionTile status="active" number="01." text="Obten tus tickets!" />
       <SideContainer>
         <LeftSide>
-          <Paragraph>Los tickets están disponibles! 🎉</Paragraph>
+          <Paragraph>Hay tickets disponibles! 🎉</Paragraph>
           <br />
           <Paragraph>
-            Crea una cuenta de JSConf Chile para comprarlos!
+            Para comprarlos, primero debes crear una cuenta de JSConf. Puedes
+            hacerlo a través de cuenta de Github en el siguente botón.
           </Paragraph>
+          <br />
+          <br />
+          <GithubButton />
         </LeftSide>
         <RigthSide>
           <ImageWrapper>

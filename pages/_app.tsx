@@ -2,9 +2,10 @@ import createCache from "@emotion/cache";
 import { CacheProvider, ThemeProvider } from "@emotion/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Provider as JotaiProvider } from "jotai";
+import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
-import { lazy, Suspense } from "react";
+import { lazy, ReactElement, ReactNode, Suspense } from "react";
 import { Provider } from "urql";
 import { urlQlient } from "../src/graphql/urql";
 import { queryClient } from "../src/helpers/API";
@@ -24,8 +25,17 @@ const value = {
     fetch(resource, init).then((res) => res.json()),
 };
 
-function MyApp(appProps: AppProps) {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function MyApp(appProps: AppPropsWithLayout) {
   const { Component, pageProps } = appProps;
+  const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
     <JotaiProvider>
@@ -37,7 +47,7 @@ function MyApp(appProps: AppProps) {
               <Suspense fallback={null}>
                 <WebSchema />
               </Suspense>
-              <Component {...pageProps} />
+              {getLayout(<Component {...pageProps} />)}
               <Suspense fallback={null}>
                 <ExtendedFooter />
               </Suspense>

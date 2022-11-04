@@ -19,7 +19,7 @@ const config = {
       },
     },
     color: {
-      value: transparentize(0.5, "#1e2019"),
+      value: transparentize(0.5, jsconfTheme.colors.jsconfBlack),
     },
     shape: {
       type: "polygon",
@@ -59,7 +59,7 @@ const config = {
     line_linked: {
       enable: true,
       distance: 200,
-      color: "#1e2019",
+      color: jsconfTheme.colors.jsconfBlack,
       opacity: 0.1,
       width: 1,
     },

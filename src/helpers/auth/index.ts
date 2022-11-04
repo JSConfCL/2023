@@ -1,4 +1,5 @@
 import { atom, useAtom } from "jotai";
+import { selectAtom } from "jotai/utils";
 import decode, { JwtPayload } from "jwt-decode";
 
 export const AUTHENTICATION_LOCALSTORAGE_KEY = "jsconfcl.auth.token";
@@ -40,14 +41,24 @@ const isTokenValid = (token: string | null) => {
     return false;
   }
 };
-accessTokenAtom.onMount = (setAtom) => {
+
+export const getValidToken = () => {
   const token = localStorage.getItem(AUTHENTICATION_LOCALSTORAGE_KEY);
   if (isTokenValid(token)) {
     // Eso quiere decir que lo que sacamos de localstorage es un token valido.
-    setAtom(token as string);
+    return token as string;
   } else {
-    setAtom(null);
+    return null;
   }
+};
+accessTokenAtom.onMount = (setAtom) => {
+  const token = getValidToken();
+  setAtom(token);
 };
 
 export const isAuthenticatedAtom = atom((get) => Boolean(get(accessTokenAtom)));
+
+export const accessTokenPureAtom = selectAtom(
+  accessTokenAtom,
+  (accessToken) => accessToken
+);

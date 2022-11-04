@@ -1,12 +1,11 @@
 import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { Document } from "@contentful/rich-text-types";
-import { B, H2 } from "../core/Typography";
+import { H2 } from "../core/Typography";
 import { ViewportSizes } from "../../../styles/theme";
+import Description from "../core/Description";
+import Image from "../core/Image";
 
-const Description = lazy(() => import("../core/Description"));
-const ExtendedDescription = lazy(() => import("../core/ExtendedDescription"));
-const Image = lazy(() => import("../core/Image"));
 const ButtonLoginCollection = lazy(
   () => import("../Collection/ButtonLoginCollection")
 );
@@ -37,62 +36,6 @@ type TicketCardProps =
         | undefined;
     }
   | undefined;
-
-const Container = styled.section<{ direction: boolean }>`
-  padding: 16px 0px;
-  padding-left: ${({ direction }) => (!direction ? "16px" : "0px")};
-  padding-right: ${({ direction }) => (!direction ? "0px" : "16px")};
-  display: flex;
-  gap: 8px;
-  flex-direction: ${({ direction }) => (!direction ? "row-reverse" : "row")};
-  overflow: hidden;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 100%;
-  width: 100vw;
-
-  picture {
-    order: 3;
-  }
-
-  img {
-    margin-top: 28px;
-    width: 100vw !important;
-    max-height: 300px;
-  }
-
-  @media (min-width: ${ViewportSizes.Phone}px) {
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    flex-direction: ${({ direction }) => (!direction ? "row" : "row-reverse")};
-    gap: 32px;
-    padding: 48px 0px;
-    padding-left: ${({ direction }) => (!direction ? "48px" : "0px")};
-    padding-right: ${({ direction }) => (!direction ? "0px" : "48px")};
-
-    picture {
-      min-width: 400px;
-    }
-    img {
-      margin-top: 115px;
-      max-width: 611px;
-      min-width: 400px;
-      width: 100% !important;
-    }
-  }
-
-  @media (min-width: ${ViewportSizes.TabletLandscape}) {
-    picture {
-      min-width: 600px;
-    }
-    img {
-      min-width: 600px;
-    }
-  }
-  @media (min-width: ${ViewportSizes.Desktop}px) {
-    overflow: visible;
-  }
-`;
 
 const CardContainer = styled.section`
   margin: 0 16px;
@@ -303,9 +246,7 @@ const TicketCard = (props: TicketCardProps) => {
           <Number />
           <H2>{props?.title!}</H2>
         </Title>
-        <Suspense fallback={null}>
-          <Description data={props?.description?.json!} />
-        </Suspense>
+        <Description data={props?.description?.json!} />
         <HR />
       </WrapperDescription>
 
