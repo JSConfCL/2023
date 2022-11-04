@@ -23,6 +23,7 @@ export const ticketSummaryAtom = selectAtom(ticketsAtom, (ticketsAtom) => {
   return ticketsAtom
     .filter((ticket) => ticket.currentQuantity > 0)
     .map((ticket) => ({
+      id: ticket.id,
       price: ticket.price,
       quantity: ticket.currentQuantity,
       subTotal: ticket.currentQuantity * ticket.price,

@@ -335,23 +335,21 @@ const NavVariant = {
 const NavBar = (props: NavBarProps) => {
   return (
     <StyledNav variants={NavVariant} animate="animate" initial="initial">
-      <AnimatePresence exitBeforeEnter>
-        <StyledWrapper>
-          <Link href="/" passHref legacyBehavior>
-            <StyledJSConfLogoWrapper>
-              <JSConfLogo />
-            </StyledJSConfLogoWrapper>
-          </Link>
-          <StyledLinksContainer>
-            <Menu {...props} />
-          </StyledLinksContainer>
-          <MobileMenu
-            items={props.items}
-            buttonsCollection={props.buttonsCollection}
-            description={props.description}
-          />
-        </StyledWrapper>
-      </AnimatePresence>
+      <StyledWrapper>
+        <Link href="/" passHref legacyBehavior>
+          <StyledJSConfLogoWrapper>
+            <JSConfLogo />
+          </StyledJSConfLogoWrapper>
+        </Link>
+        <StyledLinksContainer>
+          <Menu {...props} />
+        </StyledLinksContainer>
+        <MobileMenu
+          items={props.items}
+          buttonsCollection={props.buttonsCollection}
+          description={props.description}
+        />
+      </StyledWrapper>
     </StyledNav>
   );
 };

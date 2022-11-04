@@ -21,17 +21,29 @@ export const fetchTickets = async (): Promise<Array<Entrada>> => {
 export const createPayment = async (object: {
   gateway: "mercadopago" | "stripe";
   tickets: { id: string; quantity: number; name: string; email: string }[];
-}): Promise<Array<Entrada>> => {
+}): Promise<{ paymentUrl: string }> => {
   const accessToken = getValidToken();
-  console.log({ accessToken });
-  const res = await fetch(`${API_URL}/payments/create`, {
+  const res = await fetch(`${API_URL}/payments`, {
     headers: {
+      "content-type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
     method: "POST",
     body: JSON.stringify(object),
   });
   return res.json();
+};
+
+export const me = async (): Promise<{
+  token: string;
+  user: any;
+}> => {
+  const res = await fetch(`${API_URL}/users/me`);
+  if (res.status === 200) {
+    return res.json();
+  } else {
+    throw new Error("Token exchange error");
+  }
 };
 
 export const finishGithubLogin = async ({

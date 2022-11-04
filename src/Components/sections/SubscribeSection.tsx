@@ -186,7 +186,7 @@ const SubscribeSection = (props: Props) => {
     <Container>
       <H2 whileHover={titleAnimation}>{props?.page?.title}</H2>
       <Suspense fallback={null}>
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence mode="wait">
           <Form onSubmit={handleSubmit(onSubmit)} ref={formElement}>
             <Fieldset>
               <EmailInput

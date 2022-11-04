@@ -87,6 +87,9 @@ const PaymentMethod = () => {
   const noPaymentSelector = paymentSelectorValue === null;
   const mutation = useMutation({
     mutationFn: createPayment,
+    onSuccess: (data) => {
+      window.location.href = data.paymentUrl;
+    },
   });
   return (
     <CartPaymentMethodContainer>
@@ -100,7 +103,7 @@ const PaymentMethod = () => {
         </SubTitle>
       </Resume>
       {Object.values(ticketSummaryAtomValue).map((ticketSummary) => (
-        <Resume key={`${ticketSummary}`}>
+        <Resume key={ticketSummary.id}>
           <Paragraph>
             <Small>
               {ticketSummary.quantity} x {ticketSummary.name}
@@ -149,7 +152,12 @@ const PaymentMethod = () => {
             }
             await mutation.mutateAsync({
               gateway: paymentSelectorValue,
-              tickets: [],
+              tickets: ticketSummaryAtomValue.map((ticket) => ({
+                id: ticket.id,
+                quantity: ticket.quantity,
+                email: "hi+jsconftest@fforr.es",
+                name: ticket.name,
+              })),
             });
           }}
         >
