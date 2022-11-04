@@ -1,6 +1,6 @@
 import { Theme } from "@emotion/react";
 
-const colors = {
+export const colors = {
   jsconfBlack: "#1E2019",
   jsconfYellow: "#F0E040",
   jsconfRed: "#F45B69",
@@ -8,6 +8,11 @@ const colors = {
   white: "#FFFFFF",
   black: "#000000",
   transparent: "transparent",
+  social: {
+    twitter: "#0087ca",
+    facebook: "#1877F2",
+    linkedin: "#0A66C2",
+  },
 };
 
 const fonts = {

@@ -18,27 +18,12 @@ import styled from "@emotion/styled";
 
 // ;
 
-const socialColors = {
-  twitter: "#0087ca",
-  facebook: "#1877F2",
-  linkedin: "#0A66C2",
-};
 const SocialAnchor = styled.a<{ type: "twitter" | "facebook" | "linkedin" }>(
-  ({ type }) => [
+  ({ theme, type }) => [
     {
       display: `inline-block`,
       position: "relative",
       fontWeight: "bold",
-      // backgroundSize: "1px 1em",
-      // boxShadow: "inset 0 -0.175em white, inset 0 -0.2em #000",
-      // display: "inline",
-      // textDecoration: "underline",
-      // textDecorationSkip: "objects",
-      // textDecorationStyle: "solid",
-      // textDecorationSkipInk: "auto",
-      // transitionProperty: "text-decoration-color",
-      // transitionTimingFunction: "ease-in-out",
-      // transitionDuration: "250ms",
       ["&:after"]: {
         content: `""`,
         position: "absolute",
@@ -47,7 +32,7 @@ const SocialAnchor = styled.a<{ type: "twitter" | "facebook" | "linkedin" }>(
         height: "4px",
         bottom: 0,
         left: 0,
-        backgroundColor: socialColors[type],
+        backgroundColor: theme.colors.social[type],
         transformOrigin: "bottom right",
         transition: "transform 0.25s ease-out",
       },

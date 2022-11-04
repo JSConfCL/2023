@@ -21,6 +21,11 @@ type Colors = {
   white: string;
   black: string;
   transparent: string;
+  social: {
+    twitter: string;
+    facebook: string;
+    linkedin: string;
+  };
 };
 
 declare module "@emotion/react" {
