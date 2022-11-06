@@ -62,15 +62,19 @@ const ContributorName = styled.h3`
   color: white;
   top: -3%;
   left: 4%;
-  @media (min-width: ${ViewportSizes.TabletLandscape}px){
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     font-size: 40px;
-    
+  }
 `;
 
 const Flex = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
   gap: 20px;
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    flex-direction: row;
+  }
 `;
 
 const Grid = styled.div`
