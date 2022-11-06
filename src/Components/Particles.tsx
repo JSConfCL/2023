@@ -1,11 +1,18 @@
-import { lazy, Suspense } from "react";
 import { css, Global } from "@emotion/react";
 import { loadFull } from "tsparticles";
 import { Engine } from "tsparticles-engine";
 import Particles from "react-tsparticles";
 import config from "./sections/config";
 
-const ParticleComponent = () => {
+interface ParticleProps {
+  id?: string;
+  backgroundColor?: string;
+}
+
+const ParticleComponent = ({
+  id = "tsparticles-container",
+  backgroundColor = "#f0e040d4",
+}: ParticleProps) => {
   const particlesInit = async (main: Engine) => {
     await loadFull(main);
   };
@@ -14,7 +21,7 @@ const ParticleComponent = () => {
       <Global
         styles={[
           css`
-            #tsparticles-container {
+            #${id} {
               position: absolute;
               top: 0px;
               bottom: 0px;
@@ -23,17 +30,17 @@ const ParticleComponent = () => {
               padding: 0px;
               margin: 0px;
               z-index: 0;
-              background-color: #f0e040d4;
+              background-color: ${backgroundColor};
             }
-            #tsparticles-container canvas {
-              background-color: #f0e040d4 !important;
+            #${id} canvas {
+              background-color: ${backgroundColor} !important;
             }
           `,
         ]}
       />
       <Particles
-        id="tsparticles-container"
-        loaded={async (container) => {}}
+        id={id}
+        loaded={async (_) => {}}
         init={particlesInit}
         options={config}
       />
