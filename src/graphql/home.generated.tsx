@@ -344,6 +344,21 @@ export const HomeQueryDocument = gql`
           }
         }
       }
+      sponsorTypeCollection(limit: 20) {
+        items {
+          name
+          contributorsCollection(limit: 20) {
+            items {
+              title {
+                json
+              }
+              image {
+                url
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;

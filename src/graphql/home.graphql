@@ -155,5 +155,20 @@ query HomeQuery($locale: String!, $isPreview: Boolean = false) {
         }
       }
     }
+    sponsorTypeCollection(limit: 20) {
+      items {
+        name
+        contributorsCollection(limit: 20) {
+          items {
+            title {
+              json
+            }
+            image {
+              url
+            }
+          }
+        }
+      }
+    }
   }
 }

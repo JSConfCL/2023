@@ -24,6 +24,9 @@ const HowSection = lazy(
 const TeamSection = lazy(
   async () => await import("../src/Components/sections/TeamSection")
 );
+const SponsorSection = lazy(
+  () => import("../src/Components/sections/SponsorSection")
+);
 const SpeakerSection = lazy(
   async () => await import("../src/Components/sections/SpeakerSection")
 );
@@ -42,8 +45,8 @@ export interface PageProps {
   seo: Page["seo"];
   teamData: Page["teamBlock"];
   events: Page["eventsCollection"]["items"];
+  sponsorType: Page["sponsorTypeCollection"];
 }
-
 const Container = styled.section`
   display: flex;
   flex-direction: column;
@@ -80,6 +83,12 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
         <Suspense fallback={null}>
           {props?.teamData && <TeamSection page={props.teamData} />}
         </Suspense>
+        <Suspense fallback={null}>
+          {props.sponsorType && <SponsorSection page={props.sponsorType} />}
+        </Suspense>
+        <Suspense fallback={null}>
+          {props.teamData && <TeamSection page={props.teamData} />}
+        </Suspense>
       </StyledBlackWrapp>
     </Container>
   );
@@ -103,6 +112,7 @@ export async function getStaticProps() {
     seo: page?.seo || null,
     teamData: page?.teamBlock || null,
     events: page?.eventsCollection.items || null,
+    sponsorType: page?.sponsorTypeCollection || null,
   };
 
   return {
