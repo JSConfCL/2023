@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import { H2 } from "../core/Typography";
 import { PageProps } from "../../../pages";
 import useMediaQuery from "../../helpers/useMediaQuery";
-import { PrimaryStyledLink } from "../Links/index";
+
 import { ViewportSizes } from "../../../styles/theme";
+import { PrimaryStyledLink } from "../Links";
 
 const Description = lazy(() => import("../core/Description"));
 const Card = lazy(() => import("../Card"));
@@ -54,16 +55,21 @@ const ConstributorType = styled.section`
   position: relative;
   padding: 1.5rem 1rem;
   margin: 1rem 0;
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    padding: 1rem;
+  }
 `;
 
 const ContributorName = styled.h3`
   position: absolute;
   font-size: 32px;
   color: white;
-  top: -3%;
+  top: -2.5%;
   left: 4%;
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     font-size: 40px;
+    top: -13%;
+    left: 3%;
   }
 `;
 
@@ -74,6 +80,7 @@ const Flex = styled.div`
   gap: 20px;
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     flex-direction: row;
+    justify-content: space-between;
   }
 `;
 
@@ -83,12 +90,21 @@ const Grid = styled.div`
 `;
 
 const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
-  // const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
     <>
       <Container>
-        <Title>Sponsors</Title>
+        {isMobile ? (
+          <Title>Sponsors</Title>
+        ) : (
+          <Flex>
+            <Title>Sponsors</Title>
+            <PrimaryStyledLink href="">
+              {"Sponsors Registration"}
+            </PrimaryStyledLink>
+          </Flex>
+        )}
         {props.page?.items?.map((props, index) => (
           <>
             <ConstributorType>
