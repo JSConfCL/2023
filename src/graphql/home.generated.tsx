@@ -1,4 +1,4 @@
-import * as Types from "../types.js";
+import * as Types from "../types";
 
 import gql from "graphql-tag";
 import * as Urql from "urql";
@@ -166,6 +166,23 @@ export type HomeQueryQuery = {
         link?: string | null;
       } | null;
     } | null;
+    eventsCollection?: {
+      __typename?: "PageEventsCollection";
+      items: Array<{
+        __typename?: "Event";
+        title?: string | null;
+        date?: any | null;
+        duration?: number | null;
+        language?: string | null;
+        kind?: string | null;
+        sys: { __typename?: "Sys"; id: string };
+        speaker?: {
+          __typename?: "Speaker";
+          name?: string | null;
+          photo?: { __typename?: "Asset"; url?: string | null } | null;
+        } | null;
+      } | null>;
+    } | null;
   } | null;
 };
 
@@ -307,6 +324,24 @@ export const HomeQueryDocument = gql`
         callToAction {
           contenido
           link
+        }
+      }
+      eventsCollection {
+        items {
+          sys {
+            id
+          }
+          title
+          date
+          duration
+          language
+          kind
+          speaker {
+            name
+            photo {
+              url
+            }
+          }
         }
       }
     }
