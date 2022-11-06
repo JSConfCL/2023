@@ -23,6 +23,9 @@ const TeamSection = lazy(
 const SpeakerSection = lazy(
   () => import("../src/Components/sections/SpeakerSection")
 );
+const TimelineSection = lazy(
+  () => import("../src/Components/sections/TimelineSection")
+);
 
 type Page = ParseQuery<HomeQueryQuery["page"]>;
 
@@ -34,7 +37,9 @@ export type PageProps = {
   speakerData: Page["speakersBlock"];
   seo: Page["seo"];
   teamData: Page["teamBlock"];
+  events: Page["eventsCollection"]["items"];
 };
+
 const Container = styled.section`
   display: flex;
   flex-direction: column;
@@ -66,6 +71,9 @@ const Home: NextPage<PageProps> = (props) => {
           {props.speakerData && <SpeakerSection page={props.speakerData} />}
         </Suspense>
         <Suspense fallback={null}>
+          {props?.events && <TimelineSection events={props?.events} />}
+        </Suspense>
+        <Suspense fallback={null}>
           {props.teamData && <TeamSection page={props.teamData} />}
         </Suspense>
       </StyledBlackWrapp>
@@ -90,6 +98,7 @@ export async function getStaticProps() {
     speakerData: page?.speakersBlock,
     seo: page?.seo,
     teamData: page?.teamBlock,
+    events: page?.eventsCollection.items,
   };
 
   return {
