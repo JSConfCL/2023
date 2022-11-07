@@ -21,6 +21,13 @@ export const Paragraph = styled.p`
   }
 `;
 
+export const ButtonWrapper = styled.section`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 50px;
+`;
+
 export const Small = styled.small`
   font-size: 0.8em;
 `;
@@ -105,7 +112,7 @@ export const SideContainer = styled.div`
   gap: 4rem;
   transition: gap 250ms ease-in-out;
   @media (min-width: ${ViewportSizes.Phone}px) {
-    flex-direction: row;
+    flex-direction: column;
     gap: 2rem;
   }
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
@@ -179,7 +186,7 @@ export const Shadow = styled.div`
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
 `;
 
-const ButtonWrapper = styled.div`
+const SocialButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 300px;
@@ -190,7 +197,7 @@ const ButtonWrapper = styled.div`
 
 export const GithubButton = () => {
   return (
-    <ButtonWrapper>
+    <SocialButtonWrapper>
       <GithubLoginButton
         style={
           {
@@ -206,6 +213,6 @@ export const GithubButton = () => {
         }}
         text="Ingresa con Github"
       />
-    </ButtonWrapper>
+    </SocialButtonWrapper>
   );
 };

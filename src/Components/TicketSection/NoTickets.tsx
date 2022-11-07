@@ -48,7 +48,7 @@ const NoTickets = ({ imageUrl }: { imageUrl: string }) => {
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
 
   return (
-    <Container>
+    <>
       <SectionTile status="inactive" number="01." text="Obten tus tickets" />
       <SideContainer>
         <LeftSide>
@@ -119,7 +119,7 @@ const NoTickets = ({ imageUrl }: { imageUrl: string }) => {
           </ImageWrapper>
         </RigthSide>
       </SideContainer>
-    </Container>
+    </>
   );
 };
 

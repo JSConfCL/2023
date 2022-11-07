@@ -1,17 +1,10 @@
 import styled from "@emotion/styled";
-import Seo from "../../Components/Seo";
-import React, { Suspense, useMemo } from "react";
-import NavBar, { NavBarProps } from "../NavBar/NavBar";
-import { ViewportSizes } from "../../../styles/theme";
 import { useAtomValue, useSetAtom } from "jotai";
-import { accessTokenAtom, isAuthenticatedAtom } from "../../helpers/auth";
-import { ParseQuery } from "../../helpers/types";
-import { TicketsQueryQuery } from "../../graphql/tickets.generated";
+import { Suspense, useMemo } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
-
-// const NavBar = dynamic(() => import("../NavBar/NavBar"), {
-//   ssr: false,
-// });
+import { ViewportSizes } from "../../../styles/theme";
+import { accessTokenAtom, isAuthenticatedAtom } from "../../helpers/auth";
+import NavBar from "../NavBar/NavBar";
 
 const StyledBlackWrapp = styled.div`
   display: flex;
@@ -26,7 +19,9 @@ const StyledBlackWrapp = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   width: 100vw;
+  min-height: min(90vh, 500px);
   max-width: 1440px;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -55,20 +50,6 @@ export const TicketsLayout = (page: ReactElement) => {
           onClick: undefined,
         },
         {
-          contenido: "success",
-          id: "success",
-          isBlank: false,
-          link: "/tickets/success",
-          onClick: undefined,
-        },
-        {
-          contenido: "waiting",
-          id: "waiting",
-          isBlank: false,
-          link: "/tickets/waiting",
-          onClick: undefined,
-        },
-        {
           contenido: "Log Out",
           id: "Log Out",
           onClick: () => {
@@ -79,7 +60,7 @@ export const TicketsLayout = (page: ReactElement) => {
     }
     return [];
   }, [isLoggedIn, setAccessToken]);
-  console.log({ items });
+
   return (
     <StyledBlackWrapp>
       <Suspense fallback={null}>

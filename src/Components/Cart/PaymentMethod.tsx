@@ -5,6 +5,7 @@ import {
   GenericBtn,
   Paragraph,
   SubTitle,
+  ButtonWrapper,
   Small,
 } from "../TicketSection/shared";
 import {
@@ -34,13 +35,6 @@ const buttonData = [
     icon: "/images/mercado-pago.svg",
   },
 ] as const;
-
-const ButtonWrapper = styled.section`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  gap: 50px;
-`;
 
 const TertiaryButton = styled.button<{ selected: boolean }>`
   display: flex;

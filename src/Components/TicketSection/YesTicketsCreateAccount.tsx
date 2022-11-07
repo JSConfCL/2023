@@ -14,7 +14,7 @@ import { SectionTile } from "./Title";
 
 const YesTicketsCreateAccount = ({ imageUrl }: { imageUrl: string }) => {
   return (
-    <Container>
+    <>
       <SectionTile status="active" number="01." text="Obten tus tickets!" />
       <SideContainer>
         <LeftSide>
@@ -37,7 +37,7 @@ const YesTicketsCreateAccount = ({ imageUrl }: { imageUrl: string }) => {
           </ImageWrapper>
         </RigthSide>
       </SideContainer>
-    </Container>
+    </>
   );
 };
 
