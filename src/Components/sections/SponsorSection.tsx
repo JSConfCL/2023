@@ -45,6 +45,7 @@ const Title = styled.h2`
 
 const ImageContainer = styled.div`
   width: 50vw;
+  margin: 0.5rem 0;
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     width: fit-content;
     height: 200xp;
@@ -68,11 +69,11 @@ const ContributorName = styled.h3`
   position: absolute;
   font-size: 32px;
   color: white;
-  top: -2.5%;
+  top: -5.5%;
   left: 4%;
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     font-size: 40px;
-    top: -13%;
+    top: -18.5%;
     left: 3%;
   }
 `;
@@ -84,14 +85,16 @@ const FlexRow = styled.div`
   gap: 20px;
 `;
 
-const FlexColumn = styled.div`
+const Flex = styled.div`
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
   }
 `;
 
@@ -111,32 +114,32 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
           {isMobile ? (
             <Title>Sponsors</Title>
           ) : (
-            <FlexRow>
+            <Flex>
               <Title>Sponsors</Title>
               <PrimaryStyledLink href="">
                 {"Sponsors Registration"}
               </PrimaryStyledLink>
-            </FlexRow>
+            </Flex>
           )}
           {props.page?.items?.map((props, index) => (
             <>
               <ConstributorType>
                 <ContributorName>{props.name}</ContributorName>
-                <FlexColumn>
+                <Flex>
                   {props?.contributorsCollection?.items?.map((props, index) => (
                     <>
                       <ImageContainer>
-                        <FlexColumn>
+                        <Flex>
                           <Image
                             alt=""
                             mobile={props?.image?.url!}
                             desktop={props?.image?.url!}
                           />
-                        </FlexColumn>
+                        </Flex>
                       </ImageContainer>
                     </>
                   ))}
-                </FlexColumn>
+                </Flex>
               </ConstributorType>
             </>
           ))}
