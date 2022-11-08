@@ -44,9 +44,13 @@ const Title = styled.h2`
 `;
 
 const ImageContainer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
+  width: 50vw;
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    width: fit-content;
+    height: 200xp;
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const ConstributorType = styled.section`
@@ -56,7 +60,7 @@ const ConstributorType = styled.section`
   padding: 1.5rem 1rem;
   margin: 1rem 0;
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
-    padding: 1rem;
+    max-height: 300px;
   }
 `;
 
@@ -73,7 +77,14 @@ const ContributorName = styled.h3`
   }
 `;
 
-const Flex = styled.div`
+const FlexRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  gap: 20px;
+`;
+
+const FlexColumn = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -91,43 +102,46 @@ const Grid = styled.div`
 
 const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const [constributor, useContributor] = useState("");
 
   return (
     <>
-      <Container>
-        {isMobile ? (
-          <Title>Sponsors</Title>
-        ) : (
-          <Flex>
+      {!constributor && (
+        <Container>
+          {isMobile ? (
             <Title>Sponsors</Title>
-            <PrimaryStyledLink href="">
-              {"Sponsors Registration"}
-            </PrimaryStyledLink>
-          </Flex>
-        )}
-        {props.page?.items?.map((props, index) => (
-          <>
-            <ConstributorType>
-              <ContributorName>{props.name}</ContributorName>
-              <Flex>
-                {props?.contributorsCollection?.items?.map((props, index) => (
-                  <>
-                    <ImageContainer>
-                      <Flex>
-                        <Image
-                          alt=""
-                          mobile={props?.image?.url!}
-                          desktop={props?.image?.url!}
-                        />
-                      </Flex>
-                    </ImageContainer>
-                  </>
-                ))}
-              </Flex>
-            </ConstributorType>
-          </>
-        ))}
-      </Container>
+          ) : (
+            <FlexRow>
+              <Title>Sponsors</Title>
+              <PrimaryStyledLink href="">
+                {"Sponsors Registration"}
+              </PrimaryStyledLink>
+            </FlexRow>
+          )}
+          {props.page?.items?.map((props, index) => (
+            <>
+              <ConstributorType>
+                <ContributorName>{props.name}</ContributorName>
+                <FlexColumn>
+                  {props?.contributorsCollection?.items?.map((props, index) => (
+                    <>
+                      <ImageContainer>
+                        <FlexColumn>
+                          <Image
+                            alt=""
+                            mobile={props?.image?.url!}
+                            desktop={props?.image?.url!}
+                          />
+                        </FlexColumn>
+                      </ImageContainer>
+                    </>
+                  ))}
+                </FlexColumn>
+              </ConstributorType>
+            </>
+          ))}
+        </Container>
+      )}
     </>
   );
 };
