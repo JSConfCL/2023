@@ -219,6 +219,14 @@ const Table = styled.table`
   }
 `;
 
+const CalendarContainer = styled.div`
+  ${jsconfTheme.breakpoints.phoneOnly} {
+    h3 {
+      margin-top: 32px;
+      padding: 0 16px;
+    }
+  }
+`;
 type Flatten<T> = T extends any[] ? T[number] : T;
 
 const getTime = (date: Date) => `${format(date, "kk")}:${format(date, "mm")}`;
@@ -294,26 +302,28 @@ const TimelineSection = (props: { events: PageProps["events"] }) => {
             * Los horarios están sujetos a cambio
           </StyledActions>
         </StyledActionsContainer>
-        <H3>General</H3>
-        <Table>
-          <tbody>
-            {selectedEvents
-              .filter((event) => event.kind !== "workshop")
-              .map((event) => (
-                <TimelineRow key={event.title} event={event} />
-              ))}
-          </tbody>
-        </Table>
-        <H3>Talleres</H3>
-        <Table>
-          <tbody>
-            {selectedEvents
-              .filter((event) => event.kind === "workshop")
-              .map((event) => (
-                <TimelineRow key={event.title} event={event} />
-              ))}
-          </tbody>
-        </Table>
+        <CalendarContainer>
+          <H3>General</H3>
+          <Table>
+            <tbody>
+              {selectedEvents
+                .filter((event) => event.kind !== "workshop")
+                .map((event) => (
+                  <TimelineRow key={event.title} event={event} />
+                ))}
+            </tbody>
+          </Table>
+          <H3>Talleres</H3>
+          <Table>
+            <tbody>
+              {selectedEvents
+                .filter((event) => event.kind === "workshop")
+                .map((event) => (
+                  <TimelineRow key={event.title} event={event} />
+                ))}
+            </tbody>
+          </Table>
+        </CalendarContainer>
       </StyledForegroundWrapper>
     </div>
   );
