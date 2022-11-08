@@ -265,9 +265,6 @@ const TimelineSection = (props: { events: PageProps["events"] }) => {
 
   return (
     <div style={{ position: "relative" }}>
-      <Suspense>
-        <Particles id="timeline-particles" backgroundColor="#333" />
-      </Suspense>
       <StyledForegroundWrapper>
         <DescriptionCotainer style={{}}>
           <div>
