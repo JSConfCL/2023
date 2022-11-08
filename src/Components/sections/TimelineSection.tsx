@@ -36,6 +36,26 @@ const fadeIn = keyframes`
   }
 `;
 
+const colorOut = keyframes`
+  from {
+    background: rgb(244 91 105 / 20%);
+  }
+
+  to {
+    background: #000;
+  }
+`;
+
+const colorIn = keyframes`
+  from {
+    background: #000;
+  }
+
+  to {
+    background: rgb(244 91 105 / 20%);
+  }
+`;
+
 const StyledForegroundWrapper = styled.section(({ theme }) => ({
   height: "100%",
   width: "100%",
@@ -193,8 +213,10 @@ const TableRow = styled.tr`
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     display: table-row;
+    animation: ${colorOut} 0.5s;
 
     &:hover {
+      animation: ${colorIn} 1s ease;
       background: rgb(244 91 105 / 20%);
 
       {ImageCell} {
