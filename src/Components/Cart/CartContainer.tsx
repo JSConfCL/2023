@@ -11,7 +11,13 @@ import {
   SideContainer,
 } from "../TicketSection/shared";
 import { SectionTile } from "../TicketSection/Title";
-import { subNavigationAtom, ticketsAtom, ticketsAtomsAtom } from "./CartAtom";
+import { Agreements } from "./Agreements";
+import {
+  cartTitleAtom,
+  subNavigationAtom,
+  ticketsAtom,
+  ticketsAtomsAtom,
+} from "./CartAtom";
 import CartItem from "./CartItem";
 import PaymentMethod from "./PaymentMethod";
 import { Total } from "./Total";
@@ -54,19 +60,24 @@ const CartWrapper = styled.div`
 `;
 const CartContainer = () => {
   const ticketsAtom = useAtomValue(ticketsAtomsAtom);
-  const navigationAtom = useAtomValue(subNavigationAtom);
+  const subNavigationAtomValue = useAtomValue(subNavigationAtom);
+  const [cartTileAtomNumber, cartTileAtomText] = useAtomValue(cartTitleAtom);
   const githubAccountName = "";
   return (
-    <Container>
-      <SectionTile status="active" number="01." text="Obten tus tickets" />
+    <>
+      <SectionTile
+        status="active"
+        number={cartTileAtomNumber}
+        text={cartTileAtomText}
+      />
       <AnimatePresence mode="popLayout" initial={false}>
-        {navigationAtom === "ticket_selection" && (
+        {subNavigationAtomValue === "ticket_selection" && (
           <Wrapper
-            key="ticket_selection"
+            key={subNavigationAtomValue}
             layout="position"
-            initial={{ opacity: 0, translateY: 50 }}
-            animate={{ opacity: 1, translateY: 0 }}
-            exit={{ opacity: 0, translateY: 50 }}
+            initial={{ opacity: 0, translateX: -50 }}
+            animate={{ opacity: 1, translateX: 0 }}
+            exit={{ opacity: 0, translateX: 50 }}
           >
             <SideContainer>
               <LeftSide>
@@ -100,13 +111,29 @@ const CartContainer = () => {
             </SideContainer>
           </Wrapper>
         )}
-        {navigationAtom === "payment_selection" && (
+        {subNavigationAtomValue === "agreements" && (
           <Wrapper
-            key="payment_selection"
+            key={subNavigationAtomValue}
             layout="position"
-            initial={{ opacity: 0, translateY: -50 }}
-            animate={{ opacity: 1, translateY: 0 }}
-            exit={{ opacity: 0, translateY: -50 }}
+            initial={{ opacity: 0, translateX: -50 }}
+            animate={{ opacity: 1, translateX: 0 }}
+            exit={{ opacity: 0, translateX: 50 }}
+          >
+            <SideContainer>
+              <LeftSide>
+                <Agreements />
+              </LeftSide>
+              <RigthSide></RigthSide>
+            </SideContainer>
+          </Wrapper>
+        )}
+        {subNavigationAtomValue === "payment_selection" && (
+          <Wrapper
+            key={subNavigationAtomValue}
+            layout="position"
+            initial={{ opacity: 0, translateX: -50 }}
+            animate={{ opacity: 1, translateX: 0 }}
+            exit={{ opacity: 0, translateX: 50 }}
           >
             <SideContainer>
               <LeftSide>
@@ -117,7 +144,7 @@ const CartContainer = () => {
           </Wrapper>
         )}
       </AnimatePresence>
-    </Container>
+    </>
   );
 };
 

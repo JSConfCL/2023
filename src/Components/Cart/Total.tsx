@@ -22,11 +22,8 @@ const TotalWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
-
-  @media (min-width: ${ViewportSizes.Desktop}px) {
-    flex-direction: column;
-    align-items: flex-end;
-  }
+  flex-direction: column;
+  gap: 2rem;
 `;
 const Title = styled.p`
   text-align: right;
@@ -42,20 +39,6 @@ export const Total = () => {
   const hasBoughtTickets = useAtomValue(hasBoughtTicketsAtom);
   return (
     <TotalWrapper>
-      {
-        <GenericBtn
-          disabled={!hasBoughtTickets}
-          onClick={() => continuarAtomValue("payment_selection")}
-        >
-          {hasBoughtTickets ? (
-            <>
-              Continuar <ArrowRight size={16} />
-            </>
-          ) : (
-            "Selecciona Tickets"
-          )}
-        </GenericBtn>
-      }
       <CartTotalizer>
         <Title>Total (CLP)</Title>
         <Money>
@@ -65,6 +48,18 @@ export const Total = () => {
           }).format(priceAtomValue)}
         </Money>
       </CartTotalizer>
+      <GenericBtn
+        disabled={!hasBoughtTickets}
+        onClick={() => continuarAtomValue("agreements")}
+      >
+        {hasBoughtTickets ? (
+          <>
+            Continuar <ArrowRight size={16} />
+          </>
+        ) : (
+          "Selecciona Tickets"
+        )}
+      </GenericBtn>
     </TotalWrapper>
   );
 };

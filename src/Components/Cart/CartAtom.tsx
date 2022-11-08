@@ -48,7 +48,18 @@ export const hasBoughtTicketsAtom = atom((get) =>
 export type EntradaFormType = {
   [entradaId: Entrada["id"]]: Atom<number>;
 };
-export const subNavigationAtom = atom<"ticket_selection" | "payment_selection">(
-  "ticket_selection"
-);
+export const subNavigationAtom = atom<
+  "ticket_selection" | "agreements" | "payment_selection"
+>("ticket_selection");
+
+export const cartTitleAtom = atom((get) => {
+  switch (get(subNavigationAtom)) {
+    case "ticket_selection":
+      return ["01.", "Selecciona tus tickets."] as const;
+    case "agreements":
+      return ["02.", "Revisa nuestras politicas de compra."] as const;
+    case "payment_selection":
+      return ["03.", "Selecciona tu método de pago."] as const;
+  }
+});
 export const paymentSelectedAtom = atom<"stripe" | "mercadopago" | null>(null);
