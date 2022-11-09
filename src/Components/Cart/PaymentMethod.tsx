@@ -7,6 +7,7 @@ import {
   SubTitle,
   ButtonWrapper,
   Small,
+  PaymentButtonWrapper,
 } from "../TicketSection/shared";
 import {
   paymentSelectedAtom,
@@ -114,9 +115,9 @@ const PaymentMethod = () => {
         </Resume>
       ))}
       <br />
-      <SubTitle>Elige tu método de pago:</SubTitle>
+      <SubTitle>Elige tu metodo de pago:</SubTitle>
 
-      <ButtonWrapper>
+      <PaymentButtonWrapper>
         {buttonData.map((data) => (
           <TertiaryButton
             selected={data.id === paymentSelectorValue}
@@ -126,7 +127,7 @@ const PaymentMethod = () => {
             <IconLogin src={data.icon} className="loginIcon" />
           </TertiaryButton>
         ))}
-      </ButtonWrapper>
+      </PaymentButtonWrapper>
       <Paragraph>
         <Small>
           Selecciona Stripe para pagar en dólares (USD), o MercadoPago para
@@ -135,7 +136,7 @@ const PaymentMethod = () => {
       </Paragraph>
       {/* TODO: Mostrar mensaje de error */}
       <ButtonWrapper>
-        <GenericBtn onClick={() => continuarAtomValue("ticket_selection")}>
+        <GenericBtn onClick={() => continuarAtomValue("agreements")}>
           <ArrowLeft size={16} /> Volver
         </GenericBtn>
         <GenericBtn

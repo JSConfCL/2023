@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Suspense, useMemo } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
@@ -21,7 +22,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: 1rem;
   width: 100vw;
-  min-height: min(90vh, 500px);
+  /* min-height: min(90vh, 500px); */
   max-width: 1440px;
   padding-left: 1rem;
   padding-right: 1rem;

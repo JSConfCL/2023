@@ -21,6 +21,14 @@ export const Paragraph = styled.p`
   }
 `;
 
+export const PaymentButtonWrapper = styled.section`
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  width: 100%;
+  gap: 50px;
+`;
+
 export const ButtonWrapper = styled.section`
   display: flex;
   justify-content: space-between;

@@ -1,10 +1,14 @@
 import styled from "@emotion/styled";
-import { useSetAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "react-feather";
 import { ViewportSizes } from "../../../styles/theme";
 import { ButtonWrapper, GenericBtn, Paragraph } from "../TicketSection/shared";
-import { subNavigationAtom } from "./CartAtom";
+import {
+  codeOfConductAgreedAtom,
+  policyAgreedAtom,
+  subNavigationAtom,
+} from "./CartAtom";
 
 const TotalWrapper = styled.div`
   display: flex;
@@ -82,8 +86,8 @@ const Anchor = styled.a`
 `;
 
 export const Agreements = () => {
-  const [codeOfConduct, setCodeOfConduct] = useState(false);
-  const [policy, setPolicy] = useState(false);
+  const [codeOfConduct, setCodeOfConduct] = useAtom(codeOfConductAgreedAtom);
+  const [policy, setPolicy] = useAtom(policyAgreedAtom);
   const continuarAtomValue = useSetAtom(subNavigationAtom);
   return (
     <TotalWrapper>
