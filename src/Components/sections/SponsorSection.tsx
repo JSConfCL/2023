@@ -106,6 +106,12 @@ const Grid = styled.div`
 const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [constributor, useContributor] = useState("");
+  const NameContributor = props.page?.items;
+  const imageParams = {};
+  NameContributor.map((contributorsCollection, index) => {
+    console.log(NameContributor[index].contributorsCollection.items[index]);
+  });
+  //console.log(props.page?.items)
 
   return (
     <>
@@ -134,6 +140,11 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
                             alt=""
                             mobile={props?.image?.url!}
                             desktop={props?.image?.url!}
+                            params={
+                              isMobile
+                                ? props?.imageParamsMobile
+                                : props?.imageParamsDesktop
+                            }
                           />
                         </Flex>
                       </ImageContainer>

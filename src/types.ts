@@ -2945,6 +2945,8 @@ export type SponsorBlock = Entry & {
   __typename?: "SponsorBlock";
   contentfulMetadata: ContentfulMetadata;
   image?: Maybe<Asset>;
+  imageParamsDesktop?: Maybe<Scalars["String"]>;
+  imageParamsMobile?: Maybe<Scalars["String"]>;
   linkedFrom?: Maybe<SponsorBlockLinkingCollections>;
   sys: Sys;
   title?: Maybe<SponsorBlockTitle>;
@@ -2954,6 +2956,16 @@ export type SponsorBlock = Entry & {
 export type SponsorBlockImageArgs = {
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
+export type SponsorBlockImageParamsDesktopArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
+export type SponsorBlockImageParamsMobileArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
@@ -2978,6 +2990,20 @@ export type SponsorBlockFilter = {
   AND?: InputMaybe<Array<InputMaybe<SponsorBlockFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<SponsorBlockFilter>>>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  imageParamsDesktop?: InputMaybe<Scalars["String"]>;
+  imageParamsDesktop_contains?: InputMaybe<Scalars["String"]>;
+  imageParamsDesktop_exists?: InputMaybe<Scalars["Boolean"]>;
+  imageParamsDesktop_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  imageParamsDesktop_not?: InputMaybe<Scalars["String"]>;
+  imageParamsDesktop_not_contains?: InputMaybe<Scalars["String"]>;
+  imageParamsDesktop_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  imageParamsMobile?: InputMaybe<Scalars["String"]>;
+  imageParamsMobile_contains?: InputMaybe<Scalars["String"]>;
+  imageParamsMobile_exists?: InputMaybe<Scalars["Boolean"]>;
+  imageParamsMobile_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  imageParamsMobile_not?: InputMaybe<Scalars["String"]>;
+  imageParamsMobile_not_contains?: InputMaybe<Scalars["String"]>;
+  imageParamsMobile_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   image_exists?: InputMaybe<Scalars["Boolean"]>;
   sys?: InputMaybe<SysFilter>;
   title_contains?: InputMaybe<Scalars["String"]>;
@@ -3006,6 +3032,10 @@ export type SponsorBlockLinkingCollectionsSponsorTypeCollectionArgs = {
 };
 
 export enum SponsorBlockOrder {
+  ImageParamsDesktopAsc = "imageParamsDesktop_ASC",
+  ImageParamsDesktopDesc = "imageParamsDesktop_DESC",
+  ImageParamsMobileAsc = "imageParamsMobile_ASC",
+  ImageParamsMobileDesc = "imageParamsMobile_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",

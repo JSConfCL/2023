@@ -355,6 +355,8 @@ export const HomeQueryDocument = gql`
               image {
                 url
               }
+              imageParamsMobile
+              imageParamsDesktop
             }
           }
         }
