@@ -137,5 +137,23 @@ query HomeQuery($locale: String!, $isPreview: Boolean = false) {
         link
       }
     }
+    eventsCollection {
+      items {
+        sys {
+          id
+        }
+        title
+        date
+        duration
+        language
+        kind
+        speaker {
+          name
+          photo {
+            url
+          }
+        }
+      }
+    }
   }
 }

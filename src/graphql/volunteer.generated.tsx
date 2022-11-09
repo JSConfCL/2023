@@ -1,4 +1,4 @@
-import * as Types from "../types.js";
+import * as Types from "../types";
 
 import gql from "graphql-tag";
 import * as Urql from "urql";
