@@ -43,7 +43,7 @@ const StyledBlackWrapp = styled.section`
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 
-const Home: NextPage<PageProps> = (props) => {
+const Why: NextPage<PageProps> = (props) => {
   return (
     <StyledBlackWrapp>
       <Seo {...props.seo} />
@@ -54,7 +54,7 @@ const Home: NextPage<PageProps> = (props) => {
         <Suspense fallback={null}>
           <WhyBanner {...props.heroData} />
         </Suspense>
-        {props.whyItems.items.map((elem, index) => (
+        {props.whyItems?.items?.map((elem, index) => (
           <Suspense key={`why-card-${index}`} fallback={null}>
             <WhyCard number={index + 1} {...elem} key={`why-card-${index}`} />
           </Suspense>
@@ -75,13 +75,13 @@ export async function getStaticProps() {
   const page = queryResults.data?.page as Page;
   const props: PageProps = {
     navData: parseNavBarData(page?.navBar),
-    heroData: page?.heroBlock,
-    whyItems: page?.whyBlockCollection,
-    seo: page?.seo,
+    heroData: page?.heroBlock || null,
+    whyItems: page?.whyBlockCollection || null,
+    seo: page?.seo || null,
   };
   return {
     props,
   };
 }
 
-export default Home;
+export default Why;

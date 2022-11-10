@@ -74,7 +74,7 @@ const Home: NextPage<PageProps> = (props) => {
           {props?.events && <TimelineSection events={props?.events} />}
         </Suspense>
         <Suspense fallback={null}>
-          {props.teamData && <TeamSection page={props.teamData} />}
+          {props?.teamData && <TeamSection page={props.teamData} />}
         </Suspense>
       </StyledBlackWrapp>
     </Container>
@@ -92,13 +92,13 @@ export async function getStaticProps() {
   const page = queryResults.data?.page as Page;
   const props: PageProps = {
     navData: parseNavBarData(page?.navBar),
-    heroData: page?.heroBlock,
-    whyItems: page?.whyBlockCollection,
-    howItems: page?.howBlockCollection,
-    speakerData: page?.speakersBlock,
-    seo: page?.seo,
-    teamData: page?.teamBlock,
-    events: page?.eventsCollection.items,
+    heroData: page?.heroBlock || null,
+    whyItems: page?.whyBlockCollection || null,
+    howItems: page?.howBlockCollection || null,
+    speakerData: page?.speakersBlock || null,
+    seo: page?.seo || null,
+    teamData: page?.teamBlock || null,
+    events: page?.eventsCollection.items || null,
   };
 
   return {

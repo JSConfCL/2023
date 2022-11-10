@@ -1,9 +1,12 @@
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
 import { useAtomValue, useSetAtom } from "jotai";
+import { useRouter } from "next/router";
 import { Suspense, useMemo } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { ViewportSizes } from "../../../styles/theme";
 import { accessTokenAtom, isAuthenticatedAtom } from "../../helpers/auth";
+import { flagsAtom } from "../../helpers/featureFlags";
 import NavBar from "../NavBar/NavBar";
 
 const StyledBlackWrapp = styled.div`
@@ -21,7 +24,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: 1rem;
   width: 100vw;
-  min-height: min(90vh, 500px);
+  /* min-height: min(90vh, 500px); */
   max-width: 1440px;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -38,7 +41,9 @@ const Container = styled.div`
 
 export const TicketsLayout = (page: ReactElement) => {
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
+  const { replace } = useRouter();
   const setAccessToken = useSetAtom(accessTokenAtom);
+  const { "ticket-page-enabled": ticketPageEnabled } = useAtomValue(flagsAtom);
   const items = useMemo(() => {
     if (isLoggedIn) {
       return [
@@ -60,7 +65,10 @@ export const TicketsLayout = (page: ReactElement) => {
     }
     return [];
   }, [isLoggedIn, setAccessToken]);
-
+  if (ticketPageEnabled === false) {
+    replace("/");
+    return null;
+  }
   return (
     <StyledBlackWrapp>
       <Suspense fallback={null}>

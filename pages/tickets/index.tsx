@@ -5,7 +5,7 @@ import {
   hasticketsAtom,
   ticketsAtom,
 } from "../../src/Components/Cart/CartAtom";
-import TicketCart from "../../src/Components/Cart/CartContainer";
+import { CartContainer } from "../../src/Components/Cart/CartContainer";
 import { TicketsLayout } from "../../src/Components/Layouts/TicketsLayout";
 import Seo from "../../src/Components/Seo";
 import NoTickets from "../../src/Components/TicketSection/NoTickets";
@@ -42,7 +42,7 @@ const TicketContent = () => {
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
   if (areThereTickets) {
     if (isLoggedIn) {
-      return <TicketCart />;
+      return <CartContainer />;
     }
     return <YesTicketsCreateAccount imageUrl={image} />;
   } else {
@@ -73,7 +73,7 @@ export async function getStaticProps() {
 
   const page = queryResults.data?.page as Page;
   const props: PageProps = {
-    seo: page?.seo,
+    seo: page?.seo || null,
   };
 
   return {

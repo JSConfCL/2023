@@ -12,14 +12,10 @@ type Props = {
 };
 
 const Container = styled.section`
-  align-self: center;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   max-width: 1440px;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: wrap;
 
   > h2 {
     padding: 48px 0px;
@@ -33,13 +29,10 @@ const Container = styled.section`
   }
 `;
 
-const Form = styled.form(
-  ({ theme }) => `
-  width: 90vw;
+const Form = styled.form`
   height: 80px;
-  background: ${theme.colors.black};
-  color: ${theme.colors.white};
-  top: 50%;
+  background: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.white};
   position: relative;
   z-index: 1;
   overflow: hidden;
@@ -47,13 +40,8 @@ const Form = styled.form(
   border-left-color: transparent;
   border-right-color: transparent;
   border-top-color: transparent;
-  border-bottom-color: ${theme.colors.jsconfYellow};
-
-  @media (min-width: ${ViewportSizes.TabletLandscape}) {
-    max-width: 40vw;
-  }
-`
-);
+  border-bottom-color: ${({ theme }) => theme.colors.jsconfYellow};
+`;
 
 const Fieldset = styled.fieldset(
   ({ theme }) => `

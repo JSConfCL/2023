@@ -33,9 +33,10 @@ const FlexRow = styled.div`
   width: 100vw;
   align-self: flex-start;
   padding: 16px;
+  gap: 3rem;
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
-
   @media (min-width: ${ViewportSizes.Phone}px) {
+    gap: 0;
     flex-direction: row;
     align-self: center;
     padding: 48px;

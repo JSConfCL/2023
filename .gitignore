@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /.pnp
+/public/sitemap*
 .pnp.js
 
 # testing
