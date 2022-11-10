@@ -18,7 +18,7 @@ const FlexLayout = styled.div`
 
 const GridLayout = styled.div`
   display: grid;
-  grid-template-colums: 50% 50%;
+  grid-template-columns: 50% 50%;
   @media (min-width: ${ViewportSizes.TabletLandscape}) {
     display: flex;
     align-items: center;
@@ -28,22 +28,23 @@ const GridLayout = styled.div`
 
 const RenderingLayout = (props: {
   constributorTypeName: string;
-  children: string;
+  children: any;
 }) => {
   console.log(props.constributorTypeName);
+  console.log(props.children);
 
   return (
     <>
-      {props.constributorTypeName === "Platinum" && (
+      {props.constributorTypeName === "Platinum Sponsor" && (
         <FlexLayout>{props.children}</FlexLayout>
       )}
-      {props.constributorTypeName === "Gold" && (
+      {props.constributorTypeName === "Gold Sponsor" && (
         <FlexLayout>{props.children}</FlexLayout>
       )}
-      {props.constributorTypeName === "Silver" && (
+      {props.constributorTypeName === "Silver Sponsor" && (
         <FlexLayout>{props.children}</FlexLayout>
       )}
-      {props.constributorTypeName === "Bronze" && (
+      {props.constributorTypeName === "Bronze Sponsor" && (
         <GridLayout>{props.children}</GridLayout>
       )}
     </>
