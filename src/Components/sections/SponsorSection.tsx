@@ -11,6 +11,7 @@ import { PrimaryStyledLink } from "../Links";
 const Description = lazy(() => import("../core/Description"));
 const Card = lazy(() => import("../Card"));
 const Image = lazy(() => import("../core/Image"));
+const RenderingLayout = lazy(() => import("../core/RenderingLayout"));
 
 const Container = styled.section`
   align-self: center;
@@ -58,10 +59,10 @@ const ConstributorType = styled.section`
   background-color: #f45b6914;
   border-radius: 32px;
   position: relative;
-  padding: 1.5rem 1rem;
+  padding: 2rem 1rem;
   margin: 1rem 0;
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
-    max-height: 300px;
+    padding: 1.5rem 1rem;
   }
 `;
 
@@ -87,15 +88,10 @@ const FlexRow = styled.div`
 
 const Flex = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   gap: 30px;
-  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
 `;
 
 const Grid = styled.div`
@@ -107,12 +103,14 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [constributor, useContributor] = useState("");
   const NameContributor = props.page?.items;
-  const imageParams = {};
+  let name = "";
   NameContributor.map((contributorsCollection, index) => {
-    console.log(NameContributor[index].contributorsCollection.items[index]);
+    // console.log(NameContributor[index].contributorsCollection.items[index]);
+    // console.log(NameContributor[index].name);
+    name = NameContributor[index].name;
   });
-  //console.log(props.page?.items)
 
+  console.log(name);
   return (
     <>
       {!constributor && (
@@ -131,7 +129,7 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
             <>
               <ConstributorType>
                 <ContributorName>{props.name}</ContributorName>
-                <Flex>
+                <RenderingLayout constributorTypeName={props.name}>
                   {props?.contributorsCollection?.items?.map((props, index) => (
                     <>
                       <ImageContainer>
@@ -150,7 +148,7 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
                       </ImageContainer>
                     </>
                   ))}
-                </Flex>
+                </RenderingLayout>
               </ConstributorType>
             </>
           ))}
