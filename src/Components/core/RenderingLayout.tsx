@@ -28,25 +28,26 @@ const GridLayout = styled.div`
 
 const RenderingLayout = (props: {
   constributorTypeName: string;
-  children: any;
+  children: string;
 }) => {
   console.log(props.constributorTypeName);
 
-  return;
-  {
-    props.constributorTypeName === "Platinum" && (
-      <FlexLayout>{props.children}</FlexLayout>
-    );
-    props.constributorTypeName === "Gold" && (
-      <FlexLayout>{props.children}</FlexLayout>
-    );
-    props.constributorTypeName === "Silver" && (
-      <FlexLayout>{props.children}</FlexLayout>
-    );
-    props.constributorTypeName === "Bronze" && (
-      <GridLayout>{props.children}</GridLayout>
-    );
-  }
+  return (
+    <>
+      {props.constributorTypeName === "Platinum" && (
+        <FlexLayout>{props.children}</FlexLayout>
+      )}
+      {props.constributorTypeName === "Gold" && (
+        <FlexLayout>{props.children}</FlexLayout>
+      )}
+      {props.constributorTypeName === "Silver" && (
+        <FlexLayout>{props.children}</FlexLayout>
+      )}
+      {props.constributorTypeName === "Bronze" && (
+        <GridLayout>{props.children}</GridLayout>
+      )}
+    </>
+  );
 };
 
 export default RenderingLayout;
