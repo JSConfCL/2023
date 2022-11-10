@@ -26,22 +26,26 @@ const GridLayout = styled.div`
   }
 `;
 
-const RenderingLayout = (props: { constributorTypeName: string }) => {
+const RenderingLayout = (props: {
+  constributorTypeName: string;
+  children: any;
+}) => {
   console.log(props.constributorTypeName);
 
   return;
-  // {props.constributorTypeName === 'Platinum Sponsor' ? <FlexLayout/> : <GridLayout/>}
-  // if((props.constributorTypeName === "Platinum Sponsor")|| (props.constributorTypeName === "Gold Sponsor") || (props.constributorTypeName === "Silver Sponsor")){
-  //     <FlexLayout/>
-  // }
-  // else{
-  //    <GridLayout/>
-  // }
   {
-    props.constributorTypeName === "Platinum" && <FlexLayout />;
-    props.constributorTypeName === "Gold" && <FlexLayout />;
-    props.constributorTypeName === "Silver" && <FlexLayout />;
-    props.constributorTypeName === "Bronze" && <GridLayout />;
+    props.constributorTypeName === "Platinum" && (
+      <FlexLayout>{props.children}</FlexLayout>
+    );
+    props.constributorTypeName === "Gold" && (
+      <FlexLayout>{props.children}</FlexLayout>
+    );
+    props.constributorTypeName === "Silver" && (
+      <FlexLayout>{props.children}</FlexLayout>
+    );
+    props.constributorTypeName === "Bronze" && (
+      <GridLayout>{props.children}</GridLayout>
+    );
   }
 };
 
