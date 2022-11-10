@@ -73,7 +73,7 @@ export async function getStaticProps() {
 
   const page = queryResults.data?.page as Page;
   const props: PageProps = {
-    seo: page?.seo,
+    seo: page?.seo || null,
   };
 
   return {

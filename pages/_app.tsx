@@ -9,6 +9,7 @@ import { lazy, ReactElement, ReactNode, Suspense } from "react";
 import { Provider } from "urql";
 import { urlQlient } from "../src/graphql/urql";
 import { queryClient } from "../src/helpers/API";
+import { useInitFeatureFlag } from "../src/helpers/featureFlags";
 import { GlobalStyles } from "../styles/globalStyles";
 import { jsconfTheme } from "../styles/theme";
 
@@ -34,9 +35,9 @@ type AppPropsWithLayout = AppProps & {
 };
 
 function MyApp(appProps: AppPropsWithLayout) {
+  useInitFeatureFlag();
   const { Component, pageProps } = appProps;
   const getLayout = Component.getLayout ?? ((page) => page);
-
   return (
     <JotaiProvider>
       <CacheProvider value={cache}>

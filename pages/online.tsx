@@ -84,7 +84,7 @@ export async function getStaticProps() {
   const props: PageProps = {
     navData: parseNavBarData(page?.navBar),
     howItems: page?.howBlockCollection,
-    seo: page?.seo,
+    seo: page?.seo || null,
   };
   return {
     props,

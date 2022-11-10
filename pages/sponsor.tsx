@@ -107,10 +107,10 @@ export async function getStaticProps() {
   if (!page) return { props: {} };
   const props: PageProps = {
     navData: parseNavBarData(page?.navBar),
-    heroData: page?.heroBlock,
+    heroData: page?.heroBlock || null,
     followUsData: page?.followUsBlock,
     sponsors: page?.sponsorTypeCollection,
-    seo: page?.seo,
+    seo: page?.seo || null,
   };
   return {
     props,

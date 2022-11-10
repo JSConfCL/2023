@@ -71,7 +71,7 @@ export async function getStaticProps() {
   const page = queryResults.data?.page as Page;
   const props: PageProps = {
     navData: parseNavBarData(page?.navBar),
-    heroData: page?.heroBlock,
+    heroData: page?.heroBlock || null,
     url: process.env.NEXT_PUBLIC_DATA_API || "",
   };
   return {
