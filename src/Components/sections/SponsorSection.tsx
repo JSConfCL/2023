@@ -45,13 +45,12 @@ const Title = styled.h2`
 `;
 
 const ImageContainer = styled.div`
-  width: 50vw;
-  margin: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
-    width: fit-content;
-    height: 200xp;
-    display: flex;
     align-items: center;
+    justify-self: center;
   }
 `;
 
@@ -71,7 +70,7 @@ const ContributorName = styled.h3`
   font-size: 32px;
   color: white;
   top: -5.5%;
-  left: 4%;
+  left: 6%;
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     font-size: 40px;
     top: -18.5%;
