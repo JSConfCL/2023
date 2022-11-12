@@ -15,7 +15,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "**/*.{ts|tsx}": "eslint --fix",
+    "**/*.{ts,tsx}": "eslint --fix",
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
