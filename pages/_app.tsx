@@ -13,18 +13,18 @@ import { useInitFeatureFlag } from "../src/helpers/featureFlags";
 import { GlobalStyles } from "../styles/globalStyles";
 import { jsconfTheme } from "../styles/theme";
 
-const WebSchema = dynamic(() => import("../src/Components/schema/webpage"), {
-  ssr: false,
-});
+const WebSchema = dynamic(
+  async () => await import("../src/Components/schema/webpage"),
+  {
+    ssr: false,
+  }
+);
 
-const ExtendedFooter = lazy(() => import("../src/Components/ExtendedFooter"));
+const ExtendedFooter = lazy(
+  async () => await import("../src/Components/ExtendedFooter")
+);
 
 const cache = createCache({ key: "next" });
-
-const value = {
-  fetcher: (resource: RequestInfo | URL, init?: RequestInit | undefined) =>
-    fetch(resource, init).then((res) => res.json()),
-};
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;

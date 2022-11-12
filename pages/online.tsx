@@ -16,18 +16,21 @@ import Seo from "../src/Components/Seo";
 import { NavBarProps } from "../src/Components/NavBar/NavBar";
 import { parseNavBarData } from "../src/Components/NavBar/helper";
 
-const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
-  ssr: false,
-});
-const HowCard = lazy(() => import("../src/Components/Card/How"));
+const NavBar = dynamic(
+  async () => await import("../src/Components/NavBar/NavBar"),
+  {
+    ssr: false,
+  }
+);
+const HowCard = lazy(async () => await import("../src/Components/Card/How"));
 
 type Page = ParseQuery<HowQueryQuery["page"]>;
 
-export type PageProps = {
+export interface PageProps {
   navData: NavBarProps;
   howItems: Page["howBlockCollection"];
   seo: Page["seo"];
-};
+}
 
 const Container = styled.section`
   display: flex;
@@ -43,7 +46,7 @@ const StyledBlackWrapp = styled.section`
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 
-const OnlinePage: NextPage<PageProps> = (props) => {
+const OnlinePage: NextPage<PageProps> = (props: PageProps) => {
   return (
     <StyledBlackWrapp>
       <Seo {...props.seo} />

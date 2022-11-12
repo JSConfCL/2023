@@ -70,17 +70,25 @@
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "@types/react-portal": "^4.0.4",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
     "@zeit/next-css": "^1.0.1",
     "dotenv": "^16.0.0",
-    "eslint": "^8.18.0",
+    "eslint": "^8.27.0",
     "eslint-config-next": "^12.1.6",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.5.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.31.10",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.2",
     "next-purgecss": "^3.1.2",
-    "prettier": "^2.6.2",
+    "prettier": "2.7.1",
     "ts-essentials": "^9.3.0",
     "type-fest": "^2.13.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.8.4"
   },
   "license": "MIT"
 }

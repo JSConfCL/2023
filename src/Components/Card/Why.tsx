@@ -4,8 +4,8 @@ import { Document } from "@contentful/rich-text-types";
 import { H2 } from "../core/Typography";
 import { ViewportSizes } from "../../../styles/theme";
 
-const Description = lazy(() => import("../core/Description"));
-const Image = lazy(() => import("../core/Image"));
+const Description = lazy(async () => await import("../core/Description"));
+const Image = lazy(async () => await import("../core/Image"));
 
 type WhyCardProps =
   | {
@@ -143,7 +143,7 @@ const WhyCard = (props: WhyCardProps) => {
       </WrapperDescription>
       <Suspense fallback={null}>
         <Image
-          desktop={props?.fullImage?.url!}
+          desktop={props?.fullImage?.url}
           mobile={props?.fullImage?.url!}
           alt={props?.icon?.description! || ""}
           style={{

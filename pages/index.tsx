@@ -15,21 +15,25 @@ import Hero from "../src/Components/sections/Hero";
 import { NavBarProps } from "../src/Components/NavBar/NavBar";
 import { parseNavBarData } from "../src/Components/NavBar/helper";
 
-const WhySection = lazy(() => import("../src/Components/sections/WhySection"));
-const HowSection = lazy(() => import("../src/Components/sections/HowSection"));
+const WhySection = lazy(
+  async () => await import("../src/Components/sections/WhySection")
+);
+const HowSection = lazy(
+  async () => await import("../src/Components/sections/HowSection")
+);
 const TeamSection = lazy(
-  () => import("../src/Components/sections/TeamSection")
+  async () => await import("../src/Components/sections/TeamSection")
 );
 const SpeakerSection = lazy(
-  () => import("../src/Components/sections/SpeakerSection")
+  async () => await import("../src/Components/sections/SpeakerSection")
 );
 const TimelineSection = lazy(
-  () => import("../src/Components/sections/TimelineSection")
+  async () => await import("../src/Components/sections/TimelineSection")
 );
 
 type Page = ParseQuery<HomeQueryQuery["page"]>;
 
-export type PageProps = {
+export interface PageProps {
   navData: NavBarProps;
   whyItems: Page["whyBlockCollection"];
   howItems: Page["howBlockCollection"];
@@ -38,7 +42,7 @@ export type PageProps = {
   seo: Page["seo"];
   teamData: Page["teamBlock"];
   events: Page["eventsCollection"]["items"];
-};
+}
 
 const Container = styled.section`
   display: flex;
@@ -52,7 +56,7 @@ const StyledBlackWrapp = styled.section`
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 
-const Home: NextPage<PageProps> = (props) => {
+const Home: NextPage<PageProps> = (props: PageProps) => {
   return (
     <Container>
       <Seo {...props.seo} />

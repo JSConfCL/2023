@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import styled from "@emotion/styled";
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
-import dynamic from "next/dynamic";
+import { motion, useAnimation } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { lazy, Suspense } from "react";
 import { use100vh } from "react-div-100vh";
+import { Menu as MenuIcon, X } from "react-feather";
 import { Portal } from "react-portal";
 import { useLockBodyScroll } from "react-use";
 import { Simplify } from "type-fest";
@@ -13,8 +13,7 @@ import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { SecondaryStyledButton, SecondaryStyledLink } from "../Links";
 import JSConfLogo from "../svgs/logo";
-import { X, Menu as MenuIcon } from "react-feather";
-const Description = lazy(() => import("../core/Description"));
+const Description = lazy(async () => await import("../core/Description"));
 
 const StyledNav = styled(motion.nav)`
   z-index: 100;
@@ -165,35 +164,35 @@ const MobileFeatherIconWrapper = styled.span`
   }
 `;
 
-type MenuItem = {
+interface MenuItem {
   id: string;
   link: string;
   onClick?: never;
   isBlank: boolean;
   contenido: string;
-};
-type MenuItemOnClick = {
+}
+interface MenuItemOnClick {
   id: string;
   link?: never;
   onClick: () => void;
   contenido: string;
-};
+}
 
-type ButtonItem = {
+interface ButtonItem {
   link: string;
   onClick?: never;
   contenido: string;
-};
-type ButtonItemOnClick = {
+}
+interface ButtonItemOnClick {
   link?: never;
   onClick: () => void;
   contenido: string;
-};
+}
 
 export type NavBarProps = Simplify<{
-  items: Simplify<MenuItem | MenuItemOnClick>[];
+  items: Array<Simplify<MenuItem | MenuItemOnClick>>;
   description?: any;
-  buttonsCollection?: Simplify<ButtonItem | ButtonItemOnClick>[];
+  buttonsCollection?: Array<Simplify<ButtonItem | ButtonItemOnClick>>;
 }>;
 
 const FakeButton = styled.div``;
@@ -207,16 +206,16 @@ const Menu = ({ items }: { items: NavBarProps["items"] }) => {
           key={item.id}
           isActive={item?.link === pathname ? "active" : ""}
         >
-          {item.onClick ? (
+          {item.onClick != null ? (
             <FakeButton as="button" onClick={item.onClick}>
               {item.contenido}
             </FakeButton>
           ) : item.isBlank ? (
-            <Link rel="preconnect" href={item.link!} passHref>
+            <Link rel="preconnect" href={item.link} passHref>
               <a target="_blank">{item.contenido}</a>
             </Link>
           ) : (
-            <Link href={item.link!}>{item.contenido}</Link>
+            <Link href={item.link}>{item.contenido}</Link>
           )}
         </StyledLink>
       ))}
@@ -256,7 +255,7 @@ const MobileMenu = ({ items, description, buttonsCollection }: NavBarProps) => {
         });
       }
     };
-    animate();
+    animate().catch((e) => console.error(e));
   }, [controls, isOpen]);
 
   React.useEffect(() => {
@@ -293,7 +292,7 @@ const MobileMenu = ({ items, description, buttonsCollection }: NavBarProps) => {
               <Description data={description} />
             </Suspense>
             {buttonsCollection?.map((button, index) => {
-              if (button.onClick) {
+              if (button.onClick != null) {
                 return (
                   <SecondaryStyledButton
                     key={`button-mobile-${index}`}

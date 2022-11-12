@@ -28,9 +28,9 @@ const ActuallyRun = () => {
   const [error, setError] = useState(false);
   const setAccessToken = useSetAtom(accessTokenAtom);
   const mutation = useMutation(finishGoogleLogin, {
-    onSuccess: ({ token }) => {
+    onSuccess: async ({ token }) => {
       setAccessToken(token);
-      replace("/tickets");
+      await replace("/tickets");
     },
     onError: () => {
       setError(true);

@@ -6,8 +6,8 @@ import { PageProps } from "../../../pages";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { ViewportSizes } from "../../../styles/theme";
 
-const Description = lazy(() => import("../core/Description"));
-const Image = lazy(() => import("../core/Image"));
+const Description = lazy(async () => await import("../core/Description"));
+const Image = lazy(async () => await import("../core/Image"));
 
 const Container = styled.section`
   align-self: center;
@@ -120,7 +120,7 @@ const HowSection = (props: { page: PageProps["howItems"] }) => {
       <Container>
         <H2 whileHover={{ scale: 1.01 }}>COMO?</H2>
         <BlockContainer>
-          {props.page?.items?.map((props, index) => (
+          {props.page?.items?.map((item, index) => (
             <Block
               key={`how-block-${index}`}
               whileHover="hover"
@@ -131,8 +131,8 @@ const HowSection = (props: { page: PageProps["howItems"] }) => {
               <Flex>
                 <Suspense fallback={<div>Loading...</div>}>
                   <Image
-                    mobile={props?.image?.url!}
-                    alt={props?.image?.description! || ""}
+                    mobile={item?.image?.url}
+                    alt={item?.image?.description || ""}
                     style={{
                       height: "257px",
                       aspectRatio: "654 / 257",
@@ -147,10 +147,10 @@ const HowSection = (props: { page: PageProps["howItems"] }) => {
                 key={`how-block-description-${index} `}
                 variants={descriptionVariant}
               >
-                <H3>{props?.title}</H3>
+                <H3>{item?.title}</H3>
                 {!isMobile && (
                   <Suspense fallback={<div>Loading...</div>}>
-                    <Description data={props?.description?.json!} />
+                    <Description data={item?.description?.json} />
                   </Suspense>
                 )}
               </BlockDescription>

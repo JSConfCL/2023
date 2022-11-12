@@ -5,16 +5,7 @@ import { H3, P } from "./core/Typography";
 import useMediaQuery from "../helpers/useMediaQuery";
 import { ViewportSizes } from "../../styles/theme";
 
-const Image = lazy(() => import("./core/Image"));
-
-interface Card {
-  name?: string;
-  position?: string;
-  photo?: {
-    url: string;
-    description: string;
-  };
-}
+const Image = lazy(async () => await import("./core/Image"));
 
 const Container = styled(motion.section)<{ type: string; index: number }>`
   background: ${({ type }) => (type === "blank" ? "transparent" : "white")};

@@ -5,10 +5,10 @@ import { PageProps } from "../../../pages/volunteer";
 import { H1, P } from "../core/Typography";
 import { ViewportSizes } from "../../../styles/theme";
 
-const JSConfLogo = lazy(() => import("../svgs/logo"));
+const JSConfLogo = lazy(async () => await import("../svgs/logo"));
 
-const Description = lazy(() => import("../core/Description"));
-const Image = lazy(() => import("../core/Image"));
+const Description = lazy(async () => await import("../core/Description"));
+const Image = lazy(async () => await import("../core/Image"));
 
 const StyledH1 = styled(H1)`
   z-index: 3;
@@ -95,9 +95,9 @@ const BannerVolunteer = (props: PageProps["heroData"]) => {
     <Container>
       <Block width="38%">
         <StyledH1>{props?.tile}</StyledH1>
-        <P>{props?.firstSubtitle!}</P>
+        <P>{props?.firstSubtitle}</P>
         <PMarkdown>
-          <ReactMarkdown>{props?.secondSubtitle!}</ReactMarkdown>
+          <ReactMarkdown>{props?.secondSubtitle}</ReactMarkdown>
         </PMarkdown>
       </Block>
       <Block width="60%">
@@ -120,8 +120,8 @@ const BannerVolunteer = (props: PageProps["heroData"]) => {
             />
           </Suspense>
           <Image
-            mobile={props?.background?.url!}
-            alt={props?.background?.title! || ""}
+            mobile={props?.background?.url}
+            alt={props?.background?.title || ""}
             style={{
               maxWidth: "830px",
               width: "100%",
@@ -135,7 +135,7 @@ const BannerVolunteer = (props: PageProps["heroData"]) => {
         </ImageBlock>
 
         <Suspense fallback={null}>
-          <Description data={props?.description?.json!} />
+          <Description data={props?.description?.json} />
         </Suspense>
       </Block>
     </Container>

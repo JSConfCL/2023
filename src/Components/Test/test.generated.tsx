@@ -7,7 +7,7 @@ export type AssetCollectionQueryVariables = Types.Exact<{
   [key: string]: never;
 }>;
 
-export type AssetCollectionQuery = {
+export interface AssetCollectionQuery {
   __typename?: "Query";
   assetCollection?: {
     __typename?: "AssetCollection";
@@ -26,7 +26,7 @@ export type AssetCollectionQuery = {
       };
     } | null>;
   } | null;
-};
+}
 
 export const AssetCollectionDocument = gql`
   query AssetCollection {

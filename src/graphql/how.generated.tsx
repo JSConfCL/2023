@@ -9,7 +9,7 @@ export type HowQueryQueryVariables = Types.Exact<{
   isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
 
-export type HowQueryQuery = {
+export interface HowQueryQuery {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
@@ -111,7 +111,7 @@ export type HowQueryQuery = {
       } | null;
     } | null;
   } | null;
-};
+}
 
 export const HowQueryDocument = gql`
   query HowQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {

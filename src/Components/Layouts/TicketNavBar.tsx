@@ -1,7 +1,6 @@
 import { useAtomValue, useSetAtom } from "jotai";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { accessTokenAtom, isAuthenticatedAtom } from "../../helpers/auth";
 import { flagsAtom } from "../../helpers/featureFlags";
 import NavBar from "../NavBar/NavBar";
@@ -32,8 +31,13 @@ const TicketNavBar = () => {
     }
     return [];
   }, [isLoggedIn, setAccessToken]);
-  if (ticketPageEnabled === false) {
-    replace("/");
+  useEffect(() => {
+    if (ticketPageEnabled === false) {
+      replace("/").catch((e) => console.error(e));
+    }
+  }, [replace, ticketPageEnabled]);
+
+  if (!ticketPageEnabled) {
     return null;
   }
   return <NavBar items={items} />;

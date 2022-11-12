@@ -214,34 +214,26 @@ const SocialButtonWrapper = styled.div`
   }
 `;
 
+const style: CSSProperties = {
+  paddingTop: "2rem",
+  paddingBottom: "2rem",
+  margin: 0,
+  display: "inline-flex",
+  justifyContent: "center",
+};
+
 export const GithubButton = () => {
   return (
     <SocialButtonWrapper>
       <GithubLoginButton
-        style={
-          {
-            paddingTop: "2rem",
-            paddingBottom: "2rem",
-            margin: 0,
-            display: "inline-flex",
-            justifyContent: "center",
-          } as CSSProperties
-        }
+        style={style}
         onClick={() => {
           window.location.href = `${API_URL}/auth/github`;
         }}
         text="Ingresa con Github"
       />
       <GoogleLoginButton
-        style={
-          {
-            paddingTop: "2rem",
-            paddingBottom: "2rem",
-            margin: 0,
-            display: "inline-flex",
-            justifyContent: "center",
-          } as CSSProperties
-        }
+        style={style}
         onClick={() => {
           window.location.href = `${API_URL}/auth/google`;
         }}

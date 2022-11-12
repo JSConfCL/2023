@@ -7,7 +7,7 @@ import Description from "../core/Description";
 import Image from "../core/Image";
 
 const ButtonLoginCollection = lazy(
-  () => import("../Collection/ButtonLoginCollection")
+  async () => await import("../Collection/ButtonLoginCollection")
 );
 
 type TicketCardProps =
@@ -252,7 +252,7 @@ const TicketCard = (props: TicketCardProps) => {
 
       <Suspense fallback={null}>
         <Image
-          desktop={props?.fullImage?.url!}
+          desktop={props?.fullImage?.url}
           mobile={props?.fullImage?.url!}
           alt={props?.icon?.description! || ""}
           style={{

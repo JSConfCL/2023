@@ -1,4 +1,4 @@
-import { atom, useAtom } from "jotai";
+import { atom } from "jotai";
 import { selectAtom } from "jotai/utils";
 import decode, { JwtPayload } from "jwt-decode";
 
@@ -10,7 +10,7 @@ export const accessTokenAtom = atom(
   (get) => get(accessTokenReferenceAtom),
   (get, set, newStr: string | null) => {
     set(accessTokenReferenceAtom, newStr);
-    if (newStr) {
+    if (newStr !== null) {
       localStorage.setItem(AUTHENTICATION_LOCALSTORAGE_KEY, newStr);
     } else {
       localStorage.removeItem(AUTHENTICATION_LOCALSTORAGE_KEY);
@@ -20,7 +20,7 @@ export const accessTokenAtom = atom(
 
 const fiveMinutesInMiliseconds = 1000 * 60 * 5;
 const isTokenValid = (token: string | null) => {
-  if (!token) {
+  if (token === null) {
     return false;
   }
   try {

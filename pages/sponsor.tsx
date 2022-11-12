@@ -15,21 +15,28 @@ import { ViewportSizes } from "../styles/theme";
 import { NavBarProps } from "../src/Components/NavBar/NavBar";
 import { parseNavBarData } from "../src/Components/NavBar/helper";
 
-const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
-  ssr: false,
-});
-const BannerSponsor = lazy(() => import("../src/Components/Banner/Sponsor"));
-const SponsorCard = lazy(() => import("../src/Components/Card/Sponsor"));
+const NavBar = dynamic(
+  async () => await import("../src/Components/NavBar/NavBar"),
+  {
+    ssr: false,
+  }
+);
+const BannerSponsor = lazy(
+  async () => await import("../src/Components/Banner/Sponsor")
+);
+const SponsorCard = lazy(
+  async () => await import("../src/Components/Card/Sponsor")
+);
 
 type Page = ParseQuery<SponsorQueryQuery["page"]>;
 
-export type PageProps = {
+export interface PageProps {
   navData: NavBarProps;
   followUsData: Page["followUsBlock"];
   heroData: Page["heroBlock"];
   sponsors: Page["sponsorTypeCollection"];
   seo: Page["seo"];
-};
+}
 
 const Container = styled.section`
   display: flex;
@@ -59,7 +66,7 @@ const StyledBlackWrapp = styled.section`
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 
-const OnSitePage: NextPage<PageProps> = (props) => {
+const OnSitePage: NextPage<PageProps> = (props: PageProps) => {
   return (
     <StyledBlackWrapp>
       <Seo {...props.seo} />

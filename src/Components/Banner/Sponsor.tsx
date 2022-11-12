@@ -4,8 +4,8 @@ import { PageProps } from "../../../pages/sponsor";
 import { H1 } from "../core/Typography";
 import { ViewportSizes } from "../../../styles/theme";
 
-const Description = lazy(() => import("../core/Description"));
-const Image = lazy(() => import("../core/Image"));
+const Description = lazy(async () => await import("../core/Description"));
+const Image = lazy(async () => await import("../core/Image"));
 
 const Container = styled.section`
   display: flex;
@@ -100,8 +100,8 @@ const BannerSponsor = (props: PageProps["heroData"]) => {
         <H1 color="#F45B69">{props.tile}</H1>
         <Suspense fallback={null}>
           <Image
-            mobile={props?.background?.url!}
-            alt={props?.background?.title! || ""}
+            mobile={props?.background?.url}
+            alt={props?.background?.title || ""}
             style={{
               maxWidth: "864px",
               borderRadius: "0px 32px 0px 0px",
@@ -112,7 +112,7 @@ const BannerSponsor = (props: PageProps["heroData"]) => {
         </Suspense>
       </Block>
       <Suspense fallback={null}>
-        <Description data={props?.description?.json!} />
+        <Description data={props?.description?.json} />
       </Suspense>
     </Container>
   );

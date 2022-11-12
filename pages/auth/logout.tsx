@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -20,9 +20,9 @@ const StyledBlackWrapp = styled.section`
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 
-const GithubAuth: NextPage = (props) => {
+const GithubAuth: NextPage = () => {
   const { isReady } = useRouter();
-  const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
+  const setAccessToken = useSetAtom(accessTokenAtom);
   useEffect(() => {
     if (isReady) {
       setAccessToken(null);

@@ -8,7 +8,7 @@ export type HomeQueryQueryVariables = Types.Exact<{
   isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
 
-export type HomeQueryQuery = {
+export interface HomeQueryQuery {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
@@ -184,7 +184,7 @@ export type HomeQueryQuery = {
       } | null>;
     } | null;
   } | null;
-};
+}
 
 export const HomeQueryDocument = gql`
   query HomeQuery($locale: String!, $isPreview: Boolean = false) {

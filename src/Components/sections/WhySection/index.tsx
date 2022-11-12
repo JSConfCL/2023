@@ -7,7 +7,7 @@ import { PageProps } from "../../../../pages";
 import Description from "./Description";
 import { ViewportSizes } from "../../../../styles/theme";
 
-const Image = lazy(() => import("../../core/Image"));
+const Image = lazy(async () => await import("../../core/Image"));
 
 const Container = styled.section`
   align-self: center;
@@ -146,9 +146,9 @@ const WhySection = (props: { page: PageProps["whyItems"] }) => {
               <Block key={`why-block-${index}`} variants={BlockVariant}>
                 <Suspense fallback={<div>Loading...</div>}>
                   <Image
-                    mobile={item?.fullImage?.url!}
-                    desktop={item?.icon?.url!}
-                    alt={item?.icon?.description! || ""}
+                    mobile={item?.fullImage?.url}
+                    desktop={item?.icon?.url}
+                    alt={item?.icon?.description || ""}
                     style={{
                       height: isMobile ? "210px" : "390px",
                       width: isMobile ? "100vw" : "fit-content",
@@ -165,7 +165,7 @@ const WhySection = (props: { page: PageProps["whyItems"] }) => {
                   {!isMobile && (
                     <Suspense fallback={<div>Loading...</div>}>
                       <Description
-                        data={item?.description?.json!}
+                        data={item?.description?.json}
                         animationVariants={descriptionVariant(false)}
                       />
                     </Suspense>
@@ -173,7 +173,7 @@ const WhySection = (props: { page: PageProps["whyItems"] }) => {
                   {isMobile && (
                     <Suspense fallback={<div>Loading...</div>}>
                       <Description
-                        data={item?.description?.json!}
+                        data={item?.description?.json}
                         animationVariants={descriptionVariant(true)}
                       />
                     </Suspense>

@@ -1,11 +1,9 @@
 import React from "react";
 import { useAssetCollectionQuery } from "./test.generated";
 
-type Props = {};
-
-export const Test = (props: Props) => {
+export const Test = () => {
   const [{ data, fetching, error }] = useAssetCollectionQuery();
-  if (error) {
+  if (error != null) {
     return <div>error</div>;
   }
   if (fetching) {

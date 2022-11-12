@@ -1,17 +1,17 @@
-import React, { ReactNode } from "react";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { ReactNode } from "react";
 
 import {
-  Document,
   Block,
-  Inline,
   BLOCKS,
+  Document,
+  Inline,
   MARKS,
 } from "@contentful/rich-text-types";
-import { UL, B } from "../../core/Typography";
 import { ViewportSizes } from "../../../../styles/theme";
+import { B, UL } from "../../core/Typography";
 
 export const P = styled(motion.p)`
   font-family: "Barlow";
@@ -30,7 +30,7 @@ export const P = styled(motion.p)`
   }
 `;
 
-const Block = styled(motion.section)``;
+const Section = styled(motion.section)``;
 
 const descriptionRichTextOptions = {
   renderNode: {
@@ -48,9 +48,9 @@ const descriptionRichTextOptions = {
 };
 const Description = (props: { data: Document; animationVariants?: any }) => {
   return (
-    <Block variants={props.animationVariants}>
+    <Section variants={props.animationVariants}>
       {documentToReactComponents(props.data, descriptionRichTextOptions)}
-    </Block>
+    </Section>
   );
 };
 

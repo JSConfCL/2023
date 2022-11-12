@@ -5,11 +5,11 @@ import { FooterQueryQuery } from "../../graphql/footer.generated";
 import { H2 } from "../core/Typography";
 import { ViewportSizes } from "../../../styles/theme";
 
-const Image = lazy(() => import("../core/Image"));
+const Image = lazy(async () => await import("../core/Image"));
 
-type Props = {
+interface Props {
   page: Get<FooterQueryQuery, "page.followUsBlock">;
-};
+}
 
 const Container = styled.section`
   align-self: center;
@@ -72,18 +72,18 @@ const FollowUsSection = (props: Props) => (
     <H2 whileHover={titleAnimation}>{props.page?.title}</H2>
     <Suspense>
       <Flex>
-        {props.page?.socialNetworksCollection?.items.map((props, index) => (
+        {props.page?.socialNetworksCollection?.items.map((item, index) => (
           <StyledA
             target="_blank"
             rel="noreferrer"
-            href={props?.url!}
+            href={item?.url!}
             key={`social-${index}`}
           >
             <Suspense>
               <Image
                 key={`logo-${index}`}
-                mobile={props?.icon?.url!}
-                alt={`${props?.name} logo`}
+                mobile={item?.icon?.url!}
+                alt={`${item?.name!} logo`}
                 params="&w=40"
                 style={{ width: "40px", aspectRatio: "40 / 40" }}
               />

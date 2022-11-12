@@ -10,5 +10,5 @@ export const fetchPost = async ({ url, body }: { url: string; body: any }) => {
     throw new Error();
   }
 
-  return response.json();
+  return await response.json();
 };

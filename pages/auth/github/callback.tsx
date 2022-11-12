@@ -28,9 +28,9 @@ const ActuallyRun = () => {
   const [error, setError] = useState(false);
   const setAccessToken = useSetAtom(accessTokenAtom);
   const mutation = useMutation(finishGithubLogin, {
-    onSuccess: ({ token }) => {
+    onSuccess: async ({ token }) => {
       setAccessToken(token);
-      replace("/tickets");
+      await replace("/tickets");
     },
     onError: () => {
       setError(true);
@@ -38,13 +38,13 @@ const ActuallyRun = () => {
   });
 
   useEffect(() => {
-    if (query.code) {
+    if (query.code !== undefined) {
       mutation.mutate({ code: query.code as string });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (mutation.error || error) {
+  if (Boolean(mutation.error) || error) {
     return (
       <ErrorComponent
         url="/tickets"

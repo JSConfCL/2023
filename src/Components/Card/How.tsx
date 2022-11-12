@@ -6,9 +6,9 @@ import { H2 } from "../core/Typography";
 import { JSConfLogo } from "../svgs/logo";
 import { ViewportSizes } from "../../../styles/theme";
 
-const Description = lazy(() => import("../core/Description"));
-const Image = lazy(() => import("../core/Image"));
-const GoogleMapReact = lazy(() => import("google-map-react"));
+const Description = lazy(async () => await import("../core/Description"));
+const Image = lazy(async () => await import("../core/Image"));
+const GoogleMapReact = lazy(async () => await import("google-map-react"));
 
 type HowCardProps =
   | {
@@ -206,16 +206,16 @@ const HowCard = (props: HowCardProps) => {
           <Description data={props?.description?.json!} />
         </Suspense>
         {props?.button?.link! && (
-          <PrimaryStyledLink href={props?.button?.link!}>
+          <PrimaryStyledLink href={props?.button?.link}>
             {props?.button?.contenido!}
           </PrimaryStyledLink>
         )}
       </WrapperDescription>
-      {props?.image && (
+      {props?.image != null && (
         <ImageContainer>
           <WhiteBlock
             onClick={onHandleClick}
-            isClickeable={Boolean(props?.url!)}
+            isClickeable={Boolean(props?.url)}
           >
             <Suspense fallback={null}>
               <Image
@@ -264,7 +264,7 @@ const HowCard = (props: HowCardProps) => {
           <JSConfLogo />
         </ImageContainer>
       )}
-      {props?.mapa && (
+      {props?.mapa != null && (
         <StyledWrapperMap>
           <Suspense fallback={null}>
             <GoogleMapReact

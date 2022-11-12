@@ -6,9 +6,9 @@ import { H1 } from "../core/Typography";
 import { PrimaryStyledLink } from "../Links";
 import { ViewportSizes } from "../../../styles/theme";
 
-const Description = lazy(() => import("../core/Description"));
-const Image = lazy(() => import("../core/Image"));
-const JSConfLogo = lazy(() => import("../svgs/logo"));
+const Description = lazy(async () => await import("../core/Description"));
+const Image = lazy(async () => await import("../core/Image"));
+const JSConfLogo = lazy(async () => await import("../svgs/logo"));
 
 const Container = styled.section`
   display: flex;
@@ -161,10 +161,10 @@ const BannerCFP = (props: PageProps["heroData"]) => {
       <H1 color="#F45B69">{props.tile}</H1>
       <WrapperDescription>
         <Suspense fallback={null}>
-          <Description data={props?.description?.json!} />
+          <Description data={props?.description?.json} />
         </Suspense>
         <Suspense fallback={null}>
-          <Description data={props?.secondDescription?.json!} />
+          <Description data={props?.secondDescription?.json} />
         </Suspense>
         {props.ctaUrl && (
           <PrimaryStyledLink href={props.ctaUrl}>
@@ -179,8 +179,8 @@ const BannerCFP = (props: PageProps["heroData"]) => {
         {props?.date && <Text>{props.date}</Text>}
         <Suspense fallback={null}>
           <Image
-            mobile={props?.background?.url!}
-            alt={props?.background?.title! || ""}
+            mobile={props?.background?.url}
+            alt={props?.background?.title || ""}
             className="principal"
             style={{
               position: "absolute",

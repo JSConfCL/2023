@@ -1,14 +1,13 @@
-import { useState, useEffect, lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import { H2 } from "../core/Typography";
+import { lazy, Suspense } from "react";
 import { PageProps } from "../../../pages";
-import useMediaQuery from "../../helpers/useMediaQuery";
-import { PrimaryStyledLink } from "../Links/index";
 import { ViewportSizes } from "../../../styles/theme";
+import { H2 } from "../core/Typography";
+import { PrimaryStyledLink } from "../Links/index";
 
-const Description = lazy(() => import("../core/Description"));
-const Card = lazy(() => import("../Card"));
+const Description = lazy(async () => await import("../core/Description"));
+const Card = lazy(async () => await import("../Card"));
 
 const Container = styled.section`
   align-self: center;
@@ -91,12 +90,6 @@ const ContainerButton = styled.section`
   }
 `;
 
-const LoadMoreButton = styled.button`
-  text-align: center;
-  width: 100%;
-  color: #f0e040;
-`;
-
 const TeamSection = (props: { page: PageProps["teamData"] }) => {
   const {
     page: {
@@ -112,7 +105,7 @@ const TeamSection = (props: { page: PageProps["teamData"] }) => {
       <DescriptionContainer>
         <H2 whileHover={{ scale: 1.01 }}>{title}</H2>
         <Suspense fallback={null}>
-          <Description data={description?.json!} />
+          <Description data={description?.json} />
         </Suspense>
         <HR />
       </DescriptionContainer>
@@ -124,7 +117,7 @@ const TeamSection = (props: { page: PageProps["teamData"] }) => {
         )}
       </ContainerButton>
 
-      {items?.map((item: any, index: number) => {
+      {items?.map((item, index: number) => {
         if (index === 6) {
           return (
             <Column key={index} index={index}>

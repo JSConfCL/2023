@@ -9,22 +9,22 @@ import {
 import { ParseQuery } from "../helpers/types";
 import { ViewportSizes } from "../../styles/theme";
 
-const Footer = lazy(() => import("../Components/Footer/Footer"));
+const Footer = lazy(async () => await import("../Components/Footer/Footer"));
 const SubscribeSection = lazy(
-  () => import("../Components/sections/SubscribeSection")
+  async () => await import("../Components/sections/SubscribeSection")
 );
 const FollowUsSection = lazy(
-  () => import("../Components/sections/FollowUsSection")
+  async () => await import("../Components/sections/FollowUsSection")
 );
 
 type Page = ParseQuery<FooterQueryQuery["page"]>;
 
-export type PageProps = {
+export interface PageProps {
   navBar: Page["navBar"];
   followUsBlock: Page["followUsBlock"];
   footer: Page["footer"];
   subscribeBlock: Page["subscribeBlock"];
-};
+}
 
 const FlexRow = styled.div`
   display: flex;
@@ -60,7 +60,7 @@ const ExtendedFooter = () => {
       isPreview: Boolean(process.env.NEXT_PUBLIC_CONTENTFUL_IS_PREVIEW),
     },
   });
-  if (!data?.page) {
+  if (data?.page == null) {
     return null;
   }
   return (

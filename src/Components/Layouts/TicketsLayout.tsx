@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { ViewportSizes } from "../../../styles/theme";
-const TicketNavBar = dynamic(() => import("./TicketNavBar"), {
+const TicketNavBar = dynamic(async () => await import("./TicketNavBar"), {
   ssr: false,
 });
 

@@ -1,14 +1,12 @@
 import styled from "@emotion/styled";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import React from "react";
-import { ViewportSizes } from "../../../styles/theme";
+import { useAtomValue, useSetAtom } from "jotai";
+import { ArrowRight } from "react-feather";
 import { GenericBtn } from "../TicketSection/shared";
 import {
   hasBoughtTicketsAtom,
   subNavigationAtom,
   totalPriceAtom,
 } from "./CartAtom";
-import { ArrowRight } from "react-feather";
 
 const CartTotalizer = styled.div`
   font-size: 1.5rem;

@@ -9,7 +9,7 @@ export type CfpQueryQueryVariables = Types.Exact<{
   isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
 
-export type CfpQueryQuery = {
+export interface CfpQueryQuery {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
@@ -89,7 +89,7 @@ export type CfpQueryQuery = {
       } | null;
     } | null;
   } | null;
-};
+}
 
 export const CfpQueryDocument = gql`
   query CFPQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {

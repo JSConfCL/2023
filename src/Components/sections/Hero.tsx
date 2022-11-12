@@ -6,9 +6,11 @@ import { PageProps } from "../../../pages";
 import { SecondaryStyledLink, TertiaryStyledLink } from "../Links";
 import { NavBarProps } from "../NavBar/NavBar";
 
-const Particles = lazy(() => import("../Particles"));
+const Particles = lazy(async () => await import("../Particles"));
 
-const NavBar = dynamic(() => import("../NavBar/NavBar"), { ssr: false });
+const NavBar = dynamic(async () => await import("../NavBar/NavBar"), {
+  ssr: false,
+});
 
 const StyledWrapper = styled.section(({ theme }) => ({
   width: "100%",

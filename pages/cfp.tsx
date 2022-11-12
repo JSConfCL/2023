@@ -13,18 +13,23 @@ import {
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 
-const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
-  ssr: false,
-});
-const BannerCFP = dynamic(() => import("../src/Components/Banner/CFP"));
+const NavBar = dynamic(
+  async () => await import("../src/Components/NavBar/NavBar"),
+  {
+    ssr: false,
+  }
+);
+const BannerCFP = dynamic(
+  async () => await import("../src/Components/Banner/CFP")
+);
 
 type Page = ParseQuery<CfpQueryQuery["page"]>;
 
-export type PageProps = {
+export interface PageProps {
   navData: NavBarProps;
   heroData: Page["heroBlock"];
   seo: Page["seo"];
-};
+}
 
 const Container = styled.section`
   display: flex;
@@ -40,17 +45,17 @@ const StyledBlackWrapp = styled.section`
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 
-const OnSitePage: NextPage<PageProps> = (props) => {
+const OnSitePage: NextPage<PageProps> = (props: PageProps) => {
   return (
     <StyledBlackWrapp>
       <Seo {...props.seo} />
       <Container>
-        {props.navData && (
+        {Boolean(props.navData) && (
           <Suspense fallback={null}>
             <NavBar {...props.navData} />
           </Suspense>
         )}
-        {props.heroData && (
+        {Boolean(props.heroData) && (
           <Suspense fallback={null}>
             <BannerCFP {...props.heroData} />
           </Suspense>
@@ -68,12 +73,14 @@ export async function getStaticProps() {
       isPreview: Boolean(process.env.NEXT_PUBLIC_CONTENTFUL_IS_PREVIEW),
     })
     .toPromise();
-  const page = queryResults.data?.page as Page;
-  if (!page) return { props: {} };
+  const page = queryResults.data?.page;
+  if (page === null || page === undefined) {
+    return { props: {} };
+  }
   const props: PageProps = {
-    navData: parseNavBarData(page?.navBar),
-    heroData: page?.heroBlock || null,
-    seo: page?.seo || null,
+    navData: parseNavBarData(page?.navBar as Page["navBar"]),
+    heroData: page?.heroBlock != null || null,
+    seo: page?.seo != null || null,
   };
   return {
     props,

@@ -3,8 +3,8 @@ import dynamic from "next/dynamic";
 import { lazy, Suspense } from "react";
 import { Share } from "react-feather";
 
-const QRCode = lazy(() => import("react-qr-code"));
-const JSConfLogo = dynamic(() => import("../svgs/logo"));
+const QRCode = lazy(async () => await import("react-qr-code"));
+const JSConfLogo = dynamic(async () => await import("../svgs/logo"));
 
 const Container = styled.section`
   display: flex;
@@ -87,10 +87,6 @@ const IconWrapper = styled.div`
   justify-content: space-between;
   margin: 1rem 0;
 `;
-
-const LogoColor = {
-  color: "#000",
-};
 
 const ShoppedTicket = () => {
   return (

@@ -5,7 +5,7 @@ import { H2 } from "../core/Typography";
 import { PrimaryStyledLink } from "../Links";
 import { ViewportSizes } from "../../../styles/theme";
 
-const Description = lazy(() => import("../core/Description"));
+const Description = lazy(async () => await import("../core/Description"));
 
 type SponsorCardProps =
   | {

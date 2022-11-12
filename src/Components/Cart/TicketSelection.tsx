@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { useAtomValue } from "jotai";
-import { ViewportSizes } from "../../../styles/theme";
 import { Paragraph } from "../TicketSection/shared";
 import { ticketsAtomsAtom } from "./CartAtom";
 import CartItem from "./CartItem";
@@ -54,6 +53,7 @@ export const TicketSelection = () => {
       <CartWrapper>
         <CartItemsWrapper>
           {ticketsAtom.map((entrada) => (
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             <CartItem key={`${entrada}`} entrada={entrada} />
           ))}
         </CartItemsWrapper>
