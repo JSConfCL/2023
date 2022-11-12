@@ -61,5 +61,20 @@ export const finishGithubLogin = async ({
     throw new Error("Token exchange error");
   }
 };
+export const finishGoogleLogin = async ({
+  code,
+}: {
+  code: string;
+}): Promise<{
+  token: string;
+  user: any;
+}> => {
+  const res = await fetch(`${API_URL}/auth/google/callback?code=${code}`);
+  if (res.status === 200) {
+    return res.json();
+  } else {
+    throw new Error("Token exchange error");
+  }
+};
 
 export const useQuery = () => {};

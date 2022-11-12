@@ -49,7 +49,7 @@ const NoTickets = ({ imageUrl }: { imageUrl: string }) => {
 
   return (
     <>
-      <SectionTile status="inactive" number="01." text="Obten tus tickets" />
+      <SectionTile status="inactive" number="01." text="Regístrate!" />
       <SideContainer>
         <LeftSide>
           <Paragraph>Aún no tenemos tickets a la venta 😢</Paragraph>

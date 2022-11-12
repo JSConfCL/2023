@@ -11,7 +11,7 @@ const ButtonData: { id: number; text: string; icon: string }[] = [
   },
   {
     id: 2,
-    text: "Ingresa con Gmail",
+    text: "Ingresa con Google",
     icon: "/images/gmail-icon.svg",
   },
 ];

@@ -29,8 +29,9 @@ export type PageProps = {
 const image =
   "https://images.ctfassets.net/1kfhsqlc8ewi/EAE7GIGq6Uk26KmdTC9T6/00be1cabc2d9b1dea800dbdb7e31c1bd/ticket.png";
 
+const ticket = ["tickets"];
 const TicketContent = () => {
-  const { data } = useQuery(["tickets"], fetchTickets);
+  const { data } = useQuery(ticket, fetchTickets);
   const setTicketsAtom = useSetAtom(ticketsAtom);
   useEffect(() => {
     if (data) {
@@ -50,7 +51,7 @@ const TicketContent = () => {
   }
 };
 export default function Tickets(props: PageProps) {
-  const { isLoading } = useQuery(["tickets"], fetchTickets);
+  const { isLoading } = useQuery(ticket, fetchTickets);
   return (
     <>
       <Seo {...props.seo} />

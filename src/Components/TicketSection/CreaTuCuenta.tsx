@@ -1,6 +1,9 @@
 import styled from "@emotion/styled";
 import { CSSProperties } from "react";
-import { GithubLoginButton } from "react-social-login-buttons";
+import {
+  GithubLoginButton,
+  GoogleLoginButton,
+} from "react-social-login-buttons";
 import { API_URL } from "../../helpers/API";
 import { Container, Paragraph, SideContainer } from "./shared";
 import { SectionTile } from "./Title";
@@ -48,8 +51,22 @@ const CreaTuCuenta = () => {
               text="Ingresa con Github"
             />
           </div>
-          {/* TODO: Habilitar cuando tengamos login con gmail listo */}
-          {/* <GoogleLoginButton></GoogleLoginButton> */}
+          <div>
+            <GoogleLoginButton
+              style={
+                {
+                  paddingTop: "2rem",
+                  paddingBottom: "2rem",
+                  display: "inline-flex",
+                  justifyContent: "center",
+                } as CSSProperties
+              }
+              onClick={() => {
+                window.location.href = `${API_URL}/auth/github`;
+              }}
+              text="Ingresa con Google"
+            />
+          </div>
         </RigthSide>
       </SideContainer>
     </Container>

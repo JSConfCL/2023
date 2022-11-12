@@ -1,8 +1,10 @@
-import { lazy, Suspense } from "react";
+import styled from "@emotion/styled";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
-import styled from "@emotion/styled";
-
+import { Suspense } from "react";
+import { parseNavBarData } from "../src/Components/NavBar/helper";
+import { NavBarProps } from "../src/Components/NavBar/NavBar";
+import Seo from "../src/Components/Seo";
 import {
   CfpQueryDocument,
   CfpQueryQuery,
@@ -10,9 +12,6 @@ import {
 } from "../src/graphql/cfp.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
-import Seo from "../src/Components/Seo";
-import { NavBarProps } from "../src/Components/NavBar/NavBar";
-import { parseNavBarData } from "../src/Components/NavBar/helper";
 
 const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
   ssr: false,

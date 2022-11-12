@@ -5,7 +5,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ErrorComponent } from "../../../src/Components/ErrorComponent";
-import { finishGithubLogin } from "../../../src/helpers/API";
+import { finishGoogleLogin } from "../../../src/helpers/API";
 import { accessTokenAtom } from "../../../src/helpers/auth";
 
 const Container = styled.section`
@@ -27,7 +27,7 @@ const ActuallyRun = () => {
   const { query, replace } = useRouter();
   const [error, setError] = useState(false);
   const setAccessToken = useSetAtom(accessTokenAtom);
-  const mutation = useMutation(finishGithubLogin, {
+  const mutation = useMutation(finishGoogleLogin, {
     onSuccess: ({ token }) => {
       setAccessToken(token);
       replace("/tickets");
@@ -56,7 +56,7 @@ const ActuallyRun = () => {
   return null;
 };
 
-const GithubAuth: NextPage = (props) => {
+const GoogleAuth: NextPage = (props) => {
   const { isReady } = useRouter();
   return (
     <Container>
@@ -65,4 +65,4 @@ const GithubAuth: NextPage = (props) => {
   );
 };
 
-export default GithubAuth;
+export default GoogleAuth;
