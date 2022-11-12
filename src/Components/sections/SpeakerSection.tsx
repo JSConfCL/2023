@@ -87,8 +87,8 @@ const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
         <HR />
       </DescriptionContainer>
 
-      {speakers.map((item) => (
-        <Card key={item.sys.id} {...item} />
+      {speakers.map((item, index) => (
+        <Card key={`${item.sys.id}_${index}`} {...item} />
       ))}
       {isLoadMore && (
         <LoadMoreButton onClick={LoadMoreHandle}>Load More</LoadMoreButton>

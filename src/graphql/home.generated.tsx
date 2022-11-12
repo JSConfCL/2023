@@ -8,7 +8,7 @@ export type HomeQueryQueryVariables = Types.Exact<{
   isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
 
-export interface HomeQueryQuery {
+export type HomeQueryQuery = {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
@@ -183,8 +183,27 @@ export interface HomeQueryQuery {
         } | null;
       } | null>;
     } | null;
+    sponsorTypeCollection?: {
+      __typename?: "PageSponsorTypeCollection";
+      items: Array<{
+        __typename?: "SponsorType";
+        name?: string | null;
+        sys: { __typename?: "Sys"; id: string };
+        contributorsCollection?: {
+          __typename?: "SponsorTypeContributorsCollection";
+          items: Array<{
+            __typename?: "SponsorBlock";
+            imageParamsMobile?: string | null;
+            imageParamsDesktop?: string | null;
+            sys: { __typename?: "Sys"; id: string };
+            title?: { __typename?: "SponsorBlockTitle"; json: any } | null;
+            image?: { __typename?: "Asset"; url?: string | null } | null;
+          } | null>;
+        } | null;
+      } | null>;
+    } | null;
   } | null;
-}
+};
 
 export const HomeQueryDocument = gql`
   query HomeQuery($locale: String!, $isPreview: Boolean = false) {
@@ -340,6 +359,29 @@ export const HomeQueryDocument = gql`
             name
             photo {
               url
+            }
+          }
+        }
+      }
+      sponsorTypeCollection(limit: 20) {
+        items {
+          sys {
+            id
+          }
+          name
+          contributorsCollection(limit: 20) {
+            items {
+              sys {
+                id
+              }
+              title {
+                json
+              }
+              image {
+                url
+              }
+              imageParamsMobile
+              imageParamsDesktop
             }
           }
         }

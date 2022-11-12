@@ -1,7 +1,11 @@
-import { lazy, Suspense } from "react";
-import type { NextPage } from "next";
 import styled from "@emotion/styled";
-
+import type { NextPage } from "next";
+import { lazy, Suspense } from "react";
+import { parseNavBarData } from "../src/Components/NavBar/helper";
+import { NavBarProps } from "../src/Components/NavBar/NavBar";
+import EventSchema from "../src/Components/schema/event";
+import Hero from "../src/Components/sections/Hero";
+import Seo from "../src/Components/Seo";
 import {
   HomeQueryDocument,
   HomeQueryQuery,
@@ -9,11 +13,6 @@ import {
 } from "../src/graphql/home.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
-import Seo from "../src/Components/Seo";
-import EventSchema from "../src/Components/schema/event";
-import Hero from "../src/Components/sections/Hero";
-import { NavBarProps } from "../src/Components/NavBar/NavBar";
-import { parseNavBarData } from "../src/Components/NavBar/helper";
 
 const WhySection = lazy(
   async () => await import("../src/Components/sections/WhySection")
@@ -23,6 +22,9 @@ const HowSection = lazy(
 );
 const TeamSection = lazy(
   async () => await import("../src/Components/sections/TeamSection")
+);
+const SponsorSection = lazy(
+  async () => await import("../src/Components/sections/SponsorSection")
 );
 const SpeakerSection = lazy(
   async () => await import("../src/Components/sections/SpeakerSection")
@@ -42,8 +44,8 @@ export interface PageProps {
   seo: Page["seo"];
   teamData: Page["teamBlock"];
   events: Page["eventsCollection"]["items"];
+  sponsorType: Page["sponsorTypeCollection"];
 }
-
 const Container = styled.section`
   display: flex;
   flex-direction: column;
@@ -80,6 +82,12 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
         <Suspense fallback={null}>
           {props?.teamData && <TeamSection page={props.teamData} />}
         </Suspense>
+        <Suspense fallback={null}>
+          {props.sponsorType && <SponsorSection page={props.sponsorType} />}
+        </Suspense>
+        <Suspense fallback={null}>
+          {props.teamData && <TeamSection page={props.teamData} />}
+        </Suspense>
       </StyledBlackWrapp>
     </Container>
   );
@@ -103,6 +111,7 @@ export async function getStaticProps() {
     seo: page?.seo || null,
     teamData: page?.teamBlock || null,
     events: page?.eventsCollection.items || null,
+    sponsorType: page?.sponsorTypeCollection || null,
   };
 
   return {
