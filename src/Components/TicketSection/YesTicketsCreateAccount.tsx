@@ -19,13 +19,10 @@ const YesTicketsCreateAccount = ({ imageUrl }: { imageUrl: string }) => {
       <SideContainer>
         <LeftSide>
           <Paragraph>Hay tickets disponibles! 🎉</Paragraph>
-          <br />
           <Paragraph>
             Para comprarlos, primero debes crear una cuenta de JSConf. Puedes
-            hacerlo a través de cuenta de Github en el siguente botón.
+            hacerlo a través de cuenta de Github o Google.
           </Paragraph>
-          <br />
-          <br />
           <GithubButton />
         </LeftSide>
         <RigthSide>

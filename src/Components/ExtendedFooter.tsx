@@ -48,7 +48,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
-  justify-content: center; ;
+  justify-content: center;
+  flex-shrink: 0;
 `;
 
 const ExtendedFooter = () => {

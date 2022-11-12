@@ -1,6 +1,9 @@
 import styled from "@emotion/styled";
 import { ViewportSizes } from "../../../styles/theme";
-import { GithubLoginButton } from "react-social-login-buttons";
+import {
+  GithubLoginButton,
+  GoogleLoginButton,
+} from "react-social-login-buttons";
 import { CSSProperties } from "react";
 import { API_URL } from "../../helpers/API";
 import { transparentize } from "polished";
@@ -196,11 +199,19 @@ export const Shadow = styled.div`
 
 const SocialButtonWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 300px;
+  flex-direction: row;
+  width: 100%;
   margin: 0 auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  gap: 1rem;
+
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    width: 600px;
+  }
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    width: 100%;
+  }
 `;
 
 export const GithubButton = () => {
@@ -220,6 +231,21 @@ export const GithubButton = () => {
           window.location.href = `${API_URL}/auth/github`;
         }}
         text="Ingresa con Github"
+      />
+      <GoogleLoginButton
+        style={
+          {
+            paddingTop: "2rem",
+            paddingBottom: "2rem",
+            margin: 0,
+            display: "inline-flex",
+            justifyContent: "center",
+          } as CSSProperties
+        }
+        onClick={() => {
+          window.location.href = `${API_URL}/auth/google`;
+        }}
+        text="Ingresa con Google"
       />
     </SocialButtonWrapper>
   );

@@ -17,10 +17,6 @@ const Wrapper = styled(motion.div)`
   flex-direction: column;
 `;
 
-const Spacer = styled.div`
-  height: 90px;
-`;
-
 const useAnimation = (transition: Transition = {}): MotionProps => {
   return {
     layout: "position" as "position",
@@ -76,7 +72,6 @@ export const CartContainer = () => {
   const animation = useAnimation({ delay: 0.025 });
   return (
     <>
-      <Spacer />
       <Header />
       <AnimatePresence mode="popLayout" initial={false}>
         {subNavigationAtomValue === "ticket_selection" && (

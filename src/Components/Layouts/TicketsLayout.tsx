@@ -1,13 +1,11 @@
 import styled from "@emotion/styled";
-import { motion } from "framer-motion";
-import { useAtomValue, useSetAtom } from "jotai";
-import { useRouter } from "next/router";
-import { Suspense, useMemo } from "react";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { ViewportSizes } from "../../../styles/theme";
-import { accessTokenAtom, isAuthenticatedAtom } from "../../helpers/auth";
-import { flagsAtom } from "../../helpers/featureFlags";
-import NavBar from "../NavBar/NavBar";
+const TicketNavBar = dynamic(() => import("./TicketNavBar"), {
+  ssr: false,
+});
 
 const StyledBlackWrapp = styled.div`
   display: flex;
@@ -17,6 +15,7 @@ const StyledBlackWrapp = styled.div`
   min-height: fit-content;
   align-items: center;
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
+  flex: 1;
 `;
 
 const Container = styled.div`
@@ -39,42 +38,20 @@ const Container = styled.div`
   }
 `;
 
+const Spacer = styled.div`
+  height: 100px;
+`;
+
 export const TicketsLayout = (page: ReactElement) => {
-  const isLoggedIn = useAtomValue(isAuthenticatedAtom);
-  const { replace } = useRouter();
-  const setAccessToken = useSetAtom(accessTokenAtom);
-  const { "ticket-page-enabled": ticketPageEnabled } = useAtomValue(flagsAtom);
-  const items = useMemo(() => {
-    if (isLoggedIn) {
-      return [
-        {
-          contenido: "Settings",
-          id: "Settings",
-          isBlank: false,
-          link: "/settings",
-          onClick: undefined,
-        },
-        {
-          contenido: "Log Out",
-          id: "Log Out",
-          onClick: () => {
-            setAccessToken(null);
-          },
-        },
-      ];
-    }
-    return [];
-  }, [isLoggedIn, setAccessToken]);
-  if (ticketPageEnabled === false) {
-    replace("/");
-    return null;
-  }
   return (
     <StyledBlackWrapp>
       <Suspense fallback={null}>
-        <NavBar items={items} />
+        <TicketNavBar />
       </Suspense>
-      <Container>{page}</Container>
+      <Container>
+        <Spacer />
+        {page}
+      </Container>
     </StyledBlackWrapp>
   );
 };

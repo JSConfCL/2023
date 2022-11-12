@@ -12,7 +12,6 @@ export const parseNavBarData = (props: Page["navBar"]): NavBarProps => {
       link: item.link,
       contenido: item.contenido,
     })) || [];
-  console.log({ buttonsCollection });
   const items =
     props?.linksCollection?.items?.map((item) => ({
       link: item.link,
@@ -20,7 +19,6 @@ export const parseNavBarData = (props: Page["navBar"]): NavBarProps => {
       id: item.sys.id,
       isBlank: Boolean(item.isBlank),
     })) || [];
-  console.log({ items });
   return {
     buttonsCollection,
     items,
