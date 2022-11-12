@@ -5,6 +5,5 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_CONTENTFUL_API_GOOGLE_MAP: string;
     readonly NEXT_PUBLIC_CONTENTFUL_API_KEY: string;
     readonly NEXT_PUBLIC_FLAGSMITH_KEY: string;
-    readonly FLAGSMITH_KEY: string;
   }
 }
