@@ -14,20 +14,25 @@ import Seo from "../src/Components/Seo";
 import { NavBarProps } from "../src/Components/NavBar/NavBar";
 import { parseNavBarData } from "../src/Components/NavBar/helper";
 
-const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
-  ssr: false,
-});
-const WhyBanner = lazy(() => import("../src/Components/Banner/Why"));
-const WhyCard = lazy(() => import("../src/Components/Card/Why"));
+const NavBar = dynamic(
+  async () => await import("../src/Components/NavBar/NavBar"),
+  {
+    ssr: false,
+  }
+);
+const WhyBanner = lazy(
+  async () => await import("../src/Components/Banner/Why")
+);
+const WhyCard = lazy(async () => await import("../src/Components/Card/Why"));
 
 type Page = ParseQuery<WhyQueryQuery["page"]>;
 
-export type PageProps = {
+export interface PageProps {
   navData: NavBarProps;
   whyItems: Page["whyBlockCollection"];
   heroData: Page["heroBlock"];
   seo: Page["seo"];
-};
+}
 
 const Container = styled.section`
   display: flex;
@@ -43,7 +48,7 @@ const StyledBlackWrapp = styled.section`
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 
-const Why: NextPage<PageProps> = (props) => {
+const Why: NextPage<PageProps> = (props: PageProps) => {
   return (
     <StyledBlackWrapp>
       <Seo {...props.seo} />

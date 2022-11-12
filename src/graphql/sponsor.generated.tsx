@@ -9,7 +9,7 @@ export type SponsorQueryQueryVariables = Types.Exact<{
   isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
 
-export type SponsorQueryQuery = {
+export interface SponsorQueryQuery {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
@@ -97,7 +97,7 @@ export type SponsorQueryQuery = {
       } | null;
     } | null;
   } | null;
-};
+}
 
 export const SponsorQueryDocument = gql`
   query SponsorQuery(

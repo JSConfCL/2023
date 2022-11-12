@@ -1,14 +1,13 @@
 import Image from "../core/Image";
 import {
-  Container,
-  Paragraph,
-  SideContainer,
-  LeftSide,
-  RigthSide,
-  ImageWrapper,
-  Shadow,
-  ImageContainer,
   GithubButton,
+  ImageContainer,
+  ImageWrapper,
+  LeftSide,
+  Paragraph,
+  RigthSide,
+  Shadow,
+  SideContainer,
 } from "./shared";
 import { SectionTile } from "./Title";
 

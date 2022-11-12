@@ -1,6 +1,6 @@
 import { atom, Atom } from "jotai";
 import { selectAtom, splitAtom } from "jotai/utils";
-export type Entrada = {
+export interface Entrada {
   createdAt: string;
   description: string;
   id: string;
@@ -14,9 +14,11 @@ export type Entrada = {
   type: string;
   updatedAt: string;
   currentQuantity: number;
-};
+}
 
-export type EntradaMapType = { [entradaId: Entrada["id"]]: Entrada };
+export interface EntradaMapType {
+  [entradaId: Entrada["id"]]: Entrada;
+}
 export const ticketsAtom = atom<Entrada[]>([]);
 export const ticketsAtomsAtom = splitAtom(ticketsAtom);
 export const ticketSummaryAtom = selectAtom(ticketsAtom, (ticketsAtom) => {
@@ -45,9 +47,9 @@ export const hasBoughtTicketsAtom = atom((get) =>
   )
 );
 
-export type EntradaFormType = {
+export interface EntradaFormType {
   [entradaId: Entrada["id"]]: Atom<number>;
-};
+}
 export const subNavigationAtom = atom<
   "ticket_selection" | "agreements" | "payment_selection"
 >("ticket_selection");

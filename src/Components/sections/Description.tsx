@@ -1,18 +1,18 @@
-import React, { ReactNode } from "react";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { ReactNode } from "react";
 
 import {
-  Document,
   Block,
-  Inline,
   BLOCKS,
+  Document,
+  Inline,
   MARKS,
 } from "@contentful/rich-text-types";
-import { P, B, UL, H3 } from "../core/Typography";
+import { B, P, UL } from "../core/Typography";
 
-const Block = styled(motion.section)``;
+const Section = styled(motion.section)``;
 
 const descriptionRichTextOptions = {
   renderNode: {
@@ -30,9 +30,9 @@ const descriptionRichTextOptions = {
 };
 const Description = (props: { data: Document; animationVariants?: any }) => {
   return (
-    <Block variants={props.animationVariants}>
+    <Section variants={props.animationVariants}>
       {documentToReactComponents(props.data, descriptionRichTextOptions)}
-    </Block>
+    </Section>
   );
 };
 

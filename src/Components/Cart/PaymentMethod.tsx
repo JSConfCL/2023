@@ -16,7 +16,6 @@ import {
   totalPriceAtom,
 } from "./CartAtom";
 import { ArrowLeft, CreditCard, Loader } from "react-feather";
-import { transparentize } from "polished";
 import { useMutation } from "@tanstack/react-query";
 import { createPayment } from "../../helpers/API";
 
@@ -141,11 +140,11 @@ const PaymentMethod = () => {
         </GenericBtn>
         <GenericBtn
           disabled={noPaymentSelector || mutation.isLoading}
-          onClick={async () => {
-            if (!paymentSelectorValue) {
+          onClick={() => {
+            if (noPaymentSelector) {
               return;
             }
-            await mutation.mutateAsync({
+            mutation.mutate({
               gateway: paymentSelectorValue,
               tickets: ticketSummaryAtomValue.map((ticket) => ({
                 id: ticket.id,

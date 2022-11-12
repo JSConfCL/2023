@@ -16,15 +16,15 @@ import {
   TicketsQueryQueryVariables,
 } from "../../src/graphql/tickets.generated";
 import { urlQlient } from "../../src/graphql/urql";
-import { fetchTickets, me } from "../../src/helpers/API";
+import { fetchTickets } from "../../src/helpers/API";
 import { isAuthenticatedAtom } from "../../src/helpers/auth";
 import { ParseQuery } from "../../src/helpers/types";
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
 
-export type PageProps = {
+export interface PageProps {
   seo: Page["seo"];
-};
+}
 
 const image =
   "https://images.ctfassets.net/1kfhsqlc8ewi/EAE7GIGq6Uk26KmdTC9T6/00be1cabc2d9b1dea800dbdb7e31c1bd/ticket.png";
@@ -34,7 +34,7 @@ const TicketContent = () => {
   const { data } = useQuery(ticket, fetchTickets);
   const setTicketsAtom = useSetAtom(ticketsAtom);
   useEffect(() => {
-    if (data) {
+    if (data != null) {
       setTicketsAtom(data.map((el) => ({ ...el, currentQuantity: 0 })));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

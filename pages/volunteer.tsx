@@ -15,17 +15,20 @@ import VolunteerForm from "../src/Components/Form/Volunteer";
 import { NavBarProps } from "../src/Components/NavBar/NavBar";
 import { parseNavBarData } from "../src/Components/NavBar/helper";
 
-const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
-  ssr: false,
-});
+const NavBar = dynamic(
+  async () => await import("../src/Components/NavBar/NavBar"),
+  {
+    ssr: false,
+  }
+);
 
 type Page = ParseQuery<VolunteerQueryQuery["page"]>;
 
-export type PageProps = {
+export interface PageProps {
   navData: NavBarProps;
   heroData: Page["heroBlock"];
   url: string;
-};
+}
 
 const Container = styled.section`
   display: flex;
@@ -41,7 +44,7 @@ const StyledBlackWrapp = styled.section`
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 
-const VolunteerPage: NextPage<PageProps> = (props) => {
+const VolunteerPage: NextPage<PageProps> = (props: PageProps) => {
   return (
     <StyledBlackWrapp>
       <Container>
@@ -72,7 +75,7 @@ export async function getStaticProps() {
   const props: PageProps = {
     navData: parseNavBarData(page?.navBar),
     heroData: page?.heroBlock || null,
-    url: process.env.NEXT_PUBLIC_DATA_API || "",
+    url: process.env.NEXT_PUBLIC_DATA_API,
   };
   return {
     props,

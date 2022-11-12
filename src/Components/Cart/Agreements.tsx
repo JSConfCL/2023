@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
 import { useAtom, useSetAtom } from "jotai";
-import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "react-feather";
 import { ViewportSizes } from "../../../styles/theme";
-import { ButtonWrapper, GenericBtn, Paragraph } from "../TicketSection/shared";
+import { ButtonWrapper, GenericBtn } from "../TicketSection/shared";
 import {
   codeOfConductAgreedAtom,
   policyAgreedAtom,

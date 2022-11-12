@@ -1,0 +1,30 @@
+module.exports = {
+  parser: "@typescript-eslint/parser",
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+  },
+  root: true,
+  extends: [
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "standard-with-typescript",
+    "prettier",
+  ],
+  overrides: [],
+  parserOptions: {
+    project: ["./tsconfig.json"],
+    ecmaVersion: "latest",
+    sourceType: "module",
+  },
+  plugins: ["@typescript-eslint", "react"],
+  rules: {
+    "react/react-in-jsx-scope": ["off"],
+    "@typescript-eslint/explicit-function-return-type": ["off"],
+    "@typescript-eslint/strict-boolean-expressions": ["off"],
+    "@typescript-eslint/no-non-null-assertion": ["off"],
+    "@typescript-eslint/no-non-null-asserted-optional-chain": ["off"],
+    "@next/next/no-img-element": ["off"],
+  },
+};

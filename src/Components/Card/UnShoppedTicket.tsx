@@ -1,7 +1,4 @@
-import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
-import { Document } from "@contentful/rich-text-types";
-import { B, H2 } from "../core/Typography";
 import { ViewportSizes } from "../../../styles/theme";
 
 const Container = styled.section`

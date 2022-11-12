@@ -15,12 +15,9 @@ import { ViewportSizes } from "../../styles/theme";
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
 
-export type PageProps = {
+export interface PageProps {
   seo: Page["seo"];
-};
-
-const image =
-  "https://images.ctfassets.net/1kfhsqlc8ewi/EAE7GIGq6Uk26KmdTC9T6/00be1cabc2d9b1dea800dbdb7e31c1bd/ticket.png";
+}
 
 export const Container = styled.div`
   display: flex;
@@ -75,7 +72,7 @@ const SocialAnchor = styled.a<{ type: "twitter" | "facebook" | "linkedin" }>(
       display: `inline-block`,
       position: "relative",
       fontWeight: "bold",
-      ["&:after"]: {
+      "&:after": {
         content: `""`,
         position: "absolute",
         width: "100%",
@@ -87,7 +84,7 @@ const SocialAnchor = styled.a<{ type: "twitter" | "facebook" | "linkedin" }>(
         transformOrigin: "bottom right",
         transition: "transform 0.25s ease-out",
       },
-      ["&:hover:after"]: {
+      "&:hover:after": {
         transform: "scaleX(1)",
         transformOrigin: "bottom left",
       },

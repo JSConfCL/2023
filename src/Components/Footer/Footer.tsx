@@ -6,9 +6,9 @@ import { ViewportSizes } from "../../../styles/theme";
 import { FooterQueryQuery } from "../../graphql/footer.generated";
 import { JSConfLogo } from "../svgs/logo";
 
-type Props = {
+interface Props {
   page: Get<FooterQueryQuery, "page.footer">;
-};
+}
 
 const StyledFooter = styled.footer(
   ({ theme }) => `

@@ -1,4 +1,3 @@
-import type { NextPage } from "next";
 import styled from "@emotion/styled";
 import { H1, P } from "../core/Typography";
 import { PrimaryStyledLink } from "../Links";

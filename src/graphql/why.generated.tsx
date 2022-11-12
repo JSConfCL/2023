@@ -9,7 +9,7 @@ export type WhyQueryQueryVariables = Types.Exact<{
   isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
 
-export type WhyQueryQuery = {
+export interface WhyQueryQuery {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
@@ -102,7 +102,7 @@ export type WhyQueryQuery = {
       } | null;
     } | null;
   } | null;
-};
+}
 
 export const WhyQueryDocument = gql`
   query WhyQuery($id: String!, $locale: String!, $isPreview: Boolean = false) {

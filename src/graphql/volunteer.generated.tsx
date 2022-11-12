@@ -9,7 +9,7 @@ export type VolunteerQueryQueryVariables = Types.Exact<{
   isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
 
-export type VolunteerQueryQuery = {
+export interface VolunteerQueryQuery {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
@@ -79,7 +79,7 @@ export type VolunteerQueryQuery = {
       } | null;
     } | null;
   } | null;
-};
+}
 
 export const VolunteerQueryDocument = gql`
   query VolunteerQuery(

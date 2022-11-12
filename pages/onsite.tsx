@@ -14,20 +14,23 @@ import Seo from "../src/Components/Seo";
 import { NavBarProps } from "../src/Components/NavBar/NavBar";
 import { parseNavBarData } from "../src/Components/NavBar/helper";
 
-const NavBar = dynamic(() => import("../src/Components/NavBar/NavBar"), {
-  ssr: false,
-});
-const HowCard = lazy(() => import("../src/Components/Card/How"));
+const NavBar = dynamic(
+  async () => await import("../src/Components/NavBar/NavBar"),
+  {
+    ssr: false,
+  }
+);
+const HowCard = lazy(async () => await import("../src/Components/Card/How"));
 
 type Page = ParseQuery<HowQueryQuery["page"]>;
 
-export type PageProps = {
+export interface PageProps {
   navData: NavBarProps;
   howItems: Page["howBlockCollection"];
   followUsData: Page["followUsBlock"];
   GM_KEY: string;
   seo: Page["seo"];
-};
+}
 
 const Container = styled.section`
   display: flex;
@@ -43,7 +46,7 @@ const StyledBlackWrapp = styled.section`
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 
-const OnSitePage: NextPage<PageProps> = (props) => {
+const OnSitePage: NextPage<PageProps> = (props: PageProps) => {
   return (
     <StyledBlackWrapp>
       <Seo {...props.seo} />
@@ -84,7 +87,7 @@ export async function getStaticProps() {
     navData: parseNavBarData(page?.navBar),
     howItems: page?.howBlockCollection,
     followUsData: page?.followUsBlock,
-    GM_KEY: process.env.NEXT_PUBLIC_CONTENTFUL_API_GOOGLE_MAP || "",
+    GM_KEY: process.env.NEXT_PUBLIC_CONTENTFUL_API_GOOGLE_MAP,
     seo: page?.seo || null,
   };
   return {

@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 
@@ -48,7 +47,7 @@ const Image = (props: {
       )}
       <Img
         loading={loading}
-        src={`${props.desktop || props.mobile}?fm=webp${params}`}
+        src={`${props.desktop ?? props.mobile}?fm=webp${params}`}
         style={props.style}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { duration: 0.5 } }}

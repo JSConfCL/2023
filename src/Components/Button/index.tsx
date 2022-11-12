@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
-import { text } from "node:stream/consumers";
-import { darken, lighten, opacify } from "polished";
+import { darken, lighten } from "polished";
 
 const baseStyling = {
   all: "unset",

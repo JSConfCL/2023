@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
-import { lazy, Suspense, useState } from "react";
+import { Suspense, useState } from "react";
 import { add, format, parseISO } from "date-fns";
 import esLocale from "date-fns/locale/es";
 
@@ -10,8 +10,6 @@ import { PrimaryStyledLink } from "../Links/index";
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 
 import { PageProps } from "../../../pages";
-
-const Particles = lazy(() => import("../Particles"));
 
 const DATES = ["2023-02-03", "2023-02-04"];
 const GENERAL = "general";
@@ -208,7 +206,7 @@ const AuthorCell = styled(TableCell)`
 const TableRow = styled.tr`
   display: block;
   width: 100%;
-  border-bottom: 1px solid #FFFFFF4D;
+  border-bottom: 1px solid #ffffff4d;
   padding: 32px 16px;
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
@@ -219,7 +217,7 @@ const TableRow = styled.tr`
       animation: ${colorIn} 1s ease;
       background: rgb(244 91 105 / 20%);
 
-      {ImageCell} {
+      ${ImageCell} {
         img {
           opacity: 1;
           width: 200px;
@@ -261,7 +259,10 @@ const TimelineRow = ({ event }: { event: Flatten<PageProps["events"]> }) => {
       <ImageCell>
         <Suspense fallback={null}>
           {event?.speaker?.photo?.url ? (
-            <img src={event?.speaker?.photo?.url} />
+            <img
+              alt="Foto de uno de nuestros speakers"
+              src={event?.speaker?.photo?.url}
+            />
           ) : null}
         </Suspense>
       </ImageCell>
@@ -284,12 +285,12 @@ const TimelineRow = ({ event }: { event: Flatten<PageProps["events"]> }) => {
 
 const TimelineSection = (props: { events: PageProps["events"] }) => {
   const [selectedDate, setSelectedDate] = useState(DATES[0]);
-  const events = props.events || [];
+  const events = props.events;
   const selectedEvents = events.filter((event) =>
     event.date.startsWith(selectedDate)
   );
 
-  if (!events.length) {
+  if (events.length === 0) {
     return null;
   }
 

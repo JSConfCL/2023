@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 import { ViewportSizes } from "../../../styles/theme";
 
-type ButtonInfo = {
+interface ButtonInfo {
   id: number | string;
   text?: string;
   icon?: string;
-};
+}
 
 const IconLogin = styled.img`
   width: 40% !important;
@@ -48,9 +48,9 @@ const TertiaryButton = styled.button`
 
 const LoginButton = (props: ButtonInfo) => {
   return (
-    <TertiaryButton key={props?.id!}>
-      <IconLogin src={props?.icon!} className="loginIcon" />
-      <p>{props?.text!} </p>
+    <TertiaryButton key={props?.id}>
+      <IconLogin src={props?.icon} className="loginIcon" />
+      <p>{props?.text} </p>
     </TertiaryButton>
   );
 };

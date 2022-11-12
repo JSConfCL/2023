@@ -1,25 +1,25 @@
-import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { motion, useAnimation } from "framer-motion";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BeatLoader } from "react-spinners";
 
 import { ViewportSizes } from "../../../styles/theme";
-import { H2 } from "../core/Typography";
 import { fetchPost } from "../../services/fetch";
+import { H2 } from "../core/Typography";
 import {
-  nameValidation,
-  lastNameValidation,
-  emailValidation,
   descriptionValidation,
+  emailValidation,
+  lastNameValidation,
+  nameValidation,
 } from "./schema";
 
-type FormData = {
+interface FormData {
   name: string;
   lastName: string;
   email: string;
   description: string;
-};
+}
 
 const StyledH2 = styled(H2)`
   font-weight: 400;
@@ -76,7 +76,8 @@ const InputC = styled.input<{ error: boolean }>`
   display: flex;
   flex-direction: row;
   width: 100%;
-  border: ${({ error }) => `0px solid ${error ? "#F45B69;" : "#F0E040"}`};
+  border: ${({ error, theme }) =>
+    `0px solid ${error ? theme.colors.jsconfRed : theme.colors.jsconfYellow}`};
   border-bottom-width: 1px;
 `;
 
@@ -85,14 +86,15 @@ const Textarea = styled.textarea<{ error: boolean }>`
   display: flex;
   flex-direction: row;
   width: 100%;
-  border: ${({ error }) => `0px solid ${error ? "#F45B69;" : "#F0E040"}`};
+  border: ${({ error, theme }) =>
+    `0px solid ${error ? theme.colors.jsconfRed : theme.colors.jsconfYellow}`};
   border-bottom-width: 1px;
 `;
 
 const ErrorMessage = styled.section<{ color?: string }>`
   height: 20px;
   font-size: 16px;
-  color: ${({ color }) => (color ? color : "#f45b69")};
+  color: ${({ color, theme }) => color ?? theme.colors.jsconfRed};
   padding-bottom: 32px;
 `;
 
@@ -112,7 +114,7 @@ const VolunteerForm = (props: { url: string }) => {
   } = useForm<FormData>({ mode: "onChange" });
   const onSubmit = handleSubmit(async (data) => {
     setSubmitMessage("");
-    textControls.start({
+    await textControls.start({
       opacity: 0,
       y: -2,
       transition: { duration: 0.2 },
@@ -124,12 +126,12 @@ const VolunteerForm = (props: { url: string }) => {
       transition: { duration: 0.3, delay: 0.2 },
     });
 
-    textControls.start({
+    await textControls.start({
       x: "100vw",
       transition: { duration: 1 },
     });
     try {
-      const response = await fetchPost({
+      await fetchPost({
         url: `${props.url}/volunteer`,
         body: JSON.stringify(data),
       });
@@ -162,7 +164,10 @@ const VolunteerForm = (props: { url: string }) => {
   return (
     <Container>
       <StyledH2>Registro</StyledH2>
-      <form onSubmit={onSubmit}>
+      <form
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        onSubmit={onSubmit}
+      >
         <InputC
           {...register("name", nameValidation)}
           placeholder="Nombre"

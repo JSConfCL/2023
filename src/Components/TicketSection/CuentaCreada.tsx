@@ -1,7 +1,4 @@
 import styled from "@emotion/styled";
-import { CSSProperties } from "react";
-import { GithubLoginButton } from "react-social-login-buttons";
-import { API_URL } from "../../helpers/API";
 import { Container, Paragraph, SideContainer } from "./shared";
 import { SectionTile } from "./Title";
 

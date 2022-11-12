@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import LoginButton from "../Button/Login";
 import { ViewportSizes } from "../../../styles/theme";
 
-const ButtonData: { id: number; text: string; icon: string }[] = [
+const ButtonData: Array<{ id: number; text: string; icon: string }> = [
   {
     id: 1,
     text: "Ingresa con Github",

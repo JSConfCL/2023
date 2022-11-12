@@ -13,9 +13,9 @@ import { ViewportSizes } from "../../styles/theme";
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
 
-export type PageProps = {
+export interface PageProps {
   seo: Page["seo"];
-};
+}
 
 export const Container = styled.div`
   display: flex;

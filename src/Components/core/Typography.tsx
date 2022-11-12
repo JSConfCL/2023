@@ -11,7 +11,7 @@ export const H1 = styled(motion.h1)<{ color?: string }>`
   /* or 100% */
   display: flex;
   align-items: center;
-  color: ${({ color }) => color || "white"};
+  color: ${({ color }) => color ?? "white"};
 `;
 
 export const H2 = styled(motion.h2)`

@@ -1,15 +1,15 @@
-import React, { useRef, useState, Suspense } from "react";
 import styled from "@emotion/styled";
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
+import { Suspense, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { Get } from "type-fest";
-import { H2, H3 } from "../core/Typography";
-import { FooterQueryQuery } from "../../graphql/footer.generated";
 import { ViewportSizes } from "../../../styles/theme";
+import { FooterQueryQuery } from "../../graphql/footer.generated";
+import { H2 } from "../core/Typography";
 
-type Props = {
+interface Props {
   page: Get<FooterQueryQuery, "page.subscribeBlock">;
-};
+}
 
 const Container = styled.section`
   display: flex;
@@ -113,8 +113,8 @@ const SubscribeSection = (props: Props) => {
   const formElement = useRef<HTMLFormElement>(null);
   const { register, handleSubmit, formState } = useForm<{ email: "string" }>();
 
-  const wait = (seconds: number) =>
-    new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+  const wait = async (seconds: number) =>
+    await new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 
   const onSubmit = async (data: FieldValues) => {
     try {
@@ -175,7 +175,11 @@ const SubscribeSection = (props: Props) => {
       <H2 whileHover={titleAnimation}>{props?.page?.title}</H2>
       <Suspense fallback={null}>
         <AnimatePresence mode="wait">
-          <Form onSubmit={handleSubmit(onSubmit)} ref={formElement}>
+          <Form
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            onSubmit={handleSubmit(onSubmit)}
+            ref={formElement}
+          >
             <Fieldset>
               <EmailInput
                 placeholder="Tu Email"

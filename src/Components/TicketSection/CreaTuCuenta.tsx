@@ -18,6 +18,13 @@ const RigthSide = styled.div`
   flex: 1;
 `;
 
+const style: CSSProperties = {
+  paddingTop: "2rem",
+  paddingBottom: "2rem",
+  display: "inline-flex",
+  justifyContent: "center",
+};
+
 const CreaTuCuenta = () => {
   return (
     <Container>
@@ -37,14 +44,7 @@ const CreaTuCuenta = () => {
         <RigthSide>
           <div>
             <GithubLoginButton
-              style={
-                {
-                  paddingTop: "2rem",
-                  paddingBottom: "2rem",
-                  display: "inline-flex",
-                  justifyContent: "center",
-                } as CSSProperties
-              }
+              style={style}
               onClick={() => {
                 window.location.href = `${API_URL}/auth/github`;
               }}
@@ -53,14 +53,7 @@ const CreaTuCuenta = () => {
           </div>
           <div>
             <GoogleLoginButton
-              style={
-                {
-                  paddingTop: "2rem",
-                  paddingBottom: "2rem",
-                  display: "inline-flex",
-                  justifyContent: "center",
-                } as CSSProperties
-              }
+              style={style}
               onClick={() => {
                 window.location.href = `${API_URL}/auth/github`;
               }}

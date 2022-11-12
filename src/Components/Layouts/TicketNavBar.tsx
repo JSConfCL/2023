@@ -1,16 +1,16 @@
 import { useAtomValue, useSetAtom } from "jotai";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useFlags } from "flagsmith/react";
 import { accessTokenAtom, isAuthenticatedAtom } from "../../helpers/auth";
-import { flagsAtom } from "../../helpers/featureFlags";
 import NavBar from "../NavBar/NavBar";
 
 const TicketNavBar = () => {
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
   const { replace } = useRouter();
   const setAccessToken = useSetAtom(accessTokenAtom);
-  const { "ticket-page-enabled": ticketPageEnabled } = useAtomValue(flagsAtom);
+  const flags = useFlags(["ticket-page-enabled"]);
+  const ticketPageEnabled = flags["ticket-page-enabled"].value;
   const items = useMemo(() => {
     if (isLoggedIn) {
       return [
@@ -32,11 +32,15 @@ const TicketNavBar = () => {
     }
     return [];
   }, [isLoggedIn, setAccessToken]);
-  if (ticketPageEnabled === false) {
-    replace("/");
-    return null;
+  useEffect(() => {
+    if (!ticketPageEnabled) {
+      replace("/").catch((e) => console.error(e));
+    }
+  }, [replace, ticketPageEnabled]);
+  if (ticketPageEnabled) {
+    return <NavBar items={items} />;
   }
-  return <NavBar items={items} />;
+  return null;
 };
 
 export default TicketNavBar;
