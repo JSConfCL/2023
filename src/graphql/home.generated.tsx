@@ -183,6 +183,23 @@ export interface HomeQueryQuery {
         } | null;
       } | null>;
     } | null;
+    sponsorTypeCollection?: {
+      __typename?: "PageSponsorTypeCollection";
+      items: Array<{
+        __typename?: "SponsorType";
+        name?: string | null;
+        contributorsCollection?: {
+          __typename?: "SponsorTypeContributorsCollection";
+          items: Array<{
+            __typename?: "SponsorBlock";
+            imageParamsMobile?: string | null;
+            imageParamsDesktop?: string | null;
+            title?: { __typename?: "SponsorBlockTitle"; json: any } | null;
+            image?: { __typename?: "Asset"; url?: string | null } | null;
+          } | null>;
+        } | null;
+      } | null>;
+    } | null;
   } | null;
 }
 
