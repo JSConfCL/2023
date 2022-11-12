@@ -9,9 +9,7 @@ const TicketNavBar = () => {
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
   const { replace } = useRouter();
   const setAccessToken = useSetAtom(accessTokenAtom);
-  const flags = useFlags(["ticket-page-enabled"]); // only causes re-render if specified flag values / traits change
-
-  console.log({ flags });
+  const flags = useFlags(["ticket-page-enabled"]);
   const ticketPageEnabled = flags["ticket-page-enabled"].value;
   const items = useMemo(() => {
     if (isLoggedIn) {
