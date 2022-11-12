@@ -10,11 +10,19 @@ const customFetch = (
   input: RequestInfo | URL,
   init?: RequestInit | undefined
 ) => {
-  return fetch(input, { ...init, headers: { ...init?.headers } });
+  const accessToken = getValidToken();
+  return fetch(input, {
+    ...init,
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+      ...init?.headers,
+    },
+  });
 };
 
 export const fetchTickets = async (): Promise<Array<Entrada>> => {
-  const res = await fetch(`${API_URL}/tickets`);
+  const res = await customFetch(`${API_URL}/tickets`);
   return res.json();
 };
 
@@ -23,7 +31,7 @@ export const createPayment = async (object: {
   tickets: { id: string; quantity: number; name: string; email: string }[];
 }): Promise<{ paymentUrl: string }> => {
   const accessToken = getValidToken();
-  const res = await fetch(`${API_URL}/payments`, {
+  const res = await customFetch(`${API_URL}/payments`, {
     headers: {
       "content-type": "application/json",
       Authorization: `Bearer ${accessToken}`,
@@ -38,7 +46,7 @@ export const me = async (): Promise<{
   token: string;
   user: any;
 }> => {
-  const res = await fetch(`${API_URL}/users/me`);
+  const res = await customFetch(`${API_URL}/users/me`);
   if (res.status === 200) {
     return res.json();
   } else {
@@ -54,7 +62,7 @@ export const finishGithubLogin = async ({
   token: string;
   user: any;
 }> => {
-  const res = await fetch(`${API_URL}/auth/github/callback?code=${code}`);
+  const res = await customFetch(`${API_URL}/auth/github/callback?code=${code}`);
   if (res.status === 200) {
     return res.json();
   } else {
@@ -69,12 +77,10 @@ export const finishGoogleLogin = async ({
   token: string;
   user: any;
 }> => {
-  const res = await fetch(`${API_URL}/auth/google/callback?code=${code}`);
+  const res = await customFetch(`${API_URL}/auth/google/callback?code=${code}`);
   if (res.status === 200) {
     return res.json();
   } else {
     throw new Error("Token exchange error");
   }
 };
-
-export const useQuery = () => {};
