@@ -77,10 +77,10 @@ export async function getStaticProps() {
   if (page === null || page === undefined) {
     return { props: {} };
   }
-  const props: PageProps = {
+  const props = {
     navData: parseNavBarData(page?.navBar as Page["navBar"]),
-    heroData: page?.heroBlock != null || null,
-    seo: page?.seo != null || null,
+    heroData: page?.heroBlock ?? null,
+    seo: page?.seo ?? null,
   };
   return {
     props,
