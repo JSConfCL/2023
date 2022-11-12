@@ -9,7 +9,7 @@ export type TicketsQueryQueryVariables = Types.Exact<{
   isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
 
-export interface TicketsQueryQuery {
+export type TicketsQueryQuery = {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
@@ -106,7 +106,7 @@ export interface TicketsQueryQuery {
       } | null;
     } | null;
   } | null;
-}
+};
 
 export const TicketsQueryDocument = gql`
   query TicketsQuery(

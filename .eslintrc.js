@@ -21,6 +21,7 @@ module.exports = {
   plugins: ["@typescript-eslint", "react"],
   rules: {
     "react/react-in-jsx-scope": ["off"],
+    "@typescript-eslint/consistent-type-definitions": ["off"],
     "@typescript-eslint/explicit-function-return-type": ["off"],
     "@typescript-eslint/strict-boolean-expressions": ["off"],
     "@typescript-eslint/no-non-null-assertion": ["off"],

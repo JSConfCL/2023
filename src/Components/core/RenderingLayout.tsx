@@ -1,10 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from "react";
 import styled from "@emotion/styled";
-import { motion } from "framer-motion";
-import { H2 } from "../core/Typography";
-import { PageProps } from "../../../pages";
-//import useMediaQuery from "../../helpers/useMediaQuery";
-import { ViewportSizes } from "../../../styles/theme";
 
 const FlexLayout = styled.div`
   display: flex;

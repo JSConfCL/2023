@@ -1,7 +1,11 @@
-import { lazy, Suspense } from "react";
-import type { NextPage } from "next";
 import styled from "@emotion/styled";
-
+import type { NextPage } from "next";
+import { lazy, Suspense } from "react";
+import { parseNavBarData } from "../src/Components/NavBar/helper";
+import { NavBarProps } from "../src/Components/NavBar/NavBar";
+import EventSchema from "../src/Components/schema/event";
+import Hero from "../src/Components/sections/Hero";
+import Seo from "../src/Components/Seo";
 import {
   HomeQueryDocument,
   HomeQueryQuery,
@@ -9,11 +13,6 @@ import {
 } from "../src/graphql/home.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
-import Seo from "../src/Components/Seo";
-import EventSchema from "../src/Components/schema/event";
-import Hero from "../src/Components/sections/Hero";
-import { NavBarProps } from "../src/Components/NavBar/NavBar";
-import { parseNavBarData } from "../src/Components/NavBar/helper";
 
 const WhySection = lazy(
   async () => await import("../src/Components/sections/WhySection")
@@ -25,7 +24,7 @@ const TeamSection = lazy(
   async () => await import("../src/Components/sections/TeamSection")
 );
 const SponsorSection = lazy(
-  () => import("../src/Components/sections/SponsorSection")
+  async () => await import("../src/Components/sections/SponsorSection")
 );
 const SpeakerSection = lazy(
   async () => await import("../src/Components/sections/SpeakerSection")

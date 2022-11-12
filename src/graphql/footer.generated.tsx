@@ -9,7 +9,7 @@ export type FooterQueryQueryVariables = Types.Exact<{
   isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
 
-export interface FooterQueryQuery {
+export type FooterQueryQuery = {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
@@ -69,7 +69,7 @@ export interface FooterQueryQuery {
       title?: string | null;
     } | null;
   } | null;
-}
+};
 
 export const FooterQueryDocument = gql`
   query FooterQuery(

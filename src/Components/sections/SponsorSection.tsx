@@ -1,17 +1,15 @@
-import { useState, useEffect, lazy, Suspense } from "react";
 import styled from "@emotion/styled";
-import { motion } from "framer-motion";
-import { H2 } from "../core/Typography";
+import { Fragment, lazy, useState } from "react";
 import { PageProps } from "../../../pages";
 import useMediaQuery from "../../helpers/useMediaQuery";
 
 import { ViewportSizes } from "../../../styles/theme";
 import { PrimaryStyledLink } from "../Links";
 
-const Description = lazy(() => import("../core/Description"));
-const Card = lazy(() => import("../Card"));
-const Image = lazy(() => import("../core/Image"));
-const RenderingLayout = lazy(() => import("../core/RenderingLayout"));
+const Image = lazy(async () => await import("../core/Image"));
+const RenderingLayout = lazy(
+  async () => await import("../core/RenderingLayout")
+);
 
 const Container = styled.section`
   align-self: center;
@@ -78,13 +76,6 @@ const ContributorName = styled.h3`
   }
 `;
 
-const FlexRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  gap: 20px;
-`;
-
 const Flex = styled.div`
   display: flex;
   flex-direction: row;
@@ -93,23 +84,9 @@ const Flex = styled.div`
   gap: 30px;
 `;
 
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-`;
-
 const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const [constributor, useContributor] = useState("");
-  const NameContributor = props.page?.items;
-  let name = "";
-  NameContributor.map((contributorsCollection, index) => {
-    // console.log(NameContributor[index].contributorsCollection.items[index]);
-    // console.log(NameContributor[index].name);
-    name = NameContributor[index].name;
-  });
-
-  console.log(name);
+  const [constributor] = useState("");
   return (
     <>
       {!constributor && (
@@ -124,32 +101,28 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
               </PrimaryStyledLink>
             </Flex>
           )}
-          {props.page?.items?.map((props, index) => (
-            <>
-              <ConstributorType>
-                <ContributorName>{props.name}</ContributorName>
-                <RenderingLayout constributorTypeName={props.name}>
-                  {props?.contributorsCollection?.items?.map((props, index) => (
-                    <>
-                      <ImageContainer>
-                        <Flex>
-                          <Image
-                            alt=""
-                            mobile={props?.image?.url!}
-                            desktop={props?.image?.url!}
-                            params={
-                              isMobile
-                                ? props?.imageParamsMobile
-                                : props?.imageParamsDesktop
-                            }
-                          />
-                        </Flex>
-                      </ImageContainer>
-                    </>
-                  ))}
-                </RenderingLayout>
-              </ConstributorType>
-            </>
+          {props.page?.items?.map((item) => (
+            <ConstributorType key={item.sys.id}>
+              <ContributorName>{item.name}</ContributorName>
+              <RenderingLayout constributorTypeName={item.name}>
+                {item?.contributorsCollection?.items?.map((contributorItem) => (
+                  <ImageContainer key={contributorItem.sys.id}>
+                    <Flex>
+                      <Image
+                        alt=""
+                        mobile={contributorItem?.image?.url}
+                        desktop={contributorItem?.image?.url}
+                        params={
+                          isMobile
+                            ? contributorItem?.imageParamsMobile
+                            : contributorItem?.imageParamsDesktop
+                        }
+                      />
+                    </Flex>
+                  </ImageContainer>
+                ))}
+              </RenderingLayout>
+            </ConstributorType>
           ))}
         </Container>
       )}

@@ -157,9 +157,15 @@ query HomeQuery($locale: String!, $isPreview: Boolean = false) {
     }
     sponsorTypeCollection(limit: 20) {
       items {
+        sys {
+          id
+        }
         name
         contributorsCollection(limit: 20) {
           items {
+            sys {
+              id
+            }
             title {
               json
             }
