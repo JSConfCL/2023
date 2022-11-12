@@ -32,8 +32,6 @@ const image =
 const ticket = ["tickets"];
 const TicketContent = () => {
   const { data } = useQuery(ticket, fetchTickets);
-  const meQuery = useQuery(["me"], me);
-  console.log("meQuery");
   const setTicketsAtom = useSetAtom(ticketsAtom);
   useEffect(() => {
     if (data) {
