@@ -11,9 +11,14 @@ const Container = styled(motion.section)<{ type: string; index: number }>`
   background: ${({ type }) => (type === "blank" ? "transparent" : "white")};
   border-radius: 0px 32px 0px 0px;
   position: relative;
-  width: calc(50% - 16px);
+  width: 100%;
   height: 300px;
   display: ${({ type }) => (type === "blank" ? "none" : "inherit")};
+  overflow: hidden;
+
+  @media (min-width: ${ViewportSizes.SmallPhone}px) {
+    width: calc(50% - 16px);
+  }
 
   @media (min-width: ${ViewportSizes.Phone}px) {
     width: fit-content;
@@ -32,7 +37,6 @@ const BlockColor = styled.section<{ type: string }>`
   border-radius: 0px 32px 0px 0px;
   height: 100%;
   width: 100%;
-
   @media (min-width: ${ViewportSizes.Phone}px) {
     max-height: ${({ type }) => (type === "keynote" ? "390px" : "240px")};
   }
@@ -74,9 +78,15 @@ const BlockDescription = styled(motion.section)<{ type: string }>`
       font-size: ${({ type }) => (type === "normal" ? "24px" : "36px")};
     }
   }
+  transition-duration: 250ms;
+  transition-property: background;
   &:hover {
+    transition-timing-function: "ease-in-out";
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='40' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>❤️</text></svg>")
+        16 0,
+      auto;
     background: ${({ type }) =>
-      type === "blank" ? "transparent" : "rgb(100 31 37 / 79%)"};
+      type === "blank" ? "transparent" : "rgb(100 31 37 / 19%)"};
   }
 `;
 const HR = styled.hr`
