@@ -13,6 +13,7 @@ import { urlQlient } from "../src/graphql/urql";
 import { queryClient } from "../src/helpers/API";
 import { GlobalStyles } from "../styles/globalStyles";
 import { jsconfTheme } from "../styles/theme";
+import { useIdentify } from "../src/helpers/analytics";
 
 const WebSchema = dynamic(
   async () => await import("../src/Components/schema/webpage"),
@@ -35,12 +36,24 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+const Content = ({
+  Component,
+  pageProps,
+}: {
+  Component: NextPageWithLayout;
+  pageProps: AppProps["pageProps"];
+}) => {
+  useIdentify();
   const getLayout = Component.getLayout ?? ((page) => page);
+  return <>{getLayout(<Component {...pageProps} />)}</>;
+};
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <FlagsmithProvider
       options={{
         environmentID: process.env.NEXT_PUBLIC_FLAGSMITH_KEY,
+        cacheFlags: true,
       }}
       flagsmith={flagsmith}
     >
@@ -53,7 +66,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                 <Suspense fallback={null}>
                   <WebSchema />
                 </Suspense>
-                {getLayout(<Component {...pageProps} />)}
+                <Content Component={Component} pageProps={pageProps} />
                 <Suspense fallback={null}>
                   <ExtendedFooter />
                 </Suspense>

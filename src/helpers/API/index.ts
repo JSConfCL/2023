@@ -45,10 +45,25 @@ export const createPayment = async (object: {
   });
 };
 
-export const me = async (): Promise<{
-  token: string;
-  user: any;
-}> => {
+type UserType = {
+  company: null | string;
+  country: null | string;
+  createdAt: null | string;
+  email: null | string;
+  gender: null | string;
+  id: string;
+  name: null | string;
+  password: null | string;
+  photo: null | string;
+  position: null | string;
+  provider: null | string;
+  providerId: null | string;
+  seniority: null | string;
+  updatedAt: null | string;
+  username: null | string;
+  year: null | number;
+};
+export const me = async (): Promise<UserType> => {
   return await customFetch(`${API_URL}/users/me`);
 };
 
@@ -58,7 +73,7 @@ export const finishGithubLogin = async ({
   code: string;
 }): Promise<{
   token: string;
-  user: any;
+  user: UserType;
 }> => {
   return await customFetch(`${API_URL}/auth/github/callback?code=${code}`);
 };
@@ -68,7 +83,7 @@ export const finishGoogleLogin = async ({
   code: string;
 }): Promise<{
   token: string;
-  user: any;
+  user: UserType;
 }> => {
   return await customFetch(`${API_URL}/auth/google/callback?code=${code}`);
 };

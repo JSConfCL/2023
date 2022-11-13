@@ -1,7 +1,8 @@
+import { useFlags } from "flagsmith/react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
-import { useEffect, useMemo } from "react";
-import { useFlags } from "flagsmith/react";
+import { useMemo } from "react";
+import { useTimeout } from "usehooks-ts";
 import { accessTokenAtom, isAuthenticatedAtom } from "../../helpers/auth";
 import NavBar from "../NavBar/NavBar";
 
@@ -32,11 +33,15 @@ const TicketNavBar = () => {
     }
     return [];
   }, [isLoggedIn, setAccessToken]);
-  useEffect(() => {
+  useTimeout(() => {
+    // Le damos 2 segundos a las feature-flags para poder conectarse (Es para
+    // problar nosotros, asi que es más que suficiente IMO). :)
+    // Post 2 segundos, si no se ha conectado, o si no esta habilitado,
+    // redireccionamos a "/"
     if (!ticketPageEnabled) {
       replace("/").catch((e) => console.error(e));
     }
-  }, [replace, ticketPageEnabled]);
+  }, 2000);
   if (ticketPageEnabled) {
     return <NavBar items={items} />;
   }

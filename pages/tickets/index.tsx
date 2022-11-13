@@ -16,7 +16,7 @@ import {
   TicketsQueryQueryVariables,
 } from "../../src/graphql/tickets.generated";
 import { urlQlient } from "../../src/graphql/urql";
-import { fetchTickets, me } from "../../src/helpers/API";
+import { fetchTickets } from "../../src/helpers/API";
 import { isAuthenticatedAtom } from "../../src/helpers/auth";
 import { ParseQuery } from "../../src/helpers/types";
 
@@ -52,8 +52,6 @@ const TicketContent = () => {
 };
 export default function Tickets(props: PageProps) {
   const { isLoading } = useQuery(ticket, fetchTickets);
-  const { data } = useQuery(["me"], me);
-  console.log("data", data);
   return (
     <>
       <Seo {...props.seo} />
