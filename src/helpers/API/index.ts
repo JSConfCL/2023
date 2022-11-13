@@ -48,23 +48,42 @@ export const createPayment = async (object: {
 type UserType = {
   company: null | string;
   country: null | string;
-  createdAt: null | string;
   email: null | string;
   gender: null | string;
   id: string;
   name: null | string;
-  password: null | string;
   photo: null | string;
   position: null | string;
   provider: null | string;
   providerId: null | string;
   seniority: null | string;
-  updatedAt: null | string;
   username: null | string;
   year: null | number;
 };
+
+export interface UserPayload {
+  photo: string;
+  name: string;
+  username: string;
+  email: string;
+  country: string;
+  company: string;
+  position: string;
+  seniority: string;
+  year: number | string;
+  gender: string;
+}
+
 export const me = async (): Promise<UserType> => {
   return await customFetch(`${API_URL}/users/me`);
+};
+
+export const updateMe = async (object: UserPayload): Promise<UserType> => {
+  const json = await customFetch(`${API_URL}/users/`, {
+    method: "PUT",
+    body: JSON.stringify(object),
+  });
+  return json.updatedPost;
 };
 
 export const finishGithubLogin = async ({
