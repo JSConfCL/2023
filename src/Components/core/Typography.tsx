@@ -11,6 +11,7 @@ export const H1 = styled(motion.h1)<{ color?: string }>`
   /* or 100% */
   display: flex;
   align-items: center;
+  text-transform: uppercase;
   color: ${({ color }) => color ?? "white"};
 `;
 
@@ -22,7 +23,7 @@ export const H2 = styled(motion.h2)`
   text-align: left;
   font-size: 40px;
   line-height: 40px;
-
+  text-transform: uppercase;
   @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 80px;
     line-height: 80px;

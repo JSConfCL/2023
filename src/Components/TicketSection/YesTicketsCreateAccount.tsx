@@ -1,3 +1,4 @@
+import { useFlags } from "flagsmith/react";
 import Image from "../core/Image";
 import {
   GithubButton,
@@ -12,6 +13,9 @@ import {
 import { SectionTile } from "./Title";
 
 const YesTicketsCreateAccount = ({ imageUrl }: { imageUrl: string }) => {
+  const { google_login_enabled: googleLoginEnabled } = useFlags([
+    "google_login_enabled",
+  ]);
   return (
     <>
       <SectionTile status="active" number="01." text="Obten tus tickets!" />
@@ -20,7 +24,8 @@ const YesTicketsCreateAccount = ({ imageUrl }: { imageUrl: string }) => {
           <Paragraph>Hay tickets disponibles! 🎉</Paragraph>
           <Paragraph>
             Para comprarlos, primero debes crear una cuenta de JSConf. Puedes
-            hacerlo a través de cuenta de Github o Google.
+            hacerlo a través de cuenta de{" "}
+            {googleLoginEnabled.value ? "Github o Google" : "Github"}.
           </Paragraph>
           <GithubButton />
         </LeftSide>

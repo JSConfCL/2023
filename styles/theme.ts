@@ -38,6 +38,7 @@ export const enum ViewportSizes {
   Desktop = 1440,
   TabletLandscape = 1024,
   Phone = 768,
+  SmallPhone = 425,
 }
 
 function generateMediaQueryString(viewportSize: ViewportSizes): string {

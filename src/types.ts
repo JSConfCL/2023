@@ -1470,6 +1470,93 @@ export type Location = {
   lon?: Maybe<Scalars["Float"]>;
 };
 
+/** para cuando metamos markdown solo [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/markdownBlock) */
+export type MarkdownBlock = Entry & {
+  __typename?: "MarkdownBlock";
+  contentfulMetadata: ContentfulMetadata;
+  description?: Maybe<Scalars["String"]>;
+  linkedFrom?: Maybe<MarkdownBlockLinkingCollections>;
+  markdownTextContent?: Maybe<Scalars["String"]>;
+  sys: Sys;
+};
+
+/** para cuando metamos markdown solo [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/markdownBlock) */
+export type MarkdownBlockDescriptionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** para cuando metamos markdown solo [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/markdownBlock) */
+export type MarkdownBlockLinkedFromArgs = {
+  allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** para cuando metamos markdown solo [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/markdownBlock) */
+export type MarkdownBlockMarkdownTextContentArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+export type MarkdownBlockCollection = {
+  __typename?: "MarkdownBlockCollection";
+  items: Array<Maybe<MarkdownBlock>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export type MarkdownBlockFilter = {
+  AND?: InputMaybe<Array<InputMaybe<MarkdownBlockFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<MarkdownBlockFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  description?: InputMaybe<Scalars["String"]>;
+  description_contains?: InputMaybe<Scalars["String"]>;
+  description_exists?: InputMaybe<Scalars["Boolean"]>;
+  description_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  description_not?: InputMaybe<Scalars["String"]>;
+  description_not_contains?: InputMaybe<Scalars["String"]>;
+  description_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  markdownTextContent?: InputMaybe<Scalars["String"]>;
+  markdownTextContent_contains?: InputMaybe<Scalars["String"]>;
+  markdownTextContent_exists?: InputMaybe<Scalars["Boolean"]>;
+  markdownTextContent_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  markdownTextContent_not?: InputMaybe<Scalars["String"]>;
+  markdownTextContent_not_contains?: InputMaybe<Scalars["String"]>;
+  markdownTextContent_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  sys?: InputMaybe<SysFilter>;
+};
+
+export type MarkdownBlockLinkingCollections = {
+  __typename?: "MarkdownBlockLinkingCollections";
+  entryCollection?: Maybe<EntryCollection>;
+  pageCollection?: Maybe<PageCollection>;
+};
+
+export type MarkdownBlockLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type MarkdownBlockLinkingCollectionsPageCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export enum MarkdownBlockOrder {
+  DescriptionAsc = "description_ASC",
+  DescriptionDesc = "description_DESC",
+  SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
+  SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
+  SysIdAsc = "sys_id_ASC",
+  SysIdDesc = "sys_id_DESC",
+  SysPublishedAtAsc = "sys_publishedAt_ASC",
+  SysPublishedAtDesc = "sys_publishedAt_DESC",
+  SysPublishedVersionAsc = "sys_publishedVersion_ASC",
+  SysPublishedVersionDesc = "sys_publishedVersion_DESC",
+}
+
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/member) */
 export type Member = Entry & {
   __typename?: "Member";
@@ -1729,6 +1816,7 @@ export enum NavigationBarOrder {
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
 export type Page = Entry & {
   __typename?: "Page";
+  contentCollection?: Maybe<PageContentCollection>;
   contentfulMetadata: ContentfulMetadata;
   eventsCollection?: Maybe<PageEventsCollection>;
   followUsBlock?: Maybe<FollowUsBlock>;
@@ -1745,6 +1833,14 @@ export type Page = Entry & {
   sys: Sys;
   teamBlock?: Maybe<TeamBlock>;
   whyBlockCollection?: Maybe<PageWhyBlockCollection>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
+export type PageContentCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
@@ -1845,6 +1941,27 @@ export type PageCollection = {
   total: Scalars["Int"];
 };
 
+export type PageContentCollection = {
+  __typename?: "PageContentCollection";
+  items: Array<Maybe<PageContentItem>>;
+  limit: Scalars["Int"];
+  skip: Scalars["Int"];
+  total: Scalars["Int"];
+};
+
+export type PageContentItem =
+  | Event
+  | FollowUsBlock
+  | Footer
+  | HeroBlock
+  | HowBlock
+  | MarkdownBlock
+  | SpeakerBlock
+  | SponsorType
+  | SubscribeBlock
+  | TeamBlock
+  | WhyBlock;
+
 export type PageEventsCollection = {
   __typename?: "PageEventsCollection";
   items: Array<Maybe<Event>>;
@@ -1856,6 +1973,7 @@ export type PageEventsCollection = {
 export type PageFilter = {
   AND?: InputMaybe<Array<InputMaybe<PageFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<PageFilter>>>;
+  contentCollection_exists?: InputMaybe<Scalars["Boolean"]>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
   eventsCollection_exists?: InputMaybe<Scalars["Boolean"]>;
   followUsBlock?: InputMaybe<CfFollowUsBlockNestedFilter>;
@@ -1955,6 +2073,8 @@ export type Query = {
   lineBlockCollection?: Maybe<LineBlockCollection>;
   linkItem?: Maybe<LinkItem>;
   linkItemCollection?: Maybe<LinkItemCollection>;
+  markdownBlock?: Maybe<MarkdownBlock>;
+  markdownBlockCollection?: Maybe<MarkdownBlockCollection>;
   member?: Maybe<Member>;
   memberCollection?: Maybe<MemberCollection>;
   navigationBar?: Maybe<NavigationBar>;
@@ -2116,6 +2236,21 @@ export type QueryLinkItemCollectionArgs = {
   preview?: InputMaybe<Scalars["Boolean"]>;
   skip?: InputMaybe<Scalars["Int"]>;
   where?: InputMaybe<LinkItemFilter>;
+};
+
+export type QueryMarkdownBlockArgs = {
+  id: Scalars["String"];
+  locale?: InputMaybe<Scalars["String"]>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+export type QueryMarkdownBlockCollectionArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  locale?: InputMaybe<Scalars["String"]>;
+  order?: InputMaybe<Array<InputMaybe<MarkdownBlockOrder>>>;
+  preview?: InputMaybe<Scalars["Boolean"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<MarkdownBlockFilter>;
 };
 
 export type QueryMemberArgs = {

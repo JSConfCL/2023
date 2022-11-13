@@ -80,9 +80,6 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
           {props?.events && <TimelineSection events={props?.events} />}
         </Suspense>
         <Suspense fallback={null}>
-          {props?.teamData && <TeamSection page={props.teamData} />}
-        </Suspense>
-        <Suspense fallback={null}>
           {props.sponsorType && <SponsorSection page={props.sponsorType} />}
         </Suspense>
         <Suspense fallback={null}>

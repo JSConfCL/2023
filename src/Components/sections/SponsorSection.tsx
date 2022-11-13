@@ -78,10 +78,14 @@ const ContributorName = styled.h3`
 
 const Flex = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   gap: 30px;
+  justify-content: flex-start;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    align-items: center;
+    flex-direction: row;
+  }
 `;
 
 const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
@@ -91,16 +95,12 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
     <>
       {!constributor && (
         <Container>
-          {isMobile ? (
+          <Flex>
             <Title>Sponsors</Title>
-          ) : (
-            <Flex>
-              <Title>Sponsors</Title>
-              <PrimaryStyledLink href="">
-                {"Sponsors Registration"}
-              </PrimaryStyledLink>
-            </Flex>
-          )}
+            <PrimaryStyledLink href="/sponsor">
+              {"Sponsors Registration"}
+            </PrimaryStyledLink>
+          </Flex>
           {props.page?.items?.map((item) => (
             <ConstributorType key={item.sys.id}>
               <ContributorName>{item.name}</ContributorName>
