@@ -16,7 +16,7 @@ import {
   TicketsQueryQueryVariables,
 } from "../../src/graphql/tickets.generated";
 import { urlQlient } from "../../src/graphql/urql";
-import { fetchTickets } from "../../src/helpers/API";
+import { fetchTickets, me } from "../../src/helpers/API";
 import { isAuthenticatedAtom } from "../../src/helpers/auth";
 import { ParseQuery } from "../../src/helpers/types";
 
@@ -34,7 +34,7 @@ const TicketContent = () => {
   const { data } = useQuery(ticket, fetchTickets);
   const setTicketsAtom = useSetAtom(ticketsAtom);
   useEffect(() => {
-    if (data != null) {
+    if (data?.length) {
       setTicketsAtom(data.map((el) => ({ ...el, currentQuantity: 0 })));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,6 +52,8 @@ const TicketContent = () => {
 };
 export default function Tickets(props: PageProps) {
   const { isLoading } = useQuery(ticket, fetchTickets);
+  const { data } = useQuery(["me"], me);
+  console.log("data", data);
   return (
     <>
       <Seo {...props.seo} />

@@ -11,45 +11,43 @@ const customFetch = async (
   init?: RequestInit | undefined
 ) => {
   const accessToken = getValidToken();
-  const headers = new Headers();
+  const headers = new Headers(init?.headers);
   if (accessToken !== null) {
-    headers.set("Authorization", `Bearer ${accessToken}`);
+    headers.append("Authorization", `Bearer ${accessToken}`);
   }
-  return await fetch(input, {
+  headers.append("content-type", "application/json");
+  const res = await fetch(input, {
     ...init,
-    headers: {
-      "content-type": "application/json",
-      ...init?.headers,
-    },
+    headers,
   });
+  if (res.status === 200) {
+    return await res.json();
+  }
+  if (res.status === 401) {
+    throw new Error("Unauthorized");
+  }
+  throw new Error("Error");
 };
 
 export const fetchTickets = async (): Promise<Entrada[]> => {
-  const res = await customFetch(`${API_URL}/tickets`);
-  return await res.json();
+  return await customFetch(`${API_URL}/tickets`);
 };
 
 export const createPayment = async (object: {
   gateway: "mercadopago" | "stripe";
   tickets: Array<{ id: string; quantity: number; name: string; email: string }>;
 }): Promise<{ paymentUrl: string }> => {
-  const res = await customFetch(`${API_URL}/payments`, {
+  return await customFetch(`${API_URL}/payments`, {
     method: "POST",
     body: JSON.stringify(object),
   });
-  return await res.json();
 };
 
 export const me = async (): Promise<{
   token: string;
   user: any;
 }> => {
-  const res = await customFetch(`${API_URL}/users/me`);
-  if (res.status === 200) {
-    return await res.json();
-  } else {
-    throw new Error("Token exchange error");
-  }
+  return await customFetch(`${API_URL}/users/me`);
 };
 
 export const finishGithubLogin = async ({
@@ -60,12 +58,7 @@ export const finishGithubLogin = async ({
   token: string;
   user: any;
 }> => {
-  const res = await customFetch(`${API_URL}/auth/github/callback?code=${code}`);
-  if (res.status === 200) {
-    return await res.json();
-  } else {
-    throw new Error("Token exchange error");
-  }
+  return await customFetch(`${API_URL}/auth/github/callback?code=${code}`);
 };
 export const finishGoogleLogin = async ({
   code,
@@ -75,10 +68,5 @@ export const finishGoogleLogin = async ({
   token: string;
   user: any;
 }> => {
-  const res = await customFetch(`${API_URL}/auth/google/callback?code=${code}`);
-  if (res.status === 200) {
-    return await res.json();
-  } else {
-    throw new Error("Token exchange error");
-  }
+  return await customFetch(`${API_URL}/auth/google/callback?code=${code}`);
 };
