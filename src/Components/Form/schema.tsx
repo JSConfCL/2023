@@ -45,3 +45,17 @@ export const descriptionValidation = {
     message: "Máximo largo es de 1000 caracteres",
   },
 };
+
+export const optionalStringValidation = {
+  maxLength: {
+    value: 100,
+    message: "Máximo largo es de 100 caracteres",
+  },
+};
+
+export const notNegativeNumberValidation = {
+  validate: {
+    positive: (v: string | undefined) =>
+      (v ? parseInt(v ?? "") >= 0 : true) || "Debe ser un número no negativo",
+  },
+};
