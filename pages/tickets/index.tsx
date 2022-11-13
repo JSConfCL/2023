@@ -1,10 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { useFlags } from "flagsmith/react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
-import {
-  hasticketsAtom,
-  ticketsAtom,
-} from "../../src/Components/Cart/CartAtom";
+import { ticketsAtom } from "../../src/Components/Cart/CartAtom";
 import { CartContainer } from "../../src/Components/Cart/CartContainer";
 import { TicketsLayout } from "../../src/Components/Layouts/TicketsLayout";
 import Seo from "../../src/Components/Seo";
@@ -31,17 +29,11 @@ const image =
 
 const ticket = ["tickets"];
 const TicketContent = () => {
-  const { data } = useQuery(ticket, fetchTickets);
-  const setTicketsAtom = useSetAtom(ticketsAtom);
-  useEffect(() => {
-    if (data?.length) {
-      setTicketsAtom(data.map((el) => ({ ...el, currentQuantity: 0 })));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const areThereTickets = useAtomValue(hasticketsAtom);
+  const { "ticket-sale-enabled": ticketSaleEnabled } = useFlags([
+    "ticket-sale-enabled",
+  ]);
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
-  if (areThereTickets) {
+  if (ticketSaleEnabled) {
     if (isLoggedIn) {
       return <CartContainer />;
     }
@@ -51,7 +43,13 @@ const TicketContent = () => {
   }
 };
 export default function Tickets(props: PageProps) {
-  const { isLoading } = useQuery(ticket, fetchTickets);
+  const { isLoading, data } = useQuery(ticket, fetchTickets);
+  const setTicketsAtom = useSetAtom(ticketsAtom);
+  useEffect(() => {
+    if (data?.length) {
+      setTicketsAtom(data.map((el) => ({ ...el, currentQuantity: 0 })));
+    }
+  }, [data, setTicketsAtom]);
   return (
     <>
       <Seo {...props.seo} />

@@ -8,6 +8,7 @@ import { CSSProperties } from "react";
 import { API_URL } from "../../helpers/API";
 import { transparentize } from "polished";
 import { motion } from "framer-motion";
+import { useFlags } from "flagsmith/react";
 
 export const Paragraph = styled.p`
   color: #fff;
@@ -58,7 +59,7 @@ export const SubTitle = styled.h2`
   }
 `;
 
-export const GenericBtn = styled.button`
+export const GenericBtn = styled(motion.button)`
   border-color: ${({ theme }) => theme.colors.jsconfYellow};
   color: ${({ theme }) => theme.colors.jsconfYellow};
   border-width: 2px;
@@ -223,6 +224,9 @@ const style: CSSProperties = {
 };
 
 export const GithubButton = () => {
+  const { google_login_enabled: googleLoginEnabled } = useFlags([
+    "google_login_enabled",
+  ]);
   return (
     <SocialButtonWrapper>
       <GithubLoginButton
@@ -232,13 +236,15 @@ export const GithubButton = () => {
         }}
         text="Ingresa con Github"
       />
-      <GoogleLoginButton
-        style={style}
-        onClick={() => {
-          window.location.href = `${API_URL}/auth/google`;
-        }}
-        text="Ingresa con Google"
-      />
+      {googleLoginEnabled.value && (
+        <GoogleLoginButton
+          style={style}
+          onClick={() => {
+            window.location.href = `${API_URL}/auth/google`;
+          }}
+          text="Ingresa con Google"
+        />
+      )}
     </SocialButtonWrapper>
   );
 };
