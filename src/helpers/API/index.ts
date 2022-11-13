@@ -61,7 +61,7 @@ type UserType = {
   year: null | number;
 };
 
-export interface UserPayload {
+interface UserPayload {
   photo: string;
   name: string;
   username: string;
@@ -79,21 +79,11 @@ export const me = async (): Promise<UserType> => {
 };
 
 export const updateMe = async (object: UserPayload): Promise<UserType> => {
-  const accessToken = getValidToken();
-  const res = await fetch(`${API_URL}/users`, {
-    headers: {
-      "content-type": "application/json",
-      Authorization: `Bearer ${accessToken ?? ""}`,
-    },
+  const response = await customFetch(`${API_URL}/users`, {
     method: "PUT",
     body: JSON.stringify(object),
   });
-  if (res.status === 200) {
-    const json = await res.json();
-    return json.updatedPost;
-  } else {
-    throw new Error("Token exchange error");
-  }
+  return response.updatedPost;
 };
 
 export const finishGithubLogin = async ({
@@ -106,6 +96,7 @@ export const finishGithubLogin = async ({
 }> => {
   return await customFetch(`${API_URL}/auth/github/callback?code=${code}`);
 };
+
 export const finishGoogleLogin = async ({
   code,
 }: {
