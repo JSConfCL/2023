@@ -1,6 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 import { Entrada } from "../../Components/Cart/CartAtom";
 import { getValidToken } from "../auth";
+import { nanoid } from "nanoid";
 
 export const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ const customFetch = async (
     headers.append("Authorization", `Bearer ${accessToken}`);
   }
   headers.append("content-type", "application/json");
+  headers.append("x-trace-id", `traceid_${nanoid()}`);
   const res = await fetch(input, {
     ...init,
     headers,
