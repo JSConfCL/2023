@@ -7,6 +7,11 @@ export const queryClient = new QueryClient();
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+export type ErrorResponse = {
+  error: string;
+  message: string[];
+};
+
 const customFetch = async (
   input: RequestInfo | URL,
   init?: RequestInit | undefined
@@ -28,6 +33,13 @@ const customFetch = async (
   if (res.status === 401) {
     throw new Error("Unauthorized");
   }
+  if (res.status === 422) {
+    const response = await res.json();
+    return {
+      error: response.error as string,
+      message: response.message as string[],
+    };
+  }
   throw new Error("Error");
 };
 
@@ -46,6 +58,7 @@ export const createPayment = async (object: {
 };
 
 type UserType = {
+  error: any;
   company: null | string;
   country: null | string;
   email: null | string;
@@ -58,19 +71,17 @@ type UserType = {
   providerId: null | string;
   seniority: null | string;
   username: null | string;
-  year: null | number;
+  yearsOfExperience: null | number;
 };
 
-export interface UserPayload {
-  photo: string;
+interface UserPayload {
   name: string;
   username: string;
-  email: string;
-  country: string;
   company: string;
   position: string;
   seniority: string;
-  year: number | string;
+  yearsOfExperience: number;
+  country: string;
   gender: string;
 }
 
@@ -78,12 +89,13 @@ export const me = async (): Promise<UserType> => {
   return await customFetch(`${API_URL}/users/me`);
 };
 
-export const updateMe = async (object: UserPayload): Promise<UserType> => {
-  const json = await customFetch(`${API_URL}/users/`, {
+export const updateMe = async (
+  object: Partial<UserPayload>
+): Promise<UserType> => {
+  return await customFetch(`${API_URL}/users/`, {
     method: "PUT",
     body: JSON.stringify(object),
   });
-  return json.updatedPost;
 };
 
 export const finishGithubLogin = async ({

@@ -55,7 +55,7 @@ export const optionalStringValidation = {
 
 export const notNegativeNumberValidation = {
   validate: {
-    positive: (v: string | undefined) =>
-      (v ? parseInt(v ?? "") >= 0 : true) || "Debe ser un número no negativo",
+    positive: (v: number | undefined) =>
+      (v ? v >= 0 : true) || "Debe ser un número no negativo",
   },
 };

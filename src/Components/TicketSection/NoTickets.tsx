@@ -45,37 +45,24 @@ const SocialAnchor = styled.a<{ type: "twitter" | "facebook" | "linkedin" }>(
 
 const NoTickets = ({ imageUrl }: { imageUrl: string }) => {
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
-
   return (
     <>
-      <SectionTile status="inactive" number="01." text="Regístrate!" />
+      <SectionTile
+        status="active"
+        number="01."
+        text={isLoggedIn ? "Falta poco!" : "Crea tu cuenta"}
+      />
       <SideContainer>
         <LeftSide>
           <Paragraph>Aún no tenemos tickets a la venta 😢</Paragraph>
           <Paragraph>Pero falta poco! </Paragraph>
-          <br />
-          {!isLoggedIn ? (
-            <>
-              <Paragraph>
-                Mientras tanto, puedes crear tu cuenta JSConf Chile, así estarás
-                list@ para cuando salgan a la venta!
-              </Paragraph>
-              <br />
-              <GithubButton />
-              <Paragraph>
-                Creando tu cuente además podrás recibir correos cuando los
-                tickets estén disponibles, preventas y anuncios de la JSConf.
-              </Paragraph>
-            </>
-          ) : (
+          {isLoggedIn ? (
             <>
               <Paragraph>
                 Ya tienes tu cuenta de JSConf creada! Cuando anunciemos la fecha
                 de lanzamiento, recibirás un email (al correo de tu cuenta de
                 Github).
               </Paragraph>
-              <br />
-              <GithubButton />
               <Paragraph>
                 Para estar al tanto del lanzamiento de los tickets, noticias y
                 todos los anuncios de la JSConf, puedes seguirnos en{" "}
@@ -105,6 +92,18 @@ const NoTickets = ({ imageUrl }: { imageUrl: string }) => {
                 >
                   Linkedin
                 </SocialAnchor>
+              </Paragraph>
+            </>
+          ) : (
+            <>
+              <Paragraph>
+                Mientras tanto, puedes crear tu cuenta JSConf Chile, así estarás
+                list@ para cuando salgan a la venta!
+              </Paragraph>
+              <GithubButton />
+              <Paragraph>
+                Creando tu cuente además podrás recibir correos cuando los
+                tickets estén disponibles, preventas y anuncios de la JSConf.
               </Paragraph>
             </>
           )}
