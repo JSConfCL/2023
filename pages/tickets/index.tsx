@@ -33,7 +33,7 @@ const TicketContent = () => {
     "ticket-sale-enabled",
   ]);
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
-  if (ticketSaleEnabled) {
+  if (ticketSaleEnabled.value) {
     if (isLoggedIn) {
       return <CartContainer />;
     }

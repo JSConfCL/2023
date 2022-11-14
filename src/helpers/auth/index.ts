@@ -4,7 +4,7 @@ import decode, { JwtPayload } from "jwt-decode";
 
 export const AUTHENTICATION_LOCALSTORAGE_KEY = "jsconfcl.auth.token";
 
-const accessTokenReferenceAtom = atom<null | string>(null);
+export const accessTokenReferenceAtom = atom<null | string>(null);
 
 export const accessTokenAtom = atom(
   (get) => get(accessTokenReferenceAtom),
