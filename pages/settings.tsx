@@ -14,7 +14,6 @@ import { jsconfTheme, ViewportSizes } from "../styles/theme";
 import { me, updateMe } from "../src/helpers/API";
 
 import {
-  emailValidation,
   nameValidation,
   notNegativeNumberValidation,
   optionalStringValidation,
@@ -179,7 +178,6 @@ export default function Settings() {
       photo: user?.photo ?? "",
       name: data?.name ?? "",
       username: data?.username ?? "",
-      email: data?.email ?? "",
       company: data?.company ?? "",
       position: data?.position ?? "",
       seniority: data?.seniority ?? "",
@@ -207,18 +205,20 @@ export default function Settings() {
   });
 
   const countryObj = countries.getNames(LANGUAGE, { select: "official" });
-  const countryOptions = Object.entries(countryObj).map(([key, value]) => {
-    return {
-      label: (
-        <>
-          <ReactCountryFlag countryCode={key} />
-          {" " + value}
-        </>
-      ),
-      code: key,
-      value,
-    };
-  });
+  const countryOptions = Object.entries(countryObj).map(
+    ([key, value]: [string, string]) => {
+      return {
+        label: (
+          <>
+            <ReactCountryFlag countryCode={key} />
+            {` ${value}`}
+          </>
+        ),
+        code: key,
+        value,
+      };
+    }
+  );
 
   if (!user?.name) {
     return (
@@ -264,14 +264,6 @@ export default function Settings() {
           error={Boolean(errors.username?.type)}
         />
         <Error {...errors.username} />
-
-        <InputC
-          {...register("email", emailValidation)}
-          placeholder="Correo Electrónico"
-          defaultValue={user?.email ?? ""}
-          error={Boolean(errors.email?.type)}
-        />
-        <Error {...errors.email} />
 
         <Controller
           name="country"

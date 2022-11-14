@@ -65,7 +65,6 @@ export interface UserPayload {
   photo: string;
   name: string;
   username: string;
-  email: string;
   country: string;
   company: string;
   position: string;
@@ -78,7 +77,9 @@ export const me = async (): Promise<UserType> => {
   return await customFetch(`${API_URL}/users/me`);
 };
 
-export const updateMe = async (object: UserPayload): Promise<UserType> => {
+export const updateMe = async (
+  object: Partial<UserPayload>
+): Promise<UserType> => {
   const json = await customFetch(`${API_URL}/users/`, {
     method: "PUT",
     body: JSON.stringify(object),
