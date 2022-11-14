@@ -36,7 +36,7 @@ interface FormData {
   company?: string | undefined;
   position?: string | undefined;
   seniority?: string | undefined;
-  year?: string | undefined;
+  yearsOfExperience?: string | undefined;
   gender?: SelectOption | undefined;
 }
 
@@ -175,19 +175,20 @@ export default function Settings() {
 
   const onSubmit = handleSubmit(async (data) => {
     const submit = {
-      photo: user?.photo ?? "",
-      name: data?.name ?? "",
-      username: data?.username ?? "",
-      company: data?.company ?? "",
-      position: data?.position ?? "",
-      seniority: data?.seniority ?? "",
-      year: data?.year ?? "",
-      country:
-        (touchedFields?.country ? data?.country?.code : user?.country) ?? "",
-      gender:
-        (touchedFields?.gender ? data?.gender?.value : user?.gender) ??
-        "" ??
-        "",
+      ...(touchedFields?.name ? { name: data?.name } : {}),
+      ...(touchedFields?.username ? { username: data?.username } : {}),
+      ...(touchedFields?.company ? { company: data?.company } : {}),
+      ...(touchedFields?.position ? { position: data?.position } : {}),
+      ...(touchedFields?.seniority ? { seniority: data?.seniority } : {}),
+      ...(touchedFields?.yearsOfExperience
+        ? {
+            yearsOfExperience: data?.yearsOfExperience
+              ? parseInt(data?.yearsOfExperience, 10)
+              : undefined,
+          }
+        : {}),
+      ...(touchedFields?.country ? { country: data?.country?.code } : {}),
+      ...(touchedFields?.gender ? { gender: data?.gender?.value } : {}),
     };
 
     setSubmitMessage("");
@@ -313,12 +314,12 @@ export default function Settings() {
         <Error {...errors.seniority} />
 
         <InputC
-          {...register("year", notNegativeNumberValidation)}
+          {...register("yearsOfExperience", notNegativeNumberValidation)}
           placeholder="Años de Experiencia "
-          defaultValue={user?.year ?? ""}
-          error={Boolean(errors.year?.type)}
+          defaultValue={user?.yearsOfExperience ?? ""}
+          error={Boolean(errors.yearsOfExperience?.type)}
         />
-        <Error {...errors.year} />
+        <Error {...errors.yearsOfExperience} />
 
         <Controller
           name="gender"

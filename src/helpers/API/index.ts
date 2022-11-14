@@ -58,18 +58,17 @@ type UserType = {
   providerId: null | string;
   seniority: null | string;
   username: null | string;
-  year: null | number;
+  yearsOfExperience: null | number;
 };
 
-export interface UserPayload {
-  photo: string;
+interface UserPayload {
   name: string;
   username: string;
-  country: string;
   company: string;
   position: string;
   seniority: string;
-  year: number | string;
+  yearsOfExperience: number;
+  country: string;
   gender: string;
 }
 
