@@ -91,7 +91,7 @@ const Flex = styled.div`
 const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   if (!props.page?.items.length) {
-    return;
+    return <></>;
   }
   return (
     <Container>
