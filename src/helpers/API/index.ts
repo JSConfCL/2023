@@ -7,6 +7,11 @@ export const queryClient = new QueryClient();
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+export type ErrorResponse = {
+  error: string;
+  message: string[];
+};
+
 const customFetch = async (
   input: RequestInfo | URL,
   init?: RequestInit | undefined
@@ -28,6 +33,13 @@ const customFetch = async (
   if (res.status === 401) {
     throw new Error("Unauthorized");
   }
+  if (res.status === 422) {
+    const response = await res.json();
+    return {
+      error: response.error as string,
+      message: response.message as string[],
+    };
+  }
   throw new Error("Error");
 };
 
@@ -46,6 +58,7 @@ export const createPayment = async (object: {
 };
 
 type UserType = {
+  error: any;
   company: null | string;
   country: null | string;
   email: null | string;

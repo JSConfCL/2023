@@ -2,13 +2,13 @@ import styled from "@emotion/styled";
 import countries from "i18n-iso-countries";
 import enLocale from "i18n-iso-countries/langs/en.json";
 import esLocale from "i18n-iso-countries/langs/es.json";
-import { useId, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { Controller, useForm } from "react-hook-form";
 
 import Select, { StylesConfig } from "react-select";
 import { GenericBtn } from "../TicketSection/shared";
-import { me, updateMe } from "../../helpers/API";
+import { ErrorResponse, me, updateMe } from "../../helpers/API";
 import { jsconfTheme } from "../../../styles/theme";
 
 import {
@@ -78,6 +78,7 @@ const UpdateButton = styled(GenericBtn)`
 const ErrorMessage = styled.section<{ color?: string }>`
   height: 20px;
   font-size: 16px;
+  text-transform: capitalize;
   color: ${({ color }) => color ?? "#f45b69"};
   padding-bottom: 32px;
 `;
@@ -134,7 +135,6 @@ const customStyles: StylesConfig = {
     color: "white",
   }),
 };
-type Props = {};
 
 countries.registerLocale(enLocale);
 countries.registerLocale(esLocale);
@@ -154,19 +154,14 @@ const countryOptions = Object.entries(countryObj).map(
   }
 );
 
-export const UserInformationForm = (props: Props) => {
-  const { data: user } = useQuery(["me"], me);
+export const UserInformationForm = () => {
+  const { data: user, refetch } = useQuery(["me"], me);
   const countrySelectId = useId();
   const genderSelectId = useId();
   const [submitMessage, setSubmitMessage] = useState("");
-  const {
-    control,
-    formState: { errors, touchedFields, isDirty },
-    handleSubmit,
-    register,
-  } = useForm<FormData>({
-    mode: "onSubmit",
-    defaultValues: {
+  const [formErrors, setFormErrors] = useState<string[]>([]);
+  const defaultValues = useMemo(
+    () => ({
       name: user?.name ?? "",
       username: user?.username ?? "",
       country: user?.country
@@ -183,7 +178,27 @@ export const UserInformationForm = (props: Props) => {
             (gender: SelectOption) => gender.value === user.gender
           )
         : undefined,
-    },
+    }),
+    [
+      user?.company,
+      user?.country,
+      user?.gender,
+      user?.name,
+      user?.position,
+      user?.seniority,
+      user?.username,
+      user?.yearsOfExperience,
+    ]
+  );
+  const {
+    control,
+    reset,
+    formState: { errors, touchedFields, isDirty },
+    handleSubmit,
+    register,
+  } = useForm<FormData>({
+    mode: "onSubmit",
+    defaultValues,
   });
 
   const onSubmit = handleSubmit(async (data) => {
@@ -204,15 +219,21 @@ export const UserInformationForm = (props: Props) => {
 
     setSubmitMessage("");
     try {
-      await updateMe(submit);
-      setSubmitMessage("Actualización completada.");
-      setTimeout(() => {
-        setSubmitMessage("");
-      }, 2000);
+      const response = await updateMe(submit);
+      if ((response as unknown as ErrorResponse).error) {
+        const { message } = response as unknown as ErrorResponse;
+        setSubmitMessage("Problemas en la actualización.");
+        setFormErrors(message);
+      } else {
+        setSubmitMessage("Actualización completada.");
+        await refetch();
+        reset(defaultValues);
+        setTimeout(() => {
+          setSubmitMessage("");
+        }, 3000);
+      }
     } catch (e) {
-      setSubmitMessage(
-        "Error en la actualización, vuelve a intentar más tarde."
-      );
+      setSubmitMessage("Error en la actualización.");
     }
   });
 
@@ -316,6 +337,9 @@ export const UserInformationForm = (props: Props) => {
         message={submitMessage}
         color={submitMessage.includes("Error") ? "red" : "white"}
       />
+      {formErrors.map((error) => {
+        return <Error key={error} message={error} color={"red"} />;
+      })}
     </form>
   );
 };
