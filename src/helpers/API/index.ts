@@ -79,11 +79,10 @@ export const me = async (): Promise<UserType> => {
 export const updateMe = async (
   object: Partial<UserPayload>
 ): Promise<UserType> => {
-  const json = await customFetch(`${API_URL}/users/`, {
+  return await customFetch(`${API_URL}/users/`, {
     method: "PUT",
     body: JSON.stringify(object),
   });
-  return json.updatedPost;
 };
 
 export const finishGithubLogin = async ({
