@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Fragment, lazy, useState } from "react";
+import { lazy } from "react";
 import { PageProps } from "../../../pages";
 import useMediaQuery from "../../helpers/useMediaQuery";
 
@@ -90,43 +90,41 @@ const Flex = styled.div`
 
 const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const [constributor] = useState("");
+  if (!props.page?.items.length) {
+    return <></>;
+  }
   return (
-    <>
-      {!constributor && (
-        <Container>
-          <Flex>
-            <Title>Sponsors</Title>
-            <PrimaryStyledLink href="/sponsor">
-              {"Sponsors Registration"}
-            </PrimaryStyledLink>
-          </Flex>
-          {props.page?.items?.map((item) => (
-            <ConstributorType key={item.sys.id}>
-              <ContributorName>{item.name}</ContributorName>
-              <RenderingLayout constributorTypeName={item.name}>
-                {item?.contributorsCollection?.items?.map((contributorItem) => (
-                  <ImageContainer key={contributorItem.sys.id}>
-                    <Flex>
-                      <Image
-                        alt=""
-                        mobile={contributorItem?.image?.url}
-                        desktop={contributorItem?.image?.url}
-                        params={
-                          isMobile
-                            ? contributorItem?.imageParamsMobile
-                            : contributorItem?.imageParamsDesktop
-                        }
-                      />
-                    </Flex>
-                  </ImageContainer>
-                ))}
-              </RenderingLayout>
-            </ConstributorType>
-          ))}
-        </Container>
-      )}
-    </>
+    <Container>
+      <Flex>
+        <Title>Sponsors</Title>
+        <PrimaryStyledLink href="/sponsor">
+          {"Sponsors Registration"}
+        </PrimaryStyledLink>
+      </Flex>
+      {props.page?.items?.map((item) => (
+        <ConstributorType key={item.sys.id}>
+          <ContributorName>{item.name}</ContributorName>
+          <RenderingLayout constributorTypeName={item.name}>
+            {item?.contributorsCollection?.items?.map((contributorItem) => (
+              <ImageContainer key={contributorItem.sys.id}>
+                <Flex>
+                  <Image
+                    alt=""
+                    mobile={contributorItem?.image?.url}
+                    desktop={contributorItem?.image?.url}
+                    params={
+                      isMobile
+                        ? contributorItem?.imageParamsMobile
+                        : contributorItem?.imageParamsDesktop
+                    }
+                  />
+                </Flex>
+              </ImageContainer>
+            ))}
+          </RenderingLayout>
+        </ConstributorType>
+      ))}
+    </Container>
   );
 };
 
