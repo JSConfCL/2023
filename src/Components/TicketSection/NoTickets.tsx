@@ -45,7 +45,6 @@ const SocialAnchor = styled.a<{ type: "twitter" | "facebook" | "linkedin" }>(
 
 const NoTickets = ({ imageUrl }: { imageUrl: string }) => {
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
-  console.log({ isLoggedIn });
   return (
     <>
       <SectionTile
