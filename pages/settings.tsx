@@ -1,9 +1,6 @@
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
-
 import { UserInformationForm } from "../src/Components/UserInformationForm";
-import WithAuth from "../src/Components/WithAuth";
-
 import { me } from "../src/helpers/API";
 import { jsconfTheme, ViewportSizes } from "../styles/theme";
 
@@ -63,6 +60,6 @@ const Settings = () => {
   );
 };
 
-const AuthSettings = WithAuth(Settings);
+const AuthSettings = Settings;
 
 export default AuthSettings;

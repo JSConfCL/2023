@@ -1,11 +1,12 @@
 import { QueryClient } from "@tanstack/react-query";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { nanoid } from "nanoid";
 
 import { Entrada } from "../../Components/Cart/CartAtom";
-import { getValidToken } from "../auth";
-
-export const queryClient = new QueryClient();
+import { accessTokenAtom } from "../auth";
+import { useAtomValue, useResetAtom } from "jotai/utils";
+import { useEffect } from "react";
+import { UserPayload, UserType } from "./types";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -14,43 +15,64 @@ export type ErrorResponse = {
   message: string[];
 };
 
+let fetchReplacement:
+  | ((input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<any>)
+  | undefined;
+
 const customFetch = async (
   input: RequestInfo | URL,
   init?: RequestInit | undefined
-) => {
-  const accessToken = getValidToken();
-  const headers = new Headers(init?.headers);
-  if (accessToken !== null) {
-    headers.append("Authorization", `Bearer ${accessToken}`);
+): Promise<any> => {
+  if (typeof fetchReplacement === "function") {
+    return await fetchReplacement(input, init);
   }
-  headers.append("content-type", "application/json");
-  headers.append("x-trace-id", `traceid_${nanoid()}`);
-  const res = await fetch(input, {
-    ...init,
-    headers,
-  });
-  if (res.status === 200) {
-    return await res.json();
-  }
+  return await fetch(input, init);
+};
 
-  if (res.status === 401 && typeof window !== "undefined") {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    Router.push("/tickets");
-  }
+export const useQueryClient = () => {
+  const resetLocalReferencedAtom = useResetAtom(accessTokenAtom);
+  const accessToken = useAtomValue(accessTokenAtom);
+  const { push } = useRouter();
+  useEffect(() => {
+    fetchReplacement = async (
+      input: RequestInfo | URL,
+      init?: RequestInit | undefined
+    ) => {
+      const headers = new Headers(init?.headers);
+      if (accessToken !== null) {
+        headers.append("Authorization", `Bearer ${accessToken}`);
+      }
+      headers.append("content-type", "application/json");
+      headers.append("x-trace-id", `traceid_${nanoid()}`);
+      const res = await window.fetch(input, {
+        ...init,
+        headers,
+      });
+      if (res.status === 200) {
+        return await res.json();
+      }
 
-  if (res.status === 422) {
-    const response = await res.json();
-    return {
-      error: response.error as string,
-      message: response.message as string[],
+      if (res.status === 401 && typeof window !== "undefined") {
+        resetLocalReferencedAtom();
+        void push("/tickets");
+      }
+
+      if (res.status === 422) {
+        const response = await res.json();
+        return {
+          error: response.error as string,
+          message: response.message as string[],
+        };
+      }
+      throw new Error("Error");
     };
-  }
-  throw new Error("Error");
+  }, [accessToken, push, resetLocalReferencedAtom]);
+  const queryClient = new QueryClient();
+  return queryClient;
 };
 
-export const fetchTickets = async (): Promise<Entrada[]> => {
-  return await customFetch(`${API_URL}/tickets`);
-};
+export const fetchTickets = async (): Promise<Entrada[]> =>
+  await customFetch(`${API_URL}/tickets`);
 
 export const createPayment = async (object: {
   gateway: "mercadopago" | "stripe";
@@ -61,34 +83,6 @@ export const createPayment = async (object: {
     body: JSON.stringify(object),
   });
 };
-
-type UserType = {
-  error: any;
-  company: null | string;
-  country: null | string;
-  email: null | string;
-  gender: null | string;
-  id: string;
-  name: null | string;
-  photo: null | string;
-  position: null | string;
-  provider: null | string;
-  providerId: null | string;
-  seniority: null | string;
-  username: null | string;
-  yearsOfExperience: null | number;
-};
-
-interface UserPayload {
-  name: string;
-  username: string;
-  company: string;
-  position: string;
-  seniority: string;
-  yearsOfExperience: number;
-  country: string;
-  gender: string;
-}
 
 export const me = async (): Promise<UserType> => {
   return await customFetch(`${API_URL}/users/me`);

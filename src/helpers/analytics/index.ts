@@ -20,9 +20,12 @@ export const useIdentify = () => {
       }
     };
     if (isAutenticated && initialised) {
-      run().catch((e) => {
-        // console.error(e);
-      });
+      setTimeout(() => {
+        run().catch((e) => {
+          // console.error(e);
+        });
+        // putas race conditions
+      }, 150);
     }
   }, [identify, initialised, isAutenticated, refetch, setTraits]);
 };
