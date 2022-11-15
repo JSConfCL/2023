@@ -5,17 +5,16 @@ import { useMemo } from "react";
 import { useTimeout } from "usehooks-ts";
 
 import { accessTokenAtom, isAuthenticatedAtom } from "../../helpers/auth";
-import { hasticketsAtom } from "../Cart/CartAtom";
 
 import NavBar from "../NavBar/NavBar";
 
 const TicketNavBar = () => {
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
-  const areThereTickets = useAtomValue(hasticketsAtom);
   const { replace, push } = useRouter();
   const setAccessToken = useSetAtom(accessTokenAtom);
   const flags = useFlags(["ticket-page-enabled"]);
   const ticketPageEnabled = flags["ticket-page-enabled"].value;
+
   const items = useMemo(() => {
     if (isLoggedIn) {
       const items = [
@@ -36,7 +35,7 @@ const TicketNavBar = () => {
         },
       ];
 
-      if (areThereTickets) {
+      if (ticketPageEnabled) {
         items.unshift({
           contenido: "Tickets",
           id: "Tickets",
@@ -49,7 +48,7 @@ const TicketNavBar = () => {
       return items;
     }
     return [];
-  }, [isLoggedIn, setAccessToken, push, areThereTickets]);
+  }, [isLoggedIn, setAccessToken, push, ticketPageEnabled]);
   useTimeout(() => {
     // Le damos 2 segundos a las feature-flags para poder conectarse (Es para
     // problar nosotros, asi que es más que suficiente IMO). :)
