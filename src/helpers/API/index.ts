@@ -1,7 +1,9 @@
 import { QueryClient } from "@tanstack/react-query";
+import Router from "next/router";
+import { nanoid } from "nanoid";
+
 import { Entrada } from "../../Components/Cart/CartAtom";
 import { getValidToken } from "../auth";
-import { nanoid } from "nanoid";
 
 export const queryClient = new QueryClient();
 
@@ -30,9 +32,12 @@ const customFetch = async (
   if (res.status === 200) {
     return await res.json();
   }
-  if (res.status === 401) {
-    throw new Error("Unauthorized");
+
+  if (res.status === 401 && typeof window !== "undefined") {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    Router.push("/tickets");
   }
+
   if (res.status === 422) {
     const response = await res.json();
     return {
