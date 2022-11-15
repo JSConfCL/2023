@@ -28,6 +28,7 @@ const withAuth = (WrappedComponent: any) => {
 
   Component.displayName = "WithAuth";
   Component.getLayout = TicketsLayout;
+
   return Component;
 };
 

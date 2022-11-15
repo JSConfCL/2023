@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
-import { TicketsLayout } from "../src/Components/Layouts/TicketsLayout";
-import { me } from "../src/helpers/API";
-import { jsconfTheme, ViewportSizes } from "../styles/theme";
 
 import { UserInformationForm } from "../src/Components/UserInformationForm";
+import WithAuth from "../src/Components/WithAuth";
+
+import { me } from "../src/helpers/API";
+import { jsconfTheme, ViewportSizes } from "../styles/theme";
 
 const Title = styled.h2`
   font-family: "Koulen";
@@ -45,7 +46,7 @@ const StyledLoadingImage = styled.div`
   margin: 0 auto;
 `;
 
-export default function Settings() {
+const Settings = () => {
   const { isLoading } = useQuery(["me"], me);
 
   return (
@@ -60,6 +61,8 @@ export default function Settings() {
       )}
     </StyledContainer>
   );
-}
+};
 
-Settings.getLayout = TicketsLayout;
+const AuthSettings = WithAuth(Settings);
+
+export default AuthSettings;
