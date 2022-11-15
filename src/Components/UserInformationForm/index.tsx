@@ -95,6 +95,10 @@ const genderOptions = [
 ];
 
 const customStyles: StylesConfig = {
+  input: ({ ...provided }) => ({
+    ...provided,
+    color: "#ddd",
+  }),
   option: ({ ...provided }, state) => ({
     ...provided,
     color: "white",
@@ -102,13 +106,13 @@ const customStyles: StylesConfig = {
       ? jsconfTheme.colors.jsconfRed
       : state.isFocused
       ? "rgba(244, 91, 105,0.5)"
-      : "black",
+      : "#333",
     ":active": {
       background: "rgba(244, 91, 105,0.8)",
     },
     cursor: state.isDisabled ? "not-allowed" : "pointer",
   }),
-  menu: ({ ...provided }, state) => ({
+  menu: ({ ...provided }) => ({
     ...provided,
     background: "black",
     color: "white",
@@ -116,7 +120,7 @@ const customStyles: StylesConfig = {
   }),
   menuList: ({ ...provided }) => ({
     ...provided,
-    background: "black",
+    background: "#333",
     color: "white",
   }),
   control: ({ ...provided }) => ({
