@@ -1,11 +1,11 @@
 import { QueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/router";
 import { nanoid } from "nanoid";
+import { useRouter } from "next/router";
 
+import { useResetAtom } from "jotai/utils";
+import { useEffect, useState } from "react";
 import { Entrada } from "../../Components/Cart/CartAtom";
-import { accessTokenAtom } from "../auth";
-import { useAtomValue, useResetAtom } from "jotai/utils";
-import { useEffect } from "react";
+import { accessTokenAtom, getValidToken } from "../auth";
 import { UserPayload, UserType } from "./types";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -26,35 +26,52 @@ const customFetch = async (
   if (typeof fetchReplacement === "function") {
     return await fetchReplacement(input, init);
   }
-  return await fetch(input, init);
+  const headers = new Headers(init?.headers);
+  const token = getValidToken();
+  if (token !== null) {
+    headers.append("Authorization", `Bearer ${token}`);
+  }
+  headers.append("content-type", "application/json");
+  headers.append("x-trace-id", `traceid_${nanoid()}`);
+  headers.append("x-fetch", `raw`);
+  return await fetch(input, { ...init, headers });
 };
 
 export const useQueryClient = () => {
   const resetLocalReferencedAtom = useResetAtom(accessTokenAtom);
-  const accessToken = useAtomValue(accessTokenAtom);
+  const [client, setClient] = useState<QueryClient | null>(null);
   const { push } = useRouter();
   useEffect(() => {
+    if (!client) {
+      setClient(new QueryClient());
+    }
+    if (typeof fetchReplacement !== "undefined") {
+      return;
+    }
     fetchReplacement = async (
       input: RequestInfo | URL,
       init?: RequestInit | undefined
     ) => {
       const headers = new Headers(init?.headers);
-      if (accessToken !== null) {
-        headers.append("Authorization", `Bearer ${accessToken}`);
+      const token = getValidToken();
+      if (token !== null) {
+        headers.append("Authorization", `Bearer ${token}`);
       }
       headers.append("content-type", "application/json");
+      headers.append("x-fetch", `replacement`);
       headers.append("x-trace-id", `traceid_${nanoid()}`);
       const res = await window.fetch(input, {
         ...init,
         headers,
       });
-      if (res.status === 200) {
+      if (res.status >= 200 && res.status < 300) {
         return await res.json();
       }
 
       if (res.status === 401 && typeof window !== "undefined") {
         resetLocalReferencedAtom();
         void push("/tickets");
+        return;
       }
 
       if (res.status === 422) {
@@ -66,9 +83,8 @@ export const useQueryClient = () => {
       }
       throw new Error("Error");
     };
-  }, [accessToken, push, resetLocalReferencedAtom]);
-  const queryClient = new QueryClient();
-  return queryClient;
+  }, [client, push, resetLocalReferencedAtom]);
+  return client;
 };
 
 export const fetchTickets = async (): Promise<Entrada[]> =>
@@ -86,6 +102,10 @@ export const createPayment = async (object: {
 
 export const me = async (): Promise<UserType> => {
   return await customFetch(`${API_URL}/users/me`);
+};
+export const getMe = (props: any) => {
+  console.log(props);
+  return me;
 };
 
 export const updateMe = async (

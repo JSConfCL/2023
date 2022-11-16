@@ -2,7 +2,7 @@ import createCache from "@emotion/cache";
 import { FlagsmithProvider } from "flagsmith/react";
 import flagsmith from "flagsmith/isomorphic";
 import { CacheProvider, ThemeProvider } from "@emotion/react";
-import { QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider as TanstackQueryProvider } from "@tanstack/react-query";
 import { Provider as JotaiProvider, useAtomValue } from "jotai";
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
@@ -48,9 +48,12 @@ const mustBeAuthenticatedRoutes: string[] = [
 const mustBeAnonymousRoutes: string[] = [];
 
 const useAuthenticatedGating = () => {
-  const { pathname, push } = useRouter();
+  const { pathname, push, isReady } = useRouter();
   const isAuthenticated = useAtomValue(isAuthenticatedAtom);
   useEffect(() => {
+    if (!isReady) {
+      return;
+    }
     if (isAuthenticated) {
       if (any(pathname, mustBeAnonymousRoutes)) {
         console.info("Authenticated Users should not be in", pathname);
@@ -62,10 +65,10 @@ const useAuthenticatedGating = () => {
         push("/tickets").catch((e) => console.error(e));
       }
     }
-  }, [isAuthenticated, pathname, push]);
+  }, [isAuthenticated, isReady, pathname, push]);
 };
 
-const Content = ({
+const LayoutAndContent = ({
   Component,
   pageProps,
 }: {
@@ -73,29 +76,45 @@ const Content = ({
   pageProps: AppProps["pageProps"];
 }) => {
   useAuthenticatedGating();
-  const queryClient = useQueryClient();
   const getLayout = Component.getLayout ?? ((page) => page);
+  return (
+    <>
+      {getLayout(<Component {...pageProps} />)}
+      <Suspense fallback={null}>
+        <ExtendedFooter />
+      </Suspense>
+    </>
+  );
+};
+const AppWithQueryClients = ({
+  Component,
+  pageProps,
+}: {
+  Component: NextPageWithLayout;
+  pageProps: AppProps["pageProps"];
+}) => {
+  const queryClient = useQueryClient();
+  if (!queryClient) {
+    return <></>;
+  }
   return (
     <CacheProvider value={cache}>
       <Provider value={urlQlient}>
-        <QueryClientProvider client={queryClient}>
+        <TanstackQueryProvider client={queryClient}>
           <ThemeProvider theme={jsconfTheme}>
             <GlobalStyles />
             <Suspense fallback={null}>
               <WebSchema />
             </Suspense>
-            {getLayout(<Component {...pageProps} />)}
-            <Suspense fallback={null}>
-              <ExtendedFooter />
-            </Suspense>
+            <LayoutAndContent Component={Component} pageProps={pageProps} />
           </ThemeProvider>
-        </QueryClientProvider>
+        </TanstackQueryProvider>
       </Provider>
     </CacheProvider>
   );
 };
 
-function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+function AppWithDataStorage({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <JotaiProvider>
       <FlagsmithProvider
@@ -105,10 +124,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         }}
         flagsmith={flagsmith}
       >
-        <Content Component={Component} pageProps={pageProps} />
+        <AppWithQueryClients Component={Component} pageProps={pageProps} />
       </FlagsmithProvider>
     </JotaiProvider>
   );
 }
 
-export default MyApp;
+export default AppWithDataStorage;

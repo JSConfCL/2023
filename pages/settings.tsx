@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
+import { TicketsLayout } from "../src/Components/Layouts/TicketsLayout";
 import { UserInformationForm } from "../src/Components/UserInformationForm";
 import { me } from "../src/helpers/API";
 import { jsconfTheme, ViewportSizes } from "../styles/theme";
@@ -60,6 +61,6 @@ const Settings = () => {
   );
 };
 
-const AuthSettings = Settings;
+Settings.getLayout = TicketsLayout;
 
-export default AuthSettings;
+export default Settings;

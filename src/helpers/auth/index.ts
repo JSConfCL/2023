@@ -1,23 +1,6 @@
 import { atom } from "jotai";
-import { selectAtom, RESET } from "jotai/utils";
+import { RESET } from "jotai/utils";
 import decode, { JwtPayload } from "jwt-decode";
-
-export const AUTHENTICATION_LOCALSTORAGE_KEY = "jsconfcl.auth.token.v1";
-
-const accessTokenReferenceAtom = atom<null | string>(null);
-
-export const accessTokenAtom = atom(
-  (get) => get(accessTokenReferenceAtom),
-  (get, set, newToken: string | null | typeof RESET) => {
-    if (newToken === RESET || newToken === null) {
-      localStorage.removeItem(AUTHENTICATION_LOCALSTORAGE_KEY);
-      set(accessTokenReferenceAtom, null);
-    } else {
-      localStorage.setItem(AUTHENTICATION_LOCALSTORAGE_KEY, newToken);
-      set(accessTokenReferenceAtom, newToken);
-    }
-  }
-);
 
 const fiveMinutesInMiliseconds = 1000 * 60 * 5;
 const isTokenValid = (token: string) => {
@@ -42,8 +25,10 @@ const isTokenValid = (token: string) => {
     return false;
   }
 };
-
 export const getValidToken = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
   const token = localStorage.getItem(AUTHENTICATION_LOCALSTORAGE_KEY);
   if (!token) {
     return null;
@@ -55,6 +40,23 @@ export const getValidToken = () => {
     return null;
   }
 };
+
+const AUTHENTICATION_LOCALSTORAGE_KEY = "jsconfcl.auth.token.v1";
+const accessTokenReferenceAtom = atom<null | string>(getValidToken());
+
+export const accessTokenAtom = atom(
+  (get) => get(accessTokenReferenceAtom),
+  (get, set, newToken: string | null | typeof RESET) => {
+    if (newToken === RESET || newToken === null) {
+      localStorage.removeItem(AUTHENTICATION_LOCALSTORAGE_KEY);
+      set(accessTokenReferenceAtom, null);
+    } else {
+      localStorage.setItem(AUTHENTICATION_LOCALSTORAGE_KEY, newToken);
+      set(accessTokenReferenceAtom, newToken);
+    }
+  }
+);
+
 accessTokenAtom.onMount = (setAtom) => {
   const token = getValidToken();
   setAtom(token);
@@ -62,10 +64,5 @@ accessTokenAtom.onMount = (setAtom) => {
 
 export const isAuthenticatedAtom = atom((get) => {
   const rawToken = get(accessTokenAtom);
-  return Boolean(rawToken);
+  return rawToken !== null;
 });
-
-export const accessTokenPureAtom = selectAtom(
-  accessTokenAtom,
-  (accessToken) => accessToken
-);
