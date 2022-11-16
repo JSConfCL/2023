@@ -1,25 +1,9 @@
 import { atom } from "jotai";
-import { selectAtom } from "jotai/utils";
+import { RESET } from "jotai/utils";
 import decode, { JwtPayload } from "jwt-decode";
 
-export const AUTHENTICATION_LOCALSTORAGE_KEY = "jsconfcl.auth.token";
-
-export const accessTokenReferenceAtom = atom<null | string>(null);
-
-export const accessTokenAtom = atom(
-  (get) => get(accessTokenReferenceAtom),
-  (get, set, newStr: string | null) => {
-    set(accessTokenReferenceAtom, newStr);
-    if (newStr !== null) {
-      localStorage.setItem(AUTHENTICATION_LOCALSTORAGE_KEY, newStr);
-    } else {
-      localStorage.removeItem(AUTHENTICATION_LOCALSTORAGE_KEY);
-    }
-  }
-);
-
 const fiveMinutesInMiliseconds = 1000 * 60 * 5;
-const isTokenValid = (token: string | null) => {
+const isTokenValid = (token: string) => {
   if (token === null) {
     return false;
   }
@@ -41,24 +25,44 @@ const isTokenValid = (token: string | null) => {
     return false;
   }
 };
-
 export const getValidToken = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
   const token = localStorage.getItem(AUTHENTICATION_LOCALSTORAGE_KEY);
+  if (!token) {
+    return null;
+  }
   if (isTokenValid(token)) {
     // Eso quiere decir que lo que sacamos de localstorage es un token valido.
-    return token as string;
+    return token;
   } else {
     return null;
   }
 };
+
+const AUTHENTICATION_LOCALSTORAGE_KEY = "jsconfcl.auth.token.v1";
+const accessTokenReferenceAtom = atom<null | string>(getValidToken());
+
+export const accessTokenAtom = atom(
+  (get) => get(accessTokenReferenceAtom),
+  (get, set, newToken: string | null | typeof RESET) => {
+    if (newToken === RESET || newToken === null) {
+      localStorage.removeItem(AUTHENTICATION_LOCALSTORAGE_KEY);
+      set(accessTokenReferenceAtom, null);
+    } else {
+      localStorage.setItem(AUTHENTICATION_LOCALSTORAGE_KEY, newToken);
+      set(accessTokenReferenceAtom, newToken);
+    }
+  }
+);
+
 accessTokenAtom.onMount = (setAtom) => {
   const token = getValidToken();
   setAtom(token);
 };
 
-export const isAuthenticatedAtom = atom((get) => Boolean(get(accessTokenAtom)));
-
-export const accessTokenPureAtom = selectAtom(
-  accessTokenAtom,
-  (accessToken) => accessToken
-);
+export const isAuthenticatedAtom = atom((get) => {
+  const rawToken = get(accessTokenAtom);
+  return rawToken !== null;
+});

@@ -10,7 +10,7 @@ import NavBar from "../NavBar/NavBar";
 
 const TicketNavBar = () => {
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
-  const { replace, push } = useRouter();
+  const { replace } = useRouter();
   const setAccessToken = useSetAtom(accessTokenAtom);
   const flags = useFlags(["ticket-page-enabled"]);
   const ticketPageEnabled = flags["ticket-page-enabled"].value;
@@ -30,7 +30,6 @@ const TicketNavBar = () => {
           id: "Log Out",
           onClick: async () => {
             setAccessToken(null);
-            await push("/tickets");
           },
         },
       ];
@@ -48,7 +47,7 @@ const TicketNavBar = () => {
       return items;
     }
     return [];
-  }, [isLoggedIn, setAccessToken, push, ticketPageEnabled]);
+  }, [isLoggedIn, setAccessToken, ticketPageEnabled]);
   useTimeout(() => {
     // Le damos 2 segundos a las feature-flags para poder conectarse (Es para
     // problar nosotros, asi que es más que suficiente IMO). :)

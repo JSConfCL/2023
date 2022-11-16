@@ -1,11 +1,12 @@
 import { QueryClient } from "@tanstack/react-query";
-import Router from "next/router";
 import { nanoid } from "nanoid";
+import { useRouter } from "next/router";
 
+import { useResetAtom } from "jotai/utils";
+import { useEffect, useState } from "react";
 import { Entrada } from "../../Components/Cart/CartAtom";
-import { getValidToken } from "../auth";
-
-export const queryClient = new QueryClient();
+import { accessTokenAtom, getValidToken } from "../auth";
+import { UserPayload, UserType } from "./types";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -14,43 +15,82 @@ export type ErrorResponse = {
   message: string[];
 };
 
+let fetchReplacement:
+  | ((input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<any>)
+  | undefined;
+
 const customFetch = async (
   input: RequestInfo | URL,
   init?: RequestInit | undefined
-) => {
-  const accessToken = getValidToken();
+): Promise<any> => {
+  if (typeof fetchReplacement === "function") {
+    return await fetchReplacement(input, init);
+  }
   const headers = new Headers(init?.headers);
-  if (accessToken !== null) {
-    headers.append("Authorization", `Bearer ${accessToken}`);
+  const token = getValidToken();
+  if (token !== null) {
+    headers.append("Authorization", `Bearer ${token}`);
   }
   headers.append("content-type", "application/json");
   headers.append("x-trace-id", `traceid_${nanoid()}`);
-  const res = await fetch(input, {
-    ...init,
-    headers,
-  });
-  if (res.status === 200) {
-    return await res.json();
-  }
+  headers.append("Accept-Language", `es`);
+  headers.append("x-fetch", `raw`);
+  return await fetch(input, { ...init, headers });
+};
 
-  if (res.status === 401 && typeof window !== "undefined") {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    Router.push("/tickets");
-  }
+export const useQueryClient = () => {
+  const resetLocalReferencedAtom = useResetAtom(accessTokenAtom);
+  const [client, setClient] = useState<QueryClient | null>(null);
+  const { push } = useRouter();
+  useEffect(() => {
+    if (!client) {
+      setClient(new QueryClient());
+    }
+    if (typeof fetchReplacement !== "undefined") {
+      return;
+    }
+    fetchReplacement = async (
+      input: RequestInfo | URL,
+      init?: RequestInit | undefined
+    ) => {
+      const headers = new Headers(init?.headers);
+      const token = getValidToken();
+      if (token !== null) {
+        headers.append("Authorization", `Bearer ${token}`);
+      }
+      headers.append("content-type", "application/json");
+      headers.append("Accept-Language", `es`);
+      headers.append("x-fetch", `replacement`);
+      headers.append("x-trace-id", `traceid_${nanoid()}`);
+      const res = await window.fetch(input, {
+        ...init,
+        headers,
+      });
+      if (res.status >= 200 && res.status < 300) {
+        return await res.json();
+      }
 
-  if (res.status === 422) {
-    const response = await res.json();
-    return {
-      error: response.error as string,
-      message: response.message as string[],
+      if (res.status === 401 && typeof window !== "undefined") {
+        resetLocalReferencedAtom();
+        void push("/tickets");
+        return;
+      }
+
+      if (res.status === 422) {
+        const response = await res.json();
+        return {
+          error: response.error as string,
+          message: response.message as string[],
+        };
+      }
+      throw new Error("Error");
     };
-  }
-  throw new Error("Error");
+  }, [client, push, resetLocalReferencedAtom]);
+  return client;
 };
 
-export const fetchTickets = async (): Promise<Entrada[]> => {
-  return await customFetch(`${API_URL}/tickets`);
-};
+export const fetchTickets = async (): Promise<Entrada[]> =>
+  await customFetch(`${API_URL}/tickets`);
 
 export const createPayment = async (object: {
   gateway: "mercadopago" | "stripe";
@@ -62,36 +102,12 @@ export const createPayment = async (object: {
   });
 };
 
-type UserType = {
-  error: any;
-  company: null | string;
-  country: null | string;
-  email: null | string;
-  gender: null | string;
-  id: string;
-  name: null | string;
-  photo: null | string;
-  position: null | string;
-  provider: null | string;
-  providerId: null | string;
-  seniority: null | string;
-  username: null | string;
-  yearsOfExperience: null | number;
-};
-
-interface UserPayload {
-  name: string;
-  username: string;
-  company: string;
-  position: string;
-  seniority: string;
-  yearsOfExperience: number;
-  country: string;
-  gender: string;
-}
-
 export const me = async (): Promise<UserType> => {
   return await customFetch(`${API_URL}/users/me`);
+};
+export const getMe = (props: any) => {
+  console.log(props);
+  return me;
 };
 
 export const updateMe = async (
