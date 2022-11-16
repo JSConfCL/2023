@@ -77,15 +77,9 @@ const LayoutAndContent = ({
 }) => {
   useAuthenticatedGating();
   const getLayout = Component.getLayout ?? ((page) => page);
-  return (
-    <>
-      {getLayout(<Component {...pageProps} />)}
-      <Suspense fallback={null}>
-        <ExtendedFooter />
-      </Suspense>
-    </>
-  );
+  return <>{getLayout(<Component {...pageProps} />)}</>;
 };
+
 const AppWithQueryClients = ({
   Component,
   pageProps,
@@ -107,6 +101,9 @@ const AppWithQueryClients = ({
               <WebSchema />
             </Suspense>
             <LayoutAndContent Component={Component} pageProps={pageProps} />
+            <Suspense fallback={null}>
+              <ExtendedFooter />
+            </Suspense>
           </ThemeProvider>
         </TanstackQueryProvider>
       </Provider>
