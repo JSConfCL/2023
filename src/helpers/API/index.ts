@@ -33,6 +33,7 @@ const customFetch = async (
   }
   headers.append("content-type", "application/json");
   headers.append("x-trace-id", `traceid_${nanoid()}`);
+  headers.append("Accept-Language", `es`);
   headers.append("x-fetch", `raw`);
   return await fetch(input, { ...init, headers });
 };
@@ -58,6 +59,7 @@ export const useQueryClient = () => {
         headers.append("Authorization", `Bearer ${token}`);
       }
       headers.append("content-type", "application/json");
+      headers.append("Accept-Language", `es`);
       headers.append("x-fetch", `replacement`);
       headers.append("x-trace-id", `traceid_${nanoid()}`);
       const res = await window.fetch(input, {
