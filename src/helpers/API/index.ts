@@ -9,6 +9,7 @@ import { accessTokenAtom, getValidToken } from "../auth";
 import { UserPayload, UserType } from "./types";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
+console.log({ API_URL });
 
 export type ErrorResponse = {
   error: string;
