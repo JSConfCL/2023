@@ -2,14 +2,15 @@ import styled from "@emotion/styled";
 import countries from "i18n-iso-countries";
 import enLocale from "i18n-iso-countries/langs/en.json";
 import esLocale from "i18n-iso-countries/langs/es.json";
-import { useId, useMemo, useState } from "react";
+import { useEffect, Fragment, useId, useMemo, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { Controller, useForm } from "react-hook-form";
 
-import Select, { StylesConfig } from "react-select";
+import { StylesConfig } from "react-select";
+import Select from "react-select/creatable";
 import { GenericBtn } from "../TicketSection/shared";
 import { ErrorResponse, me, updateMe } from "../../helpers/API";
-import { jsconfTheme } from "../../../styles/theme";
+import { colors, jsconfTheme } from "../../../styles/theme";
 
 import {
   nameValidation,
@@ -17,6 +18,7 @@ import {
   optionalStringValidation,
 } from "../Form/schema";
 import { useQuery } from "@tanstack/react-query";
+import { transparentize } from "polished";
 
 interface SelectOption {
   label: any;
@@ -79,7 +81,7 @@ const ErrorMessage = styled.section<{ color?: string }>`
   height: 20px;
   font-size: 16px;
   text-transform: capitalize;
-  color: ${({ color }) => color ?? "#f45b69"};
+  color: ${({ theme, color }) => color ?? theme.colors.jsconfRed};
   padding-bottom: 32px;
 `;
 
@@ -87,12 +89,6 @@ const Error = (props: { message?: any; color?: string }) => {
   const { message, color } = props;
   return <ErrorMessage color={color}>{message}</ErrorMessage>;
 };
-
-const genderOptions = [
-  { value: "male", label: "Masculino" },
-  { value: "female", label: "Femenino" },
-  { value: "other", label: "Otro" },
-];
 
 const customStyles: StylesConfig = {
   input: ({ ...provided }) => ({
@@ -105,10 +101,10 @@ const customStyles: StylesConfig = {
     background: state.isSelected
       ? jsconfTheme.colors.jsconfRed
       : state.isFocused
-      ? "rgba(244, 91, 105,0.5)"
+      ? transparentize(0.5, colors.jsconfRed)
       : "#333",
     ":active": {
-      background: "rgba(244, 91, 105,0.8)",
+      background: transparentize(0.8, colors.jsconfRed),
     },
     cursor: state.isDisabled ? "not-allowed" : "pointer",
   }),
@@ -148,7 +144,7 @@ const countryOptions = Object.entries(countryObj).map(
     return {
       label: (
         <>
-          <ReactCountryFlag countryCode={key} />
+          <ReactCountryFlag key={key} countryCode={key} />
           {` ${value}`}
         </>
       ),
@@ -164,6 +160,26 @@ export const UserInformationForm = () => {
   const genderSelectId = useId();
   const [submitMessage, setSubmitMessage] = useState("");
   const [formErrors, setFormErrors] = useState<string[]>([]);
+  const genderOptions = useMemo(() => {
+    const defaultGenderValues = [
+      { value: "male", label: "Masculino" },
+      { value: "female", label: "Femenino" },
+      { value: "other", label: "Otro" },
+    ];
+    if (!user?.gender) {
+      return defaultGenderValues;
+    }
+    const alreadyExists = defaultGenderValues.some(
+      ({ value }) => value === user?.gender
+    );
+    if (!alreadyExists) {
+      defaultGenderValues.push({
+        value: user?.gender,
+        label: user?.gender,
+      });
+    }
+    return defaultGenderValues;
+  }, [user?.gender]);
   const defaultValues = useMemo(
     () => ({
       name: user?.name ?? "",
@@ -184,6 +200,7 @@ export const UserInformationForm = () => {
         : undefined,
     }),
     [
+      genderOptions,
       user?.company,
       user?.country,
       user?.gender,
@@ -204,6 +221,10 @@ export const UserInformationForm = () => {
     mode: "onSubmit",
     defaultValues,
   });
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
     const submit = {
@@ -323,6 +344,7 @@ export const UserInformationForm = () => {
         render={({ field }) => (
           <Select
             {...field}
+            isClearable
             styles={customStyles}
             options={genderOptions}
             instanceId={genderSelectId}
