@@ -105,10 +105,6 @@ export const createPayment = async (object: {
 export const me = async (): Promise<UserType> => {
   return await customFetch(`${API_URL}/users/me`);
 };
-export const getMe = (props: any) => {
-  console.log(props);
-  return me;
-};
 
 export const updateMe = async (
   object: Partial<UserPayload>
