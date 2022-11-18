@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
+import { transparentize } from "polished";
+
 import { TicketsLayout } from "../src/Components/Layouts/TicketsLayout";
 import { UserInformationForm } from "../src/Components/UserInformationForm";
 import { me } from "../src/helpers/API";
@@ -44,11 +46,32 @@ const StyledLoadingImage = styled.div`
   margin: 0 auto;
 `;
 
-const Settings = () => {
-  const { isLoading } = useQuery(["me"], me);
+const StyledBanner = styled.div`
+  border-radius: 8px;
+  background: ${transparentize(0.5, jsconfTheme.colors.jsconfRed)};
+  padding: 16px 24px 24px 24px;
+  margin-bottom: 16px;
 
+  > h2 {
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 1.2em;
+  }
+`;
+
+const Settings = () => {
+  const { isLoading, data: user } = useQuery(["me"], me);
   return (
     <StyledContainer>
+      {user?.id && !user.email ? (
+        <StyledBanner>
+          <h2>Informacion Importante:</h2>
+          Pudimos crear tu cuenta. Pero no conseguimos correo electrónico
+          asociado. Por lo tanto, no podremos comunicarnos contigo. Te pedimos
+          registres un correo electrónico para poder informarte los próximos
+          pasos.
+        </StyledBanner>
+      ) : null}
       <Title>Configuracion</Title>
       {isLoading ? (
         <SytledImageContainer>
