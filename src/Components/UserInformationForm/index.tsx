@@ -13,6 +13,7 @@ import { ErrorResponse, me, updateMe } from "../../helpers/API";
 import { colors, jsconfTheme } from "../../../styles/theme";
 
 import {
+  emailValidation,
   nameValidation,
   notNegativeNumberValidation,
   optionalStringValidation,
@@ -228,14 +229,32 @@ export const UserInformationForm = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     const submit = {
-      ...(touchedFields?.name ? { name: data?.name } : {}),
-      ...(touchedFields?.username ? { username: data?.username } : {}),
-      ...(touchedFields?.company ? { company: data?.company } : {}),
-      ...(touchedFields?.position ? { position: data?.position } : {}),
-      ...(touchedFields?.seniority ? { seniority: data?.seniority } : {}),
-      ...(touchedFields?.country ? { country: data?.country?.code } : {}),
-      ...(touchedFields?.gender ? { gender: data?.gender?.value } : {}),
-      ...(touchedFields?.yearsOfExperience
+      ...(touchedFields?.name && data?.name !== user?.name
+        ? { name: data?.name }
+        : {}),
+      ...(touchedFields?.username && data?.username !== user?.username
+        ? { username: data?.username }
+        : {}),
+      ...(touchedFields?.email && !user?.email && data?.email !== user?.email
+        ? { email: data?.email }
+        : {}),
+      ...(touchedFields?.company && data?.company !== user?.company
+        ? { company: data?.company }
+        : {}),
+      ...(touchedFields?.position && data?.position !== user?.position
+        ? { position: data?.position }
+        : {}),
+      ...(touchedFields?.seniority && data?.seniority !== user?.seniority
+        ? { seniority: data?.seniority }
+        : {}),
+      ...(touchedFields?.country && data?.country !== user?.country
+        ? { country: data?.country?.code }
+        : {}),
+      ...(touchedFields?.gender && data?.gender !== user?.gender
+        ? { gender: data?.gender?.value }
+        : {}),
+      ...(touchedFields?.yearsOfExperience &&
+      data?.yearsOfExperience !== user?.yearsOfExperience
         ? {
             yearsOfExperience: data?.yearsOfExperience,
           }
@@ -291,6 +310,17 @@ export const UserInformationForm = () => {
         error={Boolean(errors.username?.type)}
       />
       <Error {...errors.username} />
+
+      {!user?.email ? (
+        <>
+          <InputC
+            {...register("email", emailValidation)}
+            placeholder="Correo Electrónico"
+            error={Boolean(errors.email?.type)}
+          />
+          <Error {...errors.email} />
+        </>
+      ) : null}
 
       <Controller
         name="country"
