@@ -131,16 +131,13 @@ const SubscribeSection = (props: Props) => {
       setIsSubmiting(true);
 
       await wait(1.5);
-      const response = await fetch(
-        "https://jsconf-chile-email-worker-1.jsconfcl.workers.dev",
-        {
-          method: "POST",
-          body,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(process.env.NEXT_PUBLIC_DATA_API, {
+        method: "POST",
+        body,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (response.status !== 200) {
         throw new Error();
