@@ -1,29 +1,16 @@
 import styled from "@emotion/styled";
 
-const FlexLayout = styled.div`
+const FlexLayout = styled.div<{ height: string }>`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 30px;
+  justify-content: center;
+  gap: 2rem;
   margin: 1.5rem 1rem;
-  @media (min-width: 1024px) {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-`;
 
-const GridLayout = styled.div`
-  display: grid;
-  grid-template-columns: 50% 50%;
-  margin: 1.5rem 1rem;
-  @media (min-width: 1024px) {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 30px;
+  img {
+    height: ${({ height }) => height};
   }
 `;
 
@@ -34,16 +21,16 @@ const RenderingLayout = (props: {
   return (
     <>
       {props.constributorTypeName === "Platinum Sponsor" && (
-        <FlexLayout>{props.children}</FlexLayout>
+        <FlexLayout height="100px">{props.children}</FlexLayout>
       )}
       {props.constributorTypeName === "Gold Sponsor" && (
-        <FlexLayout>{props.children}</FlexLayout>
+        <FlexLayout height="60px">{props.children}</FlexLayout>
       )}
       {props.constributorTypeName === "Silver Sponsor" && (
-        <FlexLayout>{props.children}</FlexLayout>
+        <FlexLayout height="40px">{props.children}</FlexLayout>
       )}
       {props.constributorTypeName === "Bronze Sponsor" && (
-        <GridLayout>{props.children}</GridLayout>
+        <FlexLayout height="30px">{props.children}</FlexLayout>
       )}
     </>
   );
