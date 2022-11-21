@@ -3082,6 +3082,7 @@ export type SponsorBlock = Entry & {
   imageParamsDesktop?: Maybe<Scalars["String"]>;
   imageParamsMobile?: Maybe<Scalars["String"]>;
   linkedFrom?: Maybe<SponsorBlockLinkingCollections>;
+  name?: Maybe<Scalars["String"]>;
   sys: Sys;
   title?: Maybe<SponsorBlockTitle>;
 };
@@ -3105,6 +3106,11 @@ export type SponsorBlockImageParamsMobileArgs = {
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
 export type SponsorBlockLinkedFromArgs = {
   allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
+export type SponsorBlockNameArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
@@ -3139,6 +3145,13 @@ export type SponsorBlockFilter = {
   imageParamsMobile_not_contains?: InputMaybe<Scalars["String"]>;
   imageParamsMobile_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   image_exists?: InputMaybe<Scalars["Boolean"]>;
+  name?: InputMaybe<Scalars["String"]>;
+  name_contains?: InputMaybe<Scalars["String"]>;
+  name_exists?: InputMaybe<Scalars["Boolean"]>;
+  name_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  name_not?: InputMaybe<Scalars["String"]>;
+  name_not_contains?: InputMaybe<Scalars["String"]>;
+  name_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   sys?: InputMaybe<SysFilter>;
   title_contains?: InputMaybe<Scalars["String"]>;
   title_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -3170,6 +3183,8 @@ export enum SponsorBlockOrder {
   ImageParamsDesktopDesc = "imageParamsDesktop_DESC",
   ImageParamsMobileAsc = "imageParamsMobile_ASC",
   ImageParamsMobileDesc = "imageParamsMobile_DESC",
+  NameAsc = "name_ASC",
+  NameDesc = "name_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",

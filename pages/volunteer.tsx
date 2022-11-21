@@ -13,6 +13,7 @@ import { ParseQuery } from "../src/helpers/types";
 import BannerVolunteer from "../src/Components/Banner/Volunteer";
 import VolunteerForm from "../src/Components/Form/Volunteer";
 import { NavBarProps } from "../src/Components/NavBar/NavBar";
+import Seo from "../src/Components/Seo";
 import { parseNavBarData } from "../src/Components/NavBar/helper";
 
 const NavBar = dynamic(
@@ -28,6 +29,7 @@ export interface PageProps {
   navData: NavBarProps;
   heroData: Page["heroBlock"];
   url: string;
+  seo: Page["seo"];
 }
 
 const Container = styled.section`
@@ -47,6 +49,7 @@ const StyledBlackWrapp = styled.section`
 const VolunteerPage: NextPage<PageProps> = (props: PageProps) => {
   return (
     <StyledBlackWrapp>
+      <Seo {...props.seo} />
       <Container>
         {props.navData && (
           <Suspense fallback={null}>
@@ -76,6 +79,7 @@ export async function getStaticProps() {
     navData: parseNavBarData(page?.navBar),
     heroData: page?.heroBlock || null,
     url: process.env.NEXT_PUBLIC_DATA_API,
+    seo: page?.seo ?? null,
   };
   return {
     props,

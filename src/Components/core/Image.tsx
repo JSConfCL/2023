@@ -27,27 +27,27 @@ const Image = (props: {
     <Picture className={props.className}>
       <source
         media="(max-width: 768px)"
-        srcSet={`${props.mobile}?fm=webp${params}`}
+        srcSet={`${props.mobile}?fm=webp${params || ""}`}
       />
       <source
         media="(max-width: 768px)"
-        srcSet={`${props.mobile}?fm=jpeg${params}`}
+        srcSet={`${props.mobile}?fm=jpeg${params || ""}`}
       />
       {props.desktop && (
         <>
           <source
             media="(min-width: 769px)"
-            srcSet={`${props.desktop}?fm=webp${params}`}
+            srcSet={`${props.desktop}?fm=webp${params || ""}`}
           />
           <source
             media="(min-width: 769px)"
-            srcSet={`${props.desktop}?fm=jpeg${params}`}
+            srcSet={`${props.desktop}?fm=jpeg${params || ""}`}
           />
         </>
       )}
       <Img
         loading={loading}
-        src={`${props.desktop ?? props.mobile}?fm=webp${params}`}
+        src={`${props.desktop ?? props.mobile}?fm=webp${params || ""}`}
         style={props.style}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { duration: 0.5 } }}
