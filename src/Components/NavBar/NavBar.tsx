@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import styled from "@emotion/styled";
 import { motion, useAnimation } from "framer-motion";
+import { atom, useAtom, useSetAtom } from "jotai";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { lazy, Suspense } from "react";
@@ -58,24 +59,27 @@ const MobileStyledLinksContainer = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  display: flex;
   flex-grow: 1;
   flex-shrink: 0;
   z-index: 100;
 `;
 
-const StyledLink = styled.li<{ isActive: string }>`
+const StyledLink = styled.li<{ isActive: boolean }>`
   padding: 8px 16px;
   font-weight: 400;
   font-family: "Koulen";
+  text-align: center;
+  position: relative;
   cursor: pointer;
-  border: 0px solid ${({ theme }) => theme.colors.jsconfRed};
   color: ${({ isActive, theme }) =>
-    isActive === "active" ? theme.colors.jsconfRed : theme.colors.jsconfBlack};
+    isActive ? theme.colors.jsconfRed : theme.colors.jsconfBlack};
   @media (min-width: ${ViewportSizes.Phone}px) {
-    border-width: ${({ isActive }) =>
-      isActive === "active" ? "0px 0px 2px 0px" : "0px"};
-    color: inherit;
+    color: ${({ theme }) => theme.colors.white};
   }
+  transition-property: all;
+  transition-timing-function: ease-in-out;
+  transition-duration: 150ms;
 
   &:hover {
     opacity: 0.5;
@@ -95,17 +99,14 @@ const StyledPortalWrapper = styled(motion.section)<{ height: number | string }>`
   display: flex;
   position: fixed;
   z-index: 9999;
-  top: -1000px;
+  top: -100vh;
   overflow: scroll;
+
   background-color: #f0e040;
   flex-direction: column;
   align-items: center;
   font-size: 32px;
   opacity: 0;
-
-  li {
-    text-align: center;
-  }
 
   svg {
     align-self: flex-end;
@@ -164,14 +165,14 @@ const MobileFeatherIconWrapper = styled.span`
   }
 `;
 
-interface MenuItem {
+interface LinkMenuItem {
   id: string;
   link: string;
   onClick?: never;
   isBlank: boolean;
   contenido: string;
 }
-interface MenuItemOnClick {
+interface ButtonMenuItem {
   id: string;
   link?: never;
   onClick: () => void;
@@ -189,37 +190,66 @@ interface ButtonItemOnClick {
   contenido: string;
 }
 
+type MenuItemType = Simplify<LinkMenuItem | ButtonMenuItem>;
+
 export type NavBarProps = Simplify<{
-  items: Array<Simplify<MenuItem | MenuItemOnClick>>;
+  items: MenuItemType[];
   description?: any;
   buttonsCollection?: Array<Simplify<ButtonItem | ButtonItemOnClick>>;
 }>;
 
-const FakeButton = styled.div``;
+const FakeButton = styled.div`
+  cursor: pointer;
+`;
 
-const Menu = ({ items }: { items: NavBarProps["items"] }) => {
+const UnderLine = styled(motion.div)`
+  height: 2px;
+  background-color: ${({ theme }) => theme.colors.jsconfRed};
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  right: 0;
+`;
+
+const isOpenAtom = atom(false);
+
+const MenuItem = ({ item }: { item: MenuItemType }) => {
   const { pathname } = useRouter();
+  const setIsOpen = useSetAtom(isOpenAtom);
+  const isActive = React.useMemo(
+    () => item?.link === pathname,
+    [item?.link, pathname]
+  );
+  React.useEffect(() => {
+    console.log("pathname");
+  }, [pathname]);
+  React.useEffect(() => {
+    console.log("setIsOpen");
+  }, [setIsOpen]);
+  React.useEffect(() => {
+    console.log("isActive");
+  }, [isActive]);
   return (
-    <>
-      {items?.map((item) => (
-        <StyledLink
-          key={item.id}
-          isActive={item?.link === pathname ? "active" : ""}
-        >
-          {item.onClick != null ? (
-            <FakeButton as="button" onClick={item.onClick}>
-              {item.contenido}
-            </FakeButton>
-          ) : item.isBlank ? (
-            <Link rel="preconnect" href={item.link} passHref>
-              <a target="_blank">{item.contenido}</a>
-            </Link>
-          ) : (
-            <Link href={item.link}>{item.contenido}</Link>
-          )}
-        </StyledLink>
-      ))}
-    </>
+    <StyledLink
+      key={item.id}
+      isActive={isActive}
+      onClick={() => {
+        setIsOpen(false);
+      }}
+    >
+      {item.onClick != null ? (
+        <FakeButton as="button" onClick={item.onClick}>
+          {item.contenido}
+        </FakeButton>
+      ) : item.isBlank ? (
+        <Link rel="preconnect" href={item.link} passHref>
+          <a target="_blank">{item.contenido}</a>
+        </Link>
+      ) : (
+        <Link href={item.link}>{item.contenido}</Link>
+      )}
+      {isActive ? <UnderLine /> : null}
+    </StyledLink>
   );
 };
 
@@ -233,7 +263,7 @@ const MobileMenu = ({ items, description, buttonsCollection }: NavBarProps) => {
   const viewportHeight = height ? `${height}px` : "100vh";
 
   const isMobile = useMediaQuery(`(max-width: ${ViewportSizes.Phone}px)`);
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useAtom(isOpenAtom);
 
   useLockBodyScroll(isOpen);
   React.useEffect(() => {
@@ -241,7 +271,7 @@ const MobileMenu = ({ items, description, buttonsCollection }: NavBarProps) => {
       if (isOpen) {
         await controls.start({
           zIndex: 9999,
-          top: 3,
+          top: 0,
           opacity: 1,
           scale: 1,
           transition: { duration: 0.35 },
@@ -250,7 +280,7 @@ const MobileMenu = ({ items, description, buttonsCollection }: NavBarProps) => {
         await controls.start({
           opacity: 0.7,
           scale: 0.5,
-          top: -3000,
+          top: `-100vh`,
           transition: { duration: 0.35 },
         });
       }
@@ -262,7 +292,7 @@ const MobileMenu = ({ items, description, buttonsCollection }: NavBarProps) => {
     if (!isMobile) {
       setIsOpen(false);
     }
-  }, [isMobile]);
+  }, [isMobile, setIsOpen]);
 
   const hasItems = items.length > 0;
   if (!hasItems) {
@@ -285,7 +315,9 @@ const MobileMenu = ({ items, description, buttonsCollection }: NavBarProps) => {
           </MobileTopAreaWrapper>
 
           <MobileStyledLinksContainer>
-            <Menu items={items} />
+            {items.map((item) => {
+              return <MenuItem key={item.id} item={item} />;
+            })}
           </MobileStyledLinksContainer>
           <StyledBottom>
             <Suspense>
@@ -341,7 +373,9 @@ const NavBar = (props: NavBarProps) => {
           </StyledJSConfLogoWrapper>
         </Link>
         <StyledLinksContainer>
-          <Menu {...props} />
+          {props.items.map((item) => {
+            return <MenuItem key={item.id} item={item} />;
+          })}
         </StyledLinksContainer>
         <MobileMenu
           items={props.items}
