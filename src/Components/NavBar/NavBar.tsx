@@ -75,7 +75,7 @@ const StyledLink = styled.li<{ isActive: boolean }>`
   color: ${({ isActive, theme }) =>
     isActive ? theme.colors.jsconfRed : theme.colors.jsconfBlack};
   @media (min-width: ${ViewportSizes.Phone}px) {
-    color: ${({ theme }) => theme.colors.white};
+    color: inherit;
   }
   transition-property: all;
   transition-timing-function: ease-in-out;
