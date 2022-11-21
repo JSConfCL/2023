@@ -102,8 +102,9 @@ const NoTickets = ({ imageUrl }: { imageUrl: string }) => {
               </Paragraph>
               <GithubButton />
               <Paragraph>
-                Creando tu cuente además podrás recibir correos cuando los
-                tickets estén disponibles, preventas y anuncios de la JSConf.
+                Podrás recibir correos cuando los tickets estén disponibles,
+                notificaciones de preventas (promociones), y anuncios de la
+                JSConf.
               </Paragraph>
             </>
           )}
