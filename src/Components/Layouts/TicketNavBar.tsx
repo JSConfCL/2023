@@ -6,9 +6,9 @@ import { useTimeout } from "usehooks-ts";
 
 import { accessTokenAtom, isAuthenticatedAtom } from "../../helpers/auth";
 
-import NavBar from "../NavBar/NavBar";
+import NavBar, { NavBarProps } from "../NavBar/NavBar";
 
-const TicketNavBar = () => {
+const TicketNavBar = ({ navData }: { navData: NavBarProps }) => {
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
   const { replace } = useRouter();
   const setAccessToken = useSetAtom(accessTokenAtom);
@@ -16,37 +16,27 @@ const TicketNavBar = () => {
   const ticketPageEnabled = flags["ticket-page-enabled"].value;
 
   const items = useMemo(() => {
+    const items = [...navData.items];
+
     if (isLoggedIn) {
-      const items = [
-        {
-          contenido: "Configuracion",
-          id: "Settings",
-          isBlank: false,
-          link: "/settings",
-          onClick: undefined,
-        },
-        {
-          contenido: "Salir",
-          id: "Log Out",
-          onClick: async () => {
-            setAccessToken(null);
-          },
-        },
-      ];
+      items.push({
+        contenido: "Configuracion",
+        id: "Settings",
+        isBlank: false,
+        link: "/settings",
+        onClick: undefined,
+      });
 
-      if (ticketPageEnabled) {
-        items.unshift({
-          contenido: "Tickets",
-          id: "Tickets",
-          isBlank: false,
-          link: "/tickets",
-          onClick: undefined,
-        });
-      }
-
-      return items;
+      items.push({
+        contenido: "Salir",
+        id: "Log Out",
+        onClick: async () => {
+          setAccessToken(null);
+        },
+      });
     }
-    return [];
+
+    return items;
   }, [isLoggedIn, setAccessToken, ticketPageEnabled]);
   useTimeout(() => {
     // Le damos 2 segundos a las feature-flags para poder conectarse (Es para

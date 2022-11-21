@@ -3,6 +3,8 @@ import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { ViewportSizes } from "../../../styles/theme";
+import { NavBarProps } from "../NavBar/NavBar";
+
 const TicketNavBar = dynamic(async () => await import("./TicketNavBar"), {
   ssr: false,
 });
@@ -42,11 +44,18 @@ const Spacer = styled.div`
   height: 100px;
 `;
 
-export const TicketsLayout = (page: ReactElement) => {
+export interface LayoutPageProps extends React.ComponentPropsWithoutRef<"div"> {
+  navData: NavBarProps;
+}
+export interface PageProps extends ReactElement {
+  props: LayoutPageProps;
+}
+
+export const TicketsLayout = (page: PageProps) => {
   return (
     <StyledBlackWrapp>
       <Suspense fallback={null}>
-        <TicketNavBar />
+        <TicketNavBar navData={page.props.navData} />
       </Suspense>
       <Container>
         <Spacer />
