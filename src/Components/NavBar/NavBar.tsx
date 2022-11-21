@@ -216,23 +216,10 @@ const isOpenAtom = atom(false);
 const MenuItem = ({ item }: { item: MenuItemType }) => {
   const { pathname } = useRouter();
   const setIsOpen = useSetAtom(isOpenAtom);
-  const isActive = React.useMemo(
-    () => item?.link === pathname,
-    [item?.link, pathname]
-  );
-  React.useEffect(() => {
-    console.log("pathname");
-  }, [pathname]);
-  React.useEffect(() => {
-    console.log("setIsOpen");
-  }, [setIsOpen]);
-  React.useEffect(() => {
-    console.log("isActive");
-  }, [isActive]);
   return (
     <StyledLink
       key={item.id}
-      isActive={isActive}
+      isActive={item?.link === pathname}
       onClick={() => {
         setIsOpen(false);
       }}
@@ -248,7 +235,7 @@ const MenuItem = ({ item }: { item: MenuItemType }) => {
       ) : (
         <Link href={item.link}>{item.contenido}</Link>
       )}
-      {isActive ? <UnderLine /> : null}
+      {item?.link === pathname ? <UnderLine /> : null}
     </StyledLink>
   );
 };
