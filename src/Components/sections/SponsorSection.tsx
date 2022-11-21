@@ -126,7 +126,7 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
                     params={
                       isMobile
                         ? contributorItem?.imageParamsMobile
-                        : contributorItem?.imageParamsDesktop
+                        : contributorItem?.imageParamsDesktop || ""
                     }
                   />
                 </Flex>
