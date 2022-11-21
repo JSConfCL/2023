@@ -1,9 +1,12 @@
 import styled from "@emotion/styled";
 import { lazy } from "react";
+import { transparentize } from "polished";
+
 import { PageProps } from "../../../pages";
 import useMediaQuery from "../../helpers/useMediaQuery";
 
-import { ViewportSizes } from "../../../styles/theme";
+import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
+
 import { PrimaryStyledLink } from "../Links";
 
 const Image = lazy(async () => await import("../core/Image"));
@@ -53,7 +56,7 @@ const ImageContainer = styled.div`
 `;
 
 const ConstributorType = styled.section`
-  background-color: #f45b6914;
+  background-color: ${transparentize(0.86, jsconfTheme.colors.jsconfRed)};
   border-radius: 32px;
   position: relative;
   padding: 2rem 1rem;
@@ -67,12 +70,12 @@ const ContributorName = styled.h3`
   position: absolute;
   font-size: 32px;
   color: white;
-  top: -5.5%;
-  left: 6%;
+  top: -34px;
+  left: 29px;
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     font-size: 40px;
-    top: -18.5%;
-    left: 3%;
+    top: -34px;
+    left: 29px;
   }
 `;
 
@@ -88,6 +91,14 @@ const Flex = styled.div`
   }
 `;
 
+const FlexSpace = styled(Flex)`
+  justify-content: space-between;
+  padding: 48px 0px 96px 0px;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    justify-content: space-between;
+  }
+`;
+
 const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   if (!props.page?.items.length) {
@@ -95,12 +106,12 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
   }
   return (
     <Container>
-      <Flex>
+      <FlexSpace>
         <Title>Sponsors</Title>
         <PrimaryStyledLink href="/sponsor">
-          {"Sponsors Registration"}
+          Sponsors Registration
         </PrimaryStyledLink>
-      </Flex>
+      </FlexSpace>
       {props.page?.items?.map((item) => (
         <ConstributorType key={item.sys.id}>
           <ContributorName>{item.name}</ContributorName>
