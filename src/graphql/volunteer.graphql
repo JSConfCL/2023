@@ -63,5 +63,10 @@ query VolunteerQuery(
         }
       }
     }
+    seo {
+      title
+      description
+      metadata
+    }
   }
 }

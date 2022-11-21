@@ -78,6 +78,12 @@ export type VolunteerQueryQuery = {
         } | null>;
       } | null;
     } | null;
+    seo?: {
+      __typename?: "Seo";
+      title?: string | null;
+      description?: string | null;
+      metadata?: any | null;
+    } | null;
   } | null;
 };
 
@@ -146,6 +152,11 @@ export const VolunteerQueryDocument = gql`
             link
           }
         }
+      }
+      seo {
+        title
+        description
+        metadata
       }
     }
   }
