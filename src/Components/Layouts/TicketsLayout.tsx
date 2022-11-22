@@ -55,7 +55,7 @@ export const TicketsLayout = (page: PageProps) => {
   return (
     <StyledBlackWrapp>
       <Suspense fallback={null}>
-        <TicketNavBar navData={page.props.navData} />
+        <TicketNavBar navData={page?.props?.navData || []} />
       </Suspense>
       <Container>
         <Spacer />
