@@ -30,7 +30,7 @@ const FlexRow = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 1440px;
-  width: 100vw;
+  width: 100%;
   align-self: flex-start;
   padding: 16px;
   gap: 3rem;
