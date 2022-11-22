@@ -37,7 +37,8 @@ const TicketNavBar = ({ navData }: { navData: NavBarProps }) => {
     }
 
     return items;
-  }, [isLoggedIn, navData?.items, setAccessToken]);
+  }, [isLoggedIn, navData, navData?.items, setAccessToken]);
+
   useTimeout(() => {
     // Le damos 2 segundos a las feature-flags para poder conectarse (Es para
     // problar nosotros, asi que es más que suficiente IMO). :)
