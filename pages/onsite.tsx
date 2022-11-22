@@ -11,8 +11,6 @@ import {
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 import Seo from "../src/Components/Seo";
-import { NavBarProps } from "../src/Components/NavBar/NavBar";
-import { parseNavBarData } from "../src/Components/NavBar/helper";
 
 const NavBar = dynamic(
   async () => await import("../src/Components/NavBar/NavBar"),
@@ -25,7 +23,6 @@ const HowCard = lazy(async () => await import("../src/Components/Card/How"));
 type Page = ParseQuery<HowQueryQuery["page"]>;
 
 export interface PageProps {
-  navData: NavBarProps;
   howItems: Page["howBlockCollection"];
   followUsData: Page["followUsBlock"];
   GM_KEY: string;
@@ -51,11 +48,9 @@ const OnSitePage: NextPage<PageProps> = (props: PageProps) => {
     <StyledBlackWrapp>
       <Seo {...props.seo} />
       <Container>
-        {props.navData && (
-          <Suspense fallback={null}>
-            <NavBar {...props.navData} />
-          </Suspense>
-        )}
+        <Suspense fallback={null}>
+          <NavBar />
+        </Suspense>
         {props.howItems?.items?.map((elem, index) =>
           elem.sectionsCollection?.items.map((item, subIndex) => (
             <Suspense key={subIndex} fallback={null}>
@@ -84,7 +79,6 @@ export async function getStaticProps() {
   const page = queryResults.data?.page as Page;
   if (!page) return { props: {} };
   const props: PageProps = {
-    navData: parseNavBarData(page?.navBar),
     howItems: page?.howBlockCollection,
     followUsData: page?.followUsBlock,
     GM_KEY: process.env.NEXT_PUBLIC_CONTENTFUL_API_GOOGLE_MAP,

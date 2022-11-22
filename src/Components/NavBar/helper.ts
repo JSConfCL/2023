@@ -1,25 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { HomeQueryQuery } from "../../graphql/home.generated";
-import { ParseQuery } from "../../helpers/types";
-import { NavBarProps } from "./NavBar";
-
-type Page = ParseQuery<HomeQueryQuery["page"]>;
+import { NavBarProps } from "./InternalNavBar";
+import { NavBarQueryQuery } from "./navBar.generated";
 
 export const parseNavBarData = (
-  props: Page["navBar"] | undefined | null
+  props: NavBarQueryQuery["navigationBar"]
 ): NavBarProps => {
   const buttonsCollection =
-    props?.buttonsCollection?.items?.map((item) => ({
-      link: item.link,
-      contenido: item.contenido,
+    props?.buttonsCollection?.items?.filter(Boolean).map((item) => ({
+      link: item?.link!,
+      contenido: item?.contenido!,
     })) ?? [];
   const items =
     props?.linksCollection?.items?.map((item) => ({
-      link: item.link,
-      contenido: item.contenido,
-      id: item.sys.id,
-      isBlank: Boolean(item.isBlank),
+      link: item?.link!,
+      contenido: item?.contenido!,
+      id: item?.sys?.id!,
+      isBlank: Boolean(item?.isBlank),
     })) ?? [];
   return {
     buttonsCollection,

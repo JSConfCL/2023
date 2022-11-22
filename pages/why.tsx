@@ -11,8 +11,6 @@ import {
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 import Seo from "../src/Components/Seo";
-import { NavBarProps } from "../src/Components/NavBar/NavBar";
-import { parseNavBarData } from "../src/Components/NavBar/helper";
 
 const NavBar = dynamic(
   async () => await import("../src/Components/NavBar/NavBar"),
@@ -28,7 +26,6 @@ const WhyCard = lazy(async () => await import("../src/Components/Card/Why"));
 type Page = ParseQuery<WhyQueryQuery["page"]>;
 
 export interface PageProps {
-  navData: NavBarProps;
   whyItems: Page["whyBlockCollection"];
   heroData: Page["heroBlock"];
   seo: Page["seo"];
@@ -54,7 +51,7 @@ const Why: NextPage<PageProps> = (props: PageProps) => {
       <Seo {...props.seo} />
       <Container>
         <Suspense fallback={null}>
-          <NavBar {...props.navData} />
+          <NavBar />
         </Suspense>
         <Suspense fallback={null}>
           <WhyBanner {...props.heroData} />
@@ -79,7 +76,6 @@ export async function getStaticProps() {
     .toPromise();
   const page = queryResults.data?.page as Page;
   const props: PageProps = {
-    navData: parseNavBarData(page?.navBar),
     heroData: page?.heroBlock || null,
     whyItems: page?.whyBlockCollection || null,
     seo: page?.seo || null,

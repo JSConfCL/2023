@@ -12,9 +12,7 @@ import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 import BannerVolunteer from "../src/Components/Banner/Volunteer";
 import VolunteerForm from "../src/Components/Form/Volunteer";
-import { NavBarProps } from "../src/Components/NavBar/NavBar";
 import Seo from "../src/Components/Seo";
-import { parseNavBarData } from "../src/Components/NavBar/helper";
 
 const NavBar = dynamic(
   async () => await import("../src/Components/NavBar/NavBar"),
@@ -26,7 +24,6 @@ const NavBar = dynamic(
 type Page = ParseQuery<VolunteerQueryQuery["page"]>;
 
 export interface PageProps {
-  navData: NavBarProps;
   heroData: Page["heroBlock"];
   seo: Page["seo"];
 }
@@ -50,11 +47,9 @@ const VolunteerPage: NextPage<PageProps> = (props: PageProps) => {
     <StyledBlackWrapp>
       <Seo {...props.seo} />
       <Container>
-        {props.navData && (
-          <Suspense fallback={null}>
-            <NavBar {...props.navData} />
-          </Suspense>
-        )}
+        <Suspense>
+          <NavBar />
+        </Suspense>
         <BannerVolunteer {...props.heroData} />
         <VolunteerForm />
       </Container>
@@ -75,7 +70,6 @@ export async function getStaticProps() {
     .toPromise();
   const page = queryResults.data?.page as Page;
   const props: PageProps = {
-    navData: parseNavBarData(page?.navBar),
     heroData: page?.heroBlock || null,
     seo: page?.seo ?? null,
   };

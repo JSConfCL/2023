@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 import type { NextPage } from "next";
 import { lazy, Suspense } from "react";
-import { parseNavBarData } from "../src/Components/NavBar/helper";
-import { NavBarProps } from "../src/Components/NavBar/NavBar";
 import EventSchema from "../src/Components/schema/event";
 import Hero from "../src/Components/sections/Hero";
 import Seo from "../src/Components/Seo";
@@ -36,7 +34,6 @@ const TimelineSection = lazy(
 type Page = ParseQuery<HomeQueryQuery["page"]>;
 
 export interface PageProps {
-  navData: NavBarProps;
   whyItems: Page["whyBlockCollection"];
   howItems: Page["howBlockCollection"];
   heroData: Page["heroBlock"];
@@ -64,7 +61,7 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
       <Seo {...props.seo} />
       <EventSchema />
       <Suspense fallback={null}>
-        <Hero heroData={props.heroData} navData={props.navData} />
+        <Hero heroData={props.heroData} />
       </Suspense>
       <StyledBlackWrapp>
         <Suspense fallback={null}>
@@ -100,7 +97,6 @@ export async function getStaticProps() {
 
   const page = queryResults.data?.page as Page;
   const props: PageProps = {
-    navData: parseNavBarData(page?.navBar),
     heroData: page?.heroBlock || null,
     whyItems: page?.whyBlockCollection || null,
     howItems: page?.howBlockCollection || null,

@@ -3,8 +3,6 @@ import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { CustomMarkdown } from "../src/Components/CustomMarkdown";
-import { parseNavBarData } from "../src/Components/NavBar/helper";
-import { NavBarProps } from "../src/Components/NavBar/NavBar";
 import {
   PoliticasDePrivacidadPageDocument,
   PoliticasDePrivacidadPageQuery,
@@ -20,10 +18,10 @@ const NavBar = dynamic(
     ssr: false,
   }
 );
+
 type Page = ParseQuery<PoliticasDePrivacidadPageQuery["page"]>;
 
 export interface PageProps {
-  navData: NavBarProps;
   content: Page["contentCollection"]["items"];
 }
 const Container = styled.section`
@@ -63,11 +61,9 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
   return (
     <Container>
       <StyledBlackWrapp>
-        {props.navData && (
-          <Suspense>
-            <NavBar {...props.navData} />
-          </Suspense>
-        )}
+        <Suspense>
+          <NavBar />
+        </Suspense>
         <ContentContainer>
           {props.content
             .map((el) => {
@@ -100,7 +96,6 @@ export async function getStaticProps() {
 
   const page = queryResults.data?.page as Page;
   const props: PageProps = {
-    navData: parseNavBarData(page?.navBar),
     content: page.contentCollection.items,
   };
 

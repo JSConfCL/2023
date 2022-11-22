@@ -4,27 +4,6 @@ query VolunteerQuery(
   $isPreview: Boolean = false
 ) {
   page(id: $id, locale: $locale, preview: $isPreview) {
-    navBar {
-      linksCollection(limit: 20) {
-        items {
-          sys {
-            id
-          }
-          contenido
-          link
-          isBlank
-        }
-      }
-      buttonsCollection(limit: 20) {
-        items {
-          contenido
-          link
-        }
-      }
-      description {
-        json
-      }
-    }
     heroBlock {
       tile
       firstSubtitle

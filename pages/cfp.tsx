@@ -2,8 +2,6 @@ import styled from "@emotion/styled";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import { parseNavBarData } from "../src/Components/NavBar/helper";
-import { NavBarProps } from "../src/Components/NavBar/NavBar";
 import Seo from "../src/Components/Seo";
 import {
   CfpQueryDocument,
@@ -26,7 +24,6 @@ const BannerCFP = dynamic(
 type Page = ParseQuery<CfpQueryQuery["page"]>;
 
 export interface PageProps {
-  navData: NavBarProps;
   heroData: Page["heroBlock"];
   seo: Page["seo"];
 }
@@ -50,11 +47,9 @@ const OnSitePage: NextPage<PageProps> = (props: PageProps) => {
     <StyledBlackWrapp>
       <Seo {...props.seo} />
       <Container>
-        {Boolean(props.navData) && (
-          <Suspense fallback={null}>
-            <NavBar {...props.navData} />
-          </Suspense>
-        )}
+        <Suspense fallback={null}>
+          <NavBar />
+        </Suspense>
         {Boolean(props.heroData) && (
           <Suspense fallback={null}>
             <BannerCFP {...props.heroData} />
@@ -78,7 +73,6 @@ export async function getStaticProps() {
     return { props: {} };
   }
   const props = {
-    navData: parseNavBarData(page?.navBar as Page["navBar"]),
     heroData: page?.heroBlock ?? null,
     seo: page?.seo ?? null,
   };

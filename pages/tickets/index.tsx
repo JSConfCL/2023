@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useFlags } from "flagsmith/react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { parseNavBarData } from "../../src/Components/NavBar/helper";
 import { ticketsAtom } from "../../src/Components/Cart/CartAtom";
 import { CartContainer } from "../../src/Components/Cart/CartContainer";
 import { TicketsLayout } from "../../src/Components/Layouts/TicketsLayout";
@@ -18,13 +17,11 @@ import { urlQlient } from "../../src/graphql/urql";
 import { fetchTickets } from "../../src/helpers/API";
 import { isAuthenticatedAtom } from "../../src/helpers/auth";
 import { ParseQuery } from "../../src/helpers/types";
-import { NavBarProps } from "../../src/Components/NavBar/NavBar";
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
 
 export interface PageProps {
   seo: Page["seo"];
-  navData: NavBarProps;
 }
 
 const image =
@@ -78,7 +75,6 @@ export async function getStaticProps() {
 
   const props: PageProps = {
     seo: page?.seo || null,
-    navData: parseNavBarData(page?.navBar),
   };
 
   return {

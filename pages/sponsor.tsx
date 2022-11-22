@@ -12,8 +12,6 @@ import { urlQlient } from "../src/graphql/urql";
 import Seo from "../src/Components/Seo";
 import { ParseQuery } from "../src/helpers/types";
 import { ViewportSizes } from "../styles/theme";
-import { NavBarProps } from "../src/Components/NavBar/NavBar";
-import { parseNavBarData } from "../src/Components/NavBar/helper";
 
 const NavBar = dynamic(
   async () => await import("../src/Components/NavBar/NavBar"),
@@ -31,7 +29,6 @@ const SponsorCard = lazy(
 type Page = ParseQuery<SponsorQueryQuery["page"]>;
 
 export interface PageProps {
-  navData: NavBarProps;
   followUsData: Page["followUsBlock"];
   heroData: Page["heroBlock"];
   sponsors: Page["sponsorTypeCollection"];
@@ -71,11 +68,9 @@ const OnSitePage: NextPage<PageProps> = (props: PageProps) => {
     <StyledBlackWrapp>
       <Seo {...props.seo} />
       <Container>
-        {props.navData && (
-          <Suspense fallback={null}>
-            <NavBar {...props.navData} />
-          </Suspense>
-        )}
+        <Suspense>
+          <NavBar />
+        </Suspense>
         {props.heroData && (
           <Suspense fallback={null}>
             <BannerSponsor {...props.heroData} />
@@ -113,7 +108,6 @@ export async function getStaticProps() {
   const page = queryResults.data?.page as Page;
   if (!page) return { props: {} };
   const props: PageProps = {
-    navData: parseNavBarData(page?.navBar),
     heroData: page?.heroBlock || null,
     followUsData: page?.followUsBlock,
     sponsors: page?.sponsorTypeCollection,
