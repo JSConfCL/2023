@@ -16,7 +16,7 @@ const TicketNavBar = ({ navData }: { navData: NavBarProps }) => {
   const ticketPageEnabled = flags["ticket-page-enabled"].value;
 
   const items = useMemo(() => {
-    const items = [...navData.items];
+    const items = [...(navData?.items || [])];
 
     if (isLoggedIn) {
       items.push({
@@ -37,7 +37,7 @@ const TicketNavBar = ({ navData }: { navData: NavBarProps }) => {
     }
 
     return items;
-  }, [isLoggedIn, navData.items, setAccessToken]);
+  }, [isLoggedIn, navData, navData?.items, setAccessToken]);
   useTimeout(() => {
     // Le damos 2 segundos a las feature-flags para poder conectarse (Es para
     // problar nosotros, asi que es más que suficiente IMO). :)
