@@ -30,14 +30,14 @@ const TicketNavBar = ({ navData }: { navData: NavBarProps }) => {
       items.push({
         contenido: "Salir",
         id: "Log Out",
-        onClick: async () => {
+        onClick: () => {
           setAccessToken(null);
         },
       });
     }
 
     return items;
-  }, [isLoggedIn, setAccessToken, ticketPageEnabled]);
+  }, [isLoggedIn, navData.items, setAccessToken]);
   useTimeout(() => {
     // Le damos 2 segundos a las feature-flags para poder conectarse (Es para
     // problar nosotros, asi que es más que suficiente IMO). :)
