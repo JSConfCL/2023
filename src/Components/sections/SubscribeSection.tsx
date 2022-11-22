@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
+import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
-import { Suspense, useRef, useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { Suspense, useState } from "react";
+import { useForm } from "react-hook-form";
 import { Get } from "type-fest";
 import { ViewportSizes } from "../../../styles/theme";
 import { FooterQueryQuery } from "../../graphql/footer.generated";
+import { subscribeUser } from "../../helpers/API";
 import { H2 } from "../core/Typography";
 
 interface Props {
@@ -101,61 +103,46 @@ const titleAnimation = {
   },
 };
 
+const messages = {
+  default: "Suscríbete",
+  loading: "Enviando ⌛️",
+  success: "Estás suscrito! 😊",
+  error: "Algo salió mal 😢",
+};
+
+type FormValuesType = { email: "string" };
 const SubscribeSection = (props: Props) => {
   const controls = useAnimation();
-  const messages = {
-    loading: "Enviando ⌛️",
-    success: "Estás suscrito! 😊",
-    error: "Algo salió mal 😢",
-  };
-  const [isSubmiting, setIsSubmiting] = useState(false);
-  const [subscribeResponse, setSubscribeResponse] = useState("");
-  const formElement = useRef<HTMLFormElement>(null);
-  const { register, handleSubmit, formState } = useForm<{ email: "string" }>();
+  const [message, setMessage] = useState<keyof typeof messages>("default");
+  const { mutateAsync } = useMutation(["me"], subscribeUser);
+  const { register, handleSubmit, formState, reset } =
+    useForm<FormValuesType>();
 
   const wait = async (seconds: number) =>
     await new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 
-  const onSubmit = async (data: FieldValues) => {
+  const onSubmit = async (data: FormValuesType) => {
     try {
-      const body = JSON.stringify({
-        ...data,
-      });
-
-      setSubscribeResponse(messages.loading);
+      setMessage("loading");
       await controls.start({
         width: "100%",
         transition: { duration: 0.5, ease: "backInOut" },
       });
-      await wait(0.1);
-      setIsSubmiting(true);
-
+      await mutateAsync(data);
       await wait(1.5);
-      const response = await fetch(process.env.NEXT_PUBLIC_DATA_API, {
-        method: "POST",
-        body,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.status !== 200) {
-        throw new Error();
-      }
-      setSubscribeResponse(messages.success);
+      setMessage("success");
       await wait(2);
-      formElement.current?.reset();
-      setIsSubmiting(false);
+      reset();
     } catch (e) {
       console.error(e);
-      setSubscribeResponse(messages.error);
-      await wait(1);
-      setIsSubmiting(false);
+      setMessage("error");
+      await wait(2);
     } finally {
       await controls.start({
         width: buttonWidth,
         transition: { duration: 0.5, ease: "backInOut" },
       });
+      setMessage("default");
     }
   };
   const emailValidation = {
@@ -175,19 +162,17 @@ const SubscribeSection = (props: Props) => {
           <Form
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onSubmit={handleSubmit(onSubmit)}
-            ref={formElement}
           >
             <Fieldset>
               <EmailInput
-                placeholder="Tu Email"
+                placeholder="Ingresa tu email"
                 {...register("email", emailValidation)}
               />
 
               <SubmitButton
-                id="qqqqq"
                 animate={controls}
                 type="submit"
-                value={isSubmiting ? subscribeResponse : props?.page?.title!}
+                value={messages[message]}
               />
             </Fieldset>
           </Form>

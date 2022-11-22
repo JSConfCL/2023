@@ -10,7 +10,7 @@ import {
   Inline,
   MARKS,
 } from "@contentful/rich-text-types";
-import { B, P, UL } from "./Typography";
+import { B, P, UL, LI } from "./Typography";
 
 const Section = styled(motion.section)``;
 
@@ -21,6 +21,9 @@ const descriptionRichTextOptions = {
     ),
     [BLOCKS.UL_LIST]: (node: Block | Inline, children: ReactNode) => (
       <UL>{children}</UL>
+    ),
+    [BLOCKS.LIST_ITEM]: (node: Block | Inline, children: ReactNode) => (
+      <LI>{children}</LI>
     ),
   },
   renderMark: {

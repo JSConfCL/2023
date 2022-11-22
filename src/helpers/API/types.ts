@@ -25,3 +25,10 @@ export interface UserPayload {
   country: string;
   gender: string;
 }
+
+export interface VolunteerPayload {
+  email: string;
+  name: string;
+  lastName: string;
+  why: string;
+}

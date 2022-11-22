@@ -47,11 +47,11 @@ export const H3 = styled(motion.h3)`
 export const P = styled(motion.p)`
   font-family: "Barlow";
   font-weight: 400;
-  font-size: 16px;
+  font-size: 18px;
   font-style: normal;
   color: #e2e2e2;
   letter-spacing: 0.5px;
-  line-height: 25px;
+  line-height: 1.75rem;
 
   @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 20px;
@@ -59,16 +59,34 @@ export const P = styled(motion.p)`
 `;
 
 export const B = styled(motion.b)`
-  font-weight: 600;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 1.75rem;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    font-size: 20px;
+  }
 `;
 
 export const UL = styled(motion.ul)`
   list-style: disc;
-  padding: 16px 0px;
-  padding-left: 28px;
-  line-height: 25px;
+  margin-inline-start: 1em;
+  padding-left: 1rem;
+  line-height: 1.75rem;
+`;
 
-  > li {
-    line-height: 25px;
+export const LI = styled(motion.li)`
+  font-size: 18px;
+  line-height: 1.75rem;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    font-size: 20px;
+  }
+`;
+
+export const Strong = styled.strong`
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 1.75rem;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    font-size: 20px;
   }
 `;

@@ -6,7 +6,7 @@ import { useResetAtom } from "jotai/utils";
 import { useEffect, useState } from "react";
 import { Entrada } from "../../Components/Cart/CartAtom";
 import { accessTokenAtom, getValidToken } from "../auth";
-import { UserPayload, UserType } from "./types";
+import { UserPayload, UserType, VolunteerPayload } from "./types";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -111,6 +111,24 @@ export const updateMe = async (
 ): Promise<UserType> => {
   return await customFetch(`${API_URL}/users/`, {
     method: "PUT",
+    body: JSON.stringify(object),
+  });
+};
+
+export const subscribeVolunteer = async (
+  object: VolunteerPayload
+): Promise<void> => {
+  return await customFetch(`${API_URL}/subscriptions/volunteer`, {
+    method: "POST",
+    body: JSON.stringify(object),
+  });
+};
+
+export const subscribeUser = async (object: {
+  email: string;
+}): Promise<{ some: string }> => {
+  return await customFetch(`${API_URL}/subscriptions`, {
+    method: "POST",
     body: JSON.stringify(object),
   });
 };

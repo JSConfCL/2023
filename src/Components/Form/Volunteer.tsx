@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
+import { useMutation } from "@tanstack/react-query";
 import { motion, useAnimation } from "framer-motion";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BeatLoader } from "react-spinners";
 
 import { ViewportSizes } from "../../../styles/theme";
-import { fetchPost } from "../../services/fetch";
+import { subscribeVolunteer } from "../../helpers/API";
 import { H2 } from "../core/Typography";
 import {
   descriptionValidation,
@@ -18,7 +19,7 @@ interface FormData {
   name: string;
   lastName: string;
   email: string;
-  description: string;
+  why: string;
 }
 
 const StyledH2 = styled(H2)`
@@ -27,10 +28,8 @@ const StyledH2 = styled(H2)`
   line-height: 80px;
   color: #f45b69;
   padding: 32px 0px;
-  margin-left: -25%;
 
   @media (min-width: ${ViewportSizes.Phone}px) {
-    margin-left: -35%;
   }
 `;
 
@@ -38,18 +37,11 @@ const Container = styled.section`
   padding: 16px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 
   @media (min-width: ${ViewportSizes.Phone}px) {
     padding: 48px;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-
-    width: 100%;
-    max-width: 450px;
   }
 `;
 
@@ -98,19 +90,28 @@ const ErrorMessage = styled.section<{ color?: string }>`
   padding-bottom: 32px;
 `;
 
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 450px;
+`;
+
 const Error = (props: { message?: any; color?: string }) => {
   const { message, color } = props;
   return <ErrorMessage color={color}>{message}</ErrorMessage>;
 };
 
-const VolunteerForm = (props: { url: string }) => {
+const VolunteerForm = () => {
   const textControls = useAnimation();
   const loadingControls = useAnimation();
   const [submitMessage, setSubmitMessage] = useState("");
+  const { mutateAsync } = useMutation(["volunteer"], subscribeVolunteer);
   const {
     register,
     handleSubmit,
     formState: { errors, touchedFields },
+    reset,
   } = useForm<FormData>({ mode: "onChange" });
   const onSubmit = handleSubmit(async (data) => {
     setSubmitMessage("");
@@ -125,17 +126,14 @@ const VolunteerForm = (props: { url: string }) => {
       opacity: 1,
       transition: { duration: 0.3, delay: 0.2 },
     });
-
     await textControls.start({
       x: "100vw",
       transition: { duration: 1 },
     });
     try {
-      await fetchPost({
-        url: `${props.url}/volunteer`,
-        body: JSON.stringify(data),
-      });
+      await mutateAsync(data);
       setSubmitMessage("Inscripción Completada.");
+      reset();
     } catch (e) {
       setSubmitMessage("Error en la inscripción, vuelve a intentar más tarde.");
     } finally {
@@ -164,7 +162,7 @@ const VolunteerForm = (props: { url: string }) => {
   return (
     <Container>
       <StyledH2>Registro</StyledH2>
-      <form
+      <StyledForm
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onSubmit={onSubmit}
       >
@@ -189,11 +187,11 @@ const VolunteerForm = (props: { url: string }) => {
         />
         <Error {...errors.email} />
         <Textarea
-          {...register("description", descriptionValidation)}
+          {...register("why", descriptionValidation)}
           placeholder="Por qué quieres ser parte?"
-          error={Boolean(errors.description?.type)}
+          error={Boolean(errors.why?.type)}
         ></Textarea>
-        <Error {...errors.description} />
+        <Error {...errors.why} />
 
         <SubmitButton
           type="submit"
@@ -218,7 +216,7 @@ const VolunteerForm = (props: { url: string }) => {
           message={submitMessage}
           color={submitMessage.includes("Error") ? "red" : "white"}
         />
-      </form>
+      </StyledForm>
     </Container>
   );
 };

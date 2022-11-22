@@ -2,21 +2,22 @@ import { Suspense, lazy } from "react";
 import ReactMarkdown from "react-markdown";
 import styled from "@emotion/styled";
 import { PageProps } from "../../../pages/volunteer";
-import { H1, P } from "../core/Typography";
+import { H1, P, UL, LI, Strong } from "../core/Typography";
 import { ViewportSizes } from "../../../styles/theme";
-
-const JSConfLogo = lazy(async () => await import("../svgs/logo"));
+import { Anchor } from "../CustomMarkdown";
+import remarkGfm from "remark-gfm";
+import JSConfLogo from "../svgs/logo";
+import Image from "../core/Image";
 
 const Description = lazy(async () => await import("../core/Description"));
-const Image = lazy(async () => await import("../core/Image"));
 
 const StyledH1 = styled(H1)`
   z-index: 3;
   max-width: 250px;
   width: 100%;
-  color: #f45b69;
-  font-size: 48px;
-  line-height: 48px;
+  color: ${({ theme }) => theme.colors.jsconfRed};
+  font-size: 64px;
+  line-height: 64px;
 
   @media (min-width: ${ViewportSizes.Phone}px) {
     max-width: 250px;
@@ -28,12 +29,12 @@ const StyledH1 = styled(H1)`
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  gap: 16px;
+  padding: 1rem;
+  gap: 0rem;
 
   @media (min-width: ${ViewportSizes.Phone}px) {
+    gap: 3rem;
     flex-direction: row;
-    padding: 48px;
   }
 `;
 
@@ -52,6 +53,7 @@ const Block = styled.section<{ width: string }>`
 const ImageBlock = styled.section`
   display: flex;
   position: relative;
+  overflow-x: clip;
   background: linear-gradient(
     180deg,
     transparent 0%,
@@ -77,48 +79,40 @@ const ImageBlock = styled.section`
   }
 `;
 
-const PMarkdown = styled(P)`
-  strong {
-    font-weight: 600;
-  }
-  p {
-    padding: 16px 0px;
-  }
-  ul {
-    list-style: disc;
-    margin-inline-start: 1em;
-  }
-`;
-
 const BannerVolunteer = (props: PageProps["heroData"]) => {
   return (
     <Container>
       <Block width="38%">
-        <StyledH1>{props?.tile}</StyledH1>
+        <StyledH1>{props.tile}</StyledH1>
         <P>{props?.firstSubtitle}</P>
-        <PMarkdown>
-          <ReactMarkdown>{props?.secondSubtitle}</ReactMarkdown>
-        </PMarkdown>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          components={{
+            strong: (args: any) => <Strong {...args} />,
+            p: (args: any) => <P {...args} />,
+            a: (args: any) => <Anchor {...args} />,
+            ul: (args: any) => <UL {...args} />,
+            li: (args: any) => <LI {...args} />,
+          }}
+        >
+          {props?.secondSubtitle}
+        </ReactMarkdown>
       </Block>
       <Block width="60%">
         <ImageBlock>
-          <Suspense fallback={null}>
-            <JSConfLogo />
-          </Suspense>
-          <Suspense fallback={null}>
-            <Image
-              mobile="https://images.ctfassets.net/1kfhsqlc8ewi/3N0MGioufHIKv6bghApVdE/c3545a885192924e0627a8fd1b6ec730/image-background.png"
-              alt="background"
-              className="background"
-              style={{
-                position: "absolute",
-                zIndex: 1,
-                width: "100%",
-                bottom: "30px",
-                right: "-50px",
-              }}
-            />
-          </Suspense>
+          <JSConfLogo />
+          <Image
+            mobile="https://images.ctfassets.net/1kfhsqlc8ewi/3N0MGioufHIKv6bghApVdE/c3545a885192924e0627a8fd1b6ec730/image-background.png"
+            alt="background"
+            className="background"
+            style={{
+              position: "absolute",
+              zIndex: 1,
+              width: "100%",
+              bottom: "30px",
+              right: "-50px",
+            }}
+          />
           <Image
             mobile={props?.background?.url}
             alt={props?.background?.title || ""}
