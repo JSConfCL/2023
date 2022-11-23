@@ -20,7 +20,6 @@ const FollowUsSection = lazy(
 type Page = ParseQuery<FooterQueryQuery["page"]>;
 
 export interface PageProps {
-  navBar: Page["navBar"];
   followUsBlock: Page["followUsBlock"];
   footer: Page["footer"];
   subscribeBlock: Page["subscribeBlock"];

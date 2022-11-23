@@ -1,9 +1,5 @@
-import styled from "@emotion/styled";
-import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import { parseNavBarData } from "../src/Components/NavBar/helper";
-import { NavBarProps } from "../src/Components/NavBar/NavBar";
 import Seo from "../src/Components/Seo";
 import {
   CfpQueryDocument,
@@ -12,13 +8,8 @@ import {
 } from "../src/graphql/cfp.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
+import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
 
-const NavBar = dynamic(
-  async () => await import("../src/Components/NavBar/NavBar"),
-  {
-    ssr: false,
-  }
-);
 const BannerCFP = dynamic(
   async () => await import("../src/Components/Banner/CFP")
 );
@@ -26,44 +17,22 @@ const BannerCFP = dynamic(
 type Page = ParseQuery<CfpQueryQuery["page"]>;
 
 export interface PageProps {
-  navData: NavBarProps;
   heroData: Page["heroBlock"];
   seo: Page["seo"];
 }
 
-const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  max-width: 1440px;
-  min-height: 100vh;
-`;
-const StyledBlackWrapp = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: ${({ theme }) => theme.elements.global.backgroundColor};
-`;
-
-const OnSitePage: NextPage<PageProps> = (props: PageProps) => {
+export default function OnSitePage(props: PageProps) {
   return (
-    <StyledBlackWrapp>
+    <>
       <Seo {...props.seo} />
-      <Container>
-        {Boolean(props.navData) && (
-          <Suspense fallback={null}>
-            <NavBar {...props.navData} />
-          </Suspense>
-        )}
-        {Boolean(props.heroData) && (
-          <Suspense fallback={null}>
-            <BannerCFP {...props.heroData} />
-          </Suspense>
-        )}
-      </Container>
-    </StyledBlackWrapp>
+      {Boolean(props.heroData) && (
+        <Suspense fallback={null}>
+          <BannerCFP {...props.heroData} />
+        </Suspense>
+      )}
+    </>
   );
-};
+}
 
 export async function getStaticProps() {
   const queryResults = await urlQlient
@@ -78,7 +47,6 @@ export async function getStaticProps() {
     return { props: {} };
   }
   const props = {
-    navData: parseNavBarData(page?.navBar as Page["navBar"]),
     heroData: page?.heroBlock ?? null,
     seo: page?.seo ?? null,
   };
@@ -87,4 +55,4 @@ export async function getStaticProps() {
   };
 }
 
-export default OnSitePage;
+OnSitePage.getLayout = DefaultPagelayout;

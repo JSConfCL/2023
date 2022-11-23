@@ -1,10 +1,6 @@
 import styled from "@emotion/styled";
-import type { NextPage } from "next";
-import dynamic from "next/dynamic";
-import { Suspense } from "react";
 import { CustomMarkdown } from "../src/Components/CustomMarkdown";
-import { parseNavBarData } from "../src/Components/NavBar/helper";
-import { NavBarProps } from "../src/Components/NavBar/NavBar";
+import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
 import {
   PoliticasDePrivacidadPageDocument,
   PoliticasDePrivacidadPageQuery,
@@ -14,30 +10,11 @@ import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 import { ViewportSizes } from "../styles/theme";
 
-const NavBar = dynamic(
-  async () => await import("../src/Components/NavBar/NavBar"),
-  {
-    ssr: false,
-  }
-);
 type Page = ParseQuery<PoliticasDePrivacidadPageQuery["page"]>;
 
 export interface PageProps {
-  navData: NavBarProps;
   content: Page["contentCollection"]["items"];
 }
-const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyledBlackWrapp = styled.section`
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - 200px);
-  background-color: ${({ theme }) => theme.elements.global.backgroundColor};
-  align-items: center;
-`;
 
 const ContentContainer = styled.div`
   display: flex;
@@ -59,33 +36,26 @@ const ContentContainer = styled.div`
   }
 `;
 
-const Home: NextPage<PageProps> = (props: PageProps) => {
+export default function PoliticasDePrivacidad(props: PageProps) {
   return (
-    <Container>
-      <StyledBlackWrapp>
-        {props.navData && (
-          <Suspense>
-            <NavBar {...props.navData} />
-          </Suspense>
-        )}
-        <ContentContainer>
-          {props.content
-            .map((el) => {
-              if (el.__typename === "MarkdownBlock") {
-                return (
-                  <CustomMarkdown key={el.sys.id}>
-                    {el.markdownTextContent}
-                  </CustomMarkdown>
-                );
-              }
-              return null;
-            })
-            .filter(Boolean)}
-        </ContentContainer>
-      </StyledBlackWrapp>
-    </Container>
+    <>
+      <ContentContainer>
+        {props.content
+          .map((el) => {
+            if (el.__typename === "MarkdownBlock") {
+              return (
+                <CustomMarkdown key={el.sys.id}>
+                  {el.markdownTextContent}
+                </CustomMarkdown>
+              );
+            }
+            return null;
+          })
+          .filter(Boolean)}
+      </ContentContainer>
+    </>
   );
-};
+}
 
 export async function getStaticProps() {
   const queryResults = await urlQlient
@@ -100,7 +70,6 @@ export async function getStaticProps() {
 
   const page = queryResults.data?.page as Page;
   const props: PageProps = {
-    navData: parseNavBarData(page?.navBar),
     content: page.contentCollection.items,
   };
 
@@ -109,4 +78,4 @@ export async function getStaticProps() {
   };
 }
 
-export default Home;
+PoliticasDePrivacidad.getLayout = DefaultPagelayout;

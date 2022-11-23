@@ -12,31 +12,6 @@ export type PoliticasDePrivacidadPageQuery = {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
-    navBar?: {
-      __typename?: "NavigationBar";
-      linksCollection?: {
-        __typename?: "NavigationBarLinksCollection";
-        items: Array<{
-          __typename?: "LinkItem";
-          contenido?: string | null;
-          link?: string | null;
-          isBlank?: boolean | null;
-          sys: { __typename?: "Sys"; id: string };
-        } | null>;
-      } | null;
-      buttonsCollection?: {
-        __typename?: "NavigationBarButtonsCollection";
-        items: Array<{
-          __typename?: "LinkItem";
-          contenido?: string | null;
-          link?: string | null;
-        } | null>;
-      } | null;
-      description?: {
-        __typename?: "NavigationBarDescription";
-        json: any;
-      } | null;
-    } | null;
     contentCollection?: {
       __typename?: "PageContentCollection";
       items: Array<
@@ -68,27 +43,6 @@ export const PoliticasDePrivacidadPageDocument = gql`
     $isPreview: Boolean = false
   ) {
     page(id: "53L43SORrqnSUGQswxUCtn", locale: $locale, preview: $isPreview) {
-      navBar {
-        linksCollection(limit: 20) {
-          items {
-            sys {
-              id
-            }
-            contenido
-            link
-            isBlank
-          }
-        }
-        buttonsCollection(limit: 20) {
-          items {
-            contenido
-            link
-          }
-        }
-        description {
-          json
-        }
-      }
       contentCollection(limit: 20) {
         items {
           __typename

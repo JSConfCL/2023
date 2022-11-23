@@ -1,6 +1,4 @@
 import { lazy, Suspense } from "react";
-import type { NextPage } from "next";
-import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
 
 import {
@@ -12,15 +10,8 @@ import { urlQlient } from "../src/graphql/urql";
 import Seo from "../src/Components/Seo";
 import { ParseQuery } from "../src/helpers/types";
 import { ViewportSizes } from "../styles/theme";
-import { NavBarProps } from "../src/Components/NavBar/NavBar";
-import { parseNavBarData } from "../src/Components/NavBar/helper";
+import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
 
-const NavBar = dynamic(
-  async () => await import("../src/Components/NavBar/NavBar"),
-  {
-    ssr: false,
-  }
-);
 const BannerSponsor = lazy(
   async () => await import("../src/Components/Banner/Sponsor")
 );
@@ -31,23 +22,11 @@ const SponsorCard = lazy(
 type Page = ParseQuery<SponsorQueryQuery["page"]>;
 
 export interface PageProps {
-  navData: NavBarProps;
   followUsData: Page["followUsBlock"];
   heroData: Page["heroBlock"];
   sponsors: Page["sponsorTypeCollection"];
   seo: Page["seo"];
 }
-
-const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  max-width: 1440px;
-  gap: 32px;
-  @media (min-width: ${ViewportSizes.Phone}px) {
-    gap: 32px;
-  }
-`;
 
 const SponsorWrapper = styled.section`
   display: flex;
@@ -59,45 +38,31 @@ const SponsorWrapper = styled.section`
   }
 `;
 
-const StyledBlackWrapp = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: ${({ theme }) => theme.elements.global.backgroundColor};
-`;
-
-const OnSitePage: NextPage<PageProps> = (props: PageProps) => {
+export default function OnSitePage(props: PageProps) {
   return (
-    <StyledBlackWrapp>
+    <>
       <Seo {...props.seo} />
-      <Container>
-        {props.navData && (
-          <Suspense fallback={null}>
-            <NavBar {...props.navData} />
-          </Suspense>
-        )}
-        {props.heroData && (
-          <Suspense fallback={null}>
-            <BannerSponsor {...props.heroData} />
-          </Suspense>
-        )}
-        {props.sponsors?.items?.length && (
-          <SponsorWrapper>
-            {props.sponsors?.items?.map((elem, index) => (
-              <Suspense key={`sponsor-${index}`} fallback={null}>
-                <SponsorCard
-                  {...elem}
-                  number={index + 1}
-                  key={`sponsor-${index}`}
-                />
-              </Suspense>
-            ))}
-          </SponsorWrapper>
-        )}
-      </Container>
-    </StyledBlackWrapp>
+      {props.heroData && (
+        <Suspense fallback={null}>
+          <BannerSponsor {...props.heroData} />
+        </Suspense>
+      )}
+      {props.sponsors?.items?.length && (
+        <SponsorWrapper>
+          {props.sponsors?.items?.map((elem, index) => (
+            <Suspense key={`sponsor-${index}`} fallback={null}>
+              <SponsorCard
+                {...elem}
+                number={index + 1}
+                key={`sponsor-${index}`}
+              />
+            </Suspense>
+          ))}
+        </SponsorWrapper>
+      )}
+    </>
   );
-};
+}
 
 export async function getStaticProps() {
   const queryResults = await urlQlient
@@ -113,7 +78,6 @@ export async function getStaticProps() {
   const page = queryResults.data?.page as Page;
   if (!page) return { props: {} };
   const props: PageProps = {
-    navData: parseNavBarData(page?.navBar),
     heroData: page?.heroBlock || null,
     followUsData: page?.followUsBlock,
     sponsors: page?.sponsorTypeCollection,
@@ -124,4 +88,4 @@ export async function getStaticProps() {
   };
 }
 
-export default OnSitePage;
+OnSitePage.getLayout = DefaultPagelayout;

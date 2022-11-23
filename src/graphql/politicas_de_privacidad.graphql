@@ -1,26 +1,5 @@
 query PoliticasDePrivacidadPage($locale: String!, $isPreview: Boolean = false) {
   page(id: "53L43SORrqnSUGQswxUCtn", locale: $locale, preview: $isPreview) {
-    navBar {
-      linksCollection(limit: 20) {
-        items {
-          sys {
-            id
-          }
-          contenido
-          link
-          isBlank
-        }
-      }
-      buttonsCollection(limit: 20) {
-        items {
-          contenido
-          link
-        }
-      }
-      description {
-        json
-      }
-    }
     contentCollection(limit: 20) {
       items {
         __typename
