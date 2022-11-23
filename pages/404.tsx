@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import type { NextPage } from "next";
 import { ErrorComponent } from "../src/Components/ErrorComponent";
+import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
 
 const Container = styled.section`
   display: flex;
@@ -10,12 +10,12 @@ const Container = styled.section`
   justify-content: center;
 `;
 
-const Page404: NextPage = () => {
+export default function Page404() {
   return (
     <Container>
       <ErrorComponent errorMessage="La página que estas buscando no existe." />
     </Container>
   );
-};
+}
 
-export default Page404;
+Page404.getLayout = DefaultPagelayout;

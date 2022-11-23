@@ -1,8 +1,3 @@
-import { Suspense } from "react";
-import type { NextPage } from "next";
-import dynamic from "next/dynamic";
-import styled from "@emotion/styled";
-
 import {
   VolunteerQueryDocument,
   VolunteerQueryQuery,
@@ -13,13 +8,7 @@ import { ParseQuery } from "../src/helpers/types";
 import BannerVolunteer from "../src/Components/Banner/Volunteer";
 import VolunteerForm from "../src/Components/Form/Volunteer";
 import Seo from "../src/Components/Seo";
-
-const NavBar = dynamic(
-  async () => await import("../src/Components/NavBar/NavBar"),
-  {
-    ssr: false,
-  }
-);
+import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
 
 type Page = ParseQuery<VolunteerQueryQuery["page"]>;
 
@@ -28,34 +17,15 @@ export interface PageProps {
   seo: Page["seo"];
 }
 
-const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  max-width: 1440px;
-  min-height: calc(100vh - 100px);
-`;
-const StyledBlackWrapp = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: ${({ theme }) => theme.elements.global.backgroundColor};
-`;
-
-const VolunteerPage: NextPage<PageProps> = (props: PageProps) => {
+export default function VolunteerPage(props: PageProps) {
   return (
-    <StyledBlackWrapp>
+    <>
       <Seo {...props.seo} />
-      <Container>
-        <Suspense>
-          <NavBar />
-        </Suspense>
-        <BannerVolunteer {...props.heroData} />
-        <VolunteerForm />
-      </Container>
-    </StyledBlackWrapp>
+      <BannerVolunteer {...props.heroData} />
+      <VolunteerForm />
+    </>
   );
-};
+}
 
 export async function getStaticProps() {
   const queryResults = await urlQlient
@@ -78,4 +48,4 @@ export async function getStaticProps() {
   };
 }
 
-export default VolunteerPage;
+VolunteerPage.getLayout = DefaultPagelayout;

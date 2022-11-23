@@ -1,8 +1,4 @@
 import { lazy, Suspense } from "react";
-import type { NextPage } from "next";
-import dynamic from "next/dynamic";
-import styled from "@emotion/styled";
-
 import {
   HowQueryDocument,
   HowQueryQuery,
@@ -11,13 +7,8 @@ import {
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 import Seo from "../src/Components/Seo";
+import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
 
-const NavBar = dynamic(
-  async () => await import("../src/Components/NavBar/NavBar"),
-  {
-    ssr: false,
-  }
-);
 const HowCard = lazy(async () => await import("../src/Components/Card/How"));
 
 type Page = ParseQuery<HowQueryQuery["page"]>;
@@ -29,44 +20,25 @@ export interface PageProps {
   seo: Page["seo"];
 }
 
-const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  max-width: 1440px;
-  min-height: 100vh;
-`;
-const StyledBlackWrapp = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: ${({ theme }) => theme.elements.global.backgroundColor};
-`;
-
-const OnSitePage: NextPage<PageProps> = (props: PageProps) => {
+export default function OnSitePage(props: PageProps) {
   return (
-    <StyledBlackWrapp>
+    <>
       <Seo {...props.seo} />
-      <Container>
-        <Suspense fallback={null}>
-          <NavBar />
-        </Suspense>
-        {props.howItems?.items?.map((elem, index) =>
-          elem.sectionsCollection?.items.map((item, subIndex) => (
-            <Suspense key={subIndex} fallback={null}>
-              <HowCard
-                {...item}
-                number={subIndex + 1}
-                key={subIndex}
-                GM_KEY={props.GM_KEY}
-              />
-            </Suspense>
-          ))
-        )}
-      </Container>
-    </StyledBlackWrapp>
+      {props.howItems?.items?.map((elem, index) =>
+        elem.sectionsCollection?.items.map((item, subIndex) => (
+          <Suspense key={subIndex} fallback={null}>
+            <HowCard
+              {...item}
+              number={subIndex + 1}
+              key={subIndex}
+              GM_KEY={props.GM_KEY}
+            />
+          </Suspense>
+        ))
+      )}
+    </>
   );
-};
+}
 
 export async function getStaticProps() {
   const queryResults = await urlQlient
@@ -89,4 +61,4 @@ export async function getStaticProps() {
   };
 }
 
-export default OnSitePage;
+OnSitePage.getLayout = DefaultPagelayout;

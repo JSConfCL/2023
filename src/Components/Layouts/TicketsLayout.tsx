@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { ViewportSizes } from "../../../styles/theme";
+import { StyledWrapperSuspense } from "../NavBar/components";
 import { NavBarProps } from "../NavBar/InternalNavBar";
 
 const TicketNavBar = dynamic(async () => await import("../NavBar/NavBar"), {
@@ -54,7 +55,7 @@ export interface PageProps extends ReactElement {
 export const TicketsLayout = (page: PageProps) => {
   return (
     <StyledBlackWrapp>
-      <Suspense>
+      <Suspense fallback={<StyledWrapperSuspense />}>
         <TicketNavBar />
       </Suspense>
       <Container>
