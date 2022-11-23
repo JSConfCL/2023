@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import styled from "@emotion/styled";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, Variants } from "framer-motion";
 import { atom, useAtom, useSetAtom } from "jotai";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -14,10 +14,12 @@ import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { SecondaryStyledButton, SecondaryStyledLink } from "../Links";
 import JSConfLogo from "../svgs/logo";
+import { NavBarSize } from "./components";
 const Description = lazy(async () => await import("../core/Description"));
 
 const StyledNav = styled(motion.nav)`
   z-index: 100;
+  height: ${NavBarSize}px;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -30,11 +32,10 @@ const StyledWrapper = styled.div(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   padding: "0px 48px",
-  height: 100,
   width: "100%",
   maxWidth: 1440,
   [theme.breakpoints.phoneOnly]: {
-    padding: "32px 16px",
+    padding: "0px 16px",
   },
 }));
 
@@ -89,6 +90,7 @@ const StyledLink = styled.li<{ isActive: boolean }>`
 const StyledJSConfLogoWrapper = styled.a`
   height: 100%;
   max-height: 50px;
+  min-height: 50px;
   aspect-ratio: 1/1;
   cursor: pointer;
 `;
@@ -99,7 +101,7 @@ const StyledPortalWrapper = styled(motion.section)<{ height: number | string }>`
   display: flex;
   position: fixed;
   z-index: 9999;
-  top: -100vh;
+  top: -200vh;
   overflow: scroll;
 
   background-color: #f0e040;
@@ -338,15 +340,15 @@ const MobileMenu = ({ items, description, buttonsCollection }: NavBarProps) => {
   );
 };
 
-const NavVariant = {
+const NavVariant: Variants = {
   initial: {
     opacity: 0,
-    height: 0,
+    translateY: -50,
   },
   animate: {
     opacity: 1,
-    height: "auto",
-    transition: { duration: 0.5 },
+    translateY: 0,
+    transition: { duration: 0.5, delay: 0.5 },
   },
 };
 

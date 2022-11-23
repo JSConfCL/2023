@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { lazy, Suspense } from "react";
 import { PageProps } from "../../../pages";
 import { SecondaryStyledLink, TertiaryStyledLink } from "../Links";
+import { StyledWrapperSuspense } from "../NavBar/components";
 
 const Particles = lazy(async () => await import("../Particles"));
 
@@ -201,7 +202,7 @@ export const Hero = ({ heroData }: { heroData: PageProps["heroData"] }) => {
           alt={heroData.background.title}
         />
       </Suspense>
-      <Suspense fallback={null}>
+      <Suspense fallback={<StyledWrapperSuspense />}>
         <NavBar />
       </Suspense>
       <Suspense>
