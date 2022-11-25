@@ -26,7 +26,7 @@ const Title = styled.h2`
 `;
 
 const StyledContainer = styled.div`
-  width: 90%;
+  width: 100%;
   max-width: 500px;
   margin: 0 auto;
 `;
