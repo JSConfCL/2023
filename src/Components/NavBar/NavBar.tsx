@@ -1,5 +1,7 @@
 import { useAtomValue, useSetAtom } from "jotai";
 import { useMemo } from "react";
+import { useFlags } from "flagsmith/react";
+
 import { accessTokenAtom, isAuthenticatedAtom } from "../../helpers/auth";
 import { parseNavBarData } from "./helper";
 import { InternalNavBar } from "./InternalNavBar";
@@ -15,6 +17,10 @@ const NavBar = () => {
 
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
   const setAccessToken = useSetAtom(accessTokenAtom);
+  const { "ticket-sale-enabled": ticketSaleEnabled } = useFlags([
+    "ticket-sale-enabled",
+  ]);
+
   const navBarItems = useMemo(() => {
     if (!data) {
       return [];
@@ -22,25 +28,38 @@ const NavBar = () => {
     const newItems = [...parseNavBarData(data.navigationBar).items];
 
     if (isLoggedIn) {
-      newItems.push({
-        contenido: "Configuracion",
-        id: "Settings",
-        isBlank: false,
-        link: "/settings",
-        onClick: undefined,
-      });
+      if (ticketSaleEnabled?.value) {
+        newItems.push({
+          contenido: "Mis Tickets",
+          id: "OwnTickets",
+          isBlank: false,
+          link: "/mytickets",
+          onClick: undefined,
+        });
+      }
 
-      newItems.push({
-        contenido: "Salir",
-        id: "Log Out",
-        onClick: () => {
-          setAccessToken(null);
-        },
-      });
+      newItems.push(
+        ...[
+          {
+            contenido: "Configuracion",
+            id: "Settings",
+            isBlank: false,
+            link: "/settings",
+            onClick: undefined,
+          },
+          {
+            contenido: "Salir",
+            id: "Log Out",
+            onClick: () => {
+              setAccessToken(null);
+            },
+          },
+        ]
+      );
     }
 
     return newItems;
-  }, [data, isLoggedIn, setAccessToken]);
+  }, [data, isLoggedIn, setAccessToken, ticketSaleEnabled]);
 
   return <InternalNavBar items={navBarItems} />;
 };
