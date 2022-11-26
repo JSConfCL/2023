@@ -4,7 +4,7 @@ import { transparentize } from "polished";
 
 import { TicketsLayout } from "../src/Components/Layouts/TicketsLayout";
 import { UserInformationForm } from "../src/Components/UserInformationForm";
-import { me } from "../src/helpers/API";
+import { me, myTickets } from "../src/helpers/API";
 import { jsconfTheme, ViewportSizes } from "../styles/theme";
 
 const Title = styled.h2`
@@ -61,6 +61,9 @@ const StyledBanner = styled.div`
 
 const Settings = () => {
   const { isLoading, data: user } = useQuery(["me"], me);
+  const { data } = useQuery(["mytickets"], myTickets);
+  console.log("data", data);
+
   return (
     <StyledContainer>
       {user?.id && !user.email ? (
