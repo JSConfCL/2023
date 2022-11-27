@@ -329,6 +329,7 @@ export const UserInformationForm = () => {
           <Select
             {...field}
             isClearable
+            placeholder="Seleccionar País"
             styles={customStyles}
             options={countryOptions}
             instanceId={countrySelectId}
@@ -375,6 +376,7 @@ export const UserInformationForm = () => {
           <Select
             {...field}
             isClearable
+            placeholder="Seleccionar Género"
             styles={customStyles}
             options={genderOptions}
             instanceId={genderSelectId}
