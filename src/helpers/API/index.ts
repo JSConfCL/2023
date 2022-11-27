@@ -6,7 +6,7 @@ import { useResetAtom } from "jotai/utils";
 import { useEffect, useState } from "react";
 import { Entrada } from "../../Components/Cart/CartAtom";
 import { accessTokenAtom, getValidToken } from "../auth";
-import { UserPayload, UserType, VolunteerPayload } from "./types";
+import { UserPayload, UserType, VolunteerPayload, OwnTicket } from "./types";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -104,6 +104,10 @@ export const createPayment = async (object: {
 
 export const me = async (): Promise<UserType> => {
   return await customFetch(`${API_URL}/users/me`);
+};
+
+export const myTickets = async (): Promise<OwnTicket[]> => {
+  return await customFetch(`${API_URL}/users/me/tickets`);
 };
 
 export const updateMe = async (
