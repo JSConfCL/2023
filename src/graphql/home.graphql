@@ -134,6 +134,16 @@ query HomeQuery($locale: String!, $isPreview: Boolean = false) {
         }
       }
     }
+    communityFriendsCollection(limit: 20) {
+      items {
+        name
+        image {
+          title
+          url
+        }
+        link
+      }
+    }
     sponsorTypeCollection(limit: 20) {
       items {
         sys {

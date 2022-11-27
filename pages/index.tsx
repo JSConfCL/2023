@@ -31,6 +31,10 @@ const TimelineSection = lazy(
   async () => await import("../src/Components/sections/TimelineSection")
 );
 
+const FriendSection = lazy(
+  async () => await import("../src/Components/sections/FriendSection")
+);
+
 type Page = ParseQuery<HomeQueryQuery["page"]>;
 
 export interface PageProps {
@@ -42,6 +46,7 @@ export interface PageProps {
   teamData: Page["teamBlock"];
   events: Page["eventsCollection"]["items"];
   sponsorType: Page["sponsorTypeCollection"];
+  friends: Page["communityFriendsCollection"];
 }
 const Container = styled.section`
   display: flex;
@@ -80,6 +85,9 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
           {props.sponsorType && <SponsorSection page={props.sponsorType} />}
         </Suspense>
         <Suspense fallback={null}>
+          {props.friends && <FriendSection friends={props.friends} />}
+        </Suspense>
+        <Suspense fallback={null}>
           {props.teamData && <TeamSection page={props.teamData} />}
         </Suspense>
       </StyledBlackWrapp>
@@ -105,6 +113,7 @@ export async function getStaticProps() {
     teamData: page?.teamBlock || null,
     events: page?.eventsCollection.items || null,
     sponsorType: page?.sponsorTypeCollection || null,
+    friends: page?.communityFriendsCollection || null,
   };
 
   return {
