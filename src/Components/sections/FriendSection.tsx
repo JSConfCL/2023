@@ -38,7 +38,7 @@ const Container = styled.section`
   width: 100%;
   max-width: 1440px;
   gap: 0px 32px;
-  padding: 16px;
+  padding: 16px 16px 48px 16px;
   justify-content: space-between;
 
   @media (min-width: ${ViewportSizes.Phone}px) {
@@ -71,7 +71,6 @@ const ImageContainer = styled.section`
 const Title = styled.h2`
   font-size: 40px;
   font-weight: 400;
-  padding: 48px 0px;
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     font-size: 80px;
   }
@@ -80,7 +79,6 @@ const Title = styled.h2`
 const FlexSpace = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 24px 0px 0px 0px;
   flex-direction: column;
   gap: 30px;
   justify-content: flex-start;
