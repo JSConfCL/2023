@@ -1,0 +1,21 @@
+query FAQ($locale: String!, $isPreview: Boolean = false, $id: String!) {
+  page(id: $id, locale: $locale, preview: $isPreview) {
+    seo {
+      title
+      description
+      metadata
+    }
+    contentCollection(limit: 20) {
+      items {
+        __typename
+        ... on MarkdownBlock {
+          sys {
+            id
+          }
+          description
+          markdownTextContent
+        }
+      }
+    }
+  }
+}
