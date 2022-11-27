@@ -158,6 +158,19 @@ export type HomeQueryQuery = {
         } | null;
       } | null>;
     } | null;
+    communityFriendsCollection?: {
+      __typename?: "PageCommunityFriendsCollection";
+      items: Array<{
+        __typename?: "FriendCommunity";
+        name?: string | null;
+        link?: string | null;
+        image?: {
+          __typename?: "Asset";
+          title?: string | null;
+          url?: string | null;
+        } | null;
+      } | null>;
+    } | null;
     sponsorTypeCollection?: {
       __typename?: "PageSponsorTypeCollection";
       items: Array<{
@@ -315,6 +328,16 @@ export const HomeQueryDocument = gql`
               url
             }
           }
+        }
+      }
+      communityFriendsCollection(limit: 20) {
+        items {
+          name
+          image {
+            title
+            url
+          }
+          link
         }
       }
       sponsorTypeCollection(limit: 20) {
