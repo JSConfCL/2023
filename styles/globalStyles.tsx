@@ -152,6 +152,11 @@ const fontsCSS = css`
       U+2215, U+FEFF, U+FFFD;
   }
 `;
+
+const atroposCSS = css`
+  import 'atropos/css'
+`;
+
 export const GlobalStyles = () => {
   const theme = useTheme();
   return (
@@ -159,6 +164,7 @@ export const GlobalStyles = () => {
       styles={[
         fontsCSS,
         resetCSS,
+        atroposCSS,
         css`
           body,
           html {
