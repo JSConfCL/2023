@@ -1,9 +1,110 @@
 import styled from "@emotion/styled";
+import Atropos from "atropos/react";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 
 import { UserType, OwnTicket } from "../../helpers/API/types";
 
+const StyledAtropos = styled(Atropos)`
+  width: 350px;
+  height: 480px;
+  margin: 0 auto 16px;
+
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    width: 680px;
+    height: 380px;
+  }
+
+  .atropos {
+    position: relative;
+    display: block;
+    perspective: 1200px;
+    transform: translate3d(0, 0, 0);
+  }
+  .atropos-rotate-scroll-x,
+  .atropos-rotate-scroll-y,
+  .atropos-rotate-touch {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .atropos-rotate-touch-scroll-y {
+    touch-action: pan-y;
+  }
+  .atropos-rotate-touch-scroll-x {
+    touch-action: pan-x;
+  }
+  .atropos-rotate-touch {
+    touch-action: none;
+  }
+  .atropos-rotate,
+  .atropos-scale {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition-property: transform;
+    display: block;
+  }
+  .atropos-highlight,
+  .atropos-shadow {
+    position: absolute;
+    pointer-events: none;
+    transition-property: transform, opacity;
+    display: block;
+    opacity: 0;
+  }
+  .atropos-shadow {
+    z-index: -1;
+    background: #000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    filter: blur(30px);
+  }
+  .atropos-highlight {
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: radial-gradient(
+      circle at 50%,
+      rgba(255, 255, 255, 0.25),
+      transparent 50%
+    );
+    z-index: 0;
+  }
+  .atropos-rotate {
+    position: relative;
+  }
+  .atropos-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transform: translate3d(0, 0, 0);
+    display: block;
+  }
+  .atropos-active {
+    z-index: 1;
+  }
+  .atropos-active .atropos-shadow {
+    opacity: 1 !important;
+  }
+  [data-atropos-offset] {
+    transition-property: transform;
+  }
+  [data-atropos-opacity] {
+    transition-property: opacity;
+  }
+  [data-atropos-offset][data-atropos-opacity] {
+    transition-property: transform, opacity;
+  }
+`;
 const TicketContainer = styled.div`
   width: 350px;
   height: 480px;
@@ -140,33 +241,37 @@ export const Ticket = ({
   user: UserType;
   ticket: OwnTicket;
 }) => (
-  <TicketContainer>
-    <TicketInfo>
-      <StyledTr>
-        <TicketSection>
-          <div>
-            <StyledImg src={user.photo ?? ""} />
-          </div>
-          <div style={{ paddingLeft: "16px" }}>
-            <TicketUsername>
-              {user.username ? "@" + user.username : ""}
-            </TicketUsername>
-            <TicketName>{user.name ?? ""}</TicketName>
-          </div>
-        </TicketSection>
-        <StyledTd>
-          <Title>JSConf Chile</Title>
-          <SubTitle>Feb.03-04</SubTitle>
-        </StyledTd>
-        <TicketSection style={{ padding: 0 }}>
-          <StyledLineContainer>
-            <StyledLine>{ticket.ticket.name}</StyledLine>
-            <StyledLine>{HumanTypes[ticket.ticket.type] ?? ""}</StyledLine>
-            <StyledLine>{HumanSeasons[ticket.ticket.season] ?? ""}</StyledLine>
-            <StyledLine>{HumanStatus[ticket.status] ?? ""}</StyledLine>
-          </StyledLineContainer>
-        </TicketSection>
-      </StyledTr>
-    </TicketInfo>
-  </TicketContainer>
+  <StyledAtropos highlight={false} activeOffset={40} shadowScale={1.5}>
+    <TicketContainer>
+      <TicketInfo data-atropos-offset="2">
+        <StyledTr data-atropos-offset="0">
+          <TicketSection>
+            <div>
+              <StyledImg src={user.photo ?? ""} />
+            </div>
+            <div style={{ paddingLeft: "16px" }}>
+              <TicketUsername>
+                {user.username ? "@" + user.username : ""}
+              </TicketUsername>
+              <TicketName>{user.name ?? ""}</TicketName>
+            </div>
+          </TicketSection>
+          <StyledTd>
+            <Title>JSConf Chile</Title>
+            <SubTitle>Feb.03-04</SubTitle>
+          </StyledTd>
+          <TicketSection style={{ padding: 0 }}>
+            <StyledLineContainer>
+              <StyledLine>{ticket.ticket.name}</StyledLine>
+              <StyledLine>{HumanTypes[ticket.ticket.type] ?? ""}</StyledLine>
+              <StyledLine>
+                {HumanSeasons[ticket.ticket.season] ?? ""}
+              </StyledLine>
+              <StyledLine>{HumanStatus[ticket.status] ?? ""}</StyledLine>
+            </StyledLineContainer>
+          </TicketSection>
+        </StyledTr>
+      </TicketInfo>
+    </TicketContainer>
+  </StyledAtropos>
 );
