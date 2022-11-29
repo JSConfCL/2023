@@ -54,6 +54,8 @@ const ImageContainer = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 64px;
+  flex-wrap: wrap;
 
   img {
     opacity: 0.5;
