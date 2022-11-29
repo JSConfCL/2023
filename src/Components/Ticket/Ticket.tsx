@@ -110,6 +110,8 @@ const TicketContainer = styled.div`
   height: 480px;
   margin: 0 auto 16px;
   background: #333;
+  position: relative;
+  cursor: pointer;
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     width: 680px;
@@ -124,10 +126,6 @@ const TicketInfo = styled.div`
   top: 16px;
   left: 16px;
   border: 8px solid ${jsconfTheme.colors.jsconfYellow};
-  background-image: url("/images/logo.svg");
-  background-size: cover;
-  background-position: 70px 255px;
-  background-repeat: no-repeat;
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     background-position: 435px 154px;
@@ -234,6 +232,18 @@ const HumanStatus: { [K: string]: string } = {
   on_sale: "A la venta",
 };
 
+const StyledBackgroundImage = styled.div`
+  position: absolute;
+  height: 120%;
+  width: 120%;
+  bottom: -20%;
+  right: -20%;
+  background-image: url("/images/logo.svg");
+  background-size: cover;
+  background-position: 450px 205px;
+  background-repeat: no-repeat;
+`;
+
 export const Ticket = ({
   user,
   ticket,
@@ -241,33 +251,45 @@ export const Ticket = ({
   user: UserType;
   ticket: OwnTicket;
 }) => (
-  <StyledAtropos highlight={false} activeOffset={40} shadowScale={1.5}>
-    <TicketContainer>
+  <StyledAtropos
+    highlight={false}
+    activeOffset={40}
+    shadowScale={1.5}
+    shadowOffset={100}
+  >
+    <TicketContainer data-atropos-opacity="1;0.85" data-atropos-offset="-5">
+      <StyledBackgroundImage data-atropos-offset="-10" />
       <TicketInfo data-atropos-offset="2">
-        <StyledTr data-atropos-offset="0">
+        <StyledTr data-atropos-offset="2">
           <TicketSection>
-            <div>
+            <div data-atropos-offset="8">
               <StyledImg src={user.photo ?? ""} />
             </div>
             <div style={{ paddingLeft: "16px" }}>
-              <TicketUsername>
+              <TicketUsername data-atropos-offset="5">
                 {user.username ? "@" + user.username : ""}
               </TicketUsername>
-              <TicketName>{user.name ?? ""}</TicketName>
+              <TicketName data-atropos-offset="5">{user.name ?? ""}</TicketName>
             </div>
           </TicketSection>
-          <StyledTd>
+          <StyledTd data-atropos-offset="5">
             <Title>JSConf Chile</Title>
             <SubTitle>Feb.03-04</SubTitle>
           </StyledTd>
           <TicketSection style={{ padding: 0 }}>
-            <StyledLineContainer>
-              <StyledLine>{ticket.ticket.name}</StyledLine>
-              <StyledLine>{HumanTypes[ticket.ticket.type] ?? ""}</StyledLine>
-              <StyledLine>
+            <StyledLineContainer data-atropos-offset="3">
+              <StyledLine data-atropos-offset="1">
+                {ticket.ticket.name}
+              </StyledLine>
+              <StyledLine data-atropos-offset="2">
+                {HumanTypes[ticket.ticket.type] ?? ""}
+              </StyledLine>
+              <StyledLine data-atropos-offset="3">
                 {HumanSeasons[ticket.ticket.season] ?? ""}
               </StyledLine>
-              <StyledLine>{HumanStatus[ticket.status] ?? ""}</StyledLine>
+              <StyledLine data-atropos-offset="4">
+                {HumanStatus[ticket.status] ?? ""}
+              </StyledLine>
             </StyledLineContainer>
           </TicketSection>
         </StyledTr>
