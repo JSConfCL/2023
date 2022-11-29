@@ -121,7 +121,7 @@ export const Agreements = () => {
           <InputText>
             Estoy de acuerdo con las{" "}
             <Anchor
-              href="https://github.com/JSConfCL/code_of_conduct"
+              href="https://github.com/JSConfCL/code_of_conduct/blob/master/terminos_de_compra_e_imagen/README.md"
               target="_blank"
               rel="noreferrer"
             >
