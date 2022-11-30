@@ -54,9 +54,10 @@ const Settings = () => {
       {user?.id && !user.email ? (
         <Alert title="Informacion Importante:">
           Pudimos crear tu cuenta. Pero no conseguimos correo electrónico
-          asociado. Por lo tanto, no podremos comunicarnos contigo. Te pedimos
-          registres un correo electrónico para poder informarte los próximos
-          pasos.
+          asociado. Por lo tanto, no podremos comunicarnos contigo o procesar tu
+          compra. Te pedimos registres un correo electrónico para poder
+          continuar con la compra de tickets y además poder informarte los
+          próximos pasos.
         </Alert>
       ) : null}
       <Title>Configuracion</Title>
