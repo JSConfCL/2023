@@ -126,14 +126,16 @@ const PaymentMethod = () => {
       ))}
       <br />
       <SubTitle>Elige tu metodo de pago:</SubTitle>
-      <ErrorBanner title="Error al procesar tu pago">
-        Ocurrió un error en el procesamiento de tu pago. Por favor intenta
-        nuevamente. Si aun no funciona, envíanos un correo a{" "}
-        <StyledAnchor href="mailto:contacto@jsconf.cl">
-          contacto@jsconf.cl
-        </StyledAnchor>
-        .
-      </ErrorBanner>
+      {mutation.error && (
+        <ErrorBanner title="Error al procesar tu pago">
+          Ocurrió un error en el procesamiento de tu pago. Por favor intenta
+          nuevamente. Si aun no funciona, envíanos un correo a{" "}
+          <StyledAnchor href="mailto:contacto@jsconf.cl">
+            contacto@jsconf.cl
+          </StyledAnchor>
+          .
+        </ErrorBanner>
+      )}
       <PaymentButtonWrapper>
         {buttonData.map((data) => (
           <TertiaryButton
