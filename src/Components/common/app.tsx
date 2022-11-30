@@ -1,38 +1,33 @@
 import styled from "@emotion/styled";
 import { transparentize } from "polished";
-import { ReactElement } from "react";
+import { ReactNode } from "react";
 
 import { jsconfTheme } from "../../../styles/theme";
 
 const BaseAlert = styled.div`
   border-radius: 8px;
   background: ${transparentize(0.5, jsconfTheme.colors.jsconfRed)};
-  padding: 16px 24px 24px 24px;
-  margin-bottom: 16px;
+  padding: 24px 24px 24px 24px;
+  display: flex;
+  font-size: 1.25rem;
+  flex-direction: column;
+  gap: 0.75rem;
 `;
 
 const BaseAlertTitle = styled.h2`
-  margin-bottom: 8px;
-  font-size: 1.2em;
+  font-size: 1.25em;
+  text-align: center;
 `;
 
 export const Alert = (props: {
-  children: string | ReactElement | ReactElement[];
+  children: ReactNode | undefined;
   title?: string;
 }) => {
-  const { children, title, ...rest } = props;
+  const { children, title } = props;
   return (
-    <BaseAlert role="alert" {...rest}>
-      {title ? <AlertTitle>{title}</AlertTitle> : null}
+    <BaseAlert role="alert">
+      {title ? <BaseAlertTitle>{title}</BaseAlertTitle> : null}
       {children}
     </BaseAlert>
   );
-};
-
-export const AlertTitle = ({
-  children,
-}: {
-  children: string | ReactElement | ReactElement[];
-}) => {
-  return <BaseAlertTitle>{children}</BaseAlertTitle>;
 };

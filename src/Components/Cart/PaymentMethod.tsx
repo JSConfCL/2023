@@ -18,8 +18,8 @@ import {
 import { ArrowLeft, CreditCard, Loader } from "react-feather";
 import { useMutation } from "@tanstack/react-query";
 import { createPayment } from "../../helpers/API";
-import { ErrorBanner } from "../Banner/ErrorBanner";
 import { Anchor } from "../CustomMarkdown";
+import { Alert } from "../common/app";
 
 const CartPaymentMethodContainer = styled.div`
   display: flex;
@@ -126,16 +126,16 @@ const PaymentMethod = () => {
       ))}
       <br />
       <SubTitle>Elige tu metodo de pago:</SubTitle>
-      {mutation.error && (
-        <ErrorBanner title="Error al procesar tu pago">
+      {mutation.error ? (
+        <Alert>
           Ocurrió un error en el procesamiento de tu pago. Por favor intenta
           nuevamente. Si aun no funciona, envíanos un correo a{" "}
           <StyledAnchor href="mailto:contacto@jsconf.cl">
             contacto@jsconf.cl
           </StyledAnchor>
           .
-        </ErrorBanner>
-      )}
+        </Alert>
+      ) : null}
       <PaymentButtonWrapper>
         {buttonData.map((data) => (
           <TertiaryButton
