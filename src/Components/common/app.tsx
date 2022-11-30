@@ -27,7 +27,7 @@ export const Alert = (props: {
   return (
     <BaseAlert role="alert">
       {title ? <BaseAlertTitle>{title}</BaseAlertTitle> : null}
-      {children}
+      <span>{children}</span>
     </BaseAlert>
   );
 };
