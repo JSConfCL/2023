@@ -40,7 +40,7 @@ const TicketWrapper = styled.div`
   gap: 2rem;
 `;
 
-export const TicketSelection = () => {
+export const TicketSelection = ({ isDisabled }: { isDisabled?: boolean }) => {
   const ticketsAtom = useAtomValue(ticketsAtomsAtom);
   const githubAccountName = "";
   return (
@@ -53,8 +53,12 @@ export const TicketSelection = () => {
       <CartWrapper>
         <CartItemsWrapper>
           {ticketsAtom.map((entrada) => (
-            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-            <CartItem key={`${entrada}`} entrada={entrada} />
+            <CartItem
+              // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+              key={`${entrada}`}
+              entrada={entrada}
+              isDisabled={isDisabled}
+            />
           ))}
         </CartItemsWrapper>
         <HR />

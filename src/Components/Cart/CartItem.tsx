@@ -55,6 +55,7 @@ const TicketHeader = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
 const TicketAmountControl = styled.button`
   color: #000;
   background-color: #fff;
@@ -65,6 +66,13 @@ const TicketAmountControl = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  &:disabled {
+    opacity: 0.8;
+    background-color: #333;
+    cursor: not-allowed;
+  }
+
   @media (min-width: ${ViewportSizes.Phone}px) {
     height: 32px;
   }
@@ -78,7 +86,13 @@ const TicketAmountControl = styled.button`
 
 const TicketAvailability = styled.p``;
 
-const CartItem = ({ entrada }: { entrada: PrimitiveAtom<Entrada> }) => {
+const CartItem = ({
+  entrada,
+  isDisabled,
+}: {
+  entrada: PrimitiveAtom<Entrada>;
+  isDisabled?: boolean;
+}) => {
   const [ticket, setTicket] = useAtom(entrada);
   const { description, name, price, quantity, currentQuantity } = ticket;
   const noHayDisponibles = quantity === 0;
@@ -97,6 +111,7 @@ const CartItem = ({ entrada }: { entrada: PrimitiveAtom<Entrada> }) => {
     }
     setTicket({ ...ticket, currentQuantity: currentQuantity - 1 });
   }, [currentQuantity, isMin, setTicket, ticket]);
+
   return (
     <Ticket>
       <TicketHeader>
@@ -108,13 +123,13 @@ const CartItem = ({ entrada }: { entrada: PrimitiveAtom<Entrada> }) => {
           }).format(price)}
         </SubTitle>
         <TicketControlWrapper>
-          <TicketAmountControl onClick={goDown}>
+          <TicketAmountControl disabled={isDisabled} onClick={goDown}>
             <Suspense>
               <Minus size={18} stroke="#000" />
             </Suspense>
           </TicketAmountControl>
           <TicketAmount>{currentQuantity}</TicketAmount>
-          <TicketAmountControl onClick={goUp}>
+          <TicketAmountControl disabled={isDisabled} onClick={goUp}>
             <Suspense>
               <Plus size={18} stroke="#000" />
             </Suspense>
