@@ -6,11 +6,16 @@ import {
   Transition,
 } from "framer-motion";
 import { useAtomValue } from "jotai";
-import { SectionTile } from "../TicketSection/Title";
+import { useQuery } from "@tanstack/react-query";
+
 import { Agreements } from "./Agreements";
 import { subNavigationAtom } from "./CartAtom";
 import PaymentMethod from "./PaymentMethod";
 import { TicketSelection } from "./TicketSelection";
+import { SectionTile } from "../TicketSection/Title";
+import { Alert } from "../common/app";
+
+import { me } from "../../helpers/API";
 
 const Wrapper = styled(motion.div)`
   display: flex;
@@ -34,6 +39,7 @@ const useAnimation = (transition: Transition = {}): MotionProps => {
 const Header = () => {
   const subNavigationAtomValue = useAtomValue(subNavigationAtom);
   const animation = useAnimation();
+
   return (
     <AnimatePresence mode="popLayout" initial={false}>
       {subNavigationAtomValue === "ticket_selection" && (
@@ -68,15 +74,32 @@ const Header = () => {
 };
 
 export const CartContainer = () => {
+  const { isLoading: isLoadingUser, data: user } = useQuery(["me"], me);
   const subNavigationAtomValue = useAtomValue(subNavigationAtom);
   const animation = useAnimation({ delay: 0.025 });
+
+  if (isLoadingUser) {
+    return <div />;
+  }
+
+  const hasEmailError = Boolean(user?.id && !user.email);
+
   return (
     <>
+      {hasEmailError ? (
+        <Alert title="Informacion Importante:">
+          Pudimos crear tu cuenta. Pero no conseguimos correo electrónico
+          asociado. Por lo tanto, no podremos comunicarnos contigo o procesar tu
+          compra. Te pedimos registres un correo electrónico para poder
+          continuar con la compra de tickets y además poder informarte los
+          próximos pasos.
+        </Alert>
+      ) : null}
       <Header />
       <AnimatePresence mode="popLayout" initial={false}>
         {subNavigationAtomValue === "ticket_selection" && (
           <Wrapper key={subNavigationAtomValue} {...animation}>
-            <TicketSelection />
+            <TicketSelection isDisabled={hasEmailError} />
           </Wrapper>
         )}
         {subNavigationAtomValue === "agreements" && (
