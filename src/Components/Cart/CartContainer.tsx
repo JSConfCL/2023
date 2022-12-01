@@ -86,6 +86,7 @@ export const CartContainer = () => {
 
   return (
     <>
+      <Header />
       {hasEmailError ? (
         <Alert title="Informacion Importante:">
           Pudimos crear tu cuenta. Pero no conseguimos correo electrónico
@@ -95,7 +96,6 @@ export const CartContainer = () => {
           próximos pasos.
         </Alert>
       ) : null}
-      <Header />
       <AnimatePresence mode="popLayout" initial={false}>
         {subNavigationAtomValue === "ticket_selection" && (
           <Wrapper key={subNavigationAtomValue} {...animation}>

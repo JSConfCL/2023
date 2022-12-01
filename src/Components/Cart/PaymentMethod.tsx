@@ -18,6 +18,8 @@ import {
 import { ArrowLeft, CreditCard, Loader } from "react-feather";
 import { useMutation } from "@tanstack/react-query";
 import { createPayment } from "../../helpers/API";
+import { Anchor } from "../CustomMarkdown";
+import { Alert } from "../common/app";
 
 const CartPaymentMethodContainer = styled.div`
   display: flex;
@@ -72,6 +74,15 @@ const Resume = styled.div`
   gap: 1rem;
 `;
 
+const StyledAnchor = styled(Anchor)`
+  color: ${({ theme }) => theme.colors.white};
+  &:active,
+  &:focus,
+  &:hover {
+    color: ${({ theme }) => theme.colors.white};
+  }
+`;
+
 const PaymentMethod = () => {
   const continuarAtomValue = useSetAtom(subNavigationAtom);
   const ticketSummaryAtomValue = useAtomValue(ticketSummaryAtom);
@@ -115,7 +126,16 @@ const PaymentMethod = () => {
       ))}
       <br />
       <SubTitle>Elige tu metodo de pago:</SubTitle>
-
+      {mutation.error ? (
+        <Alert>
+          Ocurrió un error en el procesamiento de tu pago. Por favor intenta
+          nuevamente. Si aun no funciona, envíanos un correo a{" "}
+          <StyledAnchor href="mailto:contacto@jsconf.cl">
+            contacto@jsconf.cl
+          </StyledAnchor>
+          .
+        </Alert>
+      ) : null}
       <PaymentButtonWrapper>
         {buttonData.map((data) => (
           <TertiaryButton

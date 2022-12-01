@@ -17,11 +17,9 @@ const Title = styled.h2`
   transition-duration: 250ms;
   transition-property: font-size;
   font-size: 2.5rem;
-  margin-bottom: 16px;
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     font-size: 2.2rem;
-    margin-bottom: 32px;
   }
 `;
 
@@ -29,11 +27,13 @@ const StyledContainer = styled.div`
   width: 90%;
   max-width: 500px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 `;
 
 const SytledImageContainer = styled.div`
   text-align: center;
-  margin-bottom: 32px;
 `;
 
 const IMAGE_SIZE = "200px";
@@ -54,10 +54,9 @@ const Settings = () => {
       {user?.id && !user.email ? (
         <Alert title="Informacion Importante:">
           Pudimos crear tu cuenta. Pero no conseguimos correo electrónico
-          asociado. Por lo tanto, no podremos comunicarnos contigo o procesar tu
-          compra. Te pedimos registres un correo electrónico para poder
-          continuar con la compra de tickets y además poder informarte los
-          próximos pasos.
+          asociado. Por lo tanto, no podremos comunicarnos contigo. (Y tampoco
+          podrás comprar entradas). Te pedimos registres un correo electrónico
+          para poder informarte los próximos pasos.
         </Alert>
       ) : null}
       <Title>Configuracion</Title>
