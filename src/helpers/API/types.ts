@@ -1,3 +1,5 @@
+import { Entrada } from "../../Components/Cart/CartAtom";
+
 export type UserType = {
   error: any;
   company: null | string;
@@ -31,4 +33,14 @@ export interface VolunteerPayload {
   name: string;
   lastName: string;
   why: string;
+}
+
+export interface OwnTicket {
+  id: string;
+  ownerId: string;
+  paymentId: string;
+  status: string;
+  ticket: Entrada;
+  ticketId: string;
+  updated_at: string;
 }

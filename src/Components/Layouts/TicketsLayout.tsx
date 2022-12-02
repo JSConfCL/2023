@@ -42,7 +42,11 @@ const Container = styled.div`
 `;
 
 const Spacer = styled.div`
-  height: 100px;
+  height: 32px;
+
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    height: 100px;
+  }
 `;
 
 export interface LayoutPageProps extends React.ComponentPropsWithoutRef<"div"> {
