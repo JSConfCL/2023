@@ -6,7 +6,13 @@ import { useResetAtom } from "jotai/utils";
 import { useEffect, useState } from "react";
 import { Entrada } from "../../Components/Cart/CartAtom";
 import { accessTokenAtom, getValidToken } from "../auth";
-import { UserPayload, UserType, VolunteerPayload, OwnTicket } from "./types";
+import {
+  UserPayload,
+  UserType,
+  VolunteerPayload,
+  OwnTicket,
+  PublicTicket,
+} from "./types";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -110,6 +116,12 @@ export const myTickets = async (): Promise<OwnTicket[]> => {
   return await customFetch(`${API_URL}/users/me/tickets`);
 };
 
+export const publicTicket = async (ticketId: string): Promise<PublicTicket> => {
+  return await customFetch(
+    `${API_URL}/tickets/qr/info/user_ticket_${ticketId}`
+  );
+};
+
 export const updateMe = async (
   object: Partial<UserPayload>
 ): Promise<UserType> => {
@@ -147,6 +159,7 @@ export const finishGithubLogin = async ({
 }> => {
   return await customFetch(`${API_URL}/auth/github/callback?code=${code}`);
 };
+
 export const finishGoogleLogin = async ({
   code,
 }: {
