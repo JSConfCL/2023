@@ -117,6 +117,12 @@ const TicketSection = styled.div`
   display: flex;
 `;
 
+const TicketHeader = styled.div`
+  margin-top: 16px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+`;
 const StyledTr = styled.div`
   display: flex;
   flex-direction: column;
@@ -135,6 +141,7 @@ const StyledImg = styled.img`
   width: 60px;
   height: 60px;
   border-radius: 50%;
+  min-width: 60px;
 `;
 
 const TicketUsername = styled.h2`
@@ -262,8 +269,8 @@ export const Ticket = ({
         <StyledBackgroundImage data-atropos-offset="-10" />
         <TicketInfo data-atropos-offset="2">
           <StyledTr data-atropos-offset="2">
-            <TicketSection>
-              <div data-atropos-offset="8">
+            <TicketHeader>
+              <div style={{ height: "60px" }} data-atropos-offset="8">
                 <StyledImg src={userPhoto ?? ""} />
               </div>
               <div style={{ paddingLeft: "16px" }}>
@@ -274,7 +281,7 @@ export const Ticket = ({
                   {userName ?? ""}
                 </TicketName>
               </div>
-            </TicketSection>
+            </TicketHeader>
             <StyledTd data-atropos-offset="5">
               <Title>JSConf Chile</Title>
               <SubTitle>Feb.03-04</SubTitle>
