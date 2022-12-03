@@ -29,7 +29,7 @@ const NavBar = () => {
 
     if (isLoggedIn) {
       if (
-        ticketSaleEnabled?.value ??
+        Boolean(ticketSaleEnabled?.value) ||
         window.localStorage.getItem("ENABLED_SALES")
       ) {
         newItems.push({
