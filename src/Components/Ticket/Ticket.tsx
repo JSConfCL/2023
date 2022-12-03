@@ -164,12 +164,12 @@ const Title = styled.h1`
 `;
 
 const SubTitle = styled.h2`
-  font-size: 40px;
-  line-height: 40px;
+  font-size: 20px;
+  line-height: 20px;
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
-    font-size: 56px;
-    line-height: 56px;
+    font-size: 32px;
+    line-height: 32px;
   }
 `;
 
@@ -287,7 +287,7 @@ export const Ticket = ({
             </TicketHeader>
             <StyledTd data-atropos-offset="5">
               <Title>JSConf Chile</Title>
-              <SubTitle>Feb.03-04</SubTitle>
+              <SubTitle>Feb.03-04 2023 | Santiago</SubTitle>
             </StyledTd>
             <TicketSection style={{ padding: 0 }}>
               <StyledLineContainer data-atropos-offset="3">
