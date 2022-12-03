@@ -28,7 +28,10 @@ const NavBar = () => {
     const newItems = [...parseNavBarData(data.navigationBar).items];
 
     if (isLoggedIn) {
-      if (ticketSaleEnabled?.value) {
+      if (
+        ticketSaleEnabled?.value ??
+        window.localStorage.getItem("ENABLED_SALES")
+      ) {
         newItems.push({
           contenido: "Mis Tickets",
           id: "OwnTickets",
