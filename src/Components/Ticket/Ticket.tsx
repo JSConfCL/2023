@@ -3,8 +3,6 @@ import Atropos from "atropos/react";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 
-import { UserType, OwnTicket } from "../../helpers/API/types";
-
 const AtroposContainer = styled.div`
   overflow: hidden;
 `;
@@ -235,13 +233,25 @@ const StyledBackgroundImage = styled.div`
 `;
 
 export const Ticket = ({
-  user,
-  ticket,
+  userTicketId,
+  userPhoto,
+  userUsername,
+  userName,
+  ticketName,
+  ticketType,
+  ticketSeason,
+  userTicketStatus,
 }: {
-  user: UserType;
-  ticket: OwnTicket;
+  userTicketId: string;
+  userPhoto: string | null;
+  userUsername: string | null;
+  userName: string | null;
+  ticketName: string;
+  ticketType: string;
+  ticketSeason: string;
+  userTicketStatus: string;
 }) => (
-  <AtroposContainer>
+  <AtroposContainer data-id={userTicketId}>
     <StyledAtropos
       highlight={false}
       activeOffset={40}
@@ -254,14 +264,14 @@ export const Ticket = ({
           <StyledTr data-atropos-offset="2">
             <TicketSection>
               <div data-atropos-offset="8">
-                <StyledImg src={user.photo ?? ""} />
+                <StyledImg src={userPhoto ?? ""} />
               </div>
               <div style={{ paddingLeft: "16px" }}>
                 <TicketUsername data-atropos-offset="5">
-                  {user.username ? "@" + user.username : ""}
+                  {userUsername ? "@" + userUsername : ""}
                 </TicketUsername>
                 <TicketName data-atropos-offset="5">
-                  {user.name ?? ""}
+                  {userName ?? ""}
                 </TicketName>
               </div>
             </TicketSection>
@@ -271,17 +281,15 @@ export const Ticket = ({
             </StyledTd>
             <TicketSection style={{ padding: 0 }}>
               <StyledLineContainer data-atropos-offset="3">
-                <StyledLine data-atropos-offset="1">
-                  {ticket.ticket.name}
-                </StyledLine>
+                <StyledLine data-atropos-offset="1">{ticketName}</StyledLine>
                 <StyledLine data-atropos-offset="2">
-                  {HumanTypes[ticket.ticket.type] ?? ""}
+                  {HumanTypes[ticketType] ?? ""}
                 </StyledLine>
                 <StyledLine data-atropos-offset="3">
-                  {HumanSeasons[ticket.ticket.season] ?? ""}
+                  {HumanSeasons[ticketSeason] ?? ""}
                 </StyledLine>
                 <StyledLine data-atropos-offset="4">
-                  {HumanStatus[ticket.status] ?? ""}
+                  {HumanStatus[userTicketStatus] ?? ""}
                 </StyledLine>
               </StyledLineContainer>
             </TicketSection>
