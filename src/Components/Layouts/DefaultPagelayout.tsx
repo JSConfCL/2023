@@ -14,7 +14,7 @@ export const Container = styled.section`
   flex-direction: column;
   width: 100vw;
   max-width: 1440px;
-  min-height: calc(100vh - 100px);
+  min-height: calc(100vh - 600px);
 `;
 export const StyledBlackWrapp = styled.section`
   display: flex;
