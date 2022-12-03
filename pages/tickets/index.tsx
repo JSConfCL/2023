@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useFlags } from "flagsmith/react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ticketsAtom } from "../../src/Components/Cart/CartAtom";
 import { CartContainer } from "../../src/Components/Cart/CartContainer";
 import { TicketsLayout } from "../../src/Components/Layouts/TicketsLayout";
@@ -29,12 +29,17 @@ const image =
 
 const ticket = ["tickets"];
 const TicketContent = () => {
+  const [enabed, setEnabed] = useState(false);
   const { "ticket-sale-enabled": ticketSaleEnabled } = useFlags([
     "ticket-sale-enabled",
   ]);
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
 
-  if (ticketSaleEnabled.value) {
+  useEffect(() => {
+    const value = window.localStorage.getItem("ENABLED_SALES");
+    setEnabed(Boolean(value));
+  }, []);
+  if (Boolean(ticketSaleEnabled.value) || enabed) {
     if (isLoggedIn) {
       return <CartContainer />;
     }
