@@ -239,6 +239,9 @@ const StyledBackgroundImage = styled.div`
   }
 `;
 
+const normalizedString = (str: string) =>
+  str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
 export const Ticket = ({
   userTicketId,
   userPhoto,
@@ -278,7 +281,7 @@ export const Ticket = ({
                   {userUsername ? "@" + userUsername : ""}
                 </TicketUsername>
                 <TicketName data-atropos-offset="5">
-                  {userName ?? ""}
+                  {userName ? normalizedString(userName) : ""}
                 </TicketName>
               </div>
             </TicketHeader>
