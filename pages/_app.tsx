@@ -16,6 +16,7 @@ import { jsconfTheme } from "../styles/theme";
 import { useRouter } from "next/router";
 import { isAuthenticatedAtom } from "../src/helpers/auth";
 import { any } from "micromatch";
+import { useIdentify } from "../src/helpers/analytics";
 
 const WebSchema = dynamic(
   async () => await import("../src/Components/schema/webpage"),
@@ -76,6 +77,7 @@ const LayoutAndContent = ({
   pageProps: AppProps["pageProps"];
 }) => {
   useAuthenticatedGating();
+  useIdentify();
   const getLayout = Component.getLayout ?? ((page) => page);
   return <>{getLayout(<Component {...pageProps} />)}</>;
 };
