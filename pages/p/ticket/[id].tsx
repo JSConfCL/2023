@@ -15,7 +15,13 @@ const StyledSpacer = styled.div(({ theme }) => ({
   height: 100,
 }));
 
-const TicketPage = ({ ticket }: { ticket: PublicTicket }) => {
+const TicketPage = ({
+  ticket,
+  ticketApiUrl,
+}: {
+  ticket: PublicTicket;
+  ticketApiUrl: string;
+}) => {
   return (
     <div>
       <Head>
@@ -37,7 +43,7 @@ const TicketPage = ({ ticket }: { ticket: PublicTicket }) => {
         />
         <meta
           property="og:image"
-          content={`https://tickets-images-worker-localhost.jsconfcl.workers.dev/ticket/image/${ticket.ticketId}`}
+          content={`${ticketApiUrl}/ticket/image/${ticket.ticketId}`}
         />
 
         <meta name="twitter:card" content="summary_large_image" />
@@ -53,7 +59,7 @@ const TicketPage = ({ ticket }: { ticket: PublicTicket }) => {
         />
         <meta
           name="twitter:image"
-          content={`https://tickets-images-worker-localhost.jsconfcl.workers.dev/ticket/image/${ticket.ticketId}`}
+          content={`${ticketApiUrl}/ticket/image/${ticket.ticketId}`}
         />
       </Head>
       <StyledSpacer />
@@ -91,7 +97,7 @@ export const getServerSideProps = async ({
   if (ticket.statusCode === 500) {
     throw new Error(`Could not find ticket with id ${id}`);
   }
-  return { props: { ticket } };
+  return { props: { ticket, ticketApiUrl: process.env.WORKER_IMAGE_API } };
 };
 
 TicketPage.getLayout = DefaultPagelayout;
