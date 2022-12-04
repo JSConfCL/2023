@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import Atropos from "atropos/react";
+import { AnimatePresence, motion, MotionProps } from "framer-motion";
+import { useEffect, useState } from "react";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 
@@ -7,12 +9,21 @@ const AtroposContainer = styled.div`
   overflow: hidden;
 `;
 
+const FakeContainer = styled(motion.div)`
+  height: 480px;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    height: 380px;
+  }
+`;
+
+const MotionContainer = styled(motion.div)``;
+
 const StyledAtropos = styled(Atropos)`
   width: 350px;
   height: 480px;
   margin: 0 auto 16px;
 
-  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     width: 680px;
     height: 380px;
   }
@@ -27,7 +38,7 @@ const TicketContainer = styled.div`
   cursor: pointer;
   overflow: hidden;
 
-  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     width: 680px;
     height: 380px;
   }
@@ -73,7 +84,7 @@ const TicketInfo = styled.div`
   left: 16px;
   border: 8px solid ${jsconfTheme.colors.jsconfYellow};
 
-  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     background-position: 435px 154px;
   }
 
@@ -157,7 +168,7 @@ const Title = styled.h1`
   font-size: 48px;
   line-height: 48px;
 
-  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 80px;
     line-height: 80px;
   }
@@ -167,7 +178,7 @@ const SubTitle = styled.h2`
   font-size: 20px;
   line-height: 20px;
 
-  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 32px;
     line-height: 32px;
   }
@@ -178,7 +189,7 @@ const StyledLineContainer = styled.div`
   flex-direction: column;
   width: 100%;
 
-  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     flex-direction: row;
   }
 `;
@@ -189,7 +200,7 @@ const StyledLine = styled.div`
   padding: 8px 0;
   flex: 1 1 50%;
 
-  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     flex: 1 1 25%;
     &:first-of-type {
       margin-left: 0;
@@ -231,7 +242,7 @@ const StyledBackgroundImage = styled.div`
   background-position: 106px 304px;
   background-repeat: no-repeat;
 
-  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+  @media (min-width: ${ViewportSizes.Phone}px) {
     background-image: url("/images/logo.svg");
     background-size: cover;
     background-position: 450px 205px;
@@ -242,6 +253,17 @@ const StyledBackgroundImage = styled.div`
 const normalizedString = (str: string) =>
   str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
+const useAnimation = (): MotionProps => {
+  return {
+    layout: "position" as "position",
+    initial: { opacity: 0, scale: 0.9, translateY: 50 },
+    animate: { opacity: 1, scale: 1, translateY: 0 },
+    exit: { opacity: 0, scale: 0.9, translateY: 50 },
+    transition: {
+      duration: 1.5,
+    },
+  };
+};
 export const Ticket = ({
   userTicketId,
   userPhoto,
@@ -251,6 +273,7 @@ export const Ticket = ({
   ticketType,
   ticketSeason,
   userTicketStatus,
+  fadeIn,
 }: {
   userTicketId: string;
   userPhoto: string | null;
@@ -260,52 +283,77 @@ export const Ticket = ({
   ticketType: string;
   ticketSeason: string;
   userTicketStatus: string;
-}) => (
-  <AtroposContainer data-id={userTicketId}>
-    <StyledAtropos
-      highlight={false}
-      activeOffset={40}
-      shadowScale={1.5}
-      shadowOffset={100}
-    >
-      <TicketContainer data-atropos-opacity="1;0.85" data-atropos-offset="-5">
-        <StyledBackgroundImage data-atropos-offset="-10" />
-        <TicketInfo data-atropos-offset="2">
-          <StyledTr data-atropos-offset="2">
-            <TicketHeader>
-              <div style={{ height: "60px" }} data-atropos-offset="8">
-                <StyledImg src={userPhoto ?? ""} />
-              </div>
-              <div style={{ paddingLeft: "16px" }}>
-                <TicketUsername data-atropos-offset="5">
-                  {userUsername ? "@" + userUsername : ""}
-                </TicketUsername>
-                <TicketName data-atropos-offset="5">
-                  {userName ? normalizedString(userName) : ""}
-                </TicketName>
-              </div>
-            </TicketHeader>
-            <StyledTd data-atropos-offset="5">
-              <Title>JSConf Chile</Title>
-              <SubTitle>Feb.03-04 2023 | Santiago</SubTitle>
-            </StyledTd>
-            <TicketSection style={{ padding: 0 }}>
-              <StyledLineContainer data-atropos-offset="3">
-                <StyledLine data-atropos-offset="1">{ticketName}</StyledLine>
-                <StyledLine data-atropos-offset="2">
-                  {HumanTypes[ticketType] ?? ""}
-                </StyledLine>
-                <StyledLine data-atropos-offset="3">
-                  {HumanSeasons[ticketSeason] ?? ""}
-                </StyledLine>
-                <StyledLine data-atropos-offset="4">
-                  {HumanStatus[userTicketStatus] ?? ""}
-                </StyledLine>
-              </StyledLineContainer>
-            </TicketSection>
-          </StyledTr>
-        </TicketInfo>
-      </TicketContainer>
-    </StyledAtropos>
-  </AtroposContainer>
-);
+  fadeIn: boolean;
+}) => {
+  const [loaded, setLoaded] = useState(!fadeIn);
+  const animation = useAnimation();
+  useEffect(() => {
+    setTimeout(() => {
+      setLoaded(true);
+    }, 1100);
+  }, []);
+
+  return (
+    <AtroposContainer data-id={userTicketId}>
+      <AnimatePresence mode="sync" initial={fadeIn}>
+        {!loaded && <FakeContainer {...animation} />}
+        {loaded && (
+          <MotionContainer {...animation}>
+            <StyledAtropos
+              highlight
+              activeOffset={40}
+              shadowScale={1.5}
+              shadowOffset={100}
+            >
+              <TicketContainer
+                data-atropos-opacity="1;0.85"
+                data-atropos-offset="-5"
+              >
+                <StyledBackgroundImage data-atropos-offset="-10" />
+                <TicketInfo data-atropos-offset="2">
+                  <StyledTr data-atropos-offset="2">
+                    <TicketHeader>
+                      <div style={{ height: "60px" }} data-atropos-offset="8">
+                        <StyledImg src={userPhoto ?? ""} />
+                      </div>
+                      <div style={{ paddingLeft: "16px" }}>
+                        <TicketUsername data-atropos-offset="5">
+                          {userUsername ? "@" + userUsername : ""}
+                        </TicketUsername>
+                        <TicketName data-atropos-offset="5">
+                          {userName ? normalizedString(userName) : ""}
+                        </TicketName>
+                      </div>
+                    </TicketHeader>
+                    <StyledTd data-atropos-offset="5">
+                      <Title>JSConf Chile</Title>
+                      <SubTitle>Feb.03-04 2023 | Santiago</SubTitle>
+                    </StyledTd>
+                    <TicketSection style={{ padding: 0 }}>
+                      <StyledLineContainer data-atropos-offset="3">
+                        <StyledLine data-atropos-offset="1">
+                          {ticketName}
+                        </StyledLine>
+                        <StyledLine data-atropos-offset="2">
+                          {HumanTypes[ticketType] ?? ""}
+                        </StyledLine>
+                        <StyledLine data-atropos-offset="3">
+                          {HumanSeasons[ticketSeason] ?? ""}
+                        </StyledLine>
+                        <StyledLine data-atropos-offset="4">
+                          {HumanStatus[userTicketStatus] ?? ""}
+                        </StyledLine>
+                      </StyledLineContainer>
+                    </TicketSection>
+                  </StyledTr>
+                </TicketInfo>
+              </TicketContainer>
+            </StyledAtropos>
+          </MotionContainer>
+        )}
+      </AnimatePresence>
+
+      {/* <AnimatePresence mode="popLayout" initial={false}> */}
+    </AtroposContainer>
+  );
+};

@@ -59,6 +59,7 @@ const TicketsList = ({
           ticketName={ticket.ticket.name}
           ticketType={ticket.ticket.type}
           ticketSeason={ticket.ticket.season}
+          fadeIn
         />
       ))}
     </div>
