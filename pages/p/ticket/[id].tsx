@@ -94,13 +94,9 @@ export const getServerSideProps = async ({
     }
     return { props: { ticket } };
   } catch (e) {
-    console.error(e);
-    return {
-      redirect: {
-        destination: "/tickets",
-        permanent: false,
-      },
-    };
+    res.writeHead(301, { Location: "/tickets" });
+    res.end();
+    return true;
   }
 };
 
