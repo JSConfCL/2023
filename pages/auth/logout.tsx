@@ -22,7 +22,7 @@ const StyledBlackWrapp = styled.section`
 `;
 
 const GithubAuth: NextPage = () => {
-  const { isReady } = useRouter();
+  const { isReady, replace } = useRouter();
   const setAccessToken = useSetAtom(accessTokenAtom);
   const flagsmith = useFlagsmith();
 
@@ -32,8 +32,9 @@ const GithubAuth: NextPage = () => {
         void flagsmith.logout();
       }
       setAccessToken(null);
+      void replace("/tickets");
     }
-  }, [flagsmith, isReady, setAccessToken]);
+  }, [flagsmith, isReady, replace, setAccessToken]);
   return (
     <Container>
       <StyledBlackWrapp />

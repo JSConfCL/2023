@@ -3,8 +3,6 @@ import Atropos from "atropos/react";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 
-import { UserType, OwnTicket } from "../../helpers/API/types";
-
 const AtroposContainer = styled.div`
   overflow: hidden;
 `;
@@ -119,6 +117,12 @@ const TicketSection = styled.div`
   display: flex;
 `;
 
+const TicketHeader = styled.div`
+  margin-top: 16px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+`;
 const StyledTr = styled.div`
   display: flex;
   flex-direction: column;
@@ -137,6 +141,7 @@ const StyledImg = styled.img`
   width: 60px;
   height: 60px;
   border-radius: 50%;
+  min-width: 60px;
 `;
 
 const TicketUsername = styled.h2`
@@ -159,12 +164,12 @@ const Title = styled.h1`
 `;
 
 const SubTitle = styled.h2`
-  font-size: 40px;
-  line-height: 40px;
+  font-size: 20px;
+  line-height: 20px;
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
-    font-size: 56px;
-    line-height: 56px;
+    font-size: 32px;
+    line-height: 32px;
   }
 `;
 
@@ -234,14 +239,29 @@ const StyledBackgroundImage = styled.div`
   }
 `;
 
+const normalizedString = (str: string) =>
+  str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
 export const Ticket = ({
-  user,
-  ticket,
+  userTicketId,
+  userPhoto,
+  userUsername,
+  userName,
+  ticketName,
+  ticketType,
+  ticketSeason,
+  userTicketStatus,
 }: {
-  user: UserType;
-  ticket: OwnTicket;
+  userTicketId: string;
+  userPhoto: string | null;
+  userUsername: string | null;
+  userName: string | null;
+  ticketName: string;
+  ticketType: string;
+  ticketSeason: string;
+  userTicketStatus: string;
 }) => (
-  <AtroposContainer>
+  <AtroposContainer data-id={userTicketId}>
     <StyledAtropos
       highlight={false}
       activeOffset={40}
@@ -252,36 +272,34 @@ export const Ticket = ({
         <StyledBackgroundImage data-atropos-offset="-10" />
         <TicketInfo data-atropos-offset="2">
           <StyledTr data-atropos-offset="2">
-            <TicketSection>
-              <div data-atropos-offset="8">
-                <StyledImg src={user.photo ?? ""} />
+            <TicketHeader>
+              <div style={{ height: "60px" }} data-atropos-offset="8">
+                <StyledImg src={userPhoto ?? ""} />
               </div>
               <div style={{ paddingLeft: "16px" }}>
                 <TicketUsername data-atropos-offset="5">
-                  {user.username ? "@" + user.username : ""}
+                  {userUsername ? "@" + userUsername : ""}
                 </TicketUsername>
                 <TicketName data-atropos-offset="5">
-                  {user.name ?? ""}
+                  {userName ? normalizedString(userName) : ""}
                 </TicketName>
               </div>
-            </TicketSection>
+            </TicketHeader>
             <StyledTd data-atropos-offset="5">
               <Title>JSConf Chile</Title>
-              <SubTitle>Feb.03-04</SubTitle>
+              <SubTitle>Feb.03-04 2023 | Santiago</SubTitle>
             </StyledTd>
             <TicketSection style={{ padding: 0 }}>
               <StyledLineContainer data-atropos-offset="3">
-                <StyledLine data-atropos-offset="1">
-                  {ticket.ticket.name}
-                </StyledLine>
+                <StyledLine data-atropos-offset="1">{ticketName}</StyledLine>
                 <StyledLine data-atropos-offset="2">
-                  {HumanTypes[ticket.ticket.type] ?? ""}
+                  {HumanTypes[ticketType] ?? ""}
                 </StyledLine>
                 <StyledLine data-atropos-offset="3">
-                  {HumanSeasons[ticket.ticket.season] ?? ""}
+                  {HumanSeasons[ticketSeason] ?? ""}
                 </StyledLine>
                 <StyledLine data-atropos-offset="4">
-                  {HumanStatus[ticket.status] ?? ""}
+                  {HumanStatus[userTicketStatus] ?? ""}
                 </StyledLine>
               </StyledLineContainer>
             </TicketSection>

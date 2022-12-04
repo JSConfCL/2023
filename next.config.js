@@ -9,11 +9,20 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
  * @type { import('next').NextConfig }
  */
 const nextConfig = {
-  webpack(config) {
+  webpack(config, ctx) {
     config.module.rules.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
+
+    if (ctx.nextRuntime === "edge") {
+      if (!config.resolve.conditionNames) {
+        config.resolve.conditionNames = ["require", "node"];
+      }
+      if (!config.resolve.conditionNames.includes("worker")) {
+        config.resolve.conditionNames.push("worker");
+      }
+    }
 
     return config;
   },

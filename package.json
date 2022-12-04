@@ -20,8 +20,8 @@
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.12.1",
-    "@emotion/react": "^11.8.1",
-    "@emotion/styled": "^11.8.1",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@next/bundle-analyzer": "^12.1.6",
     "@next/eslint-plugin-next": "^12.1.6",
     "@tanstack/query-core": "^4.10.3",

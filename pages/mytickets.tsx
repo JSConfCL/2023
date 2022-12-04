@@ -49,7 +49,17 @@ const TicketsList = ({
   return (
     <div>
       {tickets?.map((ticket: OwnTicket) => (
-        <Ticket key={ticket.id} user={user} ticket={ticket} />
+        <Ticket
+          key={ticket.id}
+          userTicketId={ticket.id}
+          userTicketStatus={ticket.status}
+          userPhoto={user.photo}
+          userUsername={user.username}
+          userName={user.name}
+          ticketName={ticket.ticket.name}
+          ticketType={ticket.ticket.type}
+          ticketSeason={ticket.ticket.season}
+        />
       ))}
     </div>
   );

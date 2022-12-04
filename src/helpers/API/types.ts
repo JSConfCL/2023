@@ -44,3 +44,17 @@ export interface OwnTicket {
   ticketId: string;
   updated_at: string;
 }
+
+export interface PublicTicket {
+  ticketId: string;
+  status: string;
+
+  userId: string;
+  userPhoto: string;
+  username: string;
+  name: string;
+
+  ticketName: string;
+  ticketType: string;
+  ticketSeason: string;
+}
