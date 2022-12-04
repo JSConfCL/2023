@@ -79,9 +79,6 @@ const TicketPage = ({
 
 export const getServerSideProps = async ({
   query,
-  res,
-  req,
-  resolvedUrl,
 }: GetServerSidePropsContext) => {
   const { id } = query;
   if (!id) {
