@@ -1,21 +1,31 @@
 import createCache from "@emotion/cache";
-import { FlagsmithProvider } from "flagsmith/react";
-import flagsmith from "flagsmith/isomorphic";
 import { CacheProvider, ThemeProvider } from "@emotion/react";
-import { QueryClientProvider as TanstackQueryProvider } from "@tanstack/react-query";
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider as TanstackQueryProvider,
+} from "@tanstack/react-query";
+import flagsmith from "flagsmith/isomorphic";
+import { FlagsmithProvider } from "flagsmith/react";
 import { Provider as JotaiProvider, useAtomValue } from "jotai";
+import { any } from "micromatch";
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
-import { lazy, ReactElement, ReactNode, Suspense, useEffect } from "react";
+import { useRouter } from "next/router";
+import {
+  lazy,
+  ReactElement,
+  ReactNode,
+  Suspense,
+  useEffect,
+  useState,
+} from "react";
 import { Provider } from "urql";
 import { urlQlient } from "../src/graphql/urql";
-import { useQueryClient } from "../src/helpers/API";
+import { isAuthenticatedAtom } from "../src/helpers/auth";
 import { GlobalStyles } from "../styles/globalStyles";
 import { jsconfTheme } from "../styles/theme";
-import { useRouter } from "next/router";
-import { isAuthenticatedAtom } from "../src/helpers/auth";
-import { any } from "micromatch";
 
 const WebSchema = dynamic(
   async () => await import("../src/Components/schema/webpage"),
@@ -87,24 +97,24 @@ const AppWithQueryClients = ({
   Component: NextPageWithLayout;
   pageProps: AppProps["pageProps"];
 }) => {
-  const queryClient = useQueryClient();
-  if (!queryClient) {
-    return <></>;
-  }
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
     <CacheProvider value={cache}>
       <Provider value={urlQlient}>
         <TanstackQueryProvider client={queryClient}>
-          <ThemeProvider theme={jsconfTheme}>
-            <GlobalStyles />
-            <Suspense fallback={null}>
-              <WebSchema />
-            </Suspense>
-            <LayoutAndContent Component={Component} pageProps={pageProps} />
-            <Suspense fallback={null}>
-              <ExtendedFooter />
-            </Suspense>
-          </ThemeProvider>
+          <Hydrate state={(pageProps as any).dehydratedState}>
+            <ThemeProvider theme={jsconfTheme}>
+              <GlobalStyles />
+              <Suspense fallback={null}>
+                <WebSchema />
+              </Suspense>
+              <LayoutAndContent Component={Component} pageProps={pageProps} />
+              <Suspense fallback={null}>
+                <ExtendedFooter />
+              </Suspense>
+            </ThemeProvider>
+          </Hydrate>
         </TanstackQueryProvider>
       </Provider>
     </CacheProvider>

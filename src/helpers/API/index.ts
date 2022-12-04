@@ -1,17 +1,13 @@
-import { QueryClient } from "@tanstack/react-query";
 import { nanoid } from "nanoid";
-import { useRouter } from "next/router";
 
-import { useResetAtom } from "jotai/utils";
-import { useEffect, useState } from "react";
 import { Entrada } from "../../Components/Cart/CartAtom";
-import { accessTokenAtom, getValidToken } from "../auth";
+import { getValidToken } from "../auth";
 import {
+  OwnTicket,
+  PublicTicket,
   UserPayload,
   UserType,
   VolunteerPayload,
-  OwnTicket,
-  PublicTicket,
 } from "./types";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -21,17 +17,10 @@ export type ErrorResponse = {
   message: string[];
 };
 
-let fetchReplacement:
-  | ((input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<any>)
-  | undefined;
-
 const customFetch = async (
   input: RequestInfo | URL,
   init?: RequestInit | undefined
 ): Promise<any> => {
-  if (typeof fetchReplacement === "function") {
-    return await fetchReplacement(input, init);
-  }
   const headers = new Headers(init?.headers);
   const token = getValidToken();
   if (token !== null) {
@@ -41,58 +30,28 @@ const customFetch = async (
   headers.append("x-trace-id", `traceid_${nanoid()}`);
   headers.append("Accept-Language", `es`);
   headers.append("x-fetch", `raw`);
-  return await fetch(input, { ...init, headers });
-};
+  const res = await fetch(input, { ...init, headers });
+  if (res.status >= 200 && res.status < 300) {
+    return await res.json();
+  }
 
-export const useQueryClient = () => {
-  const resetLocalReferencedAtom = useResetAtom(accessTokenAtom);
-  const [client, setClient] = useState<QueryClient | null>(null);
-  const { push } = useRouter();
-  useEffect(() => {
-    if (!client) {
-      setClient(new QueryClient());
+  if (res.status === 401 && typeof window !== "undefined") {
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.pathname = "/auth/logout";
+      window.location.replace(url);
     }
-    if (typeof fetchReplacement !== "undefined") {
-      return;
-    }
-    fetchReplacement = async (
-      input: RequestInfo | URL,
-      init?: RequestInit | undefined
-    ) => {
-      const headers = new Headers(init?.headers);
-      const token = getValidToken();
-      if (token !== null) {
-        headers.append("Authorization", `Bearer ${token}`);
-      }
-      headers.append("content-type", "application/json");
-      headers.append("Accept-Language", `es`);
-      headers.append("x-fetch", `replacement`);
-      headers.append("x-trace-id", `traceid_${nanoid()}`);
-      const res = await window.fetch(input, {
-        ...init,
-        headers,
-      });
-      if (res.status >= 200 && res.status < 300) {
-        return await res.json();
-      }
+    return;
+  }
 
-      if (res.status === 401 && typeof window !== "undefined") {
-        resetLocalReferencedAtom();
-        void push("/tickets");
-        return;
-      }
-
-      if (res.status === 422) {
-        const response = await res.json();
-        return {
-          error: response.error as string,
-          message: response.message as string[],
-        };
-      }
-      throw new Error("Error");
+  if (res.status === 422) {
+    const response = await res.json();
+    return {
+      error: response.error as string,
+      message: response.message as string[],
     };
-  }, [client, push, resetLocalReferencedAtom]);
-  return client;
+  }
+  throw new Error("Error");
 };
 
 export const fetchTickets = async (): Promise<Entrada[]> =>
