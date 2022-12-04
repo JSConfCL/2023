@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { Facebook, Linkedin, Twitter } from "react-feather";
 import { H2, H3 } from "../../src/Components/core/Typography";
 import { TicketsLayout } from "../../src/Components/Layouts/TicketsLayout";
@@ -11,7 +12,8 @@ import {
 } from "../../src/graphql/tickets.generated";
 import { urlQlient } from "../../src/graphql/urql";
 import { ParseQuery } from "../../src/helpers/types";
-import { ViewportSizes } from "../../styles/theme";
+import { colors, ViewportSizes } from "../../styles/theme";
+import confetti from "canvas-confetti";
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
 
@@ -92,13 +94,65 @@ const SocialAnchor = styled.a<{ type: "twitter" | "facebook" | "linkedin" }>(
   ]
 );
 
+const StyledCanvas = styled.canvas`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 99vh;
+  width: 100vw;
+  overflow: hidden;
+  z-index: 0;
+`;
+
+const confettiColors = [colors.jsconfYellow, colors.jsconfBlack];
+
 export default function Tickets(props: PageProps) {
   const encodedURL = encodeURIComponent(`https://jsconf.cl/tickets`);
+  const ref =
+    useRef<HTMLCanvasElement>() as React.MutableRefObject<HTMLCanvasElement>;
+
+  useEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+    const myConfetti = confetti.create(ref.current, {
+      resize: true,
+      useWorker: true,
+    });
+
+    setTimeout(() => {
+      const end = Date.now() + 3 * 1000;
+
+      function drawFrame() {
+        void myConfetti({
+          particleCount: 4,
+          angle: 60,
+          startVelocity: 50,
+          spread: 80,
+          origin: { x: 0, y: 0.45 },
+          colors: confettiColors,
+        });
+        void myConfetti({
+          particleCount: 4,
+          angle: 120,
+          startVelocity: 50,
+          spread: 80,
+          origin: { x: 1, y: 0.45 },
+          colors: confettiColors,
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(drawFrame);
+        }
+      }
+      drawFrame();
+    }, 1000);
+  }, []);
 
   return (
     <>
       <Seo {...props.seo} />
-      <Container>
+      <Container style={{ zIndex: 1 }}>
         <ImageContainer>
           <Img src="/images/robot-waiting.svg" />
         </ImageContainer>
@@ -151,6 +205,7 @@ Nos vemos en Febrero!`
           <EndingTitle>Nos vemos en Febrero!</EndingTitle>
         </TextContainer>
       </Container>
+      <StyledCanvas ref={ref} id="confetti" />
     </>
   );
 }
