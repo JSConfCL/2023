@@ -15,13 +15,8 @@ const StyledSpacer = styled.div(({ theme }) => ({
   height: 100,
 }));
 
-const TicketPage = ({
-  ticket,
-  ticketApiUrl,
-}: {
-  ticket: PublicTicket;
-  ticketApiUrl: string;
-}) => {
+const ticketApiUrl = process.env.NEXT_PUBLIC_WORKER_IMAGE_API!;
+const TicketPage = ({ ticket }: { ticket: PublicTicket }) => {
   return (
     <div>
       <Head>
@@ -94,7 +89,7 @@ export const getServerSideProps = async ({
   if (ticket.statusCode === 500) {
     throw new Error(`Could not find ticket with id ${id}`);
   }
-  return { props: { ticket, ticketApiUrl: process.env.WORKER_IMAGE_API } };
+  return { props: { ticket } };
 };
 
 TicketPage.getLayout = DefaultPagelayout;
