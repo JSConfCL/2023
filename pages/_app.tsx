@@ -97,7 +97,16 @@ const AppWithQueryClients = ({
   Component: NextPageWithLayout;
   pageProps: AppProps["pageProps"];
 }) => {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+          },
+        },
+      })
+  );
 
   return (
     <CacheProvider value={cache}>
