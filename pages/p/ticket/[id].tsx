@@ -77,8 +77,24 @@ export const getServerSideProps = async ({
   req,
   resolvedUrl,
 }: GetServerSidePropsContext) => {
-  const { id } = query;
-  if (!id || Array.isArray(id)) {
+  try {
+    const { id } = query;
+    if (!id) {
+      throw new Error(`No ID present`);
+    }
+    if (Array.isArray(id)) {
+      throw new Error(`ID should be a singl string, not an array`);
+    }
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/tickets/qr/info/user_ticket_${id}`
+    );
+    const ticket = await response.json();
+    if (ticket.statusCode === 500) {
+      throw new Error(`Could not find ticket with id ${id}`);
+    }
+    return { props: { ticket } };
+  } catch (e) {
+    console.error(e);
     return {
       redirect: {
         destination: "/tickets",
@@ -86,19 +102,6 @@ export const getServerSideProps = async ({
       },
     };
   }
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/tickets/qr/info/user_ticket_${id}`
-  );
-  const ticket = await response.json();
-  if (ticket.statusCode === 500) {
-    return {
-      redirect: {
-        destination: "/tickets",
-        permanent: false,
-      },
-    };
-  }
-  return { props: { ticket } };
 };
 
 TicketPage.getLayout = DefaultPagelayout;
