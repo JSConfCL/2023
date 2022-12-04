@@ -1,19 +1,25 @@
 import styled from "@emotion/styled";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { Facebook, Linkedin, Twitter } from "react-feather";
+import confetti from "canvas-confetti";
+
 import { H2, H3 } from "../../src/Components/core/Typography";
 import { TicketsLayout } from "../../src/Components/Layouts/TicketsLayout";
 import Seo from "../../src/Components/Seo";
+import { TicketsList } from "../../src/Components/Ticket/TicketsList";
+
+import { urlQlient } from "../../src/graphql/urql";
+import { ParseQuery } from "../../src/helpers/types";
+import { colors, ViewportSizes } from "../../styles/theme";
+import { me, myTickets } from "../../src/helpers/API";
+
 import {
   TicketsQueryDocument,
   TicketsQueryQuery,
   TicketsQueryQueryVariables,
 } from "../../src/graphql/tickets.generated";
-import { urlQlient } from "../../src/graphql/urql";
-import { ParseQuery } from "../../src/helpers/types";
-import { colors, ViewportSizes } from "../../styles/theme";
-import confetti from "canvas-confetti";
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
 
@@ -42,19 +48,23 @@ export const Container = styled.div`
 const Img = styled.img`
   width: 60%;
 `;
+
 const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
 `;
+
 const TextContainer = styled.div`
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 `;
+
 const Title = styled(H2)`
   text-align: center;
 `;
+
 const EndingTitle = styled(H3)`
   text-align: center;
 `;
@@ -107,6 +117,11 @@ const StyledCanvas = styled.canvas`
 const confettiColors = [colors.jsconfYellow, colors.jsconfBlack];
 
 export default function Tickets(props: PageProps) {
+  const { isLoading: isLoadingMe, data: user } = useQuery(["me"], me);
+  const { isLoading: isLoadingTickets, data: allTickets } = useQuery(
+    ["mytickets"],
+    myTickets
+  );
   const encodedURL = encodeURIComponent(`https://jsconf.cl/tickets`);
   const ref =
     useRef<HTMLCanvasElement>() as React.MutableRefObject<HTMLCanvasElement>;
@@ -149,6 +164,18 @@ export default function Tickets(props: PageProps) {
     }, 1000);
   }, []);
 
+  if (isLoadingMe || isLoadingTickets) {
+    return <div>Loading</div>;
+  }
+  if (allTickets && allTickets?.length === 0) {
+    return <div>No conseguimos tickets.</div>;
+  }
+
+  const latestTickets = allTickets?.sort(
+    (a, b) =>
+      new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
+  );
+
   return (
     <>
       <Seo {...props.seo} />
@@ -159,12 +186,19 @@ export default function Tickets(props: PageProps) {
         <TextContainer>
           <Title>YA ESTAS LIST@ PARA LA JSCONF! 🎉</Title>
           <Paragraph>
-            Tu ticket está listo, puedes revisarlo en{" "}
-            <Link href={"/settings/tickets"} passHref>
+            Tu ticket está listo, Siempre podrás verlos en{" "}
+            <Link href={"/mytickets"} passHref>
               <A>tu página de tickets</A>
             </Link>{" "}
             (Recuerda traerlo el día de la conferencia para hacer acreditación!)
           </Paragraph>
+          {user && allTickets ? (
+            <TicketsList
+              user={user}
+              tickets={latestTickets}
+              shareEnabled={true}
+            />
+          ) : null}
           <Paragraph>Cuéntale al mundo! Compártelo tus redes!</Paragraph>
           <Paragraph
             style={{
