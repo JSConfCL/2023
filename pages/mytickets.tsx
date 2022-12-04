@@ -3,12 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useFlags } from "flagsmith/react";
 
 import { TicketsLayout } from "../src/Components/Layouts/TicketsLayout";
-import { Ticket } from "../src/Components/Ticket/Ticket";
+import { TicketsList } from "../src/Components/Ticket/TicketsList";
 
 import { me, myTickets } from "../src/helpers/API";
 import { ViewportSizes } from "../styles/theme";
-
-import { UserType, OwnTicket } from "../src/helpers/API/types";
 
 const PageContainer = styled.div`
   width: 100%;
@@ -34,37 +32,6 @@ const PageTitle = styled.h2`
 `;
 
 const Loading = () => <div>Loading</div>;
-const TicketsList = ({
-  user,
-  tickets,
-}: {
-  user: UserType;
-  tickets?: OwnTicket[];
-  shareEnabled?: boolean;
-}) => {
-  if (!tickets?.length) {
-    return <div>No hay tickets.</div>;
-  }
-
-  return (
-    <div>
-      {tickets?.map((ticket: OwnTicket) => (
-        <Ticket
-          key={ticket.id}
-          userTicketId={ticket.id}
-          userTicketStatus={ticket.status}
-          userPhoto={user.photo}
-          userUsername={user.username}
-          userName={user.name}
-          ticketName={ticket.ticket.name}
-          ticketType={ticket.ticket.type}
-          ticketSeason={ticket.ticket.season}
-          fadeIn
-        />
-      ))}
-    </div>
-  );
-};
 
 const Settings = () => {
   const { isLoading: isLoadingMe, data: user } = useQuery(["me"], me);
