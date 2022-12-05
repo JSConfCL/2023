@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { Facebook, Linkedin, Twitter } from "react-feather";
 import confetti from "canvas-confetti";
 
 import { H2, H3 } from "../../src/Components/core/Typography";
@@ -30,7 +29,7 @@ export interface PageProps {
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 8rem;
+  padding-top: 1rem;
   padding-bottom: 8rem;
   gap: 3rem;
   transition: gap 250ms ease-in-out;
@@ -43,10 +42,6 @@ export const Container = styled.div`
   @media (min-width: ${ViewportSizes.Desktop}px) {
     gap: 6rem;
   }
-`;
-
-const Img = styled.img`
-  width: 60%;
 `;
 
 const ImageContainer = styled.div`
@@ -78,32 +73,6 @@ const A = styled.a`
   font-weight: bold;
 `;
 
-const SocialAnchor = styled.a<{ type: "twitter" | "facebook" | "linkedin" }>(
-  ({ theme, type }) => [
-    {
-      display: `inline-block`,
-      position: "relative",
-      fontWeight: "bold",
-      "&:after": {
-        content: `""`,
-        position: "absolute",
-        width: "100%",
-        transform: "scaleX(0)",
-        height: "4px",
-        bottom: 0,
-        left: 0,
-        backgroundColor: theme.colors.social[type],
-        transformOrigin: "bottom right",
-        transition: "transform 0.25s ease-out",
-      },
-      "&:hover:after": {
-        transform: "scaleX(1)",
-        transformOrigin: "bottom left",
-      },
-    },
-  ]
-);
-
 const StyledCanvas = styled.canvas`
   position: fixed;
   top: 0;
@@ -117,12 +86,9 @@ const StyledCanvas = styled.canvas`
 const confettiColors = [colors.jsconfYellow, colors.jsconfBlack];
 
 export default function Tickets(props: PageProps) {
-  const { isLoading: isLoadingMe, data: user } = useQuery(["me"], me);
-  const { isLoading: isLoadingTickets, data: allTickets } = useQuery(
-    ["mytickets"],
-    myTickets
-  );
-  const encodedURL = encodeURIComponent(`https://jsconf.cl/tickets`);
+  const { data: user } = useQuery(["me"], me);
+  const { data: allTickets } = useQuery(["mytickets"], myTickets);
+
   const ref =
     useRef<HTMLCanvasElement>() as React.MutableRefObject<HTMLCanvasElement>;
 
@@ -164,13 +130,6 @@ export default function Tickets(props: PageProps) {
     }, 1000);
   }, []);
 
-  if (isLoadingMe || isLoadingTickets) {
-    return <div>Loading</div>;
-  }
-  if (allTickets && allTickets?.length === 0) {
-    return <div>No conseguimos tickets.</div>;
-  }
-
   const latestTickets = allTickets?.sort(
     (a, b) =>
       new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
@@ -180,62 +139,26 @@ export default function Tickets(props: PageProps) {
     <>
       <Seo {...props.seo} />
       <Container style={{ zIndex: 1 }}>
-        <ImageContainer>
-          <Img src="/images/robot-waiting.svg" />
-        </ImageContainer>
         <TextContainer>
           <Title>YA ESTAS LIST@ PARA LA JSCONF! 🎉</Title>
+          <ImageContainer>
+            {user && allTickets ? (
+              <TicketsList
+                user={user}
+                tickets={[latestTickets[0]]}
+                shareEnabled={true}
+              />
+            ) : null}
+          </ImageContainer>
           <Paragraph>
-            Tu ticket está listo, Siempre podrás verlos en{" "}
+            Tu compra fue exitosa. Siempre podrás ver los tickets en{" "}
             <Link href={"/mytickets"} passHref>
               <A>tu página de tickets</A>
             </Link>{" "}
-            (Recuerda traerlo el día de la conferencia para hacer acreditación!)
+            (Recuerda traer tu ticket el día de la conferencia para hacer
+            acreditación!)
           </Paragraph>
-          {user && allTickets ? (
-            <TicketsList
-              user={user}
-              tickets={latestTickets}
-              shareEnabled={true}
-            />
-          ) : null}
           <Paragraph>Cuéntale al mundo! Compártelo tus redes!</Paragraph>
-          <Paragraph
-            style={{
-              display: "inline-flex",
-              justifyContent: "center",
-              gap: "2rem",
-            }}
-          >
-            <SocialAnchor
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                `Lista mi entrada para la @JSConfCL 🎉. Obten la tuya en https://jsconf.cl/tickets.
-
-Nos vemos en Febrero!`
-              )}`}
-              target="_blank"
-              rel="noreferrer"
-              type="twitter"
-            >
-              <Twitter size={48} />
-            </SocialAnchor>
-            <SocialAnchor
-              href={`http://www.facebook.com/sharer.php?u=${encodedURL}`}
-              target="_blank"
-              rel="noreferrer"
-              type="twitter"
-            >
-              <Facebook size={48} />
-            </SocialAnchor>
-            <SocialAnchor
-              href={`https://www.linkedin.com/sharing/share-offsite?url=https://tickets.jsconf.cl`}
-              target="_blank"
-              rel="noreferrer"
-              type="twitter"
-            >
-              <Linkedin size={48} />
-            </SocialAnchor>
-          </Paragraph>
           <EndingTitle>Nos vemos en Febrero!</EndingTitle>
         </TextContainer>
       </Container>
