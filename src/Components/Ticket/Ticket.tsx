@@ -448,7 +448,9 @@ export const Ticket = ({
                 <Facebook size={32} />
               </SocialAnchor>
               <SocialAnchor
-                href={`https://www.linkedin.com/sharing/share-offsite?url=${publicUrl}`}
+                href={`https://www.linkedin.com/sharing/share-offsite?url=${encodeURIComponent(
+                  publicUrl
+                )}`}
                 target="_blank"
                 rel="noreferrer"
                 type="linkedin"
