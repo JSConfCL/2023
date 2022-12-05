@@ -1,19 +1,24 @@
 import styled from "@emotion/styled";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { Facebook, Linkedin, Twitter } from "react-feather";
+import confetti from "canvas-confetti";
+
 import { H2, H3 } from "../../src/Components/core/Typography";
 import { TicketsLayout } from "../../src/Components/Layouts/TicketsLayout";
 import Seo from "../../src/Components/Seo";
+
+import { urlQlient } from "../../src/graphql/urql";
+import { ParseQuery } from "../../src/helpers/types";
+import { colors, ViewportSizes } from "../../styles/theme";
+import { me, myTickets } from "../../src/helpers/API";
+
 import {
   TicketsQueryDocument,
   TicketsQueryQuery,
   TicketsQueryQueryVariables,
 } from "../../src/graphql/tickets.generated";
-import { urlQlient } from "../../src/graphql/urql";
-import { ParseQuery } from "../../src/helpers/types";
-import { colors, ViewportSizes } from "../../styles/theme";
-import confetti from "canvas-confetti";
+import { Ticket } from "../../src/Components/Ticket/Ticket";
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
 
@@ -24,7 +29,7 @@ export interface PageProps {
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 8rem;
+  padding-top: 1rem;
   padding-bottom: 8rem;
   gap: 3rem;
   transition: gap 250ms ease-in-out;
@@ -39,22 +44,17 @@ export const Container = styled.div`
   }
 `;
 
-const Img = styled.img`
-  width: 60%;
-`;
-const ImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 const TextContainer = styled.div`
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 `;
+
 const Title = styled(H2)`
   text-align: center;
 `;
+
 const EndingTitle = styled(H3)`
   text-align: center;
 `;
@@ -67,32 +67,6 @@ const Paragraph = styled.p`
 const A = styled.a`
   font-weight: bold;
 `;
-
-const SocialAnchor = styled.a<{ type: "twitter" | "facebook" | "linkedin" }>(
-  ({ theme, type }) => [
-    {
-      display: `inline-block`,
-      position: "relative",
-      fontWeight: "bold",
-      "&:after": {
-        content: `""`,
-        position: "absolute",
-        width: "100%",
-        transform: "scaleX(0)",
-        height: "4px",
-        bottom: 0,
-        left: 0,
-        backgroundColor: theme.colors.social[type],
-        transformOrigin: "bottom right",
-        transition: "transform 0.25s ease-out",
-      },
-      "&:hover:after": {
-        transform: "scaleX(1)",
-        transformOrigin: "bottom left",
-      },
-    },
-  ]
-);
 
 const StyledCanvas = styled.canvas`
   position: fixed;
@@ -107,7 +81,9 @@ const StyledCanvas = styled.canvas`
 const confettiColors = [colors.jsconfYellow, colors.jsconfBlack];
 
 export default function Tickets(props: PageProps) {
-  const encodedURL = encodeURIComponent(`https://jsconf.cl/tickets`);
+  const { data: user } = useQuery(["me"], me);
+  const { data: allTickets } = useQuery(["mytickets"], myTickets);
+
   const ref =
     useRef<HTMLCanvasElement>() as React.MutableRefObject<HTMLCanvasElement>;
 
@@ -149,59 +125,41 @@ export default function Tickets(props: PageProps) {
     }, 1000);
   }, []);
 
+  const latestTickets = allTickets?.sort(
+    (a, b) =>
+      new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
+  );
+
+  const ticket = latestTickets?.[0];
   return (
     <>
       <Seo {...props.seo} />
       <Container style={{ zIndex: 1 }}>
-        <ImageContainer>
-          <Img src="/images/robot-waiting.svg" />
-        </ImageContainer>
         <TextContainer>
           <Title>YA ESTAS LIST@ PARA LA JSCONF! 🎉</Title>
+          {user && ticket ? (
+            <Ticket
+              key={ticket.id}
+              userTicketId={ticket.id}
+              userTicketStatus={ticket.status}
+              userPhoto={user.photo}
+              userUsername={user.username}
+              userName={user.name}
+              ticketName={ticket.ticket.name}
+              ticketType={ticket.ticket.type}
+              ticketSeason={ticket.ticket.season}
+              fadeIn
+            />
+          ) : null}
           <Paragraph>
-            Tu ticket está listo, puedes revisarlo en{" "}
-            <Link href={"/settings/tickets"} passHref>
+            Tu compra fue exitosa. Siempre podrás ver los tickets en{" "}
+            <Link href={"/mytickets"} passHref>
               <A>tu página de tickets</A>
             </Link>{" "}
-            (Recuerda traerlo el día de la conferencia para hacer acreditación!)
+            (Recuerda traer tu ticket el día de la conferencia para hacer
+            acreditación!)
           </Paragraph>
           <Paragraph>Cuéntale al mundo! Compártelo tus redes!</Paragraph>
-          <Paragraph
-            style={{
-              display: "inline-flex",
-              justifyContent: "center",
-              gap: "2rem",
-            }}
-          >
-            <SocialAnchor
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                `Lista mi entrada para la @JSConfCL 🎉. Obten la tuya en https://jsconf.cl/tickets.
-
-Nos vemos en Febrero!`
-              )}`}
-              target="_blank"
-              rel="noreferrer"
-              type="twitter"
-            >
-              <Twitter size={48} />
-            </SocialAnchor>
-            <SocialAnchor
-              href={`http://www.facebook.com/sharer.php?u=${encodedURL}`}
-              target="_blank"
-              rel="noreferrer"
-              type="twitter"
-            >
-              <Facebook size={48} />
-            </SocialAnchor>
-            <SocialAnchor
-              href={`https://www.linkedin.com/sharing/share-offsite?url=https://tickets.jsconf.cl`}
-              target="_blank"
-              rel="noreferrer"
-              type="twitter"
-            >
-              <Linkedin size={48} />
-            </SocialAnchor>
-          </Paragraph>
           <EndingTitle>Nos vemos en Febrero!</EndingTitle>
         </TextContainer>
       </Container>
