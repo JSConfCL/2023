@@ -26,7 +26,7 @@ import { urlQlient } from "../src/graphql/urql";
 import { isAuthenticatedAtom } from "../src/helpers/auth";
 import { GlobalStyles } from "../styles/globalStyles";
 import { jsconfTheme } from "../styles/theme";
-// import { PublicTicketPageMetaTags } from "../src/Components/PublicTicketMetatag";
+import { PublicTicketPageMetaTags } from "../src/Components/PublicTicketMetatag";
 
 const WebSchema = dynamic(
   async () => await import("../src/Components/schema/webpage"),
@@ -138,12 +138,12 @@ function AppWithDataStorage({
   pageProps,
   router,
 }: AppPropsWithLayout) {
-  // const ticketId = router.query.id as string;
-  // const isPublicTicketPage =
-  //   router.pathname.startsWith("/p/ticket/") && ticketId;
+  const ticketId = router.query.id as string;
+  const isPublicTicketPage =
+    router.pathname.startsWith("/p/ticket/") && ticketId;
   return (
     <>
-      {/* {isPublicTicketPage && (
+      {isPublicTicketPage && (
         // En Facebook, los meta-tags tienen que poder verse dentro de los
         // primero 50kb del HTML descargado. Considerando la cantidad de
         // componentes q tenemos, facebook no lee los metatags creados en `/pages/p/ticket/[id]`.
@@ -152,7 +152,7 @@ function AppWithDataStorage({
           ticketApiUrl={ticketApiUrl}
           ticketId={ticketId}
         />
-      )} */}
+      )}
       <JotaiProvider>
         <FlagsmithProvider
           options={{
