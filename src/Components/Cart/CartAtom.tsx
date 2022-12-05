@@ -19,6 +19,7 @@ export interface Entrada {
 export interface EntradaMapType {
   [entradaId: Entrada["id"]]: Entrada;
 }
+export const availableTicketsAtom = atom(false);
 export const ticketsAtom = atom<Entrada[]>([]);
 export const ticketsAtomsAtom = splitAtom(ticketsAtom);
 export const ticketSummaryAtom = selectAtom(ticketsAtom, (ticketsAtom) => {
