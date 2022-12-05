@@ -20,10 +20,10 @@ const TicketPage = ({ ticket }: { ticket: PublicTicket }) => {
   return (
     <div>
       <Head>
-        <title>Ticket: ${ticket.username} | JSConf CL</title>
+        <title>{ticket.username} 💛 JSConf Chile</title>
         <meta
           name="description"
-          content="Mi Ticket para ir a la JSConf, unete a la primera "
+          content="Mi Ticket para la JSConf Chile. Obtén tu ticket acá!"
         />
 
         <meta property="og:url" content="https://www.jsconf.cl/tickets" />
@@ -34,7 +34,7 @@ const TicketPage = ({ ticket }: { ticket: PublicTicket }) => {
         />
         <meta
           property="og:description"
-          content="Mi Ticket para ir a la JSConf. Únete a la primera!"
+          content="Mi Ticket para la JSConf Chile. Obtén tu ticket acá!"
         />
         <meta
           property="og:image"
@@ -50,7 +50,7 @@ const TicketPage = ({ ticket }: { ticket: PublicTicket }) => {
         />
         <meta
           name="twitter:description"
-          content="Mi Ticket para ir a la JSConf! Únete a la primera!"
+          content="Mi Ticket para la JSConf Chile. Obtén tu ticket acá!"
         />
         <meta
           name="twitter:image"
