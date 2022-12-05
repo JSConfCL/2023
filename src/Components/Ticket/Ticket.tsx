@@ -2,9 +2,14 @@ import styled from "@emotion/styled";
 import Atropos from "atropos/react";
 import { AnimatePresence, motion, MotionProps } from "framer-motion";
 import { useEffect, useState } from "react";
+import { Facebook, Linkedin, Twitter, Copy } from "react-feather";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 
+const SharingInfo = styled.div`
+  text-align: center;
+  margin-bottom: 64px;
+`;
 const AtroposContainer = styled.div`
   overflow: hidden;
 `;
@@ -166,8 +171,8 @@ const TicketName = styled.h2`
 
 const Title = styled.h1`
   font-size: 48px;
-  line-height: 48px;
-
+  line-height: 32px;
+  text-align: left;
   @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 80px;
     line-height: 80px;
@@ -177,7 +182,7 @@ const Title = styled.h1`
 const SubTitle = styled.h2`
   font-size: 20px;
   line-height: 20px;
-
+  text-align: left;
   @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 32px;
     line-height: 32px;
@@ -250,6 +255,59 @@ const StyledBackgroundImage = styled.div`
   }
 `;
 
+const SocialButton = styled.button(({ theme }) => [
+  {
+    display: `inline-block`,
+    position: "relative",
+    fontWeight: "bold",
+    margin: "0 16px",
+    cursor: "pointer",
+    "&:after": {
+      content: `""`,
+      position: "absolute",
+      width: "100%",
+      transform: "scaleX(0)",
+      height: "4px",
+      bottom: 0,
+      left: 0,
+      backgroundColor: theme.colors.social.twitter,
+      transformOrigin: "bottom right",
+      transition: "transform 0.25s ease-out",
+    },
+    "&:hover:after": {
+      transform: "scaleX(1)",
+      transformOrigin: "bottom left",
+    },
+  },
+]);
+
+const SocialAnchor = styled.a<{ type: "twitter" | "facebook" | "linkedin" }>(
+  ({ theme, type }) => [
+    {
+      display: `inline-block`,
+      position: "relative",
+      fontWeight: "bold",
+      margin: "0 16px",
+      "&:after": {
+        content: `""`,
+        position: "absolute",
+        width: "100%",
+        transform: "scaleX(0)",
+        height: "4px",
+        bottom: 0,
+        left: 0,
+        backgroundColor: theme.colors.social[type],
+        transformOrigin: "bottom right",
+        transition: "transform 0.25s ease-out",
+      },
+      "&:hover:after": {
+        transform: "scaleX(1)",
+        transformOrigin: "bottom left",
+      },
+    },
+  ]
+);
+
 const normalizedString = (str: string) =>
   str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
@@ -264,6 +322,7 @@ const useAnimation = (): MotionProps => {
     },
   };
 };
+
 export const Ticket = ({
   userTicketId,
   userPhoto,
@@ -292,6 +351,10 @@ export const Ticket = ({
       setLoaded(true);
     }, 1100);
   }, []);
+
+  const publicUrl = `${
+    process.env.NEXT_PUBLIC_SERVER_URL ?? "https://www.jsconf.cl"
+  }/p/ticket/${userTicketId?.replace("user_ticket_", "") || ""}`;
 
   return (
     <AtroposContainer data-id={userTicketId}>
@@ -349,6 +412,46 @@ export const Ticket = ({
                 </TicketInfo>
               </TicketContainer>
             </StyledAtropos>
+            <SharingInfo>
+              <SocialAnchor
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                  `Lista mi entrada para la @JSConfCL 🎉. Obtén la tuya en ${publicUrl} . Nos vemos en Febrero!`
+                )}`}
+                target="_blank"
+                rel="noreferrer"
+                type="twitter"
+              >
+                <Twitter size={32} />
+              </SocialAnchor>
+              <SocialAnchor
+                href={`http://www.facebook.com/sharer.php?u=${encodeURIComponent(
+                  publicUrl
+                )}`}
+                target="_blank"
+                rel="noreferrer"
+                type="twitter"
+              >
+                <Facebook size={32} />
+              </SocialAnchor>
+              <SocialAnchor
+                href={`https://www.linkedin.com/sharing/share-offsite?url=${publicUrl}`}
+                target="_blank"
+                rel="noreferrer"
+                type="twitter"
+              >
+                <Linkedin size={32} />
+              </SocialAnchor>
+              <SocialButton
+                onClick={() => {
+                  /* eslint-disable @typescript-eslint/no-floating-promises */
+                  navigator.clipboard.writeText(publicUrl).then(() => {
+                    console.log(1);
+                  });
+                }}
+              >
+                <Copy size={32} />
+              </SocialButton>
+            </SharingInfo>
           </MotionContainer>
         )}
       </AnimatePresence>
