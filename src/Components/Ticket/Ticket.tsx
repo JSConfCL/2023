@@ -270,9 +270,9 @@ const SocialButton = styled.button(({ theme }) => [
       width: "100%",
       transform: "scaleX(0)",
       height: "4px",
-      bottom: 0,
+      bottom: "-8px",
       left: 0,
-      backgroundColor: theme.colors.social.twitter,
+      backgroundColor: "#fff",
       transformOrigin: "bottom right",
       transition: "transform 0.25s ease-out",
     },
@@ -296,7 +296,7 @@ const SocialAnchor = styled.a<{ type: "twitter" | "facebook" | "linkedin" }>(
         width: "100%",
         transform: "scaleX(0)",
         height: "4px",
-        bottom: 0,
+        bottom: "-8px",
         left: 0,
         backgroundColor: theme.colors.social[type],
         transformOrigin: "bottom right",
@@ -431,7 +431,7 @@ export const Ticket = ({
                 )}`}
                 target="_blank"
                 rel="noreferrer"
-                type="twitter"
+                type="facebook"
               >
                 <Facebook size={32} />
               </SocialAnchor>
@@ -439,7 +439,7 @@ export const Ticket = ({
                 href={`https://www.linkedin.com/sharing/share-offsite?url=${publicUrl}`}
                 target="_blank"
                 rel="noreferrer"
-                type="twitter"
+                type="linkedin"
               >
                 <Linkedin size={32} />
               </SocialAnchor>
