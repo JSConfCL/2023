@@ -6,11 +6,18 @@ import { Facebook, Linkedin, Twitter, Copy } from "react-feather";
 import toast, { Toaster } from "react-hot-toast";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
+import { GenericLink } from "../TicketSection/shared";
 
 const SharingInfo = styled.div`
   text-align: center;
   margin-bottom: 64px;
 `;
+
+const GetTicket = styled.div`
+  text-align: center;
+  margin-bottom: 64px;
+`;
+
 const AtroposContainer = styled.div`
   overflow: hidden;
 `;
@@ -335,6 +342,7 @@ export const Ticket = ({
   ticketSeason,
   userTicketStatus,
   fadeIn,
+  showGetTicket = false,
 }: {
   userTicketId: string;
   userPhoto: string | null;
@@ -345,6 +353,7 @@ export const Ticket = ({
   ticketSeason: string;
   userTicketStatus: string;
   fadeIn: boolean;
+  showGetTicket?: boolean;
 }) => {
   const [loaded, setLoaded] = useState(!fadeIn);
   const animation = useAnimation();
@@ -459,6 +468,11 @@ export const Ticket = ({
               </SocialButton>
               <Toaster />
             </SharingInfo>
+            {showGetTicket ? (
+              <GetTicket>
+                <GenericLink href="/tickets">Obtener Tickets</GenericLink>
+              </GetTicket>
+            ) : null}
           </MotionContainer>
         )}
       </AnimatePresence>

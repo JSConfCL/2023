@@ -101,6 +101,48 @@ export const GenericBtn = styled(motion.button)`
   }
 `;
 
+export const GenericLink = styled(motion.a)`
+  border-color: ${({ theme }) => theme.colors.jsconfYellow};
+  color: ${({ theme }) => theme.colors.jsconfYellow};
+  border-width: 2px;
+  border-style: solid;
+  font-weight: 700;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: inline-flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  line-height: 0;
+  height: 50px;
+  transition-duration: 250ms;
+  transition-property: all;
+  cursor: pointer;
+  &:active,
+  &:focus,
+  &:hover {
+    box-shadow: 0 0.5em 0.5em -0.4em ${({ theme }) => theme.colors.jsconfRed};
+    border-color: ${({ theme }) => theme.colors.jsconfRed};
+    color: ${({ theme }) => theme.colors.jsconfRed};
+  }
+  &:focus,
+  &:hover {
+    transform: translateY(-0.25em);
+  }
+  &:active {
+    box-shadow: none;
+    transform: translateY(0em);
+  }
+  &:disabled,
+  &:disabled:hover {
+    border-color: ${({ theme }) => transparentize(0.78)(theme.colors.white)};
+    color: ${({ theme }) => transparentize(0.75)(theme.colors.white)};
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: translateY(0em);
+  }
+`;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
