@@ -7,6 +7,7 @@ import {
 } from "framer-motion";
 import { useAtomValue } from "jotai";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 
 import { Agreements } from "./Agreements";
 import { subNavigationAtom } from "./CartAtom";
@@ -20,6 +21,10 @@ import { me } from "../../helpers/API";
 const Wrapper = styled(motion.div)`
   display: flex;
   flex-direction: column;
+`;
+
+const A = styled.a`
+  font-weight: bold;
 `;
 
 const useAnimation = (transition: Transition = {}): MotionProps => {
@@ -93,7 +98,12 @@ export const CartContainer = () => {
           asociado. Por lo tanto, no podremos comunicarnos contigo o procesar tu
           compra. Te pedimos registres un correo electrónico para poder
           continuar con la compra de tickets y además poder informarte los
-          próximos pasos.
+          próximos pasos. <br />
+          <br />
+          Puedes configurar tu correo electrónico en{" "}
+          <Link href={"/settings"} passHref>
+            <A>tu página de configuración de cuenta</A>
+          </Link>{" "}
         </Alert>
       ) : null}
       <AnimatePresence mode="popLayout" initial={false}>
