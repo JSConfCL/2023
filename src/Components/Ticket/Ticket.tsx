@@ -461,8 +461,8 @@ export const Ticket = ({
                 onClick={() => {
                   atcb_action({
                     name: "JSConf Chile",
-                    startDate: "2023-03-03",
-                    endDate: "2023-03-04",
+                    startDate: "2023-02-03",
+                    endDate: "2023-02-04",
                     startTime: "08:00",
                     endTime: "19:00",
                     description:
