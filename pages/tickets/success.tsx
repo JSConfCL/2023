@@ -7,7 +7,6 @@ import confetti from "canvas-confetti";
 import { H2, H3 } from "../../src/Components/core/Typography";
 import { TicketsLayout } from "../../src/Components/Layouts/TicketsLayout";
 import Seo from "../../src/Components/Seo";
-import { TicketsList } from "../../src/Components/Ticket/TicketsList";
 
 import { urlQlient } from "../../src/graphql/urql";
 import { ParseQuery } from "../../src/helpers/types";
@@ -19,6 +18,7 @@ import {
   TicketsQueryQuery,
   TicketsQueryQueryVariables,
 } from "../../src/graphql/tickets.generated";
+import { Ticket } from "../../src/Components/Ticket/Ticket";
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
 
@@ -42,11 +42,6 @@ export const Container = styled.div`
   @media (min-width: ${ViewportSizes.Desktop}px) {
     gap: 6rem;
   }
-`;
-
-const ImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
 `;
 
 const TextContainer = styled.div`
@@ -135,21 +130,27 @@ export default function Tickets(props: PageProps) {
       new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
   );
 
+  const ticket = latestTickets?.[0];
   return (
     <>
       <Seo {...props.seo} />
       <Container style={{ zIndex: 1 }}>
         <TextContainer>
           <Title>YA ESTAS LIST@ PARA LA JSCONF! 🎉</Title>
-          <ImageContainer>
-            {user && allTickets ? (
-              <TicketsList
-                user={user}
-                tickets={[latestTickets[0]]}
-                shareEnabled={true}
-              />
-            ) : null}
-          </ImageContainer>
+          {user && ticket ? (
+            <Ticket
+              key={ticket.id}
+              userTicketId={ticket.id}
+              userTicketStatus={ticket.status}
+              userPhoto={user.photo}
+              userUsername={user.username}
+              userName={user.name}
+              ticketName={ticket.ticket.name}
+              ticketType={ticket.ticket.type}
+              ticketSeason={ticket.ticket.season}
+              fadeIn
+            />
+          ) : null}
           <Paragraph>
             Tu compra fue exitosa. Siempre podrás ver los tickets en{" "}
             <Link href={"/mytickets"} passHref>
