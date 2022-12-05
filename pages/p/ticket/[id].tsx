@@ -16,7 +16,13 @@ const StyledSpacer = styled.div(({ theme }) => ({
 }));
 
 const ticketApiUrl = process.env.NEXT_PUBLIC_WORKER_IMAGE_API!;
-const TicketPage = ({ ticket }: { ticket: PublicTicket }) => {
+const TicketPage = ({
+  ticket,
+  cleanedId,
+}: {
+  ticket: PublicTicket;
+  cleanedId: string;
+}) => {
   return (
     <div>
       <Head>
@@ -26,7 +32,10 @@ const TicketPage = ({ ticket }: { ticket: PublicTicket }) => {
           content="Mi Ticket para la JSConf Chile. Obtén tu ticket acá!"
         />
 
-        <meta property="og:url" content="https://jsconf.cl/tickets" />
+        <meta
+          property="og:url"
+          content={`https://jsconf.cl/p/ticket/${cleanedId}`}
+        />
         <meta property="og:type" content="website" />
         <meta
           property="og:title"
@@ -40,10 +49,15 @@ const TicketPage = ({ ticket }: { ticket: PublicTicket }) => {
           property="og:image"
           content={`${ticketApiUrl}/ticket/image/${ticket.ticketId}`}
         />
+        <meta name="twitter:site" content="@jsconfcl" />
+        <meta name="twitter:creator" content="@jsconfcl" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="twitter:domain" content="jsconf.cl" />
-        <meta property="twitter:url" content="https://jsconf.cl/tickets" />
+        <meta
+          property="twitter:url"
+          content={`https://jsconf.cl/p/ticket/${cleanedId}`}
+        />
         <meta
           name="twitter:title"
           content={`${ticket.username} 💛 JSConf Chile`}
@@ -91,7 +105,7 @@ export const getServerSideProps = async ({
   if (ticket.statusCode === 500) {
     throw new Error(`Could not find ticket with id ${id}`);
   }
-  return { props: { ticket } };
+  return { props: { ticket, cleanedId: id } };
 };
 
 TicketPage.getLayout = DefaultPagelayout;

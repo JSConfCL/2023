@@ -13,7 +13,7 @@ export const PublicTicketPageMetaTags = ({
         name="description"
         content="Mi Ticket para la JSConf Chile. Obtén tu ticket acá!"
       />
-      <meta property="og:url" content="https://jsconf.cl/tickets" />
+      <meta property="5" content="https://jsconf.cl/tickets" />
       <meta property="og:type" content="website" />
       <meta
         property="og:description"
