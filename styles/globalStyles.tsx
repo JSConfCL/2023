@@ -157,7 +157,6 @@ const atroposCSS = css`
   /***
   This CSS is literally taken from the library node_modules/atropos/atropos.css
   ***/
-
   .atropos {
     position: relative;
     display: block;
@@ -250,6 +249,9 @@ const atroposCSS = css`
 `;
 
 const atcbCSS = css`
+  /***
+  This CSS is literally taken from the library node_modules/add-to-calendar-button/assets/css/atcb.css
+  ***/
   .atcb {
     display: none;
   }
@@ -950,6 +952,27 @@ const atcbCSS = css`
   }
 `;
 
+const atcbExtraCSS = css`
+  .atcb-list-item,
+  .atcb-list-item.atcb-list-item-close {
+    background-color: #333;
+    color: white;
+  }
+  .atcb-list-item:hover {
+    background-color: #222;
+    color: white;
+  }
+  .atcb-list-item:focus-visible {
+    background-color: #222;
+    color: white;
+  }
+  .atcb-list,
+  .atcb-list.atcb-modal .atcb-list-item:first-child,
+  .atcb-list-item:last-child {
+    border-radius: 0;
+  }
+`;
+
 export const GlobalStyles = () => {
   const theme = useTheme();
   return (
@@ -959,6 +982,7 @@ export const GlobalStyles = () => {
         resetCSS,
         atroposCSS,
         atcbCSS,
+        atcbExtraCSS,
         css`
           body,
           html {

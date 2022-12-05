@@ -2,8 +2,9 @@ import styled from "@emotion/styled";
 import Atropos from "atropos/react";
 import { AnimatePresence, motion, MotionProps } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Facebook, Linkedin, Twitter, Copy } from "react-feather";
+import { Facebook, Linkedin, Twitter, Copy, Calendar } from "react-feather";
 import toast, { Toaster } from "react-hot-toast";
+import { atcb_action, atcb_init } from "add-to-calendar-button";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 import { GenericLink } from "../TicketSection/shared";
@@ -357,7 +358,9 @@ export const Ticket = ({
 }) => {
   const [loaded, setLoaded] = useState(!fadeIn);
   const animation = useAnimation();
+
   useEffect(() => {
+    atcb_init();
     setTimeout(() => {
       setLoaded(true);
     }, 1100);
@@ -452,6 +455,23 @@ export const Ticket = ({
               >
                 <Linkedin size={32} />
               </SocialAnchor>
+              <SocialButton
+                onClick={() => {
+                  atcb_action({
+                    name: "JSConf Chile",
+                    startDate: "2023-03-03",
+                    endDate: "2023-03-04",
+                    startTime: "08:00",
+                    endTime: "19:00",
+                    description:
+                      "Acompáñanos, en la primera edición Chilena, de la más prestigiosa conferencia de JavaScript. 2 días de Charlistas internacionales, comunidad, aprendizaje y conexiones, este 03 y 04 de Febrero, 2023.",
+                    options: ["Google", "Apple", "Microsoft365", "Outlook.com"],
+                    timeZone: "America/Santiago",
+                  });
+                }}
+              >
+                <Calendar size={32} />
+              </SocialButton>
               <SocialButton
                 onClick={() => {
                   navigator.clipboard
