@@ -353,7 +353,7 @@ export const Ticket = ({
   }, []);
 
   const publicUrl = `${
-    process.env.NEXT_PUBLIC_SERVER_URL ?? "https://www.jsconf.cl"
+    process.env.NEXT_PUBLIC_SERVER_URL ?? "https://jsconf.cl"
   }/p/ticket/${userTicketId?.replace("user_ticket_", "") || ""}`;
 
   return (

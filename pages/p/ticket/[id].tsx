@@ -26,7 +26,7 @@ const TicketPage = ({ ticket }: { ticket: PublicTicket }) => {
           content="Mi Ticket para la JSConf Chile. Obtén tu ticket acá!"
         />
 
-        <meta property="og:url" content="https://www.jsconf.cl/tickets" />
+        <meta property="og:url" content="https://jsconf.cl/tickets" />
         <meta property="og:type" content="website" />
         <meta
           property="og:title"
@@ -42,8 +42,8 @@ const TicketPage = ({ ticket }: { ticket: PublicTicket }) => {
         />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta property="twitter:domain" content="www.jsconf.cl" />
-        <meta property="twitter:url" content="https://www.jsconf.cl/tickets" />
+        <meta property="twitter:domain" content="jsconf.cl" />
+        <meta property="twitter:url" content="https://jsconf.cl/tickets" />
         <meta
           name="twitter:title"
           content={`${ticket.username} 💛 JSConf Chile`}
