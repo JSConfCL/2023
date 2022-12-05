@@ -3,6 +3,7 @@ import Atropos from "atropos/react";
 import { AnimatePresence, motion, MotionProps } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Facebook, Linkedin, Twitter, Copy } from "react-feather";
+import toast, { Toaster } from "react-hot-toast";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 
@@ -139,6 +140,7 @@ const TicketHeader = styled.div`
   display: flex;
   align-items: center;
 `;
+
 const StyledTr = styled.div`
   display: flex;
   flex-direction: column;
@@ -443,19 +445,23 @@ export const Ticket = ({
               </SocialAnchor>
               <SocialButton
                 onClick={() => {
-                  /* eslint-disable @typescript-eslint/no-floating-promises */
-                  navigator.clipboard.writeText(publicUrl).then(() => {
-                    console.log(1);
-                  });
+                  navigator.clipboard
+                    .writeText(publicUrl)
+                    .then(() => {
+                      toast.success("Enlace copiado con éxito!");
+                    })
+                    .catch(() => {
+                      toast.error("Hubo un error, intentalo nuevamente!");
+                    });
                 }}
               >
                 <Copy size={32} />
               </SocialButton>
+              <Toaster />
             </SharingInfo>
           </MotionContainer>
         )}
       </AnimatePresence>
-
       {/* <AnimatePresence mode="popLayout" initial={false}> */}
     </AtroposContainer>
   );
