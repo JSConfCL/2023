@@ -39,6 +39,7 @@ const ImageWrapper = styled.section`
 `;
 const H1404 = styled(H1)`
   font-size: 70px;
+  text-align: center;
   @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 120px;
   }
@@ -67,10 +68,14 @@ const Wrapper = styled.div`
 
 export const ErrorComponent = ({
   errorMessage,
+  textoDelBoton = "Volver al home",
+  mainText = "OOPS!",
   url = "/",
 }: {
   errorMessage: string;
+  mainText?: string;
   url?: string;
+  textoDelBoton?: string;
 }) => {
   return (
     <StyledBlackWrapp>
@@ -80,10 +85,10 @@ export const ErrorComponent = ({
           alt=""
         />
       </ImageWrapper>
-      <H1404>OOPS!</H1404>
+      <H1404>{mainText}</H1404>
       <Wrapper>
         <P>{errorMessage}</P>
-        <PrimaryStyledLink href={url}>Volver al home</PrimaryStyledLink>
+        <PrimaryStyledLink href={url}>{textoDelBoton}</PrimaryStyledLink>
       </Wrapper>
     </StyledBlackWrapp>
   );
