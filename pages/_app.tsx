@@ -144,7 +144,10 @@ function AppWithDataStorage({
   return (
     <>
       {isPublicTicketPage && (
-        // En Facebook, los meta-tags tienen que poder verse dentro de los primero 50kb del HTML descargado
+        // En Facebook, los meta-tags tienen que poder verse dentro de los
+        // primero 50kb del HTML descargado. Considerando la cantidad de
+        // componentes q tenemos, facebook no lee los metatags creados en `/pages/p/ticket/[id]`.
+        // Por eso, los generamos acá como un 'Best Effort'
         <PublicTicketPageMetaTags
           ticketApiUrl={ticketApiUrl}
           ticketId={ticketId}
