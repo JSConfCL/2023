@@ -28,6 +28,7 @@
     "@tanstack/react-query": "^4.10.3",
     "@tanstack/react-query-devtools": "^4.11.0",
     "@types/canvas-confetti": "^1.6.0",
+    "add-to-calendar-button": "^1.18.8",
     "atropos": "^1.0.2",
     "canvas-confetti": "^1.6.0",
     "csstype": "^3.0.11",
