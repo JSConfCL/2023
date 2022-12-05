@@ -49,6 +49,13 @@ const TicketPage = ({
           property="og:image"
           content={`${ticketApiUrl}/ticket/image/${ticket.ticketId}`}
         />
+
+        <meta
+          name="image"
+          property="og:image"
+          content={`${ticketApiUrl}/ticket/image/${ticket.ticketId}`}
+        />
+
         <meta name="twitter:site" content="@jsconfcl" />
         <meta name="twitter:creator" content="@jsconfcl" />
 
