@@ -131,7 +131,7 @@ const AppWithQueryClients = ({
   );
 };
 
-// const ticketApiUrl = process.env.NEXT_PUBLIC_WORKER_IMAGE_API!;
+const ticketApiUrl = process.env.NEXT_PUBLIC_WORKER_IMAGE_API!;
 
 function AppWithDataStorage({
   Component,
