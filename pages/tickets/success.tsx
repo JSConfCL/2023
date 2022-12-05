@@ -151,6 +151,12 @@ export default function Tickets(props: PageProps) {
               fadeIn
             />
           ) : null}
+          {(latestTickets?.length ?? 0) > 1 ? (
+            <Paragraph>
+              (Sabemos que tienes {latestTickets?.length} tickets pero no
+              podemos mostrar tantos en esta pantalla)
+            </Paragraph>
+          ) : null}
           <Paragraph>
             Tu compra fue exitosa. Siempre podrás ver los tickets en{" "}
             <Link href={"/mytickets"} passHref>

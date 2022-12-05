@@ -68,6 +68,7 @@ const TicketPage = ({ ticket }: { ticket: PublicTicket }) => {
         ticketType={ticket.ticketType}
         ticketSeason={ticket.ticketSeason}
         fadeIn
+        showGetTicket
       />
     </div>
   );

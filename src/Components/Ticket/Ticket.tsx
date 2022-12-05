@@ -3,13 +3,21 @@ import Atropos from "atropos/react";
 import { AnimatePresence, motion, MotionProps } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Facebook, Linkedin, Twitter, Copy } from "react-feather";
+import toast, { Toaster } from "react-hot-toast";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
+import { GenericLink } from "../TicketSection/shared";
 
 const SharingInfo = styled.div`
   text-align: center;
   margin-bottom: 64px;
 `;
+
+const GetTicket = styled.div`
+  text-align: center;
+  margin-bottom: 64px;
+`;
+
 const AtroposContainer = styled.div`
   overflow: hidden;
 `;
@@ -139,6 +147,7 @@ const TicketHeader = styled.div`
   display: flex;
   align-items: center;
 `;
+
 const StyledTr = styled.div`
   display: flex;
   flex-direction: column;
@@ -268,9 +277,9 @@ const SocialButton = styled.button(({ theme }) => [
       width: "100%",
       transform: "scaleX(0)",
       height: "4px",
-      bottom: 0,
+      bottom: "-8px",
       left: 0,
-      backgroundColor: theme.colors.social.twitter,
+      backgroundColor: "#fff",
       transformOrigin: "bottom right",
       transition: "transform 0.25s ease-out",
     },
@@ -294,7 +303,7 @@ const SocialAnchor = styled.a<{ type: "twitter" | "facebook" | "linkedin" }>(
         width: "100%",
         transform: "scaleX(0)",
         height: "4px",
-        bottom: 0,
+        bottom: "-8px",
         left: 0,
         backgroundColor: theme.colors.social[type],
         transformOrigin: "bottom right",
@@ -333,6 +342,7 @@ export const Ticket = ({
   ticketSeason,
   userTicketStatus,
   fadeIn,
+  showGetTicket = false,
 }: {
   userTicketId: string;
   userPhoto: string | null;
@@ -343,6 +353,7 @@ export const Ticket = ({
   ticketSeason: string;
   userTicketStatus: string;
   fadeIn: boolean;
+  showGetTicket?: boolean;
 }) => {
   const [loaded, setLoaded] = useState(!fadeIn);
   const animation = useAnimation();
@@ -429,7 +440,7 @@ export const Ticket = ({
                 )}`}
                 target="_blank"
                 rel="noreferrer"
-                type="twitter"
+                type="facebook"
               >
                 <Facebook size={32} />
               </SocialAnchor>
@@ -437,25 +448,34 @@ export const Ticket = ({
                 href={`https://www.linkedin.com/sharing/share-offsite?url=${publicUrl}`}
                 target="_blank"
                 rel="noreferrer"
-                type="twitter"
+                type="linkedin"
               >
                 <Linkedin size={32} />
               </SocialAnchor>
               <SocialButton
                 onClick={() => {
-                  /* eslint-disable @typescript-eslint/no-floating-promises */
-                  navigator.clipboard.writeText(publicUrl).then(() => {
-                    console.log(1);
-                  });
+                  navigator.clipboard
+                    .writeText(publicUrl)
+                    .then(() => {
+                      toast.success("Enlace copiado con éxito!");
+                    })
+                    .catch(() => {
+                      toast.error("Hubo un error, intentalo nuevamente!");
+                    });
                 }}
               >
                 <Copy size={32} />
               </SocialButton>
+              <Toaster />
             </SharingInfo>
+            {showGetTicket ? (
+              <GetTicket>
+                <GenericLink href="/tickets">Obtener Tickets</GenericLink>
+              </GetTicket>
+            ) : null}
           </MotionContainer>
         )}
       </AnimatePresence>
-
       {/* <AnimatePresence mode="popLayout" initial={false}> */}
     </AtroposContainer>
   );

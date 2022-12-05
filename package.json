@@ -51,6 +51,7 @@
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
     "react-hook-form": "^7.32.0",
+    "react-hot-toast": "^2.4.0",
     "react-markdown": "^8.0.3",
     "react-portal": "^4.2.2",
     "react-qr-code": "^2.0.8",
