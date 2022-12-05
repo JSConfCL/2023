@@ -31,7 +31,6 @@ const TicketPage = ({
           name="description"
           content="Mi Ticket para la JSConf Chile. Obtén tu ticket acá!"
         />
-
         <meta
           property="og:url"
           content={`https://jsconf.cl/p/ticket/${cleanedId}`}
@@ -46,6 +45,7 @@ const TicketPage = ({
           content="Mi Ticket para la JSConf Chile. Obtén tu ticket acá!"
         />
         <meta
+          name="image"
           property="og:image"
           content={`${ticketApiUrl}/ticket/image/${ticket.ticketId}`}
         />
