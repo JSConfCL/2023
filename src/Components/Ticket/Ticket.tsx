@@ -429,7 +429,7 @@ export const Ticket = ({
             <SharingInfo>
               <SocialAnchor
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                  `Lista mi entrada para la @JSConfCL 🎉. Obtén la tuya en ${publicUrl} . Nos vemos en Febrero!`
+                  `Lista mi entrada para la @JSConfCL 🎉. Obtén la tuya en ${publicUrl} . Nos vemos el 03 y 04 de Febrero!`
                 )}`}
                 target="_blank"
                 rel="noreferrer"
