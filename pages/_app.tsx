@@ -24,6 +24,7 @@ import {
 import { Provider } from "urql";
 import { urlQlient } from "../src/graphql/urql";
 import { isAuthenticatedAtom } from "../src/helpers/auth";
+
 import { GlobalStyles } from "../styles/globalStyles";
 import { jsconfTheme } from "../styles/theme";
 // import { PublicTicketPageMetaTags } from "../src/Components/PublicTicketMetatag";
@@ -37,6 +38,10 @@ const WebSchema = dynamic(
 
 const ExtendedFooter = lazy(
   async () => await import("../src/Components/ExtendedFooter")
+);
+
+const DevelopmentWallpaper = lazy(
+  async () => await import("../src/Components/DevelopmentWallpaper")
 );
 
 const cache = createCache({ key: "next" });
@@ -119,6 +124,7 @@ const AppWithQueryClients = ({
               <Suspense fallback={null}>
                 <WebSchema />
               </Suspense>
+
               <LayoutAndContent Component={Component} pageProps={pageProps} />
               <Suspense fallback={null}>
                 <ExtendedFooter />
@@ -161,6 +167,11 @@ function AppWithDataStorage({
           }}
           flagsmith={flagsmith}
         >
+          {process.env.NEXT_PUBLIC_CONTENTFUL_IS_PREVIEW ? (
+            <DevelopmentWallpaper />
+          ) : (
+            <></>
+          )}
           <AppWithQueryClients Component={Component} pageProps={pageProps} />
         </FlagsmithProvider>
       </JotaiProvider>
