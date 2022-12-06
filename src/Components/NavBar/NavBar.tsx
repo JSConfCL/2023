@@ -28,21 +28,15 @@ const NavBar = () => {
     const newItems = [...parseNavBarData(data.navigationBar).items];
 
     if (isLoggedIn) {
-      if (
-        Boolean(ticketSaleEnabled?.value) ||
-        window.localStorage.getItem("ENABLED_SALES")
-      ) {
-        newItems.push({
-          contenido: "Mis Tickets",
-          id: "OwnTickets",
-          isBlank: false,
-          link: "/mytickets",
-          onClick: undefined,
-        });
-      }
-
       newItems.push(
         ...[
+          {
+            contenido: "Mis Tickets",
+            id: "OwnTickets",
+            isBlank: false,
+            link: "/mytickets",
+            onClick: undefined,
+          },
           {
             contenido: "Configuracion",
             id: "Settings",
