@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { PrimitiveAtom, useAtom } from "jotai";
-import { Suspense, useCallback } from "react";
+import { useCallback } from "react";
 import { Minus, Plus } from "react-feather";
 import { ViewportSizes } from "../../../styles/theme";
 import { SubTitle } from "../TicketSection/shared";
@@ -95,7 +95,7 @@ const CartItem = ({
 }) => {
   const [ticket, setTicket] = useAtom(entrada);
   const { description, name, price, quantity, currentQuantity } = ticket;
-  const noHayDisponibles = quantity === 0;
+  const hayDisponibles = quantity > 0;
   const isMin = currentQuantity === 0;
   const isMax = currentQuantity === quantity;
 
@@ -123,23 +123,25 @@ const CartItem = ({
           }).format(price)}
         </SubTitle>
         <TicketControlWrapper>
-          <TicketAmountControl disabled={isDisabled} onClick={goDown}>
-            <Suspense>
-              <Minus size={18} stroke="#000" />
-            </Suspense>
-          </TicketAmountControl>
-          <TicketAmount>{currentQuantity}</TicketAmount>
-          <TicketAmountControl disabled={isDisabled} onClick={goUp}>
-            <Suspense>
-              <Plus size={18} stroke="#000" />
-            </Suspense>
-          </TicketAmountControl>
+          {hayDisponibles ? (
+            <>
+              <TicketAmountControl disabled={isDisabled} onClick={goDown}>
+                <Minus size={18} stroke="#000" />
+              </TicketAmountControl>
+              <TicketAmount>{currentQuantity}</TicketAmount>
+              <TicketAmountControl disabled={isDisabled} onClick={goUp}>
+                <Plus size={18} stroke="#000" />
+              </TicketAmountControl>
+            </>
+          ) : (
+            <SubTitle> Agotadas </SubTitle>
+          )}
         </TicketControlWrapper>
       </TicketHeader>
       <TicketInfoWrapper>
-        <TicketAvailability>
-          {noHayDisponibles ? `Agotadas` : `(${quantity} Disponibles)`}
-        </TicketAvailability>
+        {hayDisponibles ? (
+          <TicketAvailability>({quantity} Disponibles)</TicketAvailability>
+        ) : null}
         <TicketDescription>{description}</TicketDescription>
       </TicketInfoWrapper>
     </Ticket>
