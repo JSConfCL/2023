@@ -74,7 +74,7 @@ export const TicketSelection = ({
         ) : (
           <>
             Las entradas están agotadas! ... por ahora 😄. Lanzaremos un nuevo
-            batch de entradas el día 15 de Diciembre! <br /> Mientras tanto,
+            batch de entradas el día 21 de Diciembre! <br /> Mientras tanto,
             mantente atento a nuestras redes sociales, durante los próximos
             meses tendremos anuncios de la JSConf, (y regalaremos más de alguna
             entrada!)
