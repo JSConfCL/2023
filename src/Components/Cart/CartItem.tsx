@@ -3,7 +3,7 @@ import { PrimitiveAtom, useAtom } from "jotai";
 import { useCallback } from "react";
 import { Minus, Plus } from "react-feather";
 import { ViewportSizes } from "../../../styles/theme";
-import { SubTitle } from "../TicketSection/shared";
+import { AgotadasSubtitle, SubTitle } from "../TicketSection/shared";
 import { Entrada } from "./CartAtom";
 
 const Ticket = styled.div`
@@ -95,7 +95,7 @@ const CartItem = ({
 }) => {
   const [ticket, setTicket] = useAtom(entrada);
   const { description, name, price, quantity, currentQuantity } = ticket;
-  const hayDisponibles = quantity > 0;
+  const hayDisponibles = quantity <= 0;
   const isMin = currentQuantity === 0;
   const isMax = currentQuantity === quantity;
 
@@ -134,7 +134,7 @@ const CartItem = ({
               </TicketAmountControl>
             </>
           ) : (
-            <SubTitle> Agotadas </SubTitle>
+            <AgotadasSubtitle> Agotadas </AgotadasSubtitle>
           )}
         </TicketControlWrapper>
       </TicketHeader>

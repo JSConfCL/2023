@@ -59,6 +59,10 @@ export const SubTitle = styled.h2`
   }
 `;
 
+export const AgotadasSubtitle = styled(SubTitle)`
+  color: ${({ theme }) => theme.colors.jsconfYellow};
+`;
+
 export const GenericBtn = styled(motion.button)`
   border-color: ${({ theme }) => theme.colors.jsconfYellow};
   color: ${({ theme }) => theme.colors.jsconfYellow};
