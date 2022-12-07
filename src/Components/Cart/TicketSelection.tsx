@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import { useAtomValue } from "jotai";
+import { useAtomCallback } from "jotai/utils";
+import { useCallback } from "react";
 import { Paragraph } from "../TicketSection/shared";
 import { ticketsAtomsAtom } from "./CartAtom";
 import CartItem from "./CartItem";
@@ -40,15 +42,44 @@ const TicketWrapper = styled.div`
   gap: 2rem;
 `;
 
-export const TicketSelection = ({ isDisabled }: { isDisabled?: boolean }) => {
+export const TicketSelection = ({
+  isDisabled,
+  githubAccountName,
+}: {
+  isDisabled?: boolean;
+  githubAccountName?: string;
+}) => {
   const ticketsAtom = useAtomValue(ticketsAtomsAtom);
-  const githubAccountName = "";
+  const areThereTickets = useAtomCallback(
+    useCallback((get) => {
+      let quantityOfTickets = 0;
+      const ticketsAtoms = get(ticketsAtomsAtom);
+      ticketsAtoms.forEach((entradaAtom) => {
+        const { quantity } = get(entradaAtom);
+        quantityOfTickets += quantity;
+      });
+      return quantityOfTickets !== 0;
+    }, [])
+  );
+
   return (
     <TicketWrapper>
       {githubAccountName && <Paragraph>Hey @{githubAccountName}!</Paragraph>}
       <Paragraph>
-        Está todo listo para que puedas comprar tus tickets para la JSConf Chile
-        🎉. Tus tickets estarán asociados a tu cuenta de github.
+        {areThereTickets() ? (
+          <>
+            Está todo listo para que puedas comprar tus tickets para la JSConf
+            Chile 🎉. Tus tickets estarán asociados a tu cuenta de github.
+          </>
+        ) : (
+          <>
+            Las entradas están agotadas! ... por ahora 😄. Lanzaremos un nuevo
+            batch de entradas el día 15 de Diciembre! <br /> Mientras tanto,
+            mantente atento a nuestras redes sociales, durante los próximos
+            meses tendremos anuncios de la JSConf, (y regalaremos más de alguna
+            entrada!)
+          </>
+        )}
       </Paragraph>
       <CartWrapper>
         <CartItemsWrapper>
