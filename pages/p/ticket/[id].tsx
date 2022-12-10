@@ -7,10 +7,6 @@ import { Ticket } from "../../../src/Components/Ticket/Ticket";
 
 import { PublicTicket } from "../../../src/helpers/API/types";
 
-export const config = {
-  runtime: "experimental-edge",
-};
-
 const StyledSpacer = styled.div(({ theme }) => ({
   height: 100,
 }));
