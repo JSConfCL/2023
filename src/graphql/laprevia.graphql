@@ -1,0 +1,122 @@
+query LaPrevia($locale: String!, $isPreview: Boolean = false) {
+  page(id: "2wAn9UxGwc1bgUTOOT4SPW", locale: $locale, preview: $isPreview) {
+    seo {
+      title
+      description
+      metadata
+    }
+    speakersBlock(preview: $isPreview) {
+      title
+      description {
+        json
+      }
+      speakersCollection(preview: $isPreview) {
+        items {
+          sys {
+            id
+          }
+          name
+          position
+          photo {
+            url
+            description
+          }
+          cardType
+          type
+        }
+      }
+    }
+    speakersBlock(preview: $isPreview) {
+      title
+      description {
+        json
+      }
+      speakersCollection(preview: $isPreview) {
+        items {
+          sys {
+            id
+          }
+          name
+          position
+          photo {
+            url
+            description
+          }
+          cardType
+          type
+        }
+      }
+    }
+    teamBlock {
+      membersCollection {
+        items {
+          name
+          type
+          twitter
+          photo {
+            url
+          }
+        }
+      }
+      title
+      description {
+        json
+      }
+      callToAction {
+        contenido
+        link
+      }
+    }
+    eventsCollection {
+      items {
+        sys {
+          id
+        }
+        title
+        date
+        duration
+        language
+        kind
+        speaker {
+          name
+          photo {
+            url
+          }
+        }
+      }
+    }
+    communityFriendsCollection(limit: 20) {
+      items {
+        name
+        image {
+          title
+          url
+        }
+        link
+      }
+    }
+    sponsorTypeCollection(limit: 20) {
+      items {
+        sys {
+          id
+        }
+        name
+        contributorsCollection(limit: 20) {
+          items {
+            sys {
+              id
+            }
+            title {
+              json
+            }
+            image {
+              url
+            }
+            imageParamsMobile
+            imageParamsDesktop
+          }
+        }
+      }
+    }
+  }
+}
