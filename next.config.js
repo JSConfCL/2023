@@ -27,9 +27,6 @@ const nextConfig = {
     return config;
   },
   reactStrictMode: false,
-  experimental: {
-    runtime: "experimental-edge",
-  },
   compiler: {
     emotion: true,
   },

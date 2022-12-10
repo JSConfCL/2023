@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import React, { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import useMediaQuery from "../../../helpers/useMediaQuery";
@@ -131,58 +131,60 @@ const WhySection = (props: { page: PageProps["whyItems"] }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
-    <Container>
-      <H2 whileHover={{ scale: 1.1 }}>POR QUE?</H2>
-      <BlockContainer>
-        {props.page?.items?.map((item, index) => (
-          <WhiteBlock
-            key={`white-block-${index} `}
-            whileHover="hover"
-            whileFocus="hover"
-            whileTap="hover"
-            initial="initial"
-          >
-            <Block key={`why-block-${index}`} variants={BlockVariant}>
-              <Suspense fallback={<div>Loading...</div>}>
-                <Image
-                  mobile={item?.fullImage?.url}
-                  desktop={item?.icon?.url}
-                  alt={item?.icon?.description || ""}
-                  style={{
-                    height: isMobile ? "210px" : "390px",
-                    width: isMobile ? "100vw" : "fit-content",
-                    aspectRatio: index % 2 === 0 ? "287 / 390" : "397 / 390",
-                    mixBlendMode: "multiply",
-                    borderRadius: "0px 32px 0px 0px",
-                    objectFit: isMobile ? "top" : "inherit",
-                  }}
-                />
-              </Suspense>
-              <Flex index={index}>
-                <H3>{item?.title}</H3>
-                <HR />
-                {!isMobile && (
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <Description
-                      data={item?.description?.json}
-                      animationVariants={descriptionVariant(false)}
-                    />
-                  </Suspense>
-                )}
-                {isMobile && (
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <Description
-                      data={item?.description?.json}
-                      animationVariants={descriptionVariant(true)}
-                    />
-                  </Suspense>
-                )}
-              </Flex>
-            </Block>
-          </WhiteBlock>
-        ))}
-      </BlockContainer>
-    </Container>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Container>
+        <H2 whileHover={{ scale: 1.1 }}>POR QUE?</H2>
+        <BlockContainer>
+          {props.page?.items?.map((item, index) => (
+            <WhiteBlock
+              key={`white-block-${index} `}
+              whileHover="hover"
+              whileFocus="hover"
+              whileTap="hover"
+              initial="initial"
+            >
+              <Block key={`why-block-${index}`} variants={BlockVariant}>
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Image
+                    mobile={item?.fullImage?.url}
+                    desktop={item?.icon?.url}
+                    alt={item?.icon?.description || ""}
+                    style={{
+                      height: isMobile ? "210px" : "390px",
+                      width: isMobile ? "100vw" : "fit-content",
+                      aspectRatio: index % 2 === 0 ? "287 / 390" : "397 / 390",
+                      mixBlendMode: "multiply",
+                      borderRadius: "0px 32px 0px 0px",
+                      objectFit: isMobile ? "top" : "inherit",
+                    }}
+                  />
+                </Suspense>
+                <Flex index={index}>
+                  <H3>{item?.title}</H3>
+                  <HR />
+                  {!isMobile && (
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <Description
+                        data={item?.description?.json}
+                        animationVariants={descriptionVariant(false)}
+                      />
+                    </Suspense>
+                  )}
+                  {isMobile && (
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <Description
+                        data={item?.description?.json}
+                        animationVariants={descriptionVariant(true)}
+                      />
+                    </Suspense>
+                  )}
+                </Flex>
+              </Block>
+            </WhiteBlock>
+          ))}
+        </BlockContainer>
+      </Container>
+    </Suspense>
   );
 };
 

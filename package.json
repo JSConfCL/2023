@@ -101,8 +101,7 @@
     "prettier": "2.7.1",
     "ts-essentials": "^9.3.0",
     "type-fest": "^2.13.0",
-    "typescript": "^4.8.4",
-    "vercel": "^28.8.0"
+    "typescript": "^4.8.4"
   },
   "license": "MIT"
 }
