@@ -334,9 +334,13 @@ const TimelineSection = (props: {
     new Set(events.map(({ date }) => format(parseISO(date), "yyyy-MM-dd")))
   );
   const [selectedDate, setSelectedDate] = useState(dates[0]);
-  const selectedEvents = events.filter((event) =>
-    event.date.startsWith(selectedDate)
-  );
+  const selectedEvents = events
+    .filter(({ date }) =>
+      format(parseISO(date), "yyyy-MM-dd").startsWith(selectedDate)
+    )
+    .sort(
+      (event1, event2) => Date.parse(event1.date) - Date.parse(event2.date)
+    );
 
   if (events.length === 0) {
     return null;
