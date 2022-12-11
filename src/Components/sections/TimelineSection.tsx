@@ -2,7 +2,9 @@ import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import { Suspense, useState } from "react";
 import { add, format, parseISO } from "date-fns";
+import { zonedTimeToUtc } from "date-fns-tz";
 import esLocale from "date-fns/locale/es";
+import ReactCountryFlag from "react-country-flag";
 
 import { H2, H3 } from "../core/Typography";
 import { PrimaryStyledLink } from "../Links/index";
@@ -192,6 +194,11 @@ const TimeCell = styled(TableCell)`
   vertical-align: bottom;
 `;
 
+const MultiTime = styled.div`
+  font-size: 18px;
+  line-height: 20px;
+`;
+
 const AuthorCell = styled(TableCell)`
   margin-top: 16px;
   vertical-align: bottom;
@@ -251,7 +258,49 @@ type Flatten<T> = T extends any[] ? T[number] : T;
 
 const getTime = (date: Date) => `${format(date, "kk")}:${format(date, "mm")}`;
 
-const TimelineRow = ({ event }: { event: Flatten<PageProps["events"]> }) => {
+const getFullTime = (date: Date, duration: number) =>
+  `${getTime(date)} - ${getTime(add(date, { minutes: duration }))}`;
+
+const COUNTRIES = [
+  {
+    abbr: "CL",
+    title: "Chile",
+    timezone: "America/Santiago",
+    hasExceptions: true,
+  },
+  {
+    abbr: "AR",
+    title: "Argentina",
+    timezone: "America/Buenos_Aires",
+    hasExceptions: false,
+  },
+  {
+    abbr: "CO",
+    title: "Colombia",
+    timezone: "America/Bogota",
+    hasExceptions: false,
+  },
+  {
+    abbr: "MX",
+    title: "Mexico",
+    timezone: "Mexico/General",
+    hasExceptions: true,
+  },
+  {
+    abbr: "ES",
+    title: "España",
+    timezone: "Europe/Madrid",
+    hasExceptions: false,
+  },
+];
+
+const TimelineRow = ({
+  event,
+  showForCountries,
+}: {
+  event: Flatten<PageProps["events"]>;
+  showForCountries?: boolean;
+}) => {
   const date = new Date(event.date);
 
   return (
@@ -267,7 +316,20 @@ const TimelineRow = ({ event }: { event: Flatten<PageProps["events"]> }) => {
         </Suspense>
       </ImageCell>
       <TimeCell>
-        {getTime(date)} - {getTime(add(date, { minutes: event.duration }))}
+        {showForCountries
+          ? COUNTRIES.map((country) => (
+              <MultiTime key={country.abbr}>
+                <ReactCountryFlag
+                  key={country.abbr}
+                  countryCode={country.abbr}
+                />{" "}
+                {getFullTime(
+                  zonedTimeToUtc(date, country.timezone),
+                  event.duration
+                )}
+              </MultiTime>
+            ))
+          : getFullTime(date, event.duration)}
       </TimeCell>
       <TableCell>
         {event.kind && event.kind !== GENERAL ? (
@@ -283,7 +345,10 @@ const TimelineRow = ({ event }: { event: Flatten<PageProps["events"]> }) => {
   );
 };
 
-const TimelineSection = (props: { events: PageProps["events"] }) => {
+const TimelineSection = (props: {
+  events: PageProps["events"];
+  showForCountries?: boolean;
+}) => {
   const [selectedDate, setSelectedDate] = useState(DATES[0]);
   const events = props.events;
   const selectedEvents = events.filter((event) =>
@@ -337,7 +402,11 @@ const TimelineSection = (props: { events: PageProps["events"] }) => {
           <Table>
             <tbody>
               {generalEvents.map((event) => (
-                <TimelineRow key={event.title} event={event} />
+                <TimelineRow
+                  key={event.title}
+                  event={event}
+                  showForCountries={props.showForCountries ?? false}
+                />
               ))}
             </tbody>
           </Table>
