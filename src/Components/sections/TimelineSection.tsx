@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import { Suspense, useState } from "react";
-import { add, format, parseISO } from "date-fns";
-import { zonedTimeToUtc } from "date-fns-tz";
+import { add, parseISO } from "date-fns";
+import { format, formatInTimeZone } from "date-fns-tz";
 import esLocale from "date-fns/locale/es";
 import ReactCountryFlag from "react-country-flag";
 
@@ -121,7 +121,11 @@ const StyledActionsContainer = styled.div`
   }
 `;
 
-const StyledActions = styled.div``;
+const StyledActions = styled.div`
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    text-align: right;
+  }
+`;
 const StyledButtons = styled.div`
   margin-bottom: 16px;
 `;
@@ -194,11 +198,6 @@ const TimeCell = styled(TableCell)`
   vertical-align: bottom;
 `;
 
-const MultiTime = styled.div`
-  font-size: 18px;
-  line-height: 20px;
-`;
-
 const AuthorCell = styled(TableCell)`
   margin-top: 16px;
   vertical-align: bottom;
@@ -256,52 +255,36 @@ const CalendarContainer = styled.div`
 `;
 type Flatten<T> = T extends any[] ? T[number] : T;
 
-const getTime = (date: Date) => `${format(date, "kk")}:${format(date, "mm")}`;
+const getTime = (date: Date, timezone: string) => {
+  return `${formatInTimeZone(date, timezone, "HH")}:${formatInTimeZone(
+    date,
+    timezone,
+    "mm"
+  )}`;
+};
 
-const getFullTime = (date: Date, duration: number) =>
-  `${getTime(date)} - ${getTime(add(date, { minutes: duration }))}`;
+const getFullTime = (date: Date, duration: number, timezone: string) =>
+  `${getTime(date, timezone)} - ${getTime(
+    add(date, { minutes: duration }),
+    timezone
+  )}`;
 
-const COUNTRIES = [
-  {
-    abbr: "CL",
-    title: "Chile",
-    timezone: "America/Santiago",
-    hasExceptions: true,
-  },
-  {
-    abbr: "AR",
-    title: "Argentina",
-    timezone: "America/Buenos_Aires",
-    hasExceptions: false,
-  },
-  {
-    abbr: "CO",
-    title: "Colombia",
-    timezone: "America/Bogota",
-    hasExceptions: false,
-  },
-  {
-    abbr: "MX",
-    title: "Mexico",
-    timezone: "Mexico/General",
-    hasExceptions: true,
-  },
-  {
-    abbr: "ES",
-    title: "España",
-    timezone: "Europe/Madrid",
-    hasExceptions: false,
-  },
-];
+const CHILE = {
+  abbr: "CL",
+  title: "Chile",
+  timezone: "America/Santiago",
+  hasExceptions: true,
+};
 
 const TimelineRow = ({
   event,
-  showForCountries,
+  showLocalTime,
 }: {
   event: Flatten<PageProps["events"]>;
-  showForCountries?: boolean;
+  showLocalTime: boolean;
 }) => {
   const date = new Date(event.date);
+  const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   return (
     <TableRow>
@@ -316,20 +299,13 @@ const TimelineRow = ({
         </Suspense>
       </ImageCell>
       <TimeCell>
-        {showForCountries
-          ? COUNTRIES.map((country) => (
-              <MultiTime key={country.abbr}>
-                <ReactCountryFlag
-                  key={country.abbr}
-                  countryCode={country.abbr}
-                />{" "}
-                {getFullTime(
-                  zonedTimeToUtc(date, country.timezone),
-                  event.duration
-                )}
-              </MultiTime>
-            ))
-          : getFullTime(date, event.duration)}
+        <div>
+          <ReactCountryFlag countryCode={CHILE.abbr} />{" "}
+          {getFullTime(date, event.duration, CHILE.timezone)}
+        </div>
+        {showLocalTime ? (
+          <div>🏠 {getFullTime(date, event.duration, localTimezone)}</div>
+        ) : null}
       </TimeCell>
       <TableCell>
         {event.kind && event.kind !== GENERAL ? (
@@ -347,7 +323,7 @@ const TimelineRow = ({
 
 const TimelineSection = (props: {
   events: PageProps["events"];
-  showForCountries?: boolean;
+  showLocalTime?: boolean;
 }) => {
   const [selectedDate, setSelectedDate] = useState(DATES[0]);
   const events = props.events;
@@ -365,6 +341,11 @@ const TimelineSection = (props: {
   const workshopEvents = selectedEvents.filter(
     (event) => event.kind === "workshop"
   );
+
+  const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const isDifferentTimezone = localTimezone !== CHILE.timezone;
+  const showDifferentTimezone =
+    Boolean(props.showLocalTime) && isDifferentTimezone;
 
   return (
     <div style={{ position: "relative" }}>
@@ -394,7 +375,15 @@ const TimelineSection = (props: {
                 </StyledButton>
               ))}
             </StyledButtons>
-            * Los horarios están sujetos a cambio
+            <div>* Los horarios están sujetos a cambio</div>
+            {showDifferentTimezone ? (
+              <div>
+                ** Los horarios se muestran en la zona horaria de Chile y de tu
+                dispositivo ({localTimezone}).
+              </div>
+            ) : (
+              ""
+            )}
           </StyledActions>
         </StyledActionsContainer>
         <CalendarContainer>
@@ -405,7 +394,7 @@ const TimelineSection = (props: {
                 <TimelineRow
                   key={event.title}
                   event={event}
-                  showForCountries={props.showForCountries ?? false}
+                  showLocalTime={showDifferentTimezone}
                 />
               ))}
             </tbody>
@@ -416,7 +405,11 @@ const TimelineSection = (props: {
               <Table>
                 <tbody>
                   {workshopEvents.map((event) => (
-                    <TimelineRow key={event.title} event={event} />
+                    <TimelineRow
+                      key={event.title}
+                      event={event}
+                      showLocalTime={showDifferentTimezone}
+                    />
                   ))}
                 </tbody>
               </Table>
