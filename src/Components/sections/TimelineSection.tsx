@@ -13,7 +13,6 @@ import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 
 import { PageProps } from "../../../pages";
 
-const DATES = ["2023-02-03", "2023-02-04"];
 const GENERAL = "general";
 
 const fadeOut = keyframes`
@@ -129,6 +128,7 @@ const StyledActions = styled.div`
 const StyledButtons = styled.div`
   margin-bottom: 16px;
 `;
+
 const StyledButton = styled.button`
   padding: 8px 24px;
   background: rgba(244, 91, 105, 0.2);
@@ -151,6 +151,10 @@ const StyledButton = styled.button`
   &:last-of-type {
     padding-right: 48px;
     border-radius: 0 24px 24px 0;
+  }
+
+  &:only-of-type {
+    border-radius: 24px;
   }
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
@@ -325,8 +329,11 @@ const TimelineSection = (props: {
   events: PageProps["events"];
   showLocalTime?: boolean;
 }) => {
-  const [selectedDate, setSelectedDate] = useState(DATES[0]);
   const events = props.events;
+  const dates = Array.from(
+    new Set(events.map(({ date }) => format(parseISO(date), "yyyy-MM-dd")))
+  );
+  const [selectedDate, setSelectedDate] = useState(dates[0]);
   const selectedEvents = events.filter((event) =>
     event.date.startsWith(selectedDate)
   );
@@ -364,7 +371,7 @@ const TimelineSection = (props: {
         <StyledActionsContainer>
           <StyledActions>
             <StyledButtons>
-              {DATES.map((date) => (
+              {dates.map((date) => (
                 <StyledButton
                   key={date}
                   className={date === selectedDate ? "active" : ""}
