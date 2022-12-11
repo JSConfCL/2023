@@ -294,6 +294,13 @@ const TimelineSection = (props: { events: PageProps["events"] }) => {
     return null;
   }
 
+  const generalEvents = selectedEvents.filter(
+    (event) => event.kind !== "workshop"
+  );
+  const workshopEvents = selectedEvents.filter(
+    (event) => event.kind === "workshop"
+  );
+
   return (
     <div style={{ position: "relative" }}>
       <StyledForegroundWrapper>
@@ -329,23 +336,23 @@ const TimelineSection = (props: { events: PageProps["events"] }) => {
           <H3>General</H3>
           <Table>
             <tbody>
-              {selectedEvents
-                .filter((event) => event.kind !== "workshop")
-                .map((event) => (
-                  <TimelineRow key={event.title} event={event} />
-                ))}
+              {generalEvents.map((event) => (
+                <TimelineRow key={event.title} event={event} />
+              ))}
             </tbody>
           </Table>
-          <H3>Talleres</H3>
-          <Table>
-            <tbody>
-              {selectedEvents
-                .filter((event) => event.kind === "workshop")
-                .map((event) => (
-                  <TimelineRow key={event.title} event={event} />
-                ))}
-            </tbody>
-          </Table>
+          {workshopEvents.length ? (
+            <>
+              <H3>Talleres</H3>
+              <Table>
+                <tbody>
+                  {workshopEvents.map((event) => (
+                    <TimelineRow key={event.title} event={event} />
+                  ))}
+                </tbody>
+              </Table>
+            </>
+          ) : null}
         </CalendarContainer>
       </StyledForegroundWrapper>
     </div>
