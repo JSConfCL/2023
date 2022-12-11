@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { ErrorComponent } from "../../src/Components/ErrorComponent";
-import { TicketsLayout } from "../../src/Components/Layouts/TicketsLayout";
+import { DefaultPagelayout } from "../../src/Components/Layouts/DefaultPagelayout";
 import { TicketsQueryQuery } from "../../src/graphql/tickets.generated";
 import { ParseQuery } from "../../src/helpers/types";
 import { ViewportSizes } from "../../styles/theme";
@@ -42,4 +42,4 @@ export default function Tickets(props: PageProps) {
   );
 }
 
-Tickets.getLayout = TicketsLayout;
+Tickets.getLayout = DefaultPagelayout;

@@ -19,10 +19,6 @@ const GetTicket = styled.div`
   margin-bottom: 64px;
 `;
 
-const AtroposContainer = styled.div`
-  overflow: hidden;
-`;
-
 const FakeContainer = styled(motion.div)`
   height: 480px;
   @media (min-width: ${ViewportSizes.Phone}px) {
@@ -30,12 +26,16 @@ const FakeContainer = styled(motion.div)`
   }
 `;
 
-const MotionContainer = styled(motion.div)``;
+const MotionContainer = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+`;
 
 const StyledAtropos = styled(Atropos)`
   width: 350px;
   height: 480px;
-  margin: 0 auto 16px;
 
   @media (min-width: ${ViewportSizes.Phone}px) {
     width: 680px;
@@ -371,7 +371,7 @@ export const Ticket = ({
   }/p/ticket/${userTicketId?.replace("user_ticket_", "") || ""}`;
 
   return (
-    <AtroposContainer data-id={userTicketId}>
+    <>
       <AnimatePresence mode="sync" initial={fadeIn}>
         {!loaded && <FakeContainer {...animation} />}
         {loaded && (
@@ -499,6 +499,6 @@ export const Ticket = ({
         )}
       </AnimatePresence>
       {/* <AnimatePresence mode="popLayout" initial={false}> */}
-    </AtroposContainer>
+    </>
   );
 };

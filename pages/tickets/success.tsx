@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import confetti from "canvas-confetti";
 
 import { H2, H3 } from "../../src/Components/core/Typography";
-import { TicketsLayout } from "../../src/Components/Layouts/TicketsLayout";
+import { DefaultPagelayout } from "../../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../../src/Components/Seo";
 
 import { urlQlient } from "../../src/graphql/urql";
@@ -19,6 +19,7 @@ import {
   TicketsQueryQueryVariables,
 } from "../../src/graphql/tickets.generated";
 import { Ticket } from "../../src/Components/Ticket/Ticket";
+import { PageContainer } from "../../src/Components/common/PageContainer";
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
 
@@ -48,7 +49,8 @@ const TextContainer = styled.div`
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  justify-content: center;
+  gap: 2rem;
 `;
 
 const Title = styled(H2)`
@@ -132,7 +134,7 @@ export default function Tickets(props: PageProps) {
 
   const ticket = latestTickets?.[0];
   return (
-    <>
+    <PageContainer>
       <Seo {...props.seo} />
       <Container style={{ zIndex: 1 }}>
         <TextContainer>
@@ -170,7 +172,7 @@ export default function Tickets(props: PageProps) {
         </TextContainer>
       </Container>
       <StyledCanvas ref={ref} id="confetti" />
-    </>
+    </PageContainer>
   );
 }
 
@@ -196,4 +198,4 @@ export async function getStaticProps() {
   };
 }
 
-Tickets.getLayout = TicketsLayout;
+Tickets.getLayout = DefaultPagelayout;

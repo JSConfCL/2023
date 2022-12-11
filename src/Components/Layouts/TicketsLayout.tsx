@@ -26,7 +26,6 @@ const Container = styled.div`
   flex-direction: column;
   gap: 1rem;
   width: 100vw;
-  /* min-height: min(90vh, 500px); */
   max-width: 1440px;
   padding-left: 1rem;
   padding-right: 1rem;

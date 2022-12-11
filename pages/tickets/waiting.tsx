@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { H2 } from "../../src/Components/core/Typography";
-import { TicketsLayout } from "../../src/Components/Layouts/TicketsLayout";
+import { DefaultPagelayout } from "../../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../../src/Components/Seo";
 import {
   TicketsQueryDocument,
@@ -115,4 +115,4 @@ export async function getStaticProps() {
   };
 }
 
-Tickets.getLayout = TicketsLayout;
+Tickets.getLayout = DefaultPagelayout;

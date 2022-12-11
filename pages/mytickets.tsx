@@ -1,18 +1,13 @@
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
 import { useFlags } from "flagsmith/react";
+import { PageContainer } from "../src/Components/common/PageContainer";
 
-import { TicketsLayout } from "../src/Components/Layouts/TicketsLayout";
+import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
 import { TicketsList } from "../src/Components/Ticket/TicketsList";
 
 import { me, myTickets } from "../src/helpers/API";
 import { ViewportSizes } from "../styles/theme";
-
-const PageContainer = styled.div`
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-`;
 
 const PageTitle = styled.h2`
   font-family: "Koulen";
@@ -29,6 +24,12 @@ const PageTitle = styled.h2`
     font-size: 2.2rem;
     margin-bottom: 32px;
   }
+`;
+
+const MyTicketsWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
 `;
 
 const Loading = () => <div>Loading</div>;
@@ -51,16 +52,18 @@ const Settings = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <TicketsList
-          user={user}
-          tickets={tickets}
-          shareEnabled={Boolean(ticketShareEnabled?.value)}
-        />
+        <MyTicketsWrapper>
+          <TicketsList
+            user={user}
+            tickets={tickets}
+            shareEnabled={Boolean(ticketShareEnabled?.value)}
+          />
+        </MyTicketsWrapper>
       )}
     </PageContainer>
   );
 };
 
-Settings.getLayout = TicketsLayout;
+Settings.getLayout = DefaultPagelayout;
 
 export default Settings;
