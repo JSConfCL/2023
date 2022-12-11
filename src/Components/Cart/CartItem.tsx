@@ -95,7 +95,7 @@ const CartItem = ({
 }) => {
   const [ticket, setTicket] = useAtom(entrada);
   const { description, name, price, quantity, currentQuantity } = ticket;
-  const hayDisponibles = quantity <= 0;
+  const hayDisponibles = quantity !== 0;
   const isMin = currentQuantity === 0;
   const isMax = currentQuantity === quantity;
 
