@@ -260,7 +260,7 @@ const TimelineRow = ({ event }: { event: Flatten<PageProps["events"]> }) => {
         <Suspense fallback={null}>
           {event?.speaker?.photo?.url ? (
             <img
-              alt="Foto de uno de nuestros speakers"
+              alt={event?.speaker?.name || "Speaker"}
               src={event?.speaker?.photo?.url}
             />
           ) : null}
