@@ -1,9 +1,9 @@
-query NavBarQuery($locale: String = "es-CL", $isPreview: Boolean = false) {
-  navigationBar(
-    id: "22KytadLhMxFZMtvlUYCbl"
-    locale: $locale
-    preview: $isPreview
-  ) {
+query NavBarQuery(
+  $id: String!
+  $locale: String = "es-CL"
+  $isPreview: Boolean = false
+) {
+  navigationBar(id: $id, locale: $locale, preview: $isPreview) {
     sys {
       id
     }

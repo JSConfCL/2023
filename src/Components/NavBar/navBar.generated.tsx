@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import * as Urql from "urql";
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type NavBarQueryQueryVariables = Types.Exact<{
+  id: Types.Scalars["String"];
   locale?: Types.InputMaybe<Types.Scalars["String"]>;
   isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
@@ -36,12 +37,12 @@ export type NavBarQueryQuery = {
 };
 
 export const NavBarQueryDocument = gql`
-  query NavBarQuery($locale: String = "es-CL", $isPreview: Boolean = false) {
-    navigationBar(
-      id: "22KytadLhMxFZMtvlUYCbl"
-      locale: $locale
-      preview: $isPreview
-    ) {
+  query NavBarQuery(
+    $id: String!
+    $locale: String = "es-CL"
+    $isPreview: Boolean = false
+  ) {
+    navigationBar(id: $id, locale: $locale, preview: $isPreview) {
       sys {
         id
       }
@@ -69,7 +70,7 @@ export const NavBarQueryDocument = gql`
 `;
 
 export function useNavBarQueryQuery(
-  options?: Omit<Urql.UseQueryArgs<NavBarQueryQueryVariables>, "query">
+  options: Omit<Urql.UseQueryArgs<NavBarQueryQueryVariables>, "query">
 ) {
   return Urql.useQuery<NavBarQueryQuery, NavBarQueryQueryVariables>({
     query: NavBarQueryDocument,

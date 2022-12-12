@@ -7,9 +7,10 @@ import { parseNavBarData } from "./helper";
 import { InternalNavBar } from "./InternalNavBar";
 import { useNavBarQueryQuery } from "./navBar.generated";
 
-const NavBar = () => {
+const NavBar = ({ id = "22KytadLhMxFZMtvlUYCbl" }: { id?: string }) => {
   const [{ data }] = useNavBarQueryQuery({
     variables: {
+      id,
       isPreview: Boolean(process.env.NEXT_PUBLIC_CONTENTFUL_IS_PREVIEW),
     },
   });
