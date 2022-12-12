@@ -5,7 +5,8 @@ import {
   ticketsAtom,
 } from "../../src/Components/Cart/CartAtom";
 import { CartContainer } from "../../src/Components/Cart/CartContainer";
-import { TicketsLayout } from "../../src/Components/Layouts/TicketsLayout";
+import { PageContainer } from "../../src/Components/common/PageContainer";
+import { DefaultPagelayout } from "../../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../../src/Components/Seo";
 import NoTickets from "../../src/Components/TicketSection/NoTickets";
 import YesTicketsCreateAccount from "../../src/Components/TicketSection/YesTicketsCreateAccount";
@@ -52,10 +53,10 @@ export default function Tickets(props: PageProps) {
     },
   });
   return (
-    <>
+    <PageContainer>
       <Seo {...props.seo} />
       {!isLoading && <TicketContent />}
-    </>
+    </PageContainer>
   );
 }
 
@@ -82,4 +83,4 @@ export async function getStaticProps() {
   };
 }
 
-Tickets.getLayout = TicketsLayout;
+Tickets.getLayout = DefaultPagelayout;

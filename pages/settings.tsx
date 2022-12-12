@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
 
 import { Alert } from "../src/Components/common/app";
-import { TicketsLayout } from "../src/Components/Layouts/TicketsLayout";
+import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
 import { UserInformationForm } from "../src/Components/UserInformationForm";
 
 import { me } from "../src/helpers/API";
@@ -71,6 +71,6 @@ const Settings = () => {
   );
 };
 
-Settings.getLayout = TicketsLayout;
+Settings.getLayout = DefaultPagelayout;
 
 export default Settings;

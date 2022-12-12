@@ -15,7 +15,7 @@ export const TicketsList = ({
   }
 
   return (
-    <div>
+    <>
       {tickets?.map((ticket: OwnTicket) => (
         <Ticket
           key={ticket.id}
@@ -30,6 +30,6 @@ export const TicketsList = ({
           fadeIn
         />
       ))}
-    </div>
+    </>
   );
 };
