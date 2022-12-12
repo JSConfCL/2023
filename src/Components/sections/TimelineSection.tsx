@@ -328,6 +328,7 @@ const TimelineRow = ({
 const TimelineSection = (props: {
   events: PageProps["events"];
   showLocalTime?: boolean;
+  showTickets?: boolean;
 }) => {
   const events = props.events;
   const dates = Array.from(
@@ -366,11 +367,13 @@ const TimelineSection = (props: {
             <H2 whileHover={{ scale: 1.01 }}>Calendario</H2>
             <HR />
           </div>
-          <PrimaryStyledLink href="/tickets">
-            Obtener
-            <br />
-            Tickets
-          </PrimaryStyledLink>
+          {props?.showTickets ? (
+            <PrimaryStyledLink href="/tickets">
+              Obtener
+              <br />
+              Tickets
+            </PrimaryStyledLink>
+          ) : null}
         </DescriptionCotainer>
         <StyledActionsContainer>
           <StyledActions>
