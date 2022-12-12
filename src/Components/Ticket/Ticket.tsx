@@ -466,7 +466,7 @@ export const Ticket = ({
                     startTime: "08:00",
                     endTime: "19:00",
                     description:
-                      "Acompáñanos, en la primera edición Chilena, de la más prestigiosa conferencia de JavaScript. 2 días de Charlistas internacionales, comunidad, aprendizaje y conexiones, este 03 y 04 de Febrero, 2023.",
+                      "Acompáñanos, en la primera edición Chilena, de la más prestigiosa conferencia de JavaScript. 2 días, 20 Charlistas Internacionales, +500 Desarolladores, aprendizaje y conexiones, este 03 y 04 de Febrero, 2023.",
                     options: ["Google", "Apple", "Microsoft365", "Outlook.com"],
                     timeZone: "America/Santiago",
                   });
