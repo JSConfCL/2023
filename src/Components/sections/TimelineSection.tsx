@@ -1,8 +1,10 @@
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import { Suspense, useState } from "react";
-import { add, format, parseISO } from "date-fns";
+import { add, parseISO } from "date-fns";
+import { format, formatInTimeZone } from "date-fns-tz";
 import esLocale from "date-fns/locale/es";
+import ReactCountryFlag from "react-country-flag";
 
 import { H2, H3 } from "../core/Typography";
 import { PrimaryStyledLink } from "../Links/index";
@@ -11,7 +13,6 @@ import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 
 import { PageProps } from "../../../pages";
 
-const DATES = ["2023-02-03", "2023-02-04"];
 const GENERAL = "general";
 
 const fadeOut = keyframes`
@@ -119,10 +120,15 @@ const StyledActionsContainer = styled.div`
   }
 `;
 
-const StyledActions = styled.div``;
+const StyledActions = styled.div`
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    text-align: right;
+  }
+`;
 const StyledButtons = styled.div`
   margin-bottom: 16px;
 `;
+
 const StyledButton = styled.button`
   padding: 8px 24px;
   background: rgba(244, 91, 105, 0.2);
@@ -145,6 +151,10 @@ const StyledButton = styled.button`
   &:last-of-type {
     padding-right: 48px;
     border-radius: 0 24px 24px 0;
+  }
+
+  &:only-of-type {
+    border-radius: 24px;
   }
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
@@ -249,10 +259,36 @@ const CalendarContainer = styled.div`
 `;
 type Flatten<T> = T extends any[] ? T[number] : T;
 
-const getTime = (date: Date) => `${format(date, "kk")}:${format(date, "mm")}`;
+const getTime = (date: Date, timezone: string) => {
+  return `${formatInTimeZone(date, timezone, "HH")}:${formatInTimeZone(
+    date,
+    timezone,
+    "mm"
+  )}`;
+};
 
-const TimelineRow = ({ event }: { event: Flatten<PageProps["events"]> }) => {
+const getFullTime = (date: Date, duration: number, timezone: string) =>
+  `${getTime(date, timezone)} - ${getTime(
+    add(date, { minutes: duration }),
+    timezone
+  )}`;
+
+const CHILE = {
+  abbr: "CL",
+  title: "Chile",
+  timezone: "America/Santiago",
+  hasExceptions: true,
+};
+
+const TimelineRow = ({
+  event,
+  showLocalTime,
+}: {
+  event: Flatten<PageProps["events"]>;
+  showLocalTime: boolean;
+}) => {
   const date = new Date(event.date);
+  const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   return (
     <TableRow>
@@ -260,14 +296,20 @@ const TimelineRow = ({ event }: { event: Flatten<PageProps["events"]> }) => {
         <Suspense fallback={null}>
           {event?.speaker?.photo?.url ? (
             <img
-              alt="Foto de uno de nuestros speakers"
+              alt={event?.speaker?.name || "Speaker"}
               src={event?.speaker?.photo?.url}
             />
           ) : null}
         </Suspense>
       </ImageCell>
       <TimeCell>
-        {getTime(date)} - {getTime(add(date, { minutes: event.duration }))}
+        <div>
+          <ReactCountryFlag countryCode={CHILE.abbr} />{" "}
+          {getFullTime(date, event.duration, CHILE.timezone)}
+        </div>
+        {showLocalTime ? (
+          <div>🏠 {getFullTime(date, event.duration, localTimezone)}</div>
+        ) : null}
       </TimeCell>
       <TableCell>
         {event.kind && event.kind !== GENERAL ? (
@@ -283,16 +325,39 @@ const TimelineRow = ({ event }: { event: Flatten<PageProps["events"]> }) => {
   );
 };
 
-const TimelineSection = (props: { events: PageProps["events"] }) => {
-  const [selectedDate, setSelectedDate] = useState(DATES[0]);
+const TimelineSection = (props: {
+  events: PageProps["events"];
+  showLocalTime?: boolean;
+  showTickets?: boolean;
+}) => {
   const events = props.events;
-  const selectedEvents = events.filter((event) =>
-    event.date.startsWith(selectedDate)
+  const dates = Array.from(
+    new Set(events.map(({ date }) => format(parseISO(date), "yyyy-MM-dd")))
   );
+  const [selectedDate, setSelectedDate] = useState(dates[0]);
+  const selectedEvents = events
+    .filter(({ date }) =>
+      format(parseISO(date), "yyyy-MM-dd").startsWith(selectedDate)
+    )
+    .sort(
+      (event1, event2) => Date.parse(event1.date) - Date.parse(event2.date)
+    );
 
   if (events.length === 0) {
     return null;
   }
+
+  const generalEvents = selectedEvents.filter(
+    (event) => event.kind !== "workshop"
+  );
+  const workshopEvents = selectedEvents.filter(
+    (event) => event.kind === "workshop"
+  );
+
+  const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const isDifferentTimezone = localTimezone !== CHILE.timezone;
+  const showDifferentTimezone =
+    Boolean(props.showLocalTime) && isDifferentTimezone;
 
   return (
     <div style={{ position: "relative" }}>
@@ -302,16 +367,18 @@ const TimelineSection = (props: { events: PageProps["events"] }) => {
             <H2 whileHover={{ scale: 1.01 }}>Calendario</H2>
             <HR />
           </div>
-          <PrimaryStyledLink href="/tickets">
-            Obtener
-            <br />
-            Tickets
-          </PrimaryStyledLink>
+          {props?.showTickets ? (
+            <PrimaryStyledLink href="/tickets">
+              Obtener
+              <br />
+              Tickets
+            </PrimaryStyledLink>
+          ) : null}
         </DescriptionCotainer>
         <StyledActionsContainer>
           <StyledActions>
             <StyledButtons>
-              {DATES.map((date) => (
+              {dates.map((date) => (
                 <StyledButton
                   key={date}
                   className={date === selectedDate ? "active" : ""}
@@ -322,30 +389,46 @@ const TimelineSection = (props: { events: PageProps["events"] }) => {
                 </StyledButton>
               ))}
             </StyledButtons>
-            * Los horarios están sujetos a cambio
+            <div>* Los horarios están sujetos a cambio</div>
+            {showDifferentTimezone ? (
+              <div>
+                ** Los horarios se muestran en la zona horaria de Chile y de tu
+                dispositivo ({localTimezone}).
+              </div>
+            ) : (
+              ""
+            )}
           </StyledActions>
         </StyledActionsContainer>
         <CalendarContainer>
           <H3>General</H3>
           <Table>
             <tbody>
-              {selectedEvents
-                .filter((event) => event.kind !== "workshop")
-                .map((event) => (
-                  <TimelineRow key={event.title} event={event} />
-                ))}
+              {generalEvents.map((event) => (
+                <TimelineRow
+                  key={event.title}
+                  event={event}
+                  showLocalTime={showDifferentTimezone}
+                />
+              ))}
             </tbody>
           </Table>
-          <H3>Talleres</H3>
-          <Table>
-            <tbody>
-              {selectedEvents
-                .filter((event) => event.kind === "workshop")
-                .map((event) => (
-                  <TimelineRow key={event.title} event={event} />
-                ))}
-            </tbody>
-          </Table>
+          {workshopEvents.length ? (
+            <>
+              <H3>Talleres</H3>
+              <Table>
+                <tbody>
+                  {workshopEvents.map((event) => (
+                    <TimelineRow
+                      key={event.title}
+                      event={event}
+                      showLocalTime={showDifferentTimezone}
+                    />
+                  ))}
+                </tbody>
+              </Table>
+            </>
+          ) : null}
         </CalendarContainer>
       </StyledForegroundWrapper>
     </div>

@@ -21,12 +21,15 @@ const HowSection = lazy(
 const TeamSection = lazy(
   async () => await import("../src/Components/sections/TeamSection")
 );
+
 const SponsorSection = lazy(
   async () => await import("../src/Components/sections/SponsorSection")
 );
+
 const SpeakerSection = lazy(
   async () => await import("../src/Components/sections/SpeakerSection")
 );
+
 const TimelineSection = lazy(
   async () => await import("../src/Components/sections/TimelineSection")
 );
@@ -48,6 +51,7 @@ export interface PageProps {
   sponsorType: Page["sponsorTypeCollection"];
   friends: Page["communityFriendsCollection"];
 }
+
 const Container = styled.section`
   display: flex;
   flex-direction: column;
@@ -79,7 +83,9 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
           {props.speakerData && <SpeakerSection page={props.speakerData} />}
         </Suspense>
         <Suspense fallback={null}>
-          {props?.events && <TimelineSection events={props?.events} />}
+          {props?.events && (
+            <TimelineSection events={props?.events} showTickets />
+          )}
         </Suspense>
         <Suspense fallback={null}>
           {props.sponsorType && <SponsorSection page={props.sponsorType} />}
