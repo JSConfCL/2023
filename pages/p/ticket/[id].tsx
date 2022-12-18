@@ -49,6 +49,9 @@ const TicketPage = ({
           property="og:image"
           content={`${ticketApiUrl}/ticket/image/${ticket.ticketId}`}
         />
+        <meta property="og:image:width" content="800" />
+        <meta property="og:image:height" content="400" />
+
         <meta name="twitter:site" content="@jsconfcl" />
         <meta name="twitter:creator" content="@jsconfcl" />
 
@@ -65,10 +68,6 @@ const TicketPage = ({
         <meta
           name="twitter:description"
           content="Mi Ticket para la JSConf Chile. Obtén tu ticket acá!"
-        />
-        <meta
-          name="twitter:image"
-          content={`${ticketApiUrl}/ticket/image/${ticket.ticketId}`}
         />
       </Head>
       <StyledSpacer />
