@@ -38,7 +38,7 @@ const BlockColor = styled.section<{ type: string }>`
   height: 100%;
   width: 100%;
   @media (min-width: ${ViewportSizes.Phone}px) {
-    max-height: ${({ type }) => (type === "keynote" ? "390px" : "240px")};
+    max-height: ${({ type }) => (type === "keynote" ? "390px" : "390px")};
   }
 `;
 
