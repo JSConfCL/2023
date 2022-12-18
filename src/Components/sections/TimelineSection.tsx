@@ -297,7 +297,7 @@ const TimelineRow = ({
           {event?.speaker?.photo?.url ? (
             <img
               alt={event?.speaker?.name || "Speaker"}
-              src={event?.speaker?.photo?.url}
+              src={`${event?.speaker?.photo?.url}?fit=thumb&w=320&h=320&f=face`}
             />
           ) : null}
         </Suspense>
