@@ -95,7 +95,7 @@ const TeamSection = (props: { page: PageProps["teamData"] }) => {
         </ContainerButton>
       )}
 
-      {items?.map((item, index: number) => {
+      {items?.map((item, index) => {
         return (
           <Suspense key={`speaker-${index}`} fallback={null}>
             <Card
