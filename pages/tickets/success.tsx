@@ -4,7 +4,7 @@ import confetti from 'canvas-confetti';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 
-import { DefaultPageLayout } from '../../src/Components/Layouts/DefaultPageLayout';
+import { DefaultPageLayout } from '../../src/Components/Layouts/DefaultPagelayout';
 import Seo from '../../src/Components/Seo';
 import { Ticket } from '../../src/Components/Ticket/Ticket';
 import { PageContainer } from '../../src/Components/common/PageContainer';

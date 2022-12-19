@@ -6,7 +6,7 @@ import {
 	ticketsAtom,
 } from '../../src/Components/Cart/CartAtom';
 import { CartContainer } from '../../src/Components/Cart/CartContainer';
-import { DefaultPageLayout } from '../../src/Components/Layouts/DefaultPageLayout';
+import { DefaultPageLayout } from '../../src/Components/Layouts/DefaultPagelayout';
 import Seo from '../../src/Components/Seo';
 import NoTickets from '../../src/Components/TicketSection/NoTickets';
 import YesTicketsCreateAccount from '../../src/Components/TicketSection/YesTicketsCreateAccount';

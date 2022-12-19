@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
 import { useFlags } from 'flagsmith/react';
 
-import { DefaultPageLayout } from '../src/Components/Layouts/DefaultPageLayout';
+import { DefaultPageLayout } from '../src/Components/Layouts/DefaultPagelayout';
 import { TicketsList } from '../src/Components/Ticket/TicketsList';
 import { PageContainer } from '../src/Components/common/PageContainer';
 

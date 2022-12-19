@@ -3,7 +3,7 @@ import { useFlags } from 'flagsmith/react';
 import BannerVolunteer from '../src/Components/Banner/Volunteer';
 import VolunteerForm from '../src/Components/Form/Volunteer';
 
-import { DefaultPageLayout } from '../src/Components/Layouts/DefaultPageLayout';
+import { DefaultPageLayout } from '../src/Components/Layouts/DefaultPagelayout';
 import Seo from '../src/Components/Seo';
 import TitleDescription from '../src/Components/common/TitleDescription';
 import { urlQlient } from '../src/graphql/urql';

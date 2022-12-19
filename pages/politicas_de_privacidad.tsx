@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { CustomMarkdown } from '../src/Components/CustomMarkdown';
-import { DefaultPageLayout } from '../src/Components/Layouts/DefaultPageLayout';
+import { DefaultPageLayout } from '../src/Components/Layouts/DefaultPagelayout';
 import {
 	PoliticasDePrivacidadPageDocument,
 	PoliticasDePrivacidadPageQuery,

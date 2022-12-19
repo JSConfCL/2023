@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { ErrorComponent } from '../src/Components/ErrorComponent';
-import { DefaultPageLayout } from '../src/Components/Layouts/DefaultPageLayout';
+import { DefaultPageLayout } from '../src/Components/Layouts/DefaultPagelayout';
 
 const Container = styled.section`
 	display: flex;

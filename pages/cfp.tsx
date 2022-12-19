@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 
-import { DefaultPageLayout } from '../src/Components/Layouts/DefaultPageLayout';
+import { DefaultPageLayout } from '../src/Components/Layouts/DefaultPagelayout';
 import Seo from '../src/Components/Seo';
 import {
 	CfpQueryDocument,

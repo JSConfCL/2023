@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { ErrorComponent } from '../../src/Components/ErrorComponent';
-import { DefaultPageLayout } from '../../src/Components/Layouts/DefaultPageLayout';
+import { DefaultPageLayout } from '../../src/Components/Layouts/DefaultPagelayout';
 import { TicketsQueryQuery } from '../../src/graphql/tickets.generated';
 import { ParseQuery } from '../../src/helpers/types';
 import { ViewportSizes } from '../../styles/theme';

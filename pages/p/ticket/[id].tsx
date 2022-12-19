@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 
-import { DefaultPageLayout } from '../../../src/Components/Layouts/DefaultPageLayout';
+import { DefaultPageLayout } from '../../../src/Components/Layouts/DefaultPagelayout';
 import { Ticket } from '../../../src/Components/Ticket/Ticket';
 
 import { PublicTicket } from '../../../src/helpers/API/types';

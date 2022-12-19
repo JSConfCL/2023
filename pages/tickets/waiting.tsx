@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { DefaultPageLayout } from '../../src/Components/Layouts/DefaultPageLayout';
+import { DefaultPageLayout } from '../../src/Components/Layouts/DefaultPagelayout';
 import Seo from '../../src/Components/Seo';
 import { H2 } from '../../src/Components/core/Typography';
 import {
