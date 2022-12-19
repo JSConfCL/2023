@@ -1,21 +1,22 @@
-import styled from "@emotion/styled";
-import { ErrorComponent } from "../src/Components/ErrorComponent";
-import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
+import styled from '@emotion/styled';
+
+import { ErrorComponent } from '../src/Components/ErrorComponent';
+import { DefaultPageLayout } from '../src/Components/Layouts/DefaultPageLayout';
 
 const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-  padding-top: 5rem;
-  min-height: 60vh;
-  justify-content: center;
+	display: flex;
+	flex-direction: column;
+	padding-top: 5rem;
+	min-height: 60vh;
+	justify-content: center;
 `;
 
-export default function Page404() {
-  return (
-    <Container>
-      <ErrorComponent errorMessage="La página que estas buscando no existe." />
-    </Container>
-  );
+export default function Page500() {
+	return (
+		<Container>
+			<ErrorComponent errorMessage="Estamos teniendo problemas internos. Favor intentar nuevamente." />
+		</Container>
+	);
 }
 
-Page404.getLayout = DefaultPagelayout;
+Page500.getLayout = DefaultPageLayout;
