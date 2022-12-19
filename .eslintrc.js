@@ -28,7 +28,7 @@ module.exports = {
 		'@typescript-eslint/no-non-null-assertion': ['off'],
 		'@typescript-eslint/no-non-null-asserted-optional-chain': ['off'],
 		'@next/next/no-img-element': ['off'],
-		'no-console': 0,
+		'no-console': ['error', { allow: ['warn', 'error'] }],
 		'import/no-named-as-default': 0,
 		'import/order': [
 			'error',
