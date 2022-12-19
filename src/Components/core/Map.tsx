@@ -1,5 +1,5 @@
-import React from "react";
 import GoogleMapReact from "google-map-react";
+import React from "react";
 
 const Ping = (props: { text: string }) => <section>{props.text}</section>;
 

@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
+import { atcb_action, atcb_init } from "add-to-calendar-button";
 import Atropos from "atropos/react";
 import { AnimatePresence, motion, MotionProps } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Facebook, Linkedin, Twitter, Copy, Calendar } from "react-feather";
 import toast, { Toaster } from "react-hot-toast";
-import { atcb_action, atcb_init } from "add-to-calendar-button";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 import { GenericLink } from "../TicketSection/shared";

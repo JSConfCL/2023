@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
-import { H2 } from "../../src/Components/core/Typography";
-import { DefaultPagelayout } from "../../src/Components/Layouts/DefaultPagelayout";
+
+import { DefaultPageLayout } from "../../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../../src/Components/Seo";
+import { H2 } from "../../src/Components/core/Typography";
 import {
   TicketsQueryDocument,
   TicketsQueryQuery,
@@ -115,4 +116,4 @@ export async function getStaticProps() {
   };
 }
 
-Tickets.getLayout = DefaultPagelayout;
+Tickets.getLayout = DefaultPageLayout;

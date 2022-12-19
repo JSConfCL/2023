@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 
 import { Entrada } from "../../Components/Cart/CartAtom";
 import { getValidToken } from "../auth";
+
 import {
   OwnTicket,
   PublicTicket,

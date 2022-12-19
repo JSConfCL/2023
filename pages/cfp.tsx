@@ -1,5 +1,7 @@
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+
+import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../src/Components/Seo";
 import {
   CfpQueryDocument,
@@ -8,7 +10,6 @@ import {
 } from "../src/graphql/cfp.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
-import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
 
 const BannerCFP = dynamic(
   async () => await import("../src/Components/Banner/CFP")
@@ -55,4 +56,4 @@ export async function getStaticProps() {
   };
 }
 
-OnSitePage.getLayout = DefaultPagelayout;
+OnSitePage.getLayout = DefaultPageLayout;

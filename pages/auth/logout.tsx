@@ -4,6 +4,7 @@ import { useSetAtom } from "jotai";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+
 import { accessTokenAtom } from "../../src/helpers/auth";
 
 const Container = styled.section`

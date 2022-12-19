@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
-import { H1 } from "../src/Components/core/Typography";
+
 import { CustomMarkdown } from "../src/Components/CustomMarkdown";
-import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
+import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../src/Components/Seo";
+import { H1 } from "../src/Components/core/Typography";
 import {
   FaqDocument,
   FaqQueryVariables,
@@ -88,4 +89,4 @@ export async function getStaticProps() {
   };
 }
 
-FAQ.getLayout = DefaultPagelayout;
+FAQ.getLayout = DefaultPageLayout;

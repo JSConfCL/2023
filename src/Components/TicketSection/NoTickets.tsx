@@ -1,4 +1,10 @@
+import styled from "@emotion/styled";
+import { useAtomValue } from "jotai";
+
+import { isAuthenticatedAtom } from "../../helpers/auth";
 import Image from "../core/Image";
+
+import { SectionTile } from "./Title";
 import {
   Paragraph,
   SideContainer,
@@ -9,11 +15,6 @@ import {
   ImageContainer,
   GithubButton,
 } from "./shared";
-import { SectionTile } from "./Title";
-import { isAuthenticatedAtom } from "../../helpers/auth";
-import { useAtomValue } from "jotai";
-
-import styled from "@emotion/styled";
 
 // ;
 

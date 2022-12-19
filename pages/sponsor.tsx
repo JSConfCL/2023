@@ -1,16 +1,16 @@
-import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
+import { lazy, Suspense } from "react";
 
+import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
+import Seo from "../src/Components/Seo";
 import {
   SponsorQueryDocument,
   SponsorQueryQuery,
   SponsorQueryQueryVariables,
 } from "../src/graphql/sponsor.generated";
 import { urlQlient } from "../src/graphql/urql";
-import Seo from "../src/Components/Seo";
 import { ParseQuery } from "../src/helpers/types";
 import { ViewportSizes } from "../styles/theme";
-import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
 
 const BannerSponsor = lazy(
   async () => await import("../src/Components/Banner/Sponsor")
@@ -88,4 +88,4 @@ export async function getStaticProps() {
   };
 }
 
-OnSitePage.getLayout = DefaultPagelayout;
+OnSitePage.getLayout = DefaultPageLayout;

@@ -2,7 +2,9 @@ import styled from "@emotion/styled";
 import { useAtomValue } from "jotai";
 import { useAtomCallback } from "jotai/utils";
 import { useCallback } from "react";
+
 import { Paragraph } from "../TicketSection/shared";
+
 import { ticketsAtomsAtom } from "./CartAtom";
 import CartItem from "./CartItem";
 import { Total } from "./Total";

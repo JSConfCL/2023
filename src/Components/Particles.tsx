@@ -1,7 +1,8 @@
 import { css, Global } from "@emotion/react";
+import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import { Engine } from "tsparticles-engine";
-import Particles from "react-tsparticles";
+
 import config from "./sections/config";
 
 interface ParticleProps {

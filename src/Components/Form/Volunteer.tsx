@@ -8,6 +8,7 @@ import { BeatLoader } from "react-spinners";
 import { ViewportSizes } from "../../../styles/theme";
 import { subscribeVolunteer } from "../../helpers/API";
 import { H2 } from "../core/Typography";
+
 import {
   descriptionValidation,
   emailValidation,

@@ -4,9 +4,11 @@ import {
   GithubLoginButton,
   GoogleLoginButton,
 } from "react-social-login-buttons";
+
 import { API_URL } from "../../helpers/API";
-import { Container, Paragraph, SideContainer } from "./shared";
+
 import { SectionTile } from "./Title";
+import { Container, Paragraph, SideContainer } from "./shared";
 
 const LeftSide = styled.div`
   width: 100%;

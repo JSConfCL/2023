@@ -1,9 +1,11 @@
-import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import { H3, P } from "./core/Typography";
-import useMediaQuery from "../helpers/useMediaQuery";
+import { lazy, Suspense } from "react";
+
 import { ViewportSizes } from "../../styles/theme";
+import useMediaQuery from "../helpers/useMediaQuery";
+
+import { H3, P } from "./core/Typography";
 
 const Image = lazy(async () => await import("./core/Image"));
 

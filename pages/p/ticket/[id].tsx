@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 
-import { DefaultPagelayout } from "../../../src/Components/Layouts/DefaultPagelayout";
+import { DefaultPageLayout } from "../../../src/Components/Layouts/DefaultPagelayout";
 import { Ticket } from "../../../src/Components/Ticket/Ticket";
 
 import { PublicTicket } from "../../../src/helpers/API/types";
@@ -108,6 +108,5 @@ export const getServerSideProps = async ({
   return { props: { ticket, cleanedId: id } };
 };
 
-TicketPage.getLayout = DefaultPagelayout;
-
+TicketPage.getLayout = DefaultPageLayout;
 export default TicketPage;

@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
+
 import { CustomMarkdown } from "../src/Components/CustomMarkdown";
-import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
+import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
 import {
   PoliticasDePrivacidadPageDocument,
   PoliticasDePrivacidadPageQuery,
@@ -78,4 +79,4 @@ export async function getStaticProps() {
   };
 }
 
-PoliticasDePrivacidad.getLayout = DefaultPagelayout;
+PoliticasDePrivacidad.getLayout = DefaultPageLayout;

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useFlagsmith } from "flagsmith/react";
 import { useAtomValue } from "jotai";
 import { useEffect } from "react";
+
 import { me } from "../API";
 import { isAuthenticatedAtom } from "../auth";
 

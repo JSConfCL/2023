@@ -1,13 +1,16 @@
+import styled from "@emotion/styled";
 import { Suspense, lazy } from "react";
 import ReactMarkdown from "react-markdown";
-import styled from "@emotion/styled";
+
+import remarkGfm from "remark-gfm";
+
 import { PageProps } from "../../../pages/volunteer";
-import { H1, P, UL, LI, Strong } from "../core/Typography";
 import { ViewportSizes } from "../../../styles/theme";
 import { Anchor } from "../CustomMarkdown";
-import remarkGfm from "remark-gfm";
-import JSConfLogo from "../svgs/logo";
 import Image from "../core/Image";
+import { H1, P, UL, LI, Strong } from "../core/Typography";
+
+import JSConfLogo from "../svgs/logo";
 
 const Description = lazy(async () => await import("../core/Description"));
 

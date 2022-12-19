@@ -1,5 +1,8 @@
 import { useFlags } from "flagsmith/react";
+
 import Image from "../core/Image";
+
+import { SectionTile } from "./Title";
 import {
   GithubButton,
   ImageContainer,
@@ -10,7 +13,6 @@ import {
   Shadow,
   SideContainer,
 } from "./shared";
-import { SectionTile } from "./Title";
 
 const YesTicketsCreateAccount = ({ imageUrl }: { imageUrl: string }) => {
   const { google_login_enabled: googleLoginEnabled } = useFlags([

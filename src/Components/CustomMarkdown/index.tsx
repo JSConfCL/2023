@@ -1,9 +1,10 @@
+import styled from "@emotion/styled";
+import { transparentize } from "polished";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { H1, H2, H3, P } from "../core/Typography";
-import styled from "@emotion/styled";
+
 import { ViewportSizes } from "../../../styles/theme";
-import { transparentize } from "polished";
+import { H1, H2, H3, P } from "../core/Typography";
 
 const StyledH1 = styled(H1)`
   font-size: 3rem;

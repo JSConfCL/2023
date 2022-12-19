@@ -1,13 +1,13 @@
-import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
+import { lazy, Suspense } from "react";
 
+import { ViewportSizes } from "../../styles/theme";
 import {
   FooterQueryQuery,
   useFooterQueryQuery,
 } from "../graphql/footer.generated";
 
 import { ParseQuery } from "../helpers/types";
-import { ViewportSizes } from "../../styles/theme";
 
 const Footer = lazy(async () => await import("../Components/Footer/Footer"));
 const SubscribeSection = lazy(

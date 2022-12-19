@@ -1,8 +1,4 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import styled from "@emotion/styled";
-import { motion } from "framer-motion";
-import { ReactNode } from "react";
-
 import {
   Block,
   BLOCKS,
@@ -10,6 +6,10 @@ import {
   Inline,
   MARKS,
 } from "@contentful/rich-text-types";
+import styled from "@emotion/styled";
+import { motion } from "framer-motion";
+import { ReactNode } from "react";
+
 import { B, P, UL } from "./Typography";
 
 const Section = styled(motion.section)``;

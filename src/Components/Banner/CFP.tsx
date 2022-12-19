@@ -1,10 +1,10 @@
-import { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
-import { PageProps } from "../../../pages/cfp";
-import { H1 } from "../core/Typography";
+import { lazy, Suspense } from "react";
 
-import { PrimaryStyledLink } from "../Links";
+import { PageProps } from "../../../pages/cfp";
 import { ViewportSizes } from "../../../styles/theme";
+import { PrimaryStyledLink } from "../Links";
+import { H1 } from "../core/Typography";
 
 const Description = lazy(async () => await import("../core/Description"));
 const Image = lazy(async () => await import("../core/Image"));

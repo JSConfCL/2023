@@ -1,11 +1,13 @@
-import React, { lazy, Suspense } from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
+import React, { lazy, Suspense } from "react";
+
+import { PageProps } from "../../../../pages";
+import { ViewportSizes } from "../../../../styles/theme";
 import useMediaQuery from "../../../helpers/useMediaQuery";
 import { H2 } from "../../core/Typography";
-import { PageProps } from "../../../../pages";
+
 import Description from "./Description";
-import { ViewportSizes } from "../../../../styles/theme";
 
 const Image = lazy(async () => await import("../../core/Image"));
 

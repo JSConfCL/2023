@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
-import { motion } from "framer-motion";
 import { useFlags } from "flagsmith/react";
+import { motion } from "framer-motion";
 import { lazy, Suspense } from "react";
+
 import { PageProps } from "../../../pages";
 import { ViewportSizes } from "../../../styles/theme";
-import { H2 } from "../core/Typography";
 import { PrimaryStyledLink } from "../Links/index";
+import { H2 } from "../core/Typography";
 
 const Description = lazy(async () => await import("../core/Description"));
 const Card = lazy(async () => await import("../Card"));

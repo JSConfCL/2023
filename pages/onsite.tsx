@@ -1,4 +1,7 @@
 import { lazy, Suspense } from "react";
+
+import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
+import Seo from "../src/Components/Seo";
 import {
   HowQueryDocument,
   HowQueryQuery,
@@ -6,8 +9,6 @@ import {
 } from "../src/graphql/how.generated";
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
-import Seo from "../src/Components/Seo";
-import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
 
 const HowCard = lazy(async () => await import("../src/Components/Card/How"));
 
@@ -61,4 +62,4 @@ export async function getStaticProps() {
   };
 }
 
-OnSitePage.getLayout = DefaultPagelayout;
+OnSitePage.getLayout = DefaultPageLayout;

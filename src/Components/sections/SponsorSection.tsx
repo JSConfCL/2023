@@ -1,11 +1,10 @@
 import styled from "@emotion/styled";
-import { lazy } from "react";
 import { transparentize } from "polished";
+import { lazy } from "react";
 
 import { PageProps } from "../../../pages";
-import useMediaQuery from "../../helpers/useMediaQuery";
-
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
+import useMediaQuery from "../../helpers/useMediaQuery";
 
 import { PrimaryStyledLink } from "../Links";
 

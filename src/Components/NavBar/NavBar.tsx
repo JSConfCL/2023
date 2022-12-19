@@ -1,10 +1,11 @@
+import { useFlags } from "flagsmith/react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useMemo } from "react";
-import { useFlags } from "flagsmith/react";
 
 import { accessTokenAtom, isAuthenticatedAtom } from "../../helpers/auth";
-import { parseNavBarData } from "./helper";
+
 import { InternalNavBar } from "./InternalNavBar";
+import { parseNavBarData } from "./helper";
 import { useNavBarQueryQuery } from "./navBar.generated";
 
 const NavBar = ({ id = "22KytadLhMxFZMtvlUYCbl" }: { id?: string }) => {
@@ -39,7 +40,7 @@ const NavBar = ({ id = "22KytadLhMxFZMtvlUYCbl" }: { id?: string }) => {
             onClick: undefined,
           },
           {
-            contenido: "Configuracion",
+            contenido: "Configuración",
             id: "Settings",
             isBlank: false,
             link: "/settings",

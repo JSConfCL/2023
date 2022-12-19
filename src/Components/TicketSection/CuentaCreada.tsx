@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import { Container, Paragraph, SideContainer } from "./shared";
+
 import { SectionTile } from "./Title";
+import { Container, Paragraph, SideContainer } from "./shared";
 
 const LeftSide = styled.div`
   width: 100%;

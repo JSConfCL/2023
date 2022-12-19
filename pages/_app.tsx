@@ -22,6 +22,7 @@ import {
   useState,
 } from "react";
 import { Provider } from "urql";
+
 import { urlQlient } from "../src/graphql/urql";
 import { isAuthenticatedAtom } from "../src/helpers/auth";
 import { GlobalStyles } from "../styles/globalStyles";

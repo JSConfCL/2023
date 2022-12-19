@@ -1,14 +1,17 @@
 import styled from "@emotion/styled";
-import { ViewportSizes } from "../../../styles/theme";
+
+import { useFlags } from "flagsmith/react";
+import { motion } from "framer-motion";
+import { transparentize } from "polished";
+import { CSSProperties } from "react";
 import {
   GithubLoginButton,
   GoogleLoginButton,
 } from "react-social-login-buttons";
-import { CSSProperties } from "react";
+
+import { ViewportSizes } from "../../../styles/theme";
+
 import { API_URL } from "../../helpers/API";
-import { transparentize } from "polished";
-import { motion } from "framer-motion";
-import { useFlags } from "flagsmith/react";
 
 export const Paragraph = styled.p`
   color: #fff;

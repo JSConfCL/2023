@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
 import { useFlags } from "flagsmith/react";
-import { PageContainer } from "../src/Components/common/PageContainer";
 
-import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
+import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
 import { TicketsList } from "../src/Components/Ticket/TicketsList";
+import { PageContainer } from "../src/Components/common/PageContainer";
 
 import { me, myTickets } from "../src/helpers/API";
 import { ViewportSizes } from "../styles/theme";
@@ -64,6 +64,5 @@ const Settings = () => {
   );
 };
 
-Settings.getLayout = DefaultPagelayout;
-
+Settings.getLayout = DefaultPageLayout;
 export default Settings;

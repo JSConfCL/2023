@@ -1,7 +1,8 @@
-import { Key } from "react";
 import styled from "@emotion/styled";
-import LoginButton from "../Button/Login";
+import { Key } from "react";
+
 import { ViewportSizes } from "../../../styles/theme";
+import LoginButton from "../Button/Login";
 
 const ButtonData: Array<{ id: number; text: string; icon: string }> = [
   {

@@ -1,9 +1,10 @@
-import { Suspense, lazy } from "react";
 import styled from "@emotion/styled";
+import { Suspense, lazy } from "react";
 import { Get } from "type-fest";
+
+import { ViewportSizes } from "../../../styles/theme";
 import { FooterQueryQuery } from "../../graphql/footer.generated";
 import { H2 } from "../core/Typography";
-import { ViewportSizes } from "../../../styles/theme";
 
 const Image = lazy(async () => await import("../core/Image"));
 

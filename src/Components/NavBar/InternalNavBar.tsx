@@ -10,10 +10,12 @@ import { Menu as MenuIcon, X } from "react-feather";
 import { Portal } from "react-portal";
 import { useLockBodyScroll } from "react-use";
 import { Simplify } from "type-fest";
+
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { SecondaryStyledButton, SecondaryStyledLink } from "../Links";
 import JSConfLogo from "../svgs/logo";
+
 import { NavBarSize } from "./components";
 const Description = lazy(async () => await import("../core/Description"));
 

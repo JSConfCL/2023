@@ -1,13 +1,14 @@
 import { lazy, Suspense } from "react";
+
+import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
+import Seo from "../src/Components/Seo";
+import { urlQlient } from "../src/graphql/urql";
 import {
   WhyQueryDocument,
   WhyQueryQuery,
   WhyQueryQueryVariables,
 } from "../src/graphql/why.generated";
-import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
-import Seo from "../src/Components/Seo";
-import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
 
 const WhyBanner = lazy(
   async () => await import("../src/Components/Banner/Why")

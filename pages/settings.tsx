@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
 
-import { Alert } from "../src/Components/common/app";
-import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
+import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
 import { UserInformationForm } from "../src/Components/UserInformationForm";
+import { Alert } from "../src/Components/common/app";
 
 import { me } from "../src/helpers/API";
 import { jsconfTheme, ViewportSizes } from "../styles/theme";
@@ -62,6 +62,6 @@ const Settings = () => {
   );
 };
 
-Settings.getLayout = DefaultPagelayout;
+Settings.getLayout = DefaultPageLayout;
 
 export default Settings;

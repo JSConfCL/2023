@@ -1,17 +1,18 @@
+import { useFlags } from "flagsmith/react";
+
+import BannerVolunteer from "../src/Components/Banner/Volunteer";
+import VolunteerForm from "../src/Components/Form/Volunteer";
+
+import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
+import Seo from "../src/Components/Seo";
+import TitleDescription from "../src/Components/common/TitleDescription";
+import { urlQlient } from "../src/graphql/urql";
 import {
   VolunteerQueryDocument,
   VolunteerQueryQuery,
   VolunteerQueryQueryVariables,
 } from "../src/graphql/volunteer.generated";
-import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
-import BannerVolunteer from "../src/Components/Banner/Volunteer";
-import VolunteerForm from "../src/Components/Form/Volunteer";
-
-import { useFlags } from "flagsmith/react";
-import Seo from "../src/Components/Seo";
-import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
-import TitleDescription from "../src/Components/common/TitleDescription";
 
 type Page = ParseQuery<VolunteerQueryQuery["page"]>;
 
@@ -62,4 +63,4 @@ export async function getStaticProps() {
   };
 }
 
-VolunteerPage.getLayout = DefaultPagelayout;
+VolunteerPage.getLayout = DefaultPageLayout;
