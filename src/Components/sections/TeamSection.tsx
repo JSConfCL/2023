@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useFlags } from 'flagsmith/react';
 import { motion } from 'framer-motion';
 import { lazy, Suspense } from 'react';
 
@@ -50,32 +51,6 @@ const DescriptionContainer = styled(motion.section)`
 	}
 `;
 
-const Column = styled(motion.section)<{ index: number }>`
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	width: calc(50% - 16px);
-	top: ${({ index }) => (index % 2 === 1 ? '32px' : '0px')};
-	> section {
-		width: 100%;
-	}
-	a {
-		display: none;
-	}
-	@media (min-width: ${ViewportSizes.Phone}px) {
-		width: fit-content;
-		top: 0px;
-		> section {
-			width: fit-content;
-		}
-	}
-	@media (min-width: 1362px) {
-		a {
-			display: inherit;
-		}
-	}
-`;
-
 const HR = styled.hr`
 	border-width: 1px;
 	border-color: #f45b69;
@@ -100,6 +75,9 @@ const TeamSection = (props: { page: PageProps['teamData'] }) => {
 			membersCollection: { items },
 		},
 	} = props;
+	const { 'volunteer-form-enabled': volunteerFormEnabled } = useFlags([
+		'volunteer-form-enabled',
+	]);
 
 	return (
 		<Container>
@@ -110,47 +88,18 @@ const TeamSection = (props: { page: PageProps['teamData'] }) => {
 				</Suspense>
 				<HR />
 			</DescriptionContainer>
-			<ContainerButton>
-				{callToAction && (
+			{callToAction && volunteerFormEnabled.enabled && (
+				<ContainerButton>
 					<PrimaryStyledLink href={callToAction.link}>
 						{callToAction.contenido}
 					</PrimaryStyledLink>
-				)}
-			</ContainerButton>
+				</ContainerButton>
+			)}
 
-			{items?.map((item, index: number) => {
-				if (index === 6) {
-					return (
-						<Column key={index} index={index}>
-							{callToAction && (
-								<PrimaryStyledLink href={callToAction?.link}>
-									{callToAction?.contenido}
-								</PrimaryStyledLink>
-							)}
-							<Suspense key={`team-${index}`} fallback={null}>
-								<Card
-									key={`team-${index}`}
-									{...item}
-									type={item?.type !== 'blank' ? 'normal-simple' : 'blank'}
-									position={
-										<a
-											href={`https://twitter.com/${item?.twitter}`}
-											target="_blank"
-											rel="noreferrer"
-										>
-											{item?.twitter}
-										</a>
-									}
-								/>
-							</Suspense>
-						</Column>
-					);
-				}
-
+			{items?.map((item, index) => {
 				return (
 					<Suspense key={`speaker-${index}`} fallback={null}>
 						<Card
-							key={`speaker-${index}`}
 							{...item}
 							type={item?.type !== 'blank' ? 'normal-simple' : 'blank'}
 							position={
