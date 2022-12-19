@@ -10,6 +10,7 @@ module.exports = {
     "next/core-web-vitals",
     "plugin:react/recommended",
     "standard-with-typescript",
+    "plugin:import/recommended",
     "prettier",
   ],
   overrides: [],
