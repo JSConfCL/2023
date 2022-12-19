@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 
-import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
+import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../src/Components/Seo";
 import { urlQlient } from "../src/graphql/urql";
 import {
@@ -58,4 +58,4 @@ export async function getStaticProps() {
   };
 }
 
-Why.getLayout = DefaultPagelayout;
+Why.getLayout = DefaultPageLayout;

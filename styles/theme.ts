@@ -1,4 +1,4 @@
-import { Theme } from "@emotion/react";
+import type { Theme } from "@emotion/react";
 
 export const colors = {
   jsconfBlack: "#1E2019",

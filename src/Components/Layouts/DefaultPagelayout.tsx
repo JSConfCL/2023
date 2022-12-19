@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
-import { ReactElement } from "react-markdown/lib/react-markdown";
+import { ReactElement, Suspense } from "react";
 
 import { NavBarProps } from "../NavBar/InternalNavBar";
 import { StyledWrapperSuspense } from "../NavBar/components";

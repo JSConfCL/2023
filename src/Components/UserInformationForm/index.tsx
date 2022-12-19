@@ -10,7 +10,7 @@ import { useEffect, Fragment, useId, useMemo, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { Controller, useForm } from "react-hook-form";
 
-import { StylesConfig } from "react-select";
+import type { StylesConfig } from "react-select";
 import Select from "react-select/creatable";
 
 import { colors, jsconfTheme } from "../../../styles/theme";
