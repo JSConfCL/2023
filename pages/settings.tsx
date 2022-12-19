@@ -8,21 +8,6 @@ import { UserInformationForm } from "../src/Components/UserInformationForm";
 import { me } from "../src/helpers/API";
 import { jsconfTheme, ViewportSizes } from "../styles/theme";
 
-const Title = styled.h2`
-  font-family: "Koulen";
-  font-style: normal;
-  font-weight: 400;
-  display: inline-block;
-  line-height: 1;
-  transition-duration: 250ms;
-  transition-property: font-size;
-  font-size: 2.5rem;
-
-  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
-    font-size: 2.2rem;
-  }
-`;
-
 const StyledContainer = styled.div`
   width: 100%;
   max-width: 500px;
@@ -30,6 +15,13 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  padding-top: 4rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    padding-left: 0rem;
+    padding-right: 0rem;
+  }
 `;
 
 const SytledImageContainer = styled.div`
@@ -59,7 +51,6 @@ const Settings = () => {
           para poder informarte los próximos pasos.
         </Alert>
       ) : null}
-      <Title>Configuracion</Title>
       {isLoading ? (
         <SytledImageContainer>
           <StyledLoadingImage />

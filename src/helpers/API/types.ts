@@ -15,6 +15,11 @@ export type UserType = {
   seniority: null | string;
   username: null | string;
   yearsOfExperience: null | number;
+  foodPreference: null | string;
+  shirtSize: null | string;
+  shirtStyle: null | string;
+  foodAllergy: null | string;
+  pronouns: null | string;
 };
 
 export interface UserPayload {
@@ -26,6 +31,11 @@ export interface UserPayload {
   yearsOfExperience: number;
   country: string;
   gender: string;
+  foodPreference: string;
+  shirtSize: string;
+  shirtStyle: string;
+  foodAllergy: string;
+  pronouns: string;
 }
 
 export interface VolunteerPayload {

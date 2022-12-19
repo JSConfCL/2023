@@ -84,7 +84,7 @@ export const publicTicket = async (ticketId: string): Promise<PublicTicket> => {
 export const updateMe = async (
   object: Partial<UserPayload>
 ): Promise<UserType> => {
-  return await customFetch(`${API_URL}/users/`, {
+  return await customFetch(`${API_URL}/users/me`, {
     method: "PUT",
     body: JSON.stringify(object),
   });
