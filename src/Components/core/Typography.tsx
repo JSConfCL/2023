@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
+import { transparentize } from "polished";
 import { ViewportSizes } from "../../../styles/theme";
 
 export const H1 = styled(motion.h1)<{ color?: string }>`
@@ -88,5 +89,33 @@ export const Strong = styled.strong`
   line-height: 1.75rem;
   @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 20px;
+  }
+`;
+
+export const Anchor = styled.a`
+  color: ${({ theme }) => theme.colors.jsconfYellow};
+  font-weight: bold;
+  height: 50px;
+  transition-duration: 250ms;
+  transition-property: all;
+  cursor: pointer;
+  &:active,
+  &:focus,
+  &:hover {
+    color: ${({ theme }) => theme.colors.jsconfRed};
+  }
+  &:focus,
+  &:hover {
+    transform: translateY(-0.25em);
+  }
+  &:active {
+    box-shadow: none;
+    transform: translateY(0em);
+  }
+  &:disabled,
+  &:disabled:hover {
+    color: ${({ theme }) => transparentize(0.75)(theme.colors.white)};
+    cursor: not-allowed;
+    transform: translateY(0em);
   }
 `;

@@ -15,14 +15,17 @@ export type UserType = {
   seniority: null | string;
   username: null | string;
   yearsOfExperience: null | number;
-  foodPreference: null | string;
-  shirtSize: null | string;
-  shirtStyle: null | string;
-  foodAllergy: null | string;
-  pronouns: null | string;
+} & PreferencesType;
+
+export type PreferencesType = {
+  foodPreference: string;
+  shirtSize: string;
+  shirtStyle: string;
+  foodAllergy: string;
+  pronouns: string;
 };
 
-export interface UserPayload {
+export type UserPayload = {
   name: string;
   username: string;
   company: string;
@@ -31,12 +34,7 @@ export interface UserPayload {
   yearsOfExperience: number;
   country: string;
   gender: string;
-  foodPreference: string;
-  shirtSize: string;
-  shirtStyle: string;
-  foodAllergy: string;
-  pronouns: string;
-}
+} & PreferencesType;
 
 export interface VolunteerPayload {
   email: string;
@@ -68,3 +66,10 @@ export interface PublicTicket {
   ticketType: string;
   ticketSeason: string;
 }
+
+export type SingleTicketType = {
+  id: string;
+  owner: UserType;
+  preferences: PreferencesType;
+  status: string;
+};

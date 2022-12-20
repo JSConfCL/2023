@@ -2,15 +2,13 @@ import styled from "@emotion/styled";
 import countries from "i18n-iso-countries";
 import enLocale from "i18n-iso-countries/langs/en.json";
 import esLocale from "i18n-iso-countries/langs/es.json";
-import { useEffect, Fragment, useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { Controller, useForm } from "react-hook-form";
 
-import { StylesConfig } from "react-select";
 import Select from "react-select/creatable";
-import { GenericBtn } from "../TicketSection/shared";
 import { ErrorResponse, me, updateMe } from "../../helpers/API";
-import { colors, jsconfTheme } from "../../../styles/theme";
+import { jsconfTheme } from "../../../styles/theme";
 
 import {
   emailValidation,
@@ -19,11 +17,18 @@ import {
   optionalStringValidation,
 } from "../Form/schema";
 import { useQuery } from "@tanstack/react-query";
-import { transparentize } from "polished";
-import { H3, P } from "../core/Typography";
-import { Anchor } from "../CustomMarkdown";
-import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
+import { H3 } from "../core/Typography";
+import {
+  customStyles,
+  Error,
+  TextInput,
+  UpdateButton,
+  Form,
+  FormSection,
+  FormFieldsSection,
+  FormFieldSection,
+  FormLabel,
+} from "../Form/components";
 
 interface SelectOption {
   label: any;
@@ -44,26 +49,9 @@ interface FormData {
   seniority?: string;
   yearsOfExperience?: number;
   gender?: SelectOption;
-  foodPreference?: SelectOption;
-  shirtSize?: SelectOption;
-  shirtStyle?: SelectOption;
-  foodAllergy?: SelectOption;
-  pronouns?: SelectOption;
 }
 
 const LANGUAGE = "es";
-
-const InputC = styled.input<{ error: boolean }>`
-  padding-bottom: 8px;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  border: ${({ error }) => `0px solid ${error ? "#F45B69;" : "#F0E040"}`};
-  border-bottom-width: 1px;
-  ::placeholder {
-    color: ${({ theme }) => transparentize(0.5, theme.colors.white)};
-  }
-`;
 
 const SytledImageContainer = styled.div`
   text-align: center;
@@ -84,110 +72,6 @@ const StyledLoadingImage = styled.div`
   border: 8px solid ${jsconfTheme.colors.jsconfYellow};
   margin: 0 auto;
 `;
-
-const UpdateButton = styled(GenericBtn)`
-  display: block;
-  margin-left: auto;
-`;
-
-const ErrorMessage = styled(motion.section)<{ color?: string }>`
-  height: 20px;
-  font-size: 16px;
-  text-transform: capitalize;
-  color: ${({ theme, color }) => color ?? theme.colors.jsconfRed};
-  padding-bottom: 32px;
-`;
-
-const Form = styled.form`
-  display: flex;
-  gap: 2rem;
-  flex-direction: column;
-`;
-
-const FormSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const FormFieldsSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-`;
-
-const FormFieldSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
-
-const FormLabel = styled.label`
-  cursor: pointer;
-`;
-
-const Error = (props: { message?: any; color?: string }) => {
-  const { message, color } = props;
-  return (
-    <AnimatePresence mode="popLayout" initial={false}>
-      {message && (
-        <ErrorMessage color={color} {...animation}>
-          {message}
-        </ErrorMessage>
-      )}
-    </AnimatePresence>
-  );
-};
-
-const customStyles: StylesConfig = {
-  input: ({ ...provided }) => ({
-    ...provided,
-    color: "#ddd",
-  }),
-  option: ({ ...provided }, state) => ({
-    ...provided,
-    color: "white",
-    background: state.isSelected
-      ? jsconfTheme.colors.jsconfRed
-      : state.isFocused
-      ? transparentize(0.5, colors.jsconfRed)
-      : "#333",
-    ":active": {
-      background: transparentize(0.8, colors.jsconfRed),
-    },
-    cursor: state.isDisabled ? "not-allowed" : "pointer",
-  }),
-  menu: ({ ...provided }) => ({
-    ...provided,
-    background: "black",
-    color: "white",
-    borderColor: jsconfTheme.colors.jsconfYellow,
-  }),
-  menuList: ({ ...provided }) => ({
-    ...provided,
-    background: "#333",
-    color: "white",
-  }),
-  control: ({ ...provided }) => ({
-    ...provided,
-    background: "black",
-    color: "white",
-    boxShadow: "none",
-    borderColor: jsconfTheme.colors.jsconfYellow,
-    "&:hover": {
-      borderColor: jsconfTheme.colors.jsconfYellow,
-    },
-  }),
-  placeholder: ({ ...provided }) => ({
-    ...provided,
-    color: transparentize(0.5, jsconfTheme.colors.white),
-  }),
-  singleValue: ({ ...provided }) => ({
-    ...provided,
-    background: "black",
-    color: "white",
-  }),
-};
 
 countries.registerLocale(enLocale);
 countries.registerLocale(esLocale);
@@ -344,26 +228,12 @@ const defaultShirtStyleOptions = [
   { value: "corte_clasico", label: "Corte clásico" },
 ];
 
-const animation = {
-  layout: "position" as "position",
-  initial: { opacity: 0, translateX: -50 },
-  animate: { opacity: 1, translateX: 0 },
-  exit: { opacity: 0, translateX: 50 },
-  transition: {
-    type: "spring",
-    damping: 25,
-  },
-};
-
 export const UserInformationForm = () => {
   const { data: user, refetch } = useQuery(["me"], me);
   const countrySelectId = useId();
-  const foodPreferenceId = useId();
-  const shirtSizeId = useId();
-  const shirtStyleId = useId();
   const genderSelectId = useId();
-  const pronounsSelectId = useId();
   const [submitMessage, setSubmitMessage] = useState("");
+  const [isMutating, setMutating] = useState(false);
   const [formErrors, setFormErrors] = useState<string[]>([]);
   const genderOptions = useGetGenderOptions(user?.gender);
   const foodPreferenceOptions = useGetFoodPreferenceOptions(
@@ -485,26 +355,14 @@ export const UserInformationForm = () => {
             yearsOfExperience: data?.yearsOfExperience,
           }
         : {}),
-      ...(touchedFields?.foodPreference &&
-      data?.foodPreference !== user?.foodPreference
-        ? { foodPreference: data?.foodPreference?.value }
-        : {}),
-      ...(touchedFields?.shirtSize && data?.shirtSize !== user?.shirtSize
-        ? { shirtSize: data?.shirtSize?.value }
-        : {}),
-      ...(touchedFields?.shirtStyle && data?.shirtStyle !== user?.shirtStyle
-        ? { shirtStyle: data?.shirtStyle?.value }
-        : {}),
-      ...(touchedFields?.foodAllergy && data?.foodAllergy !== user?.foodAllergy
-        ? { foodAllergy: data?.foodAllergy?.value }
-        : {}),
-      ...(touchedFields?.pronouns && data?.pronouns !== user?.pronouns
-        ? { pronouns: data?.pronouns?.value }
-        : {}),
     };
 
-    setSubmitMessage("");
     try {
+      setMutating(true);
+      if (isMutating) {
+        return;
+      }
+      setSubmitMessage("");
       const response = await updateMe(submit);
       if ((response as unknown as ErrorResponse).error) {
         const { message } = response as unknown as ErrorResponse;
@@ -520,6 +378,8 @@ export const UserInformationForm = () => {
       }
     } catch (e) {
       setSubmitMessage("Error en la actualización.");
+    } finally {
+      setMutating(false);
     }
   });
 
@@ -544,7 +404,7 @@ export const UserInformationForm = () => {
         <FormFieldsSection>
           <FormFieldSection>
             <FormLabel htmlFor="name">Nombre</FormLabel>
-            <InputC
+            <TextInput
               {...register("name", nameValidation)}
               id="name"
               placeholder="Nombre"
@@ -555,7 +415,7 @@ export const UserInformationForm = () => {
 
           <FormFieldSection>
             <FormLabel htmlFor="username">Nombre de Usuario</FormLabel>
-            <InputC
+            <TextInput
               {...register("username", nameValidation)}
               id="username"
               placeholder="Nombre de Usuario"
@@ -569,7 +429,7 @@ export const UserInformationForm = () => {
             <>
               <FormFieldSection>
                 <FormLabel htmlFor="email">Correo Electrónico</FormLabel>
-                <InputC
+                <TextInput
                   {...register("email", emailValidation)}
                   id="email"
                   placeholder="Correo Electrónico"
@@ -602,7 +462,7 @@ export const UserInformationForm = () => {
 
           <FormFieldSection>
             <FormLabel htmlFor="company">Compañía</FormLabel>
-            <InputC
+            <TextInput
               {...register("company", optionalStringValidation)}
               id="company"
               placeholder="Compañía"
@@ -613,7 +473,7 @@ export const UserInformationForm = () => {
 
           <FormFieldSection>
             <FormLabel htmlFor="position">Posición / Cargo</FormLabel>
-            <InputC
+            <TextInput
               {...register("position", optionalStringValidation)}
               id="position"
               placeholder="Posición / Cargo"
@@ -624,7 +484,7 @@ export const UserInformationForm = () => {
 
           <FormFieldSection>
             <FormLabel htmlFor="seniority">Seniority</FormLabel>
-            <InputC
+            <TextInput
               {...register("seniority", optionalStringValidation)}
               id="seniority"
               placeholder="Seniority"
@@ -637,7 +497,7 @@ export const UserInformationForm = () => {
             <FormLabel htmlFor="yearsOfExperience">
               Años de Experiencia
             </FormLabel>
-            <InputC
+            <TextInput
               {...register("yearsOfExperience", notNegativeNumberValidation)}
               id="yearsOfExperience"
               placeholder="Años de Experiencia"
@@ -667,113 +527,6 @@ export const UserInformationForm = () => {
               )}
             />
             <Error {...errors.gender} />
-          </FormFieldSection>
-        </FormFieldsSection>
-      </FormSection>
-
-      <FormSection>
-        <H3>Preferencias</H3>
-        <P>
-          Estas preferencias se asignarán por defecto a todos tus tickets,
-          puedes asignar preferencias específicas a cada ticket entrando a{" "}
-          <Link href="/mytickets" legacyBehavior>
-            <Anchor>/mytickets</Anchor>
-          </Link>
-        </P>
-        <FormFieldsSection>
-          <FormFieldSection>
-            <FormLabel>Tamaño de Polera</FormLabel>
-            <Controller
-              name="shirtSize"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  placeholder="Tamaño de Polera"
-                  isSearchable={false}
-                  styles={customStyles}
-                  options={defaultShirtSizeOptions}
-                  instanceId={shirtSizeId}
-                />
-              )}
-            />
-            <Error {...errors.country} />
-          </FormFieldSection>
-
-          <FormFieldSection>
-            <FormLabel>Estilo de Polera</FormLabel>
-            <Controller
-              name="shirtStyle"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  placeholder="Estilo de polera"
-                  isSearchable={false}
-                  styles={customStyles}
-                  options={defaultShirtStyleOptions}
-                  instanceId={shirtStyleId}
-                />
-              )}
-            />
-            <Error {...errors.country} />
-          </FormFieldSection>
-
-          <FormFieldSection>
-            <FormLabel>Preferencias Alimenticias</FormLabel>
-            <Controller
-              name="foodPreference"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  isClearable
-                  placeholder="Preferencias alimenticias"
-                  styles={customStyles}
-                  options={foodPreferenceOptions}
-                  instanceId={foodPreferenceId}
-                />
-              )}
-            />
-            <Error {...errors.country} />
-          </FormFieldSection>
-
-          <FormFieldSection>
-            <FormLabel>Alergias alimenticias</FormLabel>
-            <Controller
-              name="foodAllergy"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  isClearable
-                  placeholder="Alergias alimenticias"
-                  styles={customStyles}
-                  options={foodAllergyOptions}
-                  instanceId={shirtStyleId}
-                />
-              )}
-            />
-            <Error {...errors.country} />
-          </FormFieldSection>
-
-          <FormFieldSection>
-            <FormLabel>Pronombres</FormLabel>
-            <Controller
-              name="pronouns"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  isClearable
-                  placeholder="Pronombres"
-                  styles={customStyles}
-                  options={pronounsOptions}
-                  instanceId={pronounsSelectId}
-                />
-              )}
-            />
-            <Error {...errors.country} />
           </FormFieldSection>
         </FormFieldsSection>
         <FormFieldsSection>
