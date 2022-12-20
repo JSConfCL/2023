@@ -10,6 +10,7 @@ import {
   LaPreviaDocument,
   LaPreviaQuery,
 } from "../src/graphql/laprevia.generated";
+import Countdown from "../src/Components/StickyCountdown";
 
 const Particles = lazy(async () => await import("../src/Components/Particles"));
 
@@ -125,6 +126,8 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
       <Suspense fallback={null}>
         {props.teamData && <TeamSection page={props.teamData} />}
       </Suspense>
+
+      <Countdown />
     </Container>
   );
 };
