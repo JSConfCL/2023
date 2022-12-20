@@ -5,6 +5,7 @@ import type { NextPage } from "next";
 
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
+import { ViewportSizes } from "../styles/theme";
 
 import {
   LaPreviaDocument,
@@ -43,36 +44,104 @@ const FriendSection = lazy(
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background: #333;
+  color: ${({ theme }) => theme.colors.textColor};
+  background: ${({ theme }) => theme.colors.backgroundColor};
   scroll-behavior: smooth;
+  width: 100%;
 `;
 
 const Hero = styled.section`
-  color: white;
-  font-size: 32px;
-  width: 100%;
+  color: #000;
+  font-size: 42px;
+  width: 100vw;
   max-width: 1400px;
   margin: 0 auto;
   z-index: 3;
-  height: 100vh;
+  height: calc(100vh - 150px);
   display: flex;
   align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
 `;
 
-const HeroInfo = styled.div``;
+const HeroInfo = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+
+const ExtraInfo = styled.div`
+  z-index: 10;
+  font-size: 18px;
+  font-family: Barlow;
+  font-weight: bold;
+
+  div {
+    text-align: center;
+  }
+
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    display: flex;
+    align-content: space-around;
+    align-items: flex-end;
+    width: 90%;
+    font-size: 24px;
+    div {
+      flex: 1 1 50%;
+    }
+
+    div:first-of-type {
+      text-align: left;
+    }
+
+    div:last-of-type {
+      text-align: right;
+    }
+  }
+`;
 
 const H1 = styled.h1`
-  font-size: 100px;
-  line-height: 100px;
+  color: ${({ theme }) => theme.colors.jsconfRed};
+  font-family: "Permanent Marker";
+  font-size: 42px;
+  line-height: 42px;
   margin: 0;
   padding: 0 24px;
+  display: inline-block;
+
+  &:after {
+    display: block;
+    content: "online";
+    font-size: 16px;
+    line-height: 16px;
+    text-align: right;
+    position: relative;
+    top: -6px;
+  }
+
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    font-size: 120px;
+    line-height: 120px;
+
+    &:after {
+      font-size: 24px;
+      line-height: 24px;
+      top: -10px;
+    }
+  }
 `;
 
 const H2 = styled.h2`
-  font-size: 48px;
-  line-height: 48px;
+  font-family: "Permanent Marker";
+  color: ${({ theme }) => theme.colors.jsconfRed};
+  font-size: 20px;
+  line-height: 20px;
   margin: 0;
   padding: 0 24px;
+
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    font-size: 36px;
+    line-height: 36px;
+  }
 `;
 
 type Page = ParseQuery<LaPreviaQuery["page"]>;
@@ -94,17 +163,31 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
       </Suspense>
       <Suspense fallback={null}>
         <Hero id="home">
-          <Particles backgroundColor="#666" />
+          <Particles backgroundColor="#fff" />
+          <div />
           <HeroInfo style={{ zIndex: "5" }}>
             <H1>La PREVIA</H1>
-            <H2>Un Streaming de JS. De JSConf Chile</H2>
-            <H2>100% Online y Gratis</H2>
+            <H2>10 horas de puro JavaScript</H2>
           </HeroInfo>
+          <ExtraInfo>
+            <div>
+              Streaming en vivo.
+              <br />
+              Más de 10 charlistas
+            </div>
+            <div>
+              Gratis
+              <br />
+              Enero 7, 2023
+              <br />
+              Desde las 12:00 Chile
+            </div>
+          </ExtraInfo>
         </Hero>
       </Suspense>
       <Suspense fallback={null}>
         {props?.speakerData && (
-          <div id="speakers">
+          <div id="speakers" style={{ marginTop: "200px" }}>
             <SpeakerSection page={props?.speakerData} />
           </div>
         )}
@@ -117,13 +200,19 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
         )}
       </Suspense>
       <Suspense fallback={null}>
-        {props?.sponsorType && <SponsorSection page={props?.sponsorType} />}
+        <div id="sponsors">
+          {props?.sponsorType && <SponsorSection page={props?.sponsorType} />}
+        </div>
       </Suspense>
       <Suspense fallback={null}>
-        {props?.friends && <FriendSection friends={props?.friends} />}
+        <div id="friends">
+          {props?.friends && <FriendSection friends={props?.friends} />}
+        </div>
       </Suspense>
       <Suspense fallback={null}>
-        {props.teamData && <TeamSection page={props.teamData} />}
+        <div id="team">
+          {props.teamData && <TeamSection page={props.teamData} />}
+        </div>
       </Suspense>
     </Container>
   );

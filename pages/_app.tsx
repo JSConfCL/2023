@@ -25,7 +25,7 @@ import { Provider } from "urql";
 import { urlQlient } from "../src/graphql/urql";
 import { isAuthenticatedAtom } from "../src/helpers/auth";
 import { GlobalStyles } from "../styles/globalStyles";
-import { jsconfTheme } from "../styles/theme";
+import { jsconfTheme, previaTheme } from "../styles/theme";
 // import { PublicTicketPageMetaTags } from "../src/Components/PublicTicketMetatag";
 
 const WebSchema = dynamic(
@@ -98,6 +98,7 @@ const AppWithQueryClients = ({
   Component: NextPageWithLayout;
   pageProps: AppProps["pageProps"];
 }) => {
+  const { pathname } = useRouter();
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -114,7 +115,9 @@ const AppWithQueryClients = ({
       <Provider value={urlQlient}>
         <TanstackQueryProvider client={queryClient}>
           <Hydrate state={(pageProps as any).dehydratedState}>
-            <ThemeProvider theme={jsconfTheme}>
+            <ThemeProvider
+              theme={pathname === "/laprevia" ? previaTheme : jsconfTheme}
+            >
               <GlobalStyles />
               <Suspense fallback={null}>
                 <WebSchema />
