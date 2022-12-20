@@ -5,11 +5,13 @@ import type { NextPage } from "next";
 
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
+import { ViewportSizes } from "../styles/theme";
 
 import {
   LaPreviaDocument,
   LaPreviaQuery,
 } from "../src/graphql/laprevia.generated";
+
 import Countdown from "../src/Components/StickyCountdown";
 
 const Particles = lazy(async () => await import("../src/Components/Particles"));
@@ -57,7 +59,7 @@ const Hero = styled.section`
   max-width: 1400px;
   margin: 0 auto;
   z-index: 3;
-  height: 100vh;
+  height: calc(100vh - 150px);
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -70,35 +72,40 @@ const HeroInfo = styled.div`
 `;
 
 const ExtraInfo = styled.div`
-  width: 100%;
-  font-size: 24px;
   z-index: 10;
-
-  display: flex;
-  align-content: space-around;
-  align-items: flex-end;
-
+  font-size: 18px;
   font-family: Barlow;
   font-weight: bold;
 
   div {
-    flex: 1 1 50%;
+    text-align: center;
   }
 
-  div:first-of-type {
-    text-align: left;
-  }
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    display: flex;
+    align-content: space-around;
+    align-items: flex-end;
+    width: 90%;
+    font-size: 24px;
+    div {
+      flex: 1 1 50%;
+    }
 
-  div:last-of-type {
-    text-align: right;
+    div:first-of-type {
+      text-align: left;
+    }
+
+    div:last-of-type {
+      text-align: right;
+    }
   }
 `;
 
 const H1 = styled.h1`
   color: ${({ theme }) => theme.colors.jsconfRed};
   font-family: "Permanent Marker";
-  font-size: 120px;
-  line-height: 120px;
+  font-size: 42px;
+  line-height: 42px;
   margin: 0;
   padding: 0 24px;
   display: inline-block;
@@ -106,21 +113,37 @@ const H1 = styled.h1`
   &:after {
     display: block;
     content: "online";
-    font-size: 32px;
-    line-height: 32px;
+    font-size: 16px;
+    line-height: 16px;
     text-align: right;
     position: relative;
-    top: -10px;
+    top: -6px;
+  }
+
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    font-size: 120px;
+    line-height: 120px;
+
+    &:after {
+      font-size: 24px;
+      line-height: 24px;
+      top: -10px;
+    }
   }
 `;
 
 const H2 = styled.h2`
   font-family: "Permanent Marker";
   color: ${({ theme }) => theme.colors.jsconfRed};
-  font-size: 36px;
-  line-height: 36px;
+  font-size: 20px;
+  line-height: 20px;
   margin: 0;
   padding: 0 24px;
+
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    font-size: 36px;
+    line-height: 36px;
+  }
 `;
 
 type Page = ParseQuery<LaPreviaQuery["page"]>;
@@ -187,8 +210,9 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
       <Suspense fallback={null}>
         {props.teamData && <TeamSection page={props.teamData} />}
       </Suspense>
-
-      <Countdown />
+      <Suspense fallback={null}>
+        <Countdown />
+      </Suspense>
     </Container>
   );
 };
