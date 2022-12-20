@@ -12,8 +12,6 @@ import {
   LaPreviaQuery,
 } from "../src/graphql/laprevia.generated";
 
-import Countdown from "../src/Components/StickyCountdown";
-
 const Particles = lazy(async () => await import("../src/Components/Particles"));
 
 const NavBar = dynamic(
@@ -209,9 +207,6 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
       </Suspense>
       <Suspense fallback={null}>
         {props.teamData && <TeamSection page={props.teamData} />}
-      </Suspense>
-      <Suspense fallback={null}>
-        <Countdown />
       </Suspense>
     </Container>
   );

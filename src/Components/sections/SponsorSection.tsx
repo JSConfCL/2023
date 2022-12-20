@@ -5,7 +5,7 @@ import { transparentize } from "polished";
 import { PageProps } from "../../../pages";
 import useMediaQuery from "../../helpers/useMediaQuery";
 
-import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
+import { ViewportSizes } from "../../../styles/theme";
 
 import { PrimaryStyledLink } from "../Links";
 
@@ -49,6 +49,7 @@ const ImageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     align-items: center;
     justify-self: center;
@@ -56,7 +57,8 @@ const ImageContainer = styled.div`
 `;
 
 const ConstributorType = styled.section`
-  background-color: ${transparentize(0.86, jsconfTheme.colors.jsconfRed)};
+  background-color: ${({ theme }) =>
+    transparentize(0.86, theme.colors.contributorFooter)};
   border-radius: 32px;
   position: relative;
   padding: 2rem 1rem;
@@ -69,7 +71,7 @@ const ConstributorType = styled.section`
 const ContributorName = styled.h3`
   position: absolute;
   font-size: 32px;
-  color: white;
+  color: ${({ theme }) => theme.colors.textColor};
   top: -34px;
   left: 29px;
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {

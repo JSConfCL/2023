@@ -23,7 +23,9 @@ export const colors = {
   altColor: "#F0E040",
   textColor: "#fff",
   backgroundColor: "#000",
+  altBackgroundColor: "#F0E040",
   footer: "#333",
+  contributorFooter: "#F45B69",
 };
 
 const fonts = {
@@ -125,6 +127,8 @@ export const previaTheme = {
     altColor: "#F45B69",
     textColor: "#333",
     backgroundColor: "#fff",
-    footer: "#333",
+    footer: "#fff",
+    altBackgroundColor: "#1E2019",
+    contributorFooter: "#111",
   },
 };

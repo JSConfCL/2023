@@ -32,7 +32,9 @@ type Colors = {
   altColor: string;
   textColor: string;
   backgroundColor: string;
+  altBackgroundColor: string;
   footer: string;
+  contributorFooter: string;
 };
 
 declare module "@emotion/react" {
