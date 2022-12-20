@@ -1,6 +1,6 @@
 import { Theme } from "@emotion/react";
 
-export const colors = {
+const _colors = {
   jsconfBlack: "#1E2019",
   jsconfYellow: "#F0E040",
   jsconfRed: "#F45B69",
@@ -14,6 +14,16 @@ export const colors = {
     linkedin: "#0A66C2",
     jsconf: "#F0E040",
   },
+};
+
+export const colors = {
+  ..._colors,
+  titleColor: "#fff",
+  subtitleColor: "#fff",
+  altColor: "#F0E040",
+  textColor: "#fff",
+  backgroundColor: "#000",
+  footer: "#333",
 };
 
 const fonts = {
@@ -52,7 +62,7 @@ const breakpoints = {
   tabletLandscapeOnly: generateMediaQueryString(ViewportSizes.TabletLandscape),
 };
 
-export const jsconfTheme: Theme = {
+const theme: Theme = {
   colors,
   fonts,
   breakpoints,
@@ -99,5 +109,22 @@ export const jsconfTheme: Theme = {
       headingsFontWeight: 400,
       color: colors.white,
     },
+  },
+};
+
+export const jsconfTheme = {
+  ...theme,
+};
+
+export const previaTheme = {
+  ...theme,
+  colors: {
+    ...colors,
+    titleColor: "#111",
+    subtitleColor: "#111",
+    altColor: "#F45B69",
+    textColor: "#333",
+    backgroundColor: "#fff",
+    footer: "#333",
   },
 };

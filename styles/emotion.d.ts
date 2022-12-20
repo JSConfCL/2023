@@ -27,6 +27,12 @@ type Colors = {
     linkedin: string;
     jsconf: string;
   };
+  titleColor: string;
+  subtitleColor: string;
+  altColor: string;
+  textColor: string;
+  backgroundColor: string;
+  footer: string;
 };
 
 declare module "@emotion/react" {
