@@ -1,11 +1,11 @@
-import { Suspense, lazy } from "react";
 import styled from "@emotion/styled";
+import { Suspense } from "react";
+import { Linkedin, Twitter, Facebook } from "react-feather";
 import { Get } from "type-fest";
+
 import { FooterQueryQuery } from "../../graphql/footer.generated";
 import { H2 } from "../core/Typography";
 import { ViewportSizes } from "../../../styles/theme";
-
-const Image = lazy(async () => await import("../core/Image"));
 
 interface Props {
   page: Get<FooterQueryQuery, "page.followUsBlock">;
@@ -54,6 +54,8 @@ const Flex = styled.section`
 `;
 
 const StyledA = styled.a`
+  color: ${({ theme }) => theme.colors.textColor};
+
   &:hover {
     transform: scale(1.2);
   }
@@ -65,6 +67,22 @@ const titleAnimation = {
     duration: 0.1,
     type: "tween",
   },
+};
+
+const Icons = {
+  Linkedin,
+  Twitter,
+  Facebook,
+};
+
+const Icon = ({ name }: { name?: "Linkedin" | "Twitter" | "Facebook" }) => {
+  if (!name) {
+    return null;
+  }
+
+  const TheIcon = Icons[name];
+
+  return <TheIcon size={40} />;
 };
 
 const FollowUsSection = (props: Props) => (
@@ -80,12 +98,14 @@ const FollowUsSection = (props: Props) => (
             key={`social-${index}`}
           >
             <Suspense>
-              <Image
-                key={`logo-${index}`}
-                mobile={item?.icon?.url!}
-                alt={`${item?.name!} logo`}
-                params="&w=40"
-                style={{ width: "40px", aspectRatio: "40 / 40" }}
+              <Icon
+                name={
+                  (item?.name ?? undefined) as
+                    | "Linkedin"
+                    | "Facebook"
+                    | "Twitter"
+                    | undefined
+                }
               />
             </Suspense>
           </StyledA>
