@@ -31,16 +31,6 @@ const nextConfig = {
     emotion: true,
   },
   optimizeFonts: false,
-  async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          source: "/laprevia",
-          destination: "/",
-        },
-      ],
-    };
-  },
 };
 
 const MinimizeConfig = { ...withCss(withPurgeCss()), ...nextConfig };
