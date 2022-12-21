@@ -5,24 +5,24 @@ export interface LinkMenuItem {
   link: string;
   onClick?: never;
   isBlank: boolean;
-  contenido: React.ReactNode;
+  contenido: React.ReactNode | string;
 }
 export interface ButtonMenuItem {
   id: string;
   link?: never;
   onClick: () => void;
-  contenido: string;
+  contenido: React.ReactNode | string;
 }
 
 export interface ButtonItem {
   link: string;
   onClick?: never;
-  contenido: string;
+  contenido: React.ReactNode | string;
 }
 export interface ButtonItemOnClick {
   link?: never;
   onClick: () => void;
-  contenido: string;
+  contenido: React.ReactNode | string;
 }
 
 export type MenuItemType = Simplify<LinkMenuItem | ButtonMenuItem>;

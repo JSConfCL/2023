@@ -6,18 +6,19 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { lazy, Suspense } from "react";
 import { use100vh } from "react-div-100vh";
-import { LogIn, Menu as MenuIcon, X } from "react-feather";
+import { Menu as MenuIcon, X, LogOut, Settings, Bookmark } from "react-feather";
 import { Portal } from "react-portal";
 import { useLockBodyScroll } from "react-use";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
-import { isAuthenticatedAtom } from "../../helpers/auth";
+import { isAuthenticatedAtom, accessTokenAtom } from "../../helpers/auth";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { SecondaryStyledButton, SecondaryStyledLink } from "../Links";
 import JSConfLogo from "../svgs/logo";
 import { NavBarSize } from "./components";
 import { UserDropdownMenu } from "./DropdownMenu";
 import { MenuItemType, NavBarProps } from "./types";
+
 const Description = lazy(async () => await import("../core/Description"));
 
 const StyledNav = styled(motion.nav)`
@@ -28,13 +29,6 @@ const StyledNav = styled(motion.nav)`
   width: 100%;
   display: flex;
   overflow: hidden;
-`;
-
-const StyledNavItem = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
 `;
 
 const StyledWrapper = styled.div(({ theme }) => ({
@@ -55,6 +49,7 @@ const StyledLinksContainer = styled.ul`
   flex-direction: row;
   align-items: center;
   gap: 20px;
+
   @media (max-width: ${ViewportSizes.Phone}px) {
     display: none;
   }
@@ -195,6 +190,7 @@ const isOpenAtom = atom(false);
 const MenuItem = ({ item }: { item: MenuItemType }) => {
   const { pathname } = useRouter();
   const setIsOpen = useSetAtom(isOpenAtom);
+
   return (
     <StyledLink
       key={item.id}
@@ -209,10 +205,14 @@ const MenuItem = ({ item }: { item: MenuItemType }) => {
         </FakeButton>
       ) : item.isBlank ? (
         <Link rel="preconnect" href={item.link} passHref>
-          <a target="_blank">{item.contenido}</a>
+          <a target="_blank">
+            <span>{item.contenido}</span>
+          </a>
         </Link>
       ) : (
-        <Link href={item.link}>{item.contenido}</Link>
+        <Link href={item.link}>
+          <span>{item.contenido}</span>
+        </Link>
       )}
       {item?.link === pathname ? <UnderLine /> : null}
     </StyledLink>
@@ -331,6 +331,9 @@ const NavVariant: Variants = {
 
 export const InternalNavBar = (props: NavBarProps) => {
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
+  const setAccessToken = useSetAtom(accessTokenAtom);
+
+  console.log({ items: props.items });
   return (
     <StyledNav variants={NavVariant} animate="animate" initial="initial">
       <StyledWrapper>
@@ -343,26 +346,47 @@ export const InternalNavBar = (props: NavBarProps) => {
           {props.items.map((item) => {
             return <MenuItem key={item.id} item={item} />;
           })}
-          {isLoggedIn ? (
-            <UserDropdownMenu />
-          ) : (
-            <MenuItem
-              item={{
-                contenido: (
-                  <StyledNavItem>
-                    <LogIn size={14} />
-                    Login
-                  </StyledNavItem>
-                ),
-                id: "Login",
-                link: "/login",
-                isBlank: false,
-              }}
-            />
-          )}
+          {isLoggedIn ? <UserDropdownMenu /> : null}
         </StyledLinksContainer>
         <MobileMenu
-          items={props.items}
+          items={[
+            ...props.items,
+            ...(isLoggedIn
+              ? [
+                  {
+                    contenido: (
+                      <>
+                        <Bookmark size={26} /> Mis Tickets
+                      </>
+                    ),
+                    id: "MyTickets",
+                    link: "/mytickets",
+                    isBlank: false,
+                  },
+                  {
+                    contenido: (
+                      <>
+                        <Settings size={26} /> Configuracion
+                      </>
+                    ),
+                    id: "Settings",
+                    link: "/settings",
+                    isBlank: false,
+                  },
+                  {
+                    contenido: (
+                      <>
+                        <LogOut size={26} /> Salir
+                      </>
+                    ),
+                    id: "Logout",
+                    onClick: () => {
+                      setAccessToken(null);
+                    },
+                  },
+                ]
+              : []),
+          ]}
           buttonsCollection={props.buttonsCollection}
           description={props.description}
         />
