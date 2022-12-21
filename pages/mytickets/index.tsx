@@ -15,6 +15,7 @@ import { me, myTickets } from "../../src/helpers/API";
 const MyTicketsWrapper = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
   gap: 2rem;
   flex: 1;
 `;

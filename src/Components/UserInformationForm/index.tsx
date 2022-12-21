@@ -352,7 +352,10 @@ export const UserInformationForm = () => {
       ...(touchedFields?.yearsOfExperience &&
       data?.yearsOfExperience !== user?.yearsOfExperience
         ? {
-            yearsOfExperience: data?.yearsOfExperience,
+            yearsOfExperience: parseInt(
+              // @ts-expect-error issues con types desde la API
+              data?.yearsOfExperience
+            ),
           }
         : {}),
     };
