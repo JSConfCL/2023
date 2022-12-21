@@ -39,7 +39,7 @@ export const StyledBlackWrapp = styled.section`
   flex-direction: column;
   flex: 1;
   align-items: center;
-  background-color: ${({ theme }) => theme.elements.global.backgroundColor};
+  background-color: ${({ theme }) => theme.colors.backgroundColor};
 `;
 
 export interface LayoutPageProps extends React.ComponentPropsWithoutRef<"div"> {

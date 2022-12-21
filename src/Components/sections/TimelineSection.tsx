@@ -165,7 +165,7 @@ const StyledButton = styled.button`
 
 const TableCell = styled.td`
   display: block;
-  color: white;
+  color: ${({ theme }) => theme.colors.textColor};
   font-size: 18px;
   text-transform: capitalize;
 
@@ -206,7 +206,7 @@ const AuthorCell = styled(TableCell)`
   padding-right: 16px;
   white-space: nowrap;
   font-size: 20px;
-  color: ${jsconfTheme.colors.jsconfYellow};
+  color: ${({ theme }) => theme.colors.altColor};
   font-weight: bold;
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {

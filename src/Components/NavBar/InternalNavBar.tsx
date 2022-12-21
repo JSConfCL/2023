@@ -104,7 +104,7 @@ const StyledPortalWrapper = styled(motion.section)<{ height: number | string }>`
   top: -200vh;
   overflow: scroll;
 
-  background-color: #f0e040;
+  background-color: ${({ theme }) => theme.colors.altColor};
   flex-direction: column;
   align-items: center;
   font-size: 32px;

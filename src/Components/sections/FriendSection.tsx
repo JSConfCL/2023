@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { transparentize } from "polished";
 import { keyframes } from "@emotion/react";
 import { lazy } from "react";
 import Link from "next/link";
@@ -37,6 +38,7 @@ const Container = styled.section`
   flex-direction: column;
   width: 100%;
   max-width: 1440px;
+  margin: 0 auto;
   gap: 0px 32px;
   padding: 16px 16px 48px 16px;
   justify-content: space-between;
@@ -56,7 +58,10 @@ const ImageContainer = styled.section`
   align-items: center;
   gap: 64px;
   flex-wrap: wrap;
-
+  background-color: ${({ theme }) =>
+    transparentize(0.86, theme.colors.friendsBackground)};
+  padding: 32px 0;
+  border-radius: 32px;
   img {
     opacity: 0.5;
     &:hover {

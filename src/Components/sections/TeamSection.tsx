@@ -16,6 +16,7 @@ const Container = styled.section`
   flex-direction: row;
   width: 100%;
   max-width: 1440px;
+  margin: 0 auto;
   gap: 32px 16px;
   padding: 16px;
   justify-content: flex-start;
@@ -45,7 +46,7 @@ const DescriptionContainer = styled(motion.section)`
   max-width: 400px;
 
   p {
-    color: #f0e040;
+    color: ${({ theme }) => theme.colors.altColor};
     font-weight: 400;
   }
 `;

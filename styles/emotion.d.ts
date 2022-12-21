@@ -35,6 +35,7 @@ type Colors = {
   altBackgroundColor: string;
   footer: string;
   contributorFooter: string;
+  friendsBackground: string;
 };
 
 declare module "@emotion/react" {

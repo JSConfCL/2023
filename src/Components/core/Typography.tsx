@@ -13,13 +13,13 @@ export const H1 = styled(motion.h1)<{ color?: string }>`
   display: flex;
   align-items: center;
   text-transform: uppercase;
-  color: ${({ color }) => color ?? "white"};
+  color: ${({ theme, color }) => color ?? theme.colors.titleColor};
 `;
 
 export const H2 = styled(motion.h2)`
   font-family: "Koulen";
   letter-spacing: 1px;
-  color: #ffffff;
+  color: ${({ theme, color }) => color ?? theme.colors.titleColor};
   font-weight: 400;
   text-align: left;
   font-size: 40px;

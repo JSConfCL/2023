@@ -26,6 +26,7 @@ export const colors = {
   altBackgroundColor: "#F0E040",
   footer: "#333",
   contributorFooter: "#F45B69",
+  friendsBackground: "#000",
 };
 
 const fonts = {
@@ -129,6 +130,7 @@ export const previaTheme = {
     backgroundColor: "#fff",
     footer: "#fff",
     altBackgroundColor: "#1E2019",
-    contributorFooter: "#111",
+    contributorFooter: "#000",
+    friendsBackground: "#000",
   },
 };
