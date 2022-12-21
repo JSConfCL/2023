@@ -141,6 +141,21 @@ export const previaTheme: Theme = {
   },
   elements: {
     ...theme.elements,
+    buttons: {
+      variants: {
+        ...theme.elements.buttons.variants,
+        primary: {
+          backgroundColor: colors.jsconfRed,
+          backgroundFallbackColor: colors.jsconfRed,
+          textColor: "#fff",
+          borderColor: colors.transparent,
+          borderWidth: 1,
+          borderStyle: "solid",
+          borderTopRightRadius: 24,
+          onHoverColor: "#fff",
+        },
+      },
+    },
     navBarDropDown: {
       backgroundColor: colors.white,
       imageBorderColor: colors.jsconfBlack,

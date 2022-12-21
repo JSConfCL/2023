@@ -38,7 +38,10 @@ const BasePrimaryAnchor = styled.a(({ theme }) => ({
   borderStyle: theme.elements.buttons.variants.primary.borderStyle,
   // boxShadow: `0 2px 10px ${lighten(0.55, theme.colors.black)}`,
   "&:hover": {
-    background: lighten(0.1, theme.colors.jsconfYellow),
+    background: lighten(
+      0.1,
+      theme.elements.buttons.variants.primary.backgroundColor
+    ),
     color: theme.elements.buttons.variants.primary.onHoverColor,
   },
 
@@ -95,6 +98,7 @@ const BaseTertiaryExternalLink = styled.a(({ theme }) => ({
 }));
 
 const StyledIconWrapper = styled.div`
+  fill: ${({ theme }) => theme.elements.buttons.variants.primary.textColor};
   position: absolute;
   bottom: 0;
   right: 0;
