@@ -110,6 +110,7 @@ const theme: Theme = {
       imageBorderColor: colors.jsconfYellow,
       shadowColor: colors.jsconfBlack,
       textColor: colors.white,
+      chevronColor: colors.black,
     },
     global: {
       backgroundColor: colors.black,
@@ -161,6 +162,7 @@ export const previaTheme: Theme = {
       imageBorderColor: colors.jsconfBlack,
       shadowColor: colors.jsconfBlack,
       textColor: colors.jsconfBlack,
+      chevronColor: colors.black,
     },
   },
 };

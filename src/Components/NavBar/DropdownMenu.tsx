@@ -14,6 +14,7 @@ import { useSetAtom } from "jotai";
 const Container = styled.div`
   font-family: "Koulen";
 `;
+
 const StyledDropdownWrapper = styled.div`
   display: flex;
   position: relative;
@@ -24,6 +25,7 @@ const StyledDropdownWrapper = styled.div`
   cursor: pointer;
   color: ${({ theme }) => theme.elements.navBarDropDown.textColor};
 `;
+
 const StyledImageWrapper = styled.div<{ image: string | null }>`
   background-color: ${({ theme }) =>
     theme.elements.navBarDropDown.backgroundColor};
@@ -38,6 +40,7 @@ const StyledImageWrapper = styled.div<{ image: string | null }>`
   background-image: url(${({ image }) => image});
   background-size: cover;
 `;
+
 const StyledIconWrapper = styled.div<{ isClosed: boolean }>`
   transform: ${({ isClosed }) =>
     isClosed ? `rotate(0deg)` : `rotate(180deg)`};
@@ -45,12 +48,14 @@ const StyledIconWrapper = styled.div<{ isClosed: boolean }>`
   transition-property: transform;
   transition-duration: 150ms;
   transition-timing-function: ease-in-out;
+  color: ${({ theme }) => theme.elements.navBarDropDown.chevronColor};
 `;
 
 export const fadeIn = keyframes`
   from { opacity: 0; }
   to   { opacity: 1; }
 `;
+
 const DrowndownContainer = styled.div<{ isOpen: boolean }>`
   padding-top: 0.5rem;
   padding-bottom: 1rem;
@@ -70,7 +75,9 @@ const DrowndownContainer = styled.div<{ isOpen: boolean }>`
     ${({ theme }) =>
       transparentize(0.7, theme.elements.navBarDropDown.shadowColor)};
   gap: 0.75rem;
+  color: ${({ theme }) => theme.elements.navBarDropDown.textColor};
 `;
+
 const StyledUsername = styled.span`
   font-weight: bold;
   flex: 1;
@@ -96,6 +103,7 @@ const StyledMenuElement = styled.div`
   align-items: center;
   gap: 0.5rem;
 `;
+
 const StyledAnchor = styled.a`
   cursor: pointer;
   line-height: 0.5rem;
@@ -140,6 +148,7 @@ export const UserDropdownMenu = () => {
   if (!data) {
     return null;
   }
+
   return (
     <Container ref={containerRef}>
       <StyledDropdownWrapper

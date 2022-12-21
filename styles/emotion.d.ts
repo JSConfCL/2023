@@ -18,6 +18,7 @@ type NavBarDropDownMenu = {
   textColor: string;
   shadowColor: string;
   imageBorderColor: string;
+  chevronColor: string;
 };
 
 type Colors = {
