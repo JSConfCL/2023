@@ -104,6 +104,12 @@ const theme: Theme = {
         },
       },
     },
+    navBarDropDown: {
+      backgroundColor: colors.black,
+      imageBorderColor: colors.jsconfYellow,
+      shadowColor: colors.jsconfBlack,
+      textColor: colors.white,
+    },
     global: {
       backgroundColor: colors.black,
       fontFamily: fonts.Barlow.name,
@@ -114,11 +120,11 @@ const theme: Theme = {
   },
 };
 
-export const jsconfTheme = {
+export const jsconfTheme: Theme = {
   ...theme,
 };
 
-export const previaTheme = {
+export const previaTheme: Theme = {
   ...theme,
   colors: {
     ...colors,
@@ -130,5 +136,14 @@ export const previaTheme = {
     footer: "#fff",
     altBackgroundColor: "#1E2019",
     contributorFooter: "#111",
+  },
+  elements: {
+    ...theme.elements,
+    navBarDropDown: {
+      backgroundColor: colors.white,
+      imageBorderColor: colors.jsconfBlack,
+      shadowColor: colors.jsconfBlack,
+      textColor: colors.jsconfBlack,
+    },
   },
 };
