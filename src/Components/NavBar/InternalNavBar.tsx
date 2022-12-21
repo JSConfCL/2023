@@ -1,20 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
 import styled from "@emotion/styled";
 import { motion, useAnimation, Variants } from "framer-motion";
-import { atom, useAtom, useSetAtom } from "jotai";
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { lazy, Suspense } from "react";
 import { use100vh } from "react-div-100vh";
-import { Menu as MenuIcon, X } from "react-feather";
+import { LogIn, Menu as MenuIcon, X } from "react-feather";
 import { Portal } from "react-portal";
 import { useLockBodyScroll } from "react-use";
-import { Simplify } from "type-fest";
+
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
+import { isAuthenticatedAtom } from "../../helpers/auth";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { SecondaryStyledButton, SecondaryStyledLink } from "../Links";
 import JSConfLogo from "../svgs/logo";
 import { NavBarSize } from "./components";
+import { UserDropdownMenu } from "./DropdownMenu";
+import { MenuItemType, NavBarProps } from "./types";
 const Description = lazy(async () => await import("../core/Description"));
 
 const StyledNav = styled(motion.nav)`
@@ -25,6 +28,13 @@ const StyledNav = styled(motion.nav)`
   width: 100%;
   display: flex;
   overflow: hidden;
+`;
+
+const StyledNavItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 `;
 
 const StyledWrapper = styled.div(({ theme }) => ({
@@ -166,39 +176,6 @@ const MobileFeatherIconWrapper = styled.span`
     display: none;
   }
 `;
-
-interface LinkMenuItem {
-  id: string;
-  link: string;
-  onClick?: never;
-  isBlank: boolean;
-  contenido: string;
-}
-interface ButtonMenuItem {
-  id: string;
-  link?: never;
-  onClick: () => void;
-  contenido: string;
-}
-
-interface ButtonItem {
-  link: string;
-  onClick?: never;
-  contenido: string;
-}
-interface ButtonItemOnClick {
-  link?: never;
-  onClick: () => void;
-  contenido: string;
-}
-
-type MenuItemType = Simplify<LinkMenuItem | ButtonMenuItem>;
-
-export type NavBarProps = Simplify<{
-  items: MenuItemType[];
-  description?: any;
-  buttonsCollection?: Array<Simplify<ButtonItem | ButtonItemOnClick>>;
-}>;
 
 const FakeButton = styled.div`
   cursor: pointer;
@@ -353,6 +330,7 @@ const NavVariant: Variants = {
 };
 
 export const InternalNavBar = (props: NavBarProps) => {
+  const isLoggedIn = useAtomValue(isAuthenticatedAtom);
   return (
     <StyledNav variants={NavVariant} animate="animate" initial="initial">
       <StyledWrapper>
@@ -365,6 +343,23 @@ export const InternalNavBar = (props: NavBarProps) => {
           {props.items.map((item) => {
             return <MenuItem key={item.id} item={item} />;
           })}
+          {isLoggedIn ? (
+            <UserDropdownMenu />
+          ) : (
+            <MenuItem
+              item={{
+                contenido: (
+                  <StyledNavItem>
+                    <LogIn size={14} />
+                    Login
+                  </StyledNavItem>
+                ),
+                id: "Login",
+                link: "/login",
+                isBlank: false,
+              }}
+            />
+          )}
         </StyledLinksContainer>
         <MobileMenu
           items={props.items}

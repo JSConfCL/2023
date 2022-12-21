@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { ViewportSizes } from "../../../styles/theme";
 import { StyledWrapperSuspense } from "../NavBar/components";
-import { NavBarProps } from "../NavBar/InternalNavBar";
+import { NavBarProps } from "../NavBar/types";
 
 const TicketNavBar = dynamic(async () => await import("../NavBar/NavBar"), {
   ssr: false,

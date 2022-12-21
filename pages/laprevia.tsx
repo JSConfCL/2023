@@ -11,6 +11,7 @@ import {
   LaPreviaDocument,
   LaPreviaQuery,
 } from "../src/graphql/laprevia.generated";
+import { StyledWrapperSuspense } from "../src/Components/NavBar/components";
 
 const Particles = lazy(async () => await import("../src/Components/Particles"));
 
@@ -158,7 +159,7 @@ export interface PageProps {
 const Home: NextPage<PageProps> = (props: PageProps) => {
   return (
     <Container>
-      <Suspense>
+      <Suspense fallback={<StyledWrapperSuspense />}>
         <NavBar id="yEsNC4mdITUXpMO1REbOv" />
       </Suspense>
       <Suspense fallback={null}>
