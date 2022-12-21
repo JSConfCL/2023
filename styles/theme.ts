@@ -12,6 +12,7 @@ export const colors = {
     twitter: "#0087ca",
     facebook: "#1877F2",
     linkedin: "#0A66C2",
+    jsconf: "#F0E040",
   },
 };
 

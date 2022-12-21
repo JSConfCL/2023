@@ -6,7 +6,6 @@ import { ArrowLeft, CreditCard, Loader } from "react-feather";
 
 import { ViewportSizes } from "../../../styles/theme";
 import { createPayment } from "../../helpers/API";
-import { Anchor } from "../CustomMarkdown";
 import {
   GenericBtn,
   Paragraph,
@@ -16,6 +15,8 @@ import {
   PaymentButtonWrapper,
 } from "../TicketSection/shared";
 import { Alert } from "../common/app";
+
+import { Anchor } from "../core/Typography";
 
 import {
   paymentSelectedAtom,

@@ -25,6 +25,7 @@ type Colors = {
     twitter: string;
     facebook: string;
     linkedin: string;
+    jsconf: string;
   };
 };
 

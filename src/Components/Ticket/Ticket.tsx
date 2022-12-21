@@ -1,25 +1,20 @@
 import styled from "@emotion/styled";
-import { atcb_action, atcb_init } from "add-to-calendar-button";
+import { atcb_init } from "add-to-calendar-button";
 import Atropos from "atropos/react";
 import { AnimatePresence, motion, MotionProps } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Facebook, Linkedin, Twitter, Copy, Calendar } from "react-feather";
-import toast, { Toaster } from "react-hot-toast";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 import { GenericLink } from "../TicketSection/shared";
 
-const SharingInfo = styled.div`
-  text-align: center;
-  margin-bottom: 64px;
-`;
+import { SocialLinks } from "./SocialLinks";
 
 const GetTicket = styled.div`
   text-align: center;
   margin-bottom: 64px;
 `;
 
-const FakeContainer = styled(motion.div)`
+export const FakeTicketContainer = styled(motion.div)`
   height: 480px;
   @media (min-width: ${ViewportSizes.Phone}px) {
     height: 380px;
@@ -29,7 +24,7 @@ const FakeContainer = styled(motion.div)`
 const MotionContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
   align-items: center;
 `;
 
@@ -47,7 +42,7 @@ const TicketContainer = styled.div`
   width: 350px;
   height: 480px;
   margin: 0 auto 16px;
-  background: #333;
+  background: ${({ theme }) => theme.colors.jsconfBlack};
   position: relative;
   cursor: pointer;
   overflow: hidden;
@@ -106,14 +101,14 @@ const TicketInfo = styled.div`
     display: inline-block;
     width: 65px;
     height: 65px;
-    background: #333;
+    background: ${({ theme }) => theme.colors.jsconfBlack};
     left: -40px;
     top: 150px;
     content: "";
     position: absolute;
     border-radius: 50%;
-    border-bottom: 8px solid #f0e040;
-    border-right: 8px solid #f0e040;
+    border-bottom: 8px solid ${({ theme }) => theme.colors.jsconfYellow};
+    border-right: 8px solid ${({ theme }) => theme.colors.jsconfYellow};
     border-top: 8px solid transparent;
     border-left: 8px solid transparent;
     transform: rotate(315deg);
@@ -123,7 +118,7 @@ const TicketInfo = styled.div`
     display: inline-block;
     width: 65px;
     height: 65px;
-    background: #333;
+    background: ${({ theme }) => theme.colors.jsconfBlack};
     right: -40px;
     top: 150px;
     content: "";
@@ -131,8 +126,8 @@ const TicketInfo = styled.div`
     border-radius: 50%;
     border-bottom: 8px solid transparent;
     border-right: 8px solid transparent;
-    border-top: 8px solid #f0e040;
-    border-left: 8px solid #f0e040;
+    border-top: 8px solid ${({ theme }) => theme.colors.jsconfYellow};
+    border-left: 8px solid ${({ theme }) => theme.colors.jsconfYellow};
     transform: rotate(315deg);
   }
 `;
@@ -265,59 +260,6 @@ const StyledBackgroundImage = styled.div`
   }
 `;
 
-const SocialButton = styled.button(({ theme }) => [
-  {
-    display: `inline-block`,
-    position: "relative",
-    fontWeight: "bold",
-    margin: "0 16px",
-    cursor: "pointer",
-    "&:after": {
-      content: `""`,
-      position: "absolute",
-      width: "100%",
-      transform: "scaleX(0)",
-      height: "4px",
-      bottom: "-8px",
-      left: 0,
-      backgroundColor: "#fff",
-      transformOrigin: "bottom right",
-      transition: "transform 0.25s ease-out",
-    },
-    "&:hover:after": {
-      transform: "scaleX(1)",
-      transformOrigin: "bottom left",
-    },
-  },
-]);
-
-const SocialAnchor = styled.a<{ type: "twitter" | "facebook" | "linkedin" }>(
-  ({ theme, type }) => [
-    {
-      display: `inline-block`,
-      position: "relative",
-      fontWeight: "bold",
-      margin: "0 16px",
-      "&:after": {
-        content: `""`,
-        position: "absolute",
-        width: "100%",
-        transform: "scaleX(0)",
-        height: "4px",
-        bottom: "-8px",
-        left: 0,
-        backgroundColor: theme.colors.social[type],
-        transformOrigin: "bottom right",
-        transition: "transform 0.25s ease-out",
-      },
-      "&:hover:after": {
-        transform: "scaleX(1)",
-        transformOrigin: "bottom left",
-      },
-    },
-  ]
-);
-
 const normalizedString = (str: string) =>
   str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
@@ -366,14 +308,10 @@ export const Ticket = ({
     }, 1100);
   }, []);
 
-  const publicUrl = `${
-    process.env.NEXT_PUBLIC_SERVER_URL ?? "https://jsconf.cl"
-  }/p/ticket/${userTicketId?.replace("user_ticket_", "") || ""}`;
-
   return (
     <>
       <AnimatePresence mode="sync" initial={fadeIn}>
-        {!loaded && <FakeContainer {...animation} />}
+        {!loaded && <FakeTicketContainer {...animation} />}
         {loaded && (
           <MotionContainer {...animation}>
             <StyledAtropos
@@ -426,70 +364,7 @@ export const Ticket = ({
                 </TicketInfo>
               </TicketContainer>
             </StyledAtropos>
-            <SharingInfo>
-              <SocialAnchor
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                  `Lista mi entrada para la @JSConfCL 🎉. Obtén la tuya en ${publicUrl} . Nos vemos el 03 y 04 de Febrero!`
-                )}`}
-                target="_blank"
-                rel="noreferrer"
-                type="twitter"
-              >
-                <Twitter size={32} />
-              </SocialAnchor>
-              <SocialAnchor
-                href={`http://www.facebook.com/sharer.php?u=${encodeURIComponent(
-                  publicUrl
-                )}`}
-                target="_blank"
-                rel="noreferrer"
-                type="facebook"
-              >
-                <Facebook size={32} />
-              </SocialAnchor>
-              <SocialAnchor
-                href={`https://www.linkedin.com/sharing/share-offsite?url=${encodeURIComponent(
-                  publicUrl
-                )}`}
-                target="_blank"
-                rel="noreferrer"
-                type="linkedin"
-              >
-                <Linkedin size={32} />
-              </SocialAnchor>
-              <SocialButton
-                onClick={() => {
-                  atcb_action({
-                    name: "JSConf Chile",
-                    startDate: "2023-02-03",
-                    endDate: "2023-02-04",
-                    startTime: "08:00",
-                    endTime: "19:00",
-                    description:
-                      "Acompáñanos, en la primera edición Chilena, de la más prestigiosa conferencia de JavaScript. 2 días de Charlistas internacionales, comunidad, aprendizaje y conexiones, este 03 y 04 de Febrero, 2023.",
-                    options: ["Google", "Apple", "Microsoft365", "Outlook.com"],
-                    timeZone: "America/Santiago",
-                  });
-                }}
-              >
-                <Calendar size={32} />
-              </SocialButton>
-              <SocialButton
-                onClick={() => {
-                  navigator.clipboard
-                    .writeText(publicUrl)
-                    .then(() => {
-                      toast.success("Enlace copiado con éxito!");
-                    })
-                    .catch(() => {
-                      toast.error("Hubo un error, intentalo nuevamente!");
-                    });
-                }}
-              >
-                <Copy size={32} />
-              </SocialButton>
-              <Toaster />
-            </SharingInfo>
+            <SocialLinks userTicketId={userTicketId} />
             {showGetTicket ? (
               <GetTicket>
                 <GenericLink href="/tickets">Obtener Tickets</GenericLink>

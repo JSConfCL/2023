@@ -6,10 +6,8 @@ import remarkGfm from "remark-gfm";
 
 import { PageProps } from "../../../pages/volunteer";
 import { ViewportSizes } from "../../../styles/theme";
-import { Anchor } from "../CustomMarkdown";
 import Image from "../core/Image";
-import { H1, P, UL, LI, Strong } from "../core/Typography";
-
+import { Anchor, H1, P, UL, LI, Strong } from "../core/Typography";
 import JSConfLogo from "../svgs/logo";
 
 const Description = lazy(async () => await import("../core/Description"));

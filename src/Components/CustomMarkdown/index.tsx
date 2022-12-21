@@ -1,10 +1,9 @@
 import styled from "@emotion/styled";
-import { transparentize } from "polished";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { ViewportSizes } from "../../../styles/theme";
-import { H1, H2, H3, P } from "../core/Typography";
+import { Anchor, H1, H2, H3, P } from "../core/Typography";
 
 const StyledH1 = styled(H1)`
   font-size: 3rem;
@@ -57,34 +56,6 @@ const Table = styled.table`
 
 export const Bold = styled.p`
   font-weight: 700;
-`;
-
-export const Anchor = styled.a`
-  color: ${({ theme }) => theme.colors.jsconfYellow};
-  font-weight: bold;
-  height: 50px;
-  transition-duration: 250ms;
-  transition-property: all;
-  cursor: pointer;
-  &:active,
-  &:focus,
-  &:hover {
-    color: ${({ theme }) => theme.colors.jsconfRed};
-  }
-  &:focus,
-  &:hover {
-    transform: translateY(-0.25em);
-  }
-  &:active {
-    box-shadow: none;
-    transform: translateY(0em);
-  }
-  &:disabled,
-  &:disabled:hover {
-    color: ${({ theme }) => transparentize(0.75)(theme.colors.white)};
-    cursor: not-allowed;
-    transform: translateY(0em);
-  }
 `;
 
 type Props = {
