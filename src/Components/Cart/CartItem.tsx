@@ -95,7 +95,7 @@ const CartItem = ({
 }) => {
   const [ticket, setTicket] = useAtom(entrada);
   const { description, name, price, quantity, currentQuantity } = ticket;
-  const hayDisponibles = quantity !== 0;
+  const isAvailable = quantity !== 0;
   const isMin = currentQuantity === 0;
   const isMax = currentQuantity === quantity;
 
@@ -112,6 +112,11 @@ const CartItem = ({
     setTicket({ ...ticket, currentQuantity: currentQuantity - 1 });
   }, [currentQuantity, isMin, setTicket, ticket]);
 
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  const isDisabledDown = isDisabled || !isAvailable || isMin;
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  const isDisabledUp = isDisabled || !isAvailable || isMax;
+
   return (
     <Ticket>
       <TicketHeader>
@@ -123,13 +128,13 @@ const CartItem = ({
           }).format(price)}
         </SubTitle>
         <TicketControlWrapper>
-          {hayDisponibles ? (
+          {isAvailable ? (
             <>
-              <TicketAmountControl disabled={isDisabled} onClick={goDown}>
+              <TicketAmountControl disabled={isDisabledDown} onClick={goDown}>
                 <Minus size={18} stroke="#000" />
               </TicketAmountControl>
               <TicketAmount>{currentQuantity}</TicketAmount>
-              <TicketAmountControl disabled={isDisabled} onClick={goUp}>
+              <TicketAmountControl disabled={isDisabledUp} onClick={goUp}>
                 <Plus size={18} stroke="#000" />
               </TicketAmountControl>
             </>
@@ -139,7 +144,7 @@ const CartItem = ({
         </TicketControlWrapper>
       </TicketHeader>
       <TicketInfoWrapper>
-        {hayDisponibles ? (
+        {isAvailable ? (
           <TicketAvailability>({quantity} Disponibles)</TicketAvailability>
         ) : null}
         <TicketDescription>{description}</TicketDescription>
