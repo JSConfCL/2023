@@ -7,7 +7,9 @@ import {
   PublicTicket,
   UserPayload,
   UserType,
+  PreferencesType,
   VolunteerPayload,
+  SingleTicketType,
 } from "./types";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -88,6 +90,22 @@ export const updateMe = async (
     method: "PUT",
     body: JSON.stringify(object),
   });
+};
+
+export const updateOneTicket = async (
+  ticketId: string,
+  object: Partial<PreferencesType>
+): Promise<SingleTicketType> => {
+  return await customFetch(`${API_URL}/tickets/${ticketId}`, {
+    method: "PUT",
+    body: JSON.stringify(object),
+  });
+};
+
+export const oneTicket = async (
+  ticketId: string
+): Promise<SingleTicketType> => {
+  return await customFetch(`${API_URL}/tickets/${ticketId}`);
 };
 
 export const subscribeVolunteer = async (

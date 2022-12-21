@@ -1,28 +1,16 @@
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
+import { Anchor } from "react-feather";
 
 import { Alert } from "../src/Components/common/app";
+import { FormPageContainer } from "../src/Components/Form/components";
 import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
 import { UserInformationForm } from "../src/Components/UserInformationForm";
+import { UserPreferencesForm } from "../src/Components/UserPreferencesForm";
 
-import { me } from "../src/helpers/API";
-import { jsconfTheme, ViewportSizes } from "../styles/theme";
-
-const StyledContainer = styled.div`
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding-top: 4rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  @media (min-width: ${ViewportSizes.Phone}px) {
-    padding-left: 0rem;
-    padding-right: 0rem;
-  }
-`;
+import { me, updateMe } from "../src/helpers/API";
+import { jsconfTheme } from "../styles/theme";
 
 const SytledImageContainer = styled.div`
   text-align: center;
@@ -42,7 +30,7 @@ const StyledLoadingImage = styled.div`
 const Settings = () => {
   const { isLoading, data: user } = useQuery(["me"], me);
   return (
-    <StyledContainer>
+    <FormPageContainer>
       {user?.id && !user.email ? (
         <Alert title="Informacion Importante:">
           Pudimos crear tu cuenta. Pero no conseguimos correo electrónico
@@ -56,9 +44,25 @@ const Settings = () => {
           <StyledLoadingImage />
         </SytledImageContainer>
       ) : (
-        <UserInformationForm />
+        <>
+          <UserInformationForm />
+          <UserPreferencesForm
+            getterKey={["me"]}
+            getterFunction={me as any}
+            mutationFunction={updateMe as any}
+            subtitle={
+              <>
+                Estas preferencias se asignarán por defecto a todos tus tickets,
+                puedes asignar preferencias específicas a cada ticket entrando a{" "}
+                <Link href="/mytickets" legacyBehavior>
+                  <Anchor>/mytickets</Anchor>
+                </Link>
+              </>
+            }
+          />
+        </>
       )}
-    </StyledContainer>
+    </FormPageContainer>
   );
 };
 

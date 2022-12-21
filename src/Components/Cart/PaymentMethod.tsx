@@ -18,8 +18,8 @@ import {
 import { ArrowLeft, CreditCard, Loader } from "react-feather";
 import { useMutation } from "@tanstack/react-query";
 import { createPayment } from "../../helpers/API";
-import { Anchor } from "../CustomMarkdown";
 import { Alert } from "../common/app";
+import { Anchor } from "../core/Typography";
 
 const CartPaymentMethodContainer = styled.div`
   display: flex;

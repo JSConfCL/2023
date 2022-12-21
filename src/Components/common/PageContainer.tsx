@@ -9,6 +9,7 @@ export const PageContainer = styled.div`
   gap: 2rem;
   max-width: 1440px;
   padding-left: 1rem;
+  flex: 1;
   padding-right: 1rem;
   @media (min-width: ${ViewportSizes.Phone}px) {
     padding-left: 3rem;
