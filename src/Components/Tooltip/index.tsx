@@ -29,7 +29,7 @@ export const ToolTip = ({
   children: React.ReactNode;
   content: React.ReactNode;
 }) => {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const referenceRef = useRef(null);
   const popperRef = useRef(null);
 
