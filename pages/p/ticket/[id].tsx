@@ -1,21 +1,10 @@
 import styled from "@emotion/styled";
 import { GetServerSidePropsContext } from "next";
-import dynamic from "next/dynamic";
 import Head from "next/head";
-import { Suspense } from "react";
 
 import { DefaultPageLayout } from "../../../src/Components/Layouts/DefaultPagelayout";
+import { Ticket } from "../../../src/Components/Ticket/Ticket";
 import { PublicTicket } from "../../../src/helpers/API/types";
-
-const Ticket = dynamic(
-  async () => {
-    const { Ticket } = await import("../../../src/Components/Ticket/Ticket");
-    return { default: Ticket };
-  },
-  {
-    ssr: false,
-  }
-);
 
 export const config = {
   runtime: "experimental-edge",
@@ -82,20 +71,18 @@ const TicketPage = ({
         />
       </Head>
       <StyledSpacer />
-      <Suspense>
-        <Ticket
-          userTicketId={ticket.ticketId}
-          userTicketStatus={ticket.status}
-          userPhoto={ticket?.userPhoto ?? ""}
-          userUsername={ticket?.username ?? ""}
-          userName={ticket?.name ?? ""}
-          ticketName={ticket.ticketName}
-          ticketType={ticket.ticketType}
-          ticketSeason={ticket.ticketSeason}
-          fadeIn
-          showGetTicket
-        />
-      </Suspense>
+      <Ticket
+        userTicketId={ticket.ticketId}
+        userTicketStatus={ticket.status}
+        userPhoto={ticket?.userPhoto ?? ""}
+        userUsername={ticket?.username ?? ""}
+        userName={ticket?.name ?? ""}
+        ticketName={ticket.ticketName}
+        ticketType={ticket.ticketType}
+        ticketSeason={ticket.ticketSeason}
+        fadeIn
+        showGetTicket
+      />
     </div>
   );
 };
