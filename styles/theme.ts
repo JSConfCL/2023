@@ -174,7 +174,7 @@ export const previaTheme: Theme = {
       imageBorderColor: colors.jsconfBlack,
       shadowColor: colors.jsconfBlack,
       textColor: colors.jsconfBlack,
-      chevronColor: colors.black,
+      chevronColor: colors.jsconfBlack,
     },
   },
 };

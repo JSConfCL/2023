@@ -365,7 +365,7 @@ export const InternalNavBar = (props: NavBarProps) => {
               item={{
                 contenido: (
                   <>
-                    Login <LogIn size={12} />
+                    Ingresar <LogIn size={12} />
                   </>
                 ),
                 id: "Login",
