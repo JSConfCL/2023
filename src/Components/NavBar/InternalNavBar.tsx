@@ -56,15 +56,14 @@ const StyledLinksContainer = styled.ul`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 20px;
+  gap: 1rem;
 
-  @media (max-width: ${ViewportSizes.Phone}px) {
+  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
     display: none;
   }
 `;
 
 const MobileStyledLinksContainer = styled.ul`
-  width: fit-content;
   list-style: none;
   padding: 29px 16px;
   flex-direction: row;
@@ -80,16 +79,17 @@ const MobileStyledLinksContainer = styled.ul`
 `;
 
 const StyledLink = styled.li<{ isActive: boolean }>`
-  padding: 8px 16px;
+  padding: 8px 8px;
   font-weight: 400;
   font-family: "Koulen";
   text-align: center;
   position: relative;
   cursor: pointer;
   color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.jsconfRed : theme.colors.jsconfBlack};
-  @media (min-width: ${ViewportSizes.Phone}px) {
-    color: inherit;
+    isActive ? theme.colors.jsconfRed : theme.colors.white};
+  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
+    color: ${({ isActive, theme }) =>
+      isActive ? theme.colors.jsconfRed : theme.colors.jsconfBlack};
   }
   transition-property: all;
   transition-timing-function: ease-in-out;
@@ -126,7 +126,7 @@ const StyledPortalWrapper = styled(motion.section)<{ height: number | string }>`
   svg {
     align-self: flex-end;
   }
-  @media (min-width: ${ViewportSizes.Phone}px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     display: none;
   }
 `;
@@ -175,7 +175,7 @@ const MobileFeatherIconWrapper = styled.span`
   cursor: pointer;
   position: relative;
   height: fit-content;
-  @media (min-width: ${ViewportSizes.Phone}px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     display: none;
   }
 `;
@@ -236,7 +236,9 @@ const MobileMenu = ({ items, description, buttonsCollection }: NavBarProps) => {
   const height = use100vh();
   const viewportHeight = height ? `${height}px` : "100vh";
 
-  const isMobile = useMediaQuery(`(max-width: ${ViewportSizes.Phone}px)`);
+  const isMobile = useMediaQuery(
+    `(max-width: ${ViewportSizes.TabletLandscape}px)`
+  );
   const [isOpen, setIsOpen] = useAtom(isOpenAtom);
 
   useLockBodyScroll(isOpen);
