@@ -1,6 +1,7 @@
 import { atom } from "jotai";
 import { RESET } from "jotai/utils";
-import decode, { JwtPayload } from "jwt-decode";
+import decode from "jwt-decode";
+import type { JwtPayload } from "jwt-decode";
 
 const fiveMinutesInMiliseconds = 1000 * 60 * 5;
 const isTokenValid = (token: string) => {

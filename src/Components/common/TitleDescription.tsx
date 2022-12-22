@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
-import { H2, P } from "../core/Typography";
-import Image from "../core/Image";
+
 import { ViewportSizes } from "../../../styles/theme";
+import Image from "../core/Image";
+import { H2, P } from "../core/Typography";
 
 const Container = styled.section`
   display: flex;

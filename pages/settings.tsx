@@ -3,11 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { Anchor } from "react-feather";
 
-import { Alert } from "../src/Components/common/app";
 import { FormPageContainer } from "../src/Components/Form/components";
-import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
+import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
 import { UserInformationForm } from "../src/Components/UserInformationForm";
 import { UserPreferencesForm } from "../src/Components/UserPreferencesForm";
+import { Alert } from "../src/Components/common/app";
 
 import { me, updateMe } from "../src/helpers/API";
 import { jsconfTheme } from "../styles/theme";
@@ -66,6 +66,6 @@ const Settings = () => {
   );
 };
 
-Settings.getLayout = DefaultPagelayout;
+Settings.getLayout = DefaultPageLayout;
 
 export default Settings;

@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 
-import { parseNavBarData } from "./helper";
 import { InternalNavBar } from "./InternalNavBar";
-import { useNavBarQueryQuery } from "./navBar.generated";
 import { StyledWrapperSuspense } from "./components";
+import { parseNavBarData } from "./helper";
+import { useNavBarQueryQuery } from "./navBar.generated";
 
 const NavBar = ({ id = "22KytadLhMxFZMtvlUYCbl" }: { id?: string }) => {
   const [{ data }] = useNavBarQueryQuery({

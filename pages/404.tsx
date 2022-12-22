@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
+
 import { ErrorComponent } from "../src/Components/ErrorComponent";
-import { DefaultPagelayout } from "../src/Components/Layouts/DefaultPagelayout";
+import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
 
 const Container = styled.section`
   display: flex;
@@ -18,4 +19,4 @@ export default function Page404() {
   );
 }
 
-Page404.getLayout = DefaultPagelayout;
+Page404.getLayout = DefaultPageLayout;

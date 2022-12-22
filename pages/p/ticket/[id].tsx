@@ -3,8 +3,9 @@ import { GetServerSidePropsContext } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { Suspense } from "react";
+
+import { DefaultPageLayout } from "../../../src/Components/Layouts/DefaultPagelayout";
 import { PublicTicket } from "../../../src/helpers/API/types";
-import { DefaultPagelayout } from "../../../src/Components/Layouts/DefaultPagelayout";
 
 const Ticket = dynamic(
   async () => {
@@ -119,6 +120,5 @@ export const getServerSideProps = async ({
   return { props: { ticket, cleanedId: id } };
 };
 
-TicketPage.getLayout = DefaultPagelayout;
-
+TicketPage.getLayout = DefaultPageLayout;
 export default TicketPage;

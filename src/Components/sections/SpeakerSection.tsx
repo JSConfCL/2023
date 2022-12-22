@@ -1,12 +1,13 @@
-import { useState } from "react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import { H2 } from "../core/Typography";
+import { useState } from "react";
+
 import { PageProps } from "../../../pages";
-import useMediaQuery from "../../helpers/useMediaQuery";
 import { ViewportSizes } from "../../../styles/theme";
-import Description from "../core/Description";
+import useMediaQuery from "../../helpers/useMediaQuery";
 import Card from "../Card";
+import Description from "../core/Description";
+import { H2 } from "../core/Typography";
 
 const Container = styled.section`
   align-self: center;

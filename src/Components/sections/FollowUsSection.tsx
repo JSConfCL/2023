@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
 import { Suspense } from "react";
 import { Linkedin, Twitter, Facebook } from "react-feather";
+
 import { Get } from "type-fest";
 
+import { ViewportSizes } from "../../../styles/theme";
 import { FooterQueryQuery } from "../../graphql/footer.generated";
 import { H2 } from "../core/Typography";
-import { ViewportSizes } from "../../../styles/theme";
 
 interface Props {
   page: Get<FooterQueryQuery, "page.followUsBlock">;

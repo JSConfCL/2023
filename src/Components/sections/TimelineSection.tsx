@@ -1,18 +1,17 @@
-import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
-import { Suspense, useState } from "react";
+import styled from "@emotion/styled";
 import { add, parseISO } from "date-fns";
 import { format, formatInTimeZone } from "date-fns-tz";
 import esLocale from "date-fns/locale/es";
-import ReactCountryFlag from "react-country-flag";
 import { transparentize } from "polished";
-
-import { H2, H3 } from "../core/Typography";
-import { PrimaryStyledLink } from "../Links/index";
-
-import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
+import { Suspense, useState } from "react";
+import ReactCountryFlag from "react-country-flag";
 
 import { PageProps } from "../../../pages";
+import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
+
+import { PrimaryStyledLink } from "../Links/index";
+import { H2, H3 } from "../core/Typography";
 
 const GENERAL = "general";
 

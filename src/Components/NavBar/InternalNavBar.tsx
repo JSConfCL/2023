@@ -23,8 +23,9 @@ import { isAuthenticatedAtom, accessTokenAtom } from "../../helpers/auth";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { SecondaryStyledButton, SecondaryStyledLink } from "../Links";
 import JSConfLogo from "../svgs/logo";
-import { NavBarSize } from "./components";
+
 import { UserDropdownMenu } from "./DropdownMenu";
+import { NavBarSize } from "./components";
 import { MenuItemType, NavBarProps } from "./types";
 
 const Description = lazy(async () => await import("../core/Description"));

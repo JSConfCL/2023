@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
-import { PageContainer } from "../../src/Components/common/PageContainer";
 
 import {
-  DefaultPagelayout,
+  DefaultPageLayout,
   InternalPageTitle,
 } from "../../src/Components/Layouts/DefaultPagelayout";
-import { FakeTicketContainer } from "../../src/Components/Ticket/components";
 import { TicketsList } from "../../src/Components/Ticket/TicketsList";
+import { FakeTicketContainer } from "../../src/Components/Ticket/components";
+import { PageContainer } from "../../src/Components/common/PageContainer";
 
 import { me, myTickets } from "../../src/helpers/API";
 
@@ -42,7 +42,7 @@ const Settings = () => {
   );
 };
 
-Settings.getLayout = DefaultPagelayout;
+Settings.getLayout = DefaultPageLayout;
 
 export const config = {
   runtime: "experimental-edge",

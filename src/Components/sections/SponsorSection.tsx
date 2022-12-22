@@ -1,11 +1,10 @@
 import styled from "@emotion/styled";
-import { lazy } from "react";
 import { transparentize } from "polished";
+import { lazy } from "react";
 
 import { PageProps } from "../../../pages";
-import useMediaQuery from "../../helpers/useMediaQuery";
-
 import { ViewportSizes } from "../../../styles/theme";
+import useMediaQuery from "../../helpers/useMediaQuery";
 
 import { PrimaryStyledLink } from "../Links";
 
@@ -57,7 +56,7 @@ const ImageContainer = styled.div`
   }
 `;
 
-const ConstributorType = styled.section`
+const ContributorType = styled.section`
   background-color: ${({ theme }) =>
     transparentize(0.86, theme.colors.contributorFooter)};
   border-radius: 32px;
@@ -116,9 +115,9 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
         </PrimaryStyledLink>
       </FlexSpace>
       {props.page?.items?.map((item) => (
-        <ConstributorType key={item.sys.id}>
+        <ContributorType key={item.sys.id}>
           <ContributorName>{item.name}</ContributorName>
-          <RenderingLayout constributorTypeName={item.name}>
+          <RenderingLayout contributorTypeName={item.name}>
             {item?.contributorsCollection?.items?.map((contributorItem) => (
               <ImageContainer key={contributorItem.sys.id}>
                 <Flex>
@@ -136,7 +135,7 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
               </ImageContainer>
             ))}
           </RenderingLayout>
-        </ConstributorType>
+        </ContributorType>
       ))}
     </Container>
   );

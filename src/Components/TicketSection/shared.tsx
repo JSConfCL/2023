@@ -1,13 +1,16 @@
 import styled from "@emotion/styled";
-import { ViewportSizes } from "../../../styles/theme";
+
+import { motion } from "framer-motion";
+import { transparentize } from "polished";
+import { CSSProperties } from "react";
 import {
   GithubLoginButton,
   GoogleLoginButton,
 } from "react-social-login-buttons";
-import { CSSProperties } from "react";
+
+import { ViewportSizes } from "../../../styles/theme";
+
 import { API_URL } from "../../helpers/API";
-import { transparentize } from "polished";
-import { motion } from "framer-motion";
 
 export const Paragraph = styled.p`
   color: #fff;
@@ -190,7 +193,7 @@ export const LeftSide = styled(motion.div)`
   gap: 2rem;
 `;
 
-export const RigthSide = styled(motion.div)`
+export const RightSide = styled(motion.div)`
   width: 100%;
   flex: 1;
   display: flex;

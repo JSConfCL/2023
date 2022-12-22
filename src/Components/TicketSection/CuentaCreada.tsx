@@ -1,13 +1,14 @@
 import styled from "@emotion/styled";
-import { Container, Paragraph, SideContainer } from "./shared";
+
 import { SectionTile } from "./Title";
+import { Container, Paragraph, SideContainer } from "./shared";
 
 const LeftSide = styled.div`
   width: 100%;
   flex: 2;
 `;
 
-const RigthSide = styled.div`
+const RightSide = styled.div`
   width: 100%;
   flex: 1;
 `;
@@ -33,11 +34,11 @@ const CuentaCreada = () => {
           </Paragraph>
           <br />
           <Paragraph>
-            Recuerda que los tickes que compres estarán asociados a tu cuenta, y
-            podrás reasignarlos y regalarlos sin problemas.
+            Recuerda que los tickets que compres estarán asociados a tu cuenta,
+            y podrás reasignarlos y regalarlos sin problemas.
           </Paragraph>
         </LeftSide>
-        <RigthSide></RigthSide>
+        <RightSide></RightSide>
       </SideContainer>
     </Container>
   );

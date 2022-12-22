@@ -1,12 +1,12 @@
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useId, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import Select from "react-select/creatable";
+
 import { ErrorResponse } from "../../helpers/API";
 
-import { useQuery } from "@tanstack/react-query";
 import { PreferencesType } from "../../helpers/API/types";
-import { H3, P } from "../core/Typography";
 import {
   customStyles,
   Error,
@@ -17,6 +17,7 @@ import {
   FormSection,
   UpdateButton,
 } from "../Form/components";
+import { H3, P } from "../core/Typography";
 
 interface SelectOption {
   label: any;

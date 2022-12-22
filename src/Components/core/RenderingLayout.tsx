@@ -15,21 +15,21 @@ const FlexLayout = styled.div<{ height: string }>`
 `;
 
 const RenderingLayout = (props: {
-  constributorTypeName: string;
+  contributorTypeName: string;
   children: any;
 }) => {
   return (
     <>
-      {props.constributorTypeName === "Platinum Sponsor" && (
+      {props.contributorTypeName === "Platinum Sponsor" && (
         <FlexLayout height="100px">{props.children}</FlexLayout>
       )}
-      {props.constributorTypeName === "Gold Sponsor" && (
+      {props.contributorTypeName === "Gold Sponsor" && (
         <FlexLayout height="60px">{props.children}</FlexLayout>
       )}
-      {props.constributorTypeName === "Silver Sponsor" && (
+      {props.contributorTypeName === "Silver Sponsor" && (
         <FlexLayout height="40px">{props.children}</FlexLayout>
       )}
-      {props.constributorTypeName === "Bronze Sponsor" && (
+      {props.contributorTypeName === "Bronze Sponsor" && (
         <FlexLayout height="30px">{props.children}</FlexLayout>
       )}
     </>

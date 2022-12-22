@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import { AnimatePresence, motion } from "framer-motion";
 import { transparentize } from "polished";
 import { Loader } from "react-feather";
-import { StylesConfig } from "react-select";
+import type { StylesConfig } from "react-select";
+
 import { colors, jsconfTheme, ViewportSizes } from "../../../styles/theme";
 import { GenericBtn } from "../TicketSection/shared";
 

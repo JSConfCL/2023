@@ -1,25 +1,24 @@
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
+import confetti from "canvas-confetti";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import confetti from "canvas-confetti";
 
-import { H2, H3 } from "../../src/Components/core/Typography";
-import { DefaultPagelayout } from "../../src/Components/Layouts/DefaultPagelayout";
+import { DefaultPageLayout } from "../../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../../src/Components/Seo";
-
-import { urlQlient } from "../../src/graphql/urql";
-import { ParseQuery } from "../../src/helpers/types";
-import { colors, ViewportSizes } from "../../styles/theme";
-import { me, myTickets } from "../../src/helpers/API";
+import { Ticket } from "../../src/Components/Ticket/Ticket";
+import { PageContainer } from "../../src/Components/common/PageContainer";
+import { H2, H3 } from "../../src/Components/core/Typography";
 
 import {
   TicketsQueryDocument,
   TicketsQueryQuery,
   TicketsQueryQueryVariables,
 } from "../../src/graphql/tickets.generated";
-import { Ticket } from "../../src/Components/Ticket/Ticket";
-import { PageContainer } from "../../src/Components/common/PageContainer";
+import { urlQlient } from "../../src/graphql/urql";
+import { me, myTickets } from "../../src/helpers/API";
+import { ParseQuery } from "../../src/helpers/types";
+import { colors, ViewportSizes } from "../../styles/theme";
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
 
@@ -198,4 +197,4 @@ export async function getStaticProps() {
   };
 }
 
-Tickets.getLayout = DefaultPagelayout;
+Tickets.getLayout = DefaultPageLayout;

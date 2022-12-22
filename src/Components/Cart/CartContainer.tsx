@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useQuery } from "@tanstack/react-query";
 import {
   AnimatePresence,
   motion,
@@ -6,17 +7,17 @@ import {
   Transition,
 } from "framer-motion";
 import { useAtomValue } from "jotai";
-import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+
+import { me } from "../../helpers/API";
+import { SectionTile } from "../TicketSection/Title";
+
+import { Alert } from "../common/app";
 
 import { Agreements } from "./Agreements";
 import { subNavigationAtom } from "./CartAtom";
 import PaymentMethod from "./PaymentMethod";
 import { TicketSelection } from "./TicketSelection";
-import { SectionTile } from "../TicketSection/Title";
-import { Alert } from "../common/app";
-
-import { me } from "../../helpers/API";
 
 const Wrapper = styled(motion.div)`
   display: flex;

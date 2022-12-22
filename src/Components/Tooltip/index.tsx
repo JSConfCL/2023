@@ -7,7 +7,8 @@ export const fadeIn = keyframes`
   from { opacity: 0; }
   to   { opacity: 1; }
 `;
-const StyledTootltip = styled.div`
+
+const StyledTooltip = styled.div`
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 0.75rem;
@@ -60,13 +61,13 @@ export const ToolTip = ({
         {children}
       </span>
       {visible && (
-        <StyledTootltip
+        <StyledTooltip
           ref={popperRef}
           style={styles.popper}
           {...attributes.popper}
         >
           {content}
-        </StyledTootltip>
+        </StyledTooltip>
       )}
     </React.Fragment>
   );

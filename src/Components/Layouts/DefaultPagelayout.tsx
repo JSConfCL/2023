@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import type { ReactElement } from "react-markdown/lib/react-markdown";
+
 import { ViewportSizes } from "../../../styles/theme";
 import { StyledWrapperSuspense } from "../NavBar/components";
 import { NavBarProps } from "../NavBar/types";
@@ -34,7 +35,8 @@ export const Container = styled.section`
   flex: 1;
   min-height: calc(100vh - 600px);
 `;
-export const StyledBlackWrapp = styled.section`
+
+export const StyledBlackWrap = styled.section`
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -45,17 +47,18 @@ export const StyledBlackWrapp = styled.section`
 export interface LayoutPageProps extends React.ComponentPropsWithoutRef<"div"> {
   navData: NavBarProps;
 }
+
 export interface PageProps extends ReactElement {
   props: LayoutPageProps;
 }
 
-export const DefaultPagelayout = (page: PageProps) => {
+export const DefaultPageLayout = (page: PageProps) => {
   return (
-    <StyledBlackWrapp>
+    <StyledBlackWrap>
       <Suspense fallback={<StyledWrapperSuspense />}>
         <TicketNavBar />
       </Suspense>
       <Container>{page}</Container>
-    </StyledBlackWrapp>
+    </StyledBlackWrap>
   );
 };

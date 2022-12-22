@@ -1,19 +1,20 @@
+import styled from "@emotion/styled";
+import { useAtomValue } from "jotai";
+
+import { isAuthenticatedAtom } from "../../helpers/auth";
 import Image from "../core/Image";
+
+import { SectionTile } from "./Title";
 import {
   Paragraph,
   SideContainer,
   LeftSide,
-  RigthSide,
+  RightSide,
   ImageWrapper,
   Shadow,
   ImageContainer,
   GithubButton,
 } from "./shared";
-import { SectionTile } from "./Title";
-import { isAuthenticatedAtom } from "../../helpers/auth";
-import { useAtomValue } from "jotai";
-
-import styled from "@emotion/styled";
 
 // ;
 
@@ -109,14 +110,14 @@ const NoTickets = ({ imageUrl }: { imageUrl: string }) => {
             </>
           )}
         </LeftSide>
-        <RigthSide>
+        <RightSide>
           <ImageWrapper>
             <ImageContainer>
               <Image mobile={imageUrl} alt={"Un ticket de la JSCconf"} />
               <Shadow />
             </ImageContainer>
           </ImageWrapper>
-        </RigthSide>
+        </RightSide>
       </SideContainer>
     </>
   );

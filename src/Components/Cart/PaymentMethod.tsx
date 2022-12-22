@@ -1,6 +1,11 @@
 import styled from "@emotion/styled";
+import { useMutation } from "@tanstack/react-query";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
+
+import { ArrowLeft, CreditCard, Loader } from "react-feather";
+
 import { ViewportSizes } from "../../../styles/theme";
+import { createPayment } from "../../helpers/API";
 import {
   GenericBtn,
   Paragraph,
@@ -9,17 +14,16 @@ import {
   Small,
   PaymentButtonWrapper,
 } from "../TicketSection/shared";
+import { Alert } from "../common/app";
+
+import { Anchor } from "../core/Typography";
+
 import {
   paymentSelectedAtom,
   subNavigationAtom,
   ticketSummaryAtom,
   totalPriceAtom,
 } from "./CartAtom";
-import { ArrowLeft, CreditCard, Loader } from "react-feather";
-import { useMutation } from "@tanstack/react-query";
-import { createPayment } from "../../helpers/API";
-import { Alert } from "../common/app";
-import { Anchor } from "../core/Typography";
 
 const CartPaymentMethodContainer = styled.div`
   display: flex;

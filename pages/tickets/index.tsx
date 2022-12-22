@@ -1,15 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue, useSetAtom } from "jotai";
+
 import {
   availableTicketsAtom,
   ticketsAtom,
 } from "../../src/Components/Cart/CartAtom";
 import { CartContainer } from "../../src/Components/Cart/CartContainer";
-import { PageContainer } from "../../src/Components/common/PageContainer";
-import { DefaultPagelayout } from "../../src/Components/Layouts/DefaultPagelayout";
+import { DefaultPageLayout } from "../../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../../src/Components/Seo";
 import NoTickets from "../../src/Components/TicketSection/NoTickets";
 import YesTicketsCreateAccount from "../../src/Components/TicketSection/YesTicketsCreateAccount";
+import { PageContainer } from "../../src/Components/common/PageContainer";
 import {
   TicketsQueryDocument,
   TicketsQueryQuery,
@@ -83,4 +84,4 @@ export async function getStaticProps() {
   };
 }
 
-Tickets.getLayout = DefaultPagelayout;
+Tickets.getLayout = DefaultPageLayout;

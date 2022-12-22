@@ -1,15 +1,19 @@
+import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
+import Link from "next/link";
+import { transparentize } from "polished";
 import { useRef, useState } from "react";
 import { ChevronDown, LogOut, Settings, Bookmark } from "react-feather";
-import { me } from "../../helpers/API";
+
 import { usePopper } from "react-popper";
-import { keyframes } from "@emotion/react";
 import { useClickAway } from "react-use";
-import { transparentize } from "polished";
-import Link from "next/link";
+
+import { me } from "../../helpers/API";
+
 import { accessTokenAtom } from "../../helpers/auth";
-import { useSetAtom } from "jotai";
+
 
 const Container = styled.div`
   font-family: "Koulen";

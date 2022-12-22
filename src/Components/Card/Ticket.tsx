@@ -1,10 +1,11 @@
-import { lazy, Suspense } from "react";
-import styled from "@emotion/styled";
 import { Document } from "@contentful/rich-text-types";
-import { H2 } from "../core/Typography";
+import styled from "@emotion/styled";
+import { lazy, Suspense } from "react";
+
 import { ViewportSizes } from "../../../styles/theme";
 import Description from "../core/Description";
 import Image from "../core/Image";
+import { H2 } from "../core/Typography";
 
 const ButtonLoginCollection = lazy(
   async () => await import("../Collection/ButtonLoginCollection")

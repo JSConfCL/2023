@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ArrowRight } from "react-feather";
+
 import { GenericBtn } from "../TicketSection/shared";
+
 import {
   hasBoughtTicketsAtom,
   subNavigationAtom,

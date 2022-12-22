@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
-import { H1, P } from "../core/Typography";
+
+import { ViewportSizes } from "../../../styles/theme";
 import { PrimaryStyledLink } from "../Links";
 import Image from "../core/Image";
-import { ViewportSizes } from "../../../styles/theme";
+import { H1, P } from "../core/Typography";
 
 const StyledBlackWrapp = styled.section`
   display: flex;

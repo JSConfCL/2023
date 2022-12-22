@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { useEffect } from "react";
+
 import { me } from "../API";
 import { isAuthenticatedAtom } from "../auth";
 

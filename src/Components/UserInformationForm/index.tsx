@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useQuery } from "@tanstack/react-query";
 import countries from "i18n-iso-countries";
 import enLocale from "i18n-iso-countries/langs/en.json";
 import esLocale from "i18n-iso-countries/langs/es.json";
@@ -7,17 +8,10 @@ import ReactCountryFlag from "react-country-flag";
 import { Controller, useForm } from "react-hook-form";
 
 import Select from "react-select/creatable";
-import { ErrorResponse, me, updateMe } from "../../helpers/API";
-import { jsconfTheme } from "../../../styles/theme";
 
-import {
-  emailValidation,
-  nameValidation,
-  notNegativeNumberValidation,
-  optionalStringValidation,
-} from "../Form/schema";
-import { useQuery } from "@tanstack/react-query";
-import { H3 } from "../core/Typography";
+import { jsconfTheme } from "../../../styles/theme";
+import { ErrorResponse, me, updateMe } from "../../helpers/API";
+
 import {
   customStyles,
   Error,
@@ -29,6 +23,13 @@ import {
   FormFieldSection,
   FormLabel,
 } from "../Form/components";
+import {
+  emailValidation,
+  nameValidation,
+  notNegativeNumberValidation,
+  optionalStringValidation,
+} from "../Form/schema";
+import { H3 } from "../core/Typography";
 
 interface SelectOption {
   label: any;

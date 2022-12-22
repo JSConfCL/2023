@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import { transparentize } from "polished";
+
 import { ViewportSizes } from "../../../styles/theme";
 
 export const H1 = styled(motion.h1)<{ color?: string }>`

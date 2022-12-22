@@ -4,16 +4,18 @@ import {
   GithubLoginButton,
   GoogleLoginButton,
 } from "react-social-login-buttons";
+
 import { API_URL } from "../../helpers/API";
-import { Container, Paragraph, SideContainer } from "./shared";
+
 import { SectionTile } from "./Title";
+import { Container, Paragraph, SideContainer } from "./shared";
 
 const LeftSide = styled.div`
   width: 100%;
   flex: 2;
 `;
 
-const RigthSide = styled.div`
+const RightSide = styled.div`
   width: 100%;
   flex: 1;
 `;
@@ -41,7 +43,7 @@ const CreaTuCuenta = () => {
             Podrás reasignarlos y regalarlos sin problemas.
           </Paragraph>
         </LeftSide>
-        <RigthSide>
+        <RightSide>
           <div>
             <GithubLoginButton
               style={style}
@@ -60,7 +62,7 @@ const CreaTuCuenta = () => {
               text="Ingresa con Google"
             />
           </div>
-        </RigthSide>
+        </RightSide>
       </SideContainer>
     </Container>
   );

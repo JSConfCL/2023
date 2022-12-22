@@ -2,8 +2,10 @@ import styled from "@emotion/styled";
 import { PrimitiveAtom, useAtom } from "jotai";
 import { useCallback } from "react";
 import { Minus, Plus } from "react-feather";
+
 import { ViewportSizes } from "../../../styles/theme";
 import { AgotadasSubtitle, SubTitle } from "../TicketSection/shared";
+
 import { Entrada } from "./CartAtom";
 
 const Ticket = styled.div`

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+
 import { ViewportSizes } from "../../../styles/theme";
 
 const TitleNumber = styled.span`

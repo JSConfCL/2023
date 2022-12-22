@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { NavBarProps } from "./types";
 import { NavBarQueryQuery } from "./navBar.generated";
+import { NavBarProps } from "./types";
 
 export const parseNavBarData = (
   props: NavBarQueryQuery["navigationBar"]

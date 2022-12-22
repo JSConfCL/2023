@@ -2,10 +2,11 @@ import { css, keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
+
 import { FormPageContainer } from "../../src/Components/Form/components";
 
 import {
-  DefaultPagelayout,
+  DefaultPageLayout,
   InternalPageTitle,
 } from "../../src/Components/Layouts/DefaultPagelayout";
 import { UserPreferencesForm } from "../../src/Components/UserPreferencesForm";
@@ -74,6 +75,6 @@ const Settings = () => {
   );
 };
 
-Settings.getLayout = DefaultPagelayout;
+Settings.getLayout = DefaultPageLayout;
 
 export default Settings;

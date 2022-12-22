@@ -4,6 +4,7 @@ import { useSetAtom } from "jotai";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+
 import { ErrorComponent } from "../../../src/Components/ErrorComponent";
 import { finishGithubLogin } from "../../../src/helpers/API";
 import { accessTokenAtom } from "../../../src/helpers/auth";

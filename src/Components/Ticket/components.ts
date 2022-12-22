@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
+
 import { ViewportSizes } from "../../../styles/theme";
 
 export const FakeTicketContainer = styled(motion.div)`

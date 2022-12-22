@@ -2,6 +2,7 @@
 import styled from "@emotion/styled";
 import dynamic from "next/dynamic";
 import { lazy, Suspense } from "react";
+
 import { PageProps } from "../../../pages";
 import { SecondaryStyledLink, TertiaryStyledLink } from "../Links";
 import { StyledWrapperSuspense } from "../NavBar/components";

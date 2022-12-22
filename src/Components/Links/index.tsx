@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { lighten } from "polished";
 import { MouseEventHandler } from "react";
+
 import { ArrowIcon } from "../svgs/arrow";
 
 const baseStyling = {

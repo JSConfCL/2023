@@ -1,17 +1,16 @@
 import styled from "@emotion/styled";
+import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import { lazy, Suspense } from "react";
-import type { NextPage } from "next";
 
-import { urlQlient } from "../src/graphql/urql";
-import { ParseQuery } from "../src/helpers/types";
-import { ViewportSizes } from "../styles/theme";
-
+import { StyledWrapperSuspense } from "../src/Components/NavBar/components";
 import {
   LaPreviaDocument,
   LaPreviaQuery,
 } from "../src/graphql/laprevia.generated";
-import { StyledWrapperSuspense } from "../src/Components/NavBar/components";
+import { urlQlient } from "../src/graphql/urql";
+import { ParseQuery } from "../src/helpers/types";
+import { ViewportSizes } from "../styles/theme";
 
 const Particles = lazy(async () => await import("../src/Components/Particles"));
 

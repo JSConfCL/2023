@@ -4,8 +4,10 @@ import Atropos from "atropos/react";
 import { AnimatePresence, motion, MotionProps } from "framer-motion";
 import dynamic from "next/dynamic";
 import { Suspense, useEffect, useState } from "react";
+
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 import { GenericLink } from "../TicketSection/shared";
+
 import { atroposCSS } from "./atroposStyles";
 import { FakeTicketContainer } from "./components";
 

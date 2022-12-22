@@ -1,4 +1,5 @@
 import React from "react";
+
 import { useAssetCollectionQuery } from "./test.generated";
 
 export const Test = () => {

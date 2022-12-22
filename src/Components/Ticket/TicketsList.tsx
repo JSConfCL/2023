@@ -1,6 +1,6 @@
-import { Ticket } from "./Ticket";
-
 import { UserType, OwnTicket } from "../../helpers/API/types";
+
+import { Ticket } from "./Ticket";
 
 export const TicketsList = ({
   user,

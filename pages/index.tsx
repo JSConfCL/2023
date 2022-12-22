@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
 import type { NextPage } from "next";
 import { lazy, Suspense } from "react";
+
+import Seo from "../src/Components/Seo";
 import EventSchema from "../src/Components/schema/event";
 import Hero from "../src/Components/sections/Hero";
-import Seo from "../src/Components/Seo";
 import {
   HomeQueryDocument,
   HomeQueryQuery,

@@ -1,10 +1,11 @@
-import styled from "@emotion/styled";
-import { transparentize } from "polished";
 import { keyframes } from "@emotion/react";
-import { lazy } from "react";
+import styled from "@emotion/styled";
 import Link from "next/link";
-import { ViewportSizes } from "../../../styles/theme";
+import { transparentize } from "polished";
+import { lazy } from "react";
+
 import { PageProps } from "../../../pages";
+import { ViewportSizes } from "../../../styles/theme";
 
 const Image = lazy(async () => await import("../core/Image"));
 

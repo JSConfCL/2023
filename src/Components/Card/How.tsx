@@ -1,10 +1,11 @@
-import { lazy, Suspense } from "react";
-import styled from "@emotion/styled";
 import { Document } from "@contentful/rich-text-types";
+import styled from "@emotion/styled";
+import { lazy, Suspense } from "react";
+
+import { ViewportSizes } from "../../../styles/theme";
 import { PrimaryStyledLink } from "../Links";
 import { H2 } from "../core/Typography";
 import { JSConfLogo } from "../svgs/logo";
-import { ViewportSizes } from "../../../styles/theme";
 
 const Description = lazy(async () => await import("../core/Description"));
 const Image = lazy(async () => await import("../core/Image"));

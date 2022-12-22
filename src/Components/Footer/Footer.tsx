@@ -2,6 +2,7 @@
 import styled from "@emotion/styled";
 import Link from "next/link";
 import { Get } from "type-fest";
+
 import { ViewportSizes } from "../../../styles/theme";
 import { FooterQueryQuery } from "../../graphql/footer.generated";
 import { JSConfLogo } from "../svgs/logo";

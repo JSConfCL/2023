@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { Suspense, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Get } from "type-fest";
+
 import { ViewportSizes } from "../../../styles/theme";
 import { FooterQueryQuery } from "../../graphql/footer.generated";
 import { subscribeUser } from "../../helpers/API";
