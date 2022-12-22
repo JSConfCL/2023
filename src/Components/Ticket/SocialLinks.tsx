@@ -1,3 +1,4 @@
+import { Global } from "@emotion/react";
 import styled from "@emotion/styled";
 import { atcb_action, atcb_init } from "add-to-calendar-button";
 import Link from "next/link";
@@ -12,6 +13,7 @@ import {
 } from "react-feather";
 import toast, { Toaster } from "react-hot-toast";
 import { ToolTip } from "../Tooltip";
+import { atcbCSS, atcbExtraCSS } from "./addToCalendarStyles";
 
 const SharingInfo = styled.div`
   text-align: center;
@@ -82,6 +84,7 @@ const SocialLinks = ({ userTicketId }: { userTicketId: string }) => {
 
   return (
     <SharingInfo>
+      <Global styles={[atcbCSS, atcbExtraCSS]} />
       <SocialAnchor
         href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
           `Lista mi entrada para la @JSConfCL 🎉. Obtén la tuya en ${publicUrl} . Nos vemos el 03 y 04 de Febrero!`

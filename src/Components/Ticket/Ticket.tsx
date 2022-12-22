@@ -1,3 +1,4 @@
+import { Global } from "@emotion/react";
 import styled from "@emotion/styled";
 import Atropos from "atropos/react";
 import { AnimatePresence, motion, MotionProps } from "framer-motion";
@@ -5,6 +6,7 @@ import dynamic from "next/dynamic";
 import { Suspense, useEffect, useState } from "react";
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 import { GenericLink } from "../TicketSection/shared";
+import { atroposCSS } from "./atroposStyles";
 import { FakeTicketContainer } from "./components";
 
 const SocialLinks = dynamic(async () => await import("./SocialLinks"), {
@@ -305,6 +307,7 @@ export const Ticket = ({
   }, []);
   return (
     <>
+      <Global styles={[atroposCSS]} />
       <AnimatePresence mode="sync" initial={fadeIn}>
         {!loaded && <FakeTicketContainer {...animation} />}
         {loaded && (
