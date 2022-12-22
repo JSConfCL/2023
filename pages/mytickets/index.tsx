@@ -6,7 +6,7 @@ import {
   DefaultPagelayout,
   InternalPageTitle,
 } from "../../src/Components/Layouts/DefaultPagelayout";
-import { FakeTicketContainer } from "../../src/Components/Ticket/Ticket";
+import { FakeTicketContainer } from "../../src/Components/Ticket/components";
 import { TicketsList } from "../../src/Components/Ticket/TicketsList";
 
 import { me, myTickets } from "../../src/helpers/API";

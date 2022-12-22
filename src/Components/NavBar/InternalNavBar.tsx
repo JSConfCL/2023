@@ -332,8 +332,6 @@ const NavVariant: Variants = {
 export const InternalNavBar = (props: NavBarProps) => {
   const isLoggedIn = useAtomValue(isAuthenticatedAtom);
   const setAccessToken = useSetAtom(accessTokenAtom);
-
-  console.log({ items: props.items });
   return (
     <StyledNav variants={NavVariant} animate="animate" initial="initial">
       <StyledWrapper>
