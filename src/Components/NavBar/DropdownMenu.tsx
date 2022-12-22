@@ -14,7 +14,6 @@ import { me } from "../../helpers/API";
 
 import { accessTokenAtom } from "../../helpers/auth";
 
-
 const Container = styled.div`
   font-family: "Koulen";
 `;
