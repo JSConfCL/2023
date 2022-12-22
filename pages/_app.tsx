@@ -5,8 +5,6 @@ import {
   QueryClient,
   QueryClientProvider as TanstackQueryProvider,
 } from "@tanstack/react-query";
-import flagsmith from "flagsmith/isomorphic";
-import { FlagsmithProvider } from "flagsmith/react";
 import { Provider as JotaiProvider, useAtomValue } from "jotai";
 import { any } from "micromatch";
 import { NextPage } from "next";
@@ -26,7 +24,6 @@ import { urlQlient } from "../src/graphql/urql";
 import { isAuthenticatedAtom } from "../src/helpers/auth";
 import { GlobalStyles } from "../styles/globalStyles";
 import { jsconfTheme, previaTheme } from "../styles/theme";
-// import { PublicTicketPageMetaTags } from "../src/Components/PublicTicketMetatag";
 
 const WebSchema = dynamic(
   async () => await import("../src/Components/schema/webpage"),
@@ -134,40 +131,15 @@ const AppWithQueryClients = ({
   );
 };
 
-// const ticketApiUrl = process.env.NEXT_PUBLIC_WORKER_IMAGE_API!;
-
 function AppWithDataStorage({
   Component,
   pageProps,
   router,
 }: AppPropsWithLayout) {
-  // const ticketId = router.query.id as string;
-  // const isPublicTicketPage =
-  //   router.pathname.startsWith("/p/ticket/") && ticketId;
   return (
-    <>
-      {/* {isPublicTicketPage && (
-        // En Facebook, los meta-tags tienen que poder verse dentro de los
-        // primero 50kb del HTML descargado. Considerando la cantidad de
-        // componentes q tenemos, facebook no lee los metatags creados en `/pages/p/ticket/[id]`.
-        // Por eso, los generamos acá como un 'Best Effort'
-        <PublicTicketPageMetaTags
-          ticketApiUrl={ticketApiUrl}
-          ticketId={ticketId}
-        />
-      )} */}
-      <JotaiProvider>
-        <FlagsmithProvider
-          options={{
-            environmentID: process.env.NEXT_PUBLIC_FLAGSMITH_KEY,
-            cacheFlags: true,
-          }}
-          flagsmith={flagsmith}
-        >
-          <AppWithQueryClients Component={Component} pageProps={pageProps} />
-        </FlagsmithProvider>
-      </JotaiProvider>
-    </>
+    <JotaiProvider>
+      <AppWithQueryClients Component={Component} pageProps={pageProps} />
+    </JotaiProvider>
   );
 }
 

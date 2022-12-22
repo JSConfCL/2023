@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
-import { useFlags } from "flagsmith/react";
 import { PageContainer } from "../../src/Components/common/PageContainer";
 
 import {
@@ -26,9 +25,6 @@ const Settings = () => {
     ["mytickets"],
     myTickets
   );
-  const { ticket_shared_enabled: ticketShareEnabled } = useFlags([
-    "ticket_shared_enabled",
-  ]);
 
   const isLoading = isLoadingMe || isLoadingTickets || !user;
 
@@ -39,11 +35,7 @@ const Settings = () => {
         {isLoading ? (
           <FakeTicketContainer />
         ) : (
-          <TicketsList
-            user={user}
-            tickets={tickets}
-            shareEnabled={Boolean(ticketShareEnabled?.value)}
-          />
+          <TicketsList user={user} tickets={tickets} />
         )}
       </MyTicketsWrapper>
     </PageContainer>
