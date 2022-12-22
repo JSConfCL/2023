@@ -110,7 +110,7 @@ const theme: Theme = {
       imageBorderColor: colors.jsconfYellow,
       shadowColor: colors.jsconfBlack,
       textColor: colors.white,
-      chevronColor: colors.black,
+      chevronColor: colors.white,
     },
     global: {
       backgroundColor: colors.black,

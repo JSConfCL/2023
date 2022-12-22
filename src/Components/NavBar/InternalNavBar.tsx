@@ -6,11 +6,19 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { lazy, Suspense } from "react";
 import { use100vh } from "react-div-100vh";
-import { Menu as MenuIcon, X, LogOut, Settings, Bookmark } from "react-feather";
+import {
+  Menu as MenuIcon,
+  X,
+  LogOut,
+  Settings,
+  Bookmark,
+  LogIn,
+} from "react-feather";
 import { Portal } from "react-portal";
 import { useLockBodyScroll } from "react-use";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
+import { API_URL } from "../../helpers/API";
 import { isAuthenticatedAtom, accessTokenAtom } from "../../helpers/auth";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { SecondaryStyledButton, SecondaryStyledLink } from "../Links";
@@ -344,7 +352,23 @@ export const InternalNavBar = (props: NavBarProps) => {
           {props.items.map((item) => {
             return <MenuItem key={item.id} item={item} />;
           })}
-          {isLoggedIn ? <UserDropdownMenu /> : null}
+          {isLoggedIn ? (
+            <UserDropdownMenu />
+          ) : (
+            <MenuItem
+              item={{
+                contenido: (
+                  <>
+                    Login <LogIn size={12} />
+                  </>
+                ),
+                id: "Login",
+                onClick: () => {
+                  window.location.href = `${API_URL}/auth/github`;
+                },
+              }}
+            />
+          )}
         </StyledLinksContainer>
         <MobileMenu
           items={[
@@ -383,7 +407,19 @@ export const InternalNavBar = (props: NavBarProps) => {
                     },
                   },
                 ]
-              : []),
+              : [
+                  {
+                    contenido: (
+                      <>
+                        <LogIn size={26} /> Ingresar
+                      </>
+                    ),
+                    id: "Login",
+                    onClick: () => {
+                      window.location.href = `${API_URL}/auth/github`;
+                    },
+                  },
+                ]),
           ]}
           buttonsCollection={props.buttonsCollection}
           description={props.description}
