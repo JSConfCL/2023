@@ -160,41 +160,39 @@ export const UserDropdownMenu = () => {
           <ChevronDown />
         </StyledIconWrapper>
       </StyledDropdownWrapper>
-      {
-        <DrowndownContainer
-          ref={popperRef}
-          style={styles.popper}
-          {...attributes.popper}
-          isOpen={isOpen}
-        >
-          <StyledMenuElement>
-            <StyledUsername>👋 @{data.username}</StyledUsername>
-          </StyledMenuElement>
-          <StyledMenuElement>
-            <StyledBlock />
-          </StyledMenuElement>
-          <StyledMenuElement>
-            <Bookmark size={14} />
-            <Link href={"/mytickets"}>
-              <StyledAnchor>Mis tickets</StyledAnchor>
-            </Link>
-          </StyledMenuElement>
+      <DrowndownContainer
+        ref={popperRef}
+        style={styles.popper}
+        {...attributes.popper}
+        isOpen={isOpen}
+      >
+        <StyledMenuElement>
+          <StyledUsername>👋 @{data.username}</StyledUsername>
+        </StyledMenuElement>
+        <StyledMenuElement>
+          <StyledBlock />
+        </StyledMenuElement>
+        <StyledMenuElement>
+          <Bookmark size={14} />
+          <Link href={"/mytickets"}>
+            <StyledAnchor>Mis tickets</StyledAnchor>
+          </Link>
+        </StyledMenuElement>
 
-          <StyledMenuElement>
-            <StyledBlock />
-          </StyledMenuElement>
-          <StyledMenuElement>
-            <Settings size={14} />
-            <Link href={"/settings"}>
-              <StyledAnchor>Configuracion</StyledAnchor>
-            </Link>
-          </StyledMenuElement>
-          <StyledMenuElement onClick={() => setAccessToken(null)}>
-            <LogOut size={14} />
-            <StyledAnchor>Salir</StyledAnchor>
-          </StyledMenuElement>
-        </DrowndownContainer>
-      }
+        <StyledMenuElement>
+          <StyledBlock />
+        </StyledMenuElement>
+        <StyledMenuElement>
+          <Settings size={14} />
+          <Link href={"/settings"}>
+            <StyledAnchor>Configuracion</StyledAnchor>
+          </Link>
+        </StyledMenuElement>
+        <StyledMenuElement onClick={() => setAccessToken(null)}>
+          <LogOut size={14} />
+          <StyledAnchor>Salir</StyledAnchor>
+        </StyledMenuElement>
+      </DrowndownContainer>
     </Container>
   );
 };

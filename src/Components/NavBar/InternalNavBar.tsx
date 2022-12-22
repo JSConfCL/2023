@@ -6,11 +6,19 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { lazy, Suspense } from "react";
 import { use100vh } from "react-div-100vh";
-import { Menu as MenuIcon, X, LogOut, Settings, Bookmark } from "react-feather";
+import {
+  Menu as MenuIcon,
+  X,
+  LogOut,
+  Settings,
+  Bookmark,
+  LogIn,
+} from "react-feather";
 import { Portal } from "react-portal";
 import { useLockBodyScroll } from "react-use";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
+import { API_URL } from "../../helpers/API";
 import { isAuthenticatedAtom, accessTokenAtom } from "../../helpers/auth";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { SecondaryStyledButton, SecondaryStyledLink } from "../Links";
@@ -48,15 +56,14 @@ const StyledLinksContainer = styled.ul`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 20px;
+  gap: 1rem;
 
-  @media (max-width: ${ViewportSizes.Phone}px) {
+  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
     display: none;
   }
 `;
 
 const MobileStyledLinksContainer = styled.ul`
-  width: fit-content;
   list-style: none;
   padding: 29px 16px;
   flex-direction: row;
@@ -72,16 +79,21 @@ const MobileStyledLinksContainer = styled.ul`
 `;
 
 const StyledLink = styled.li<{ isActive: boolean }>`
-  padding: 8px 16px;
+  padding: 8px 8px;
   font-weight: 400;
   font-family: "Koulen";
   text-align: center;
   position: relative;
   cursor: pointer;
   color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.jsconfRed : theme.colors.jsconfBlack};
-  @media (min-width: ${ViewportSizes.Phone}px) {
-    color: inherit;
+    isActive
+      ? theme.elements.navBar.activeTextColor
+      : theme.elements.navBar.textColor};
+  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
+    color: ${({ isActive, theme }) =>
+      isActive
+        ? theme.elements.navBar.activeMobileTextColor
+        : theme.elements.navBar.mobileTextColor};
   }
   transition-property: all;
   transition-timing-function: ease-in-out;
@@ -118,7 +130,7 @@ const StyledPortalWrapper = styled(motion.section)<{ height: number | string }>`
   svg {
     align-self: flex-end;
   }
-  @media (min-width: ${ViewportSizes.Phone}px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     display: none;
   }
 `;
@@ -167,7 +179,7 @@ const MobileFeatherIconWrapper = styled.span`
   cursor: pointer;
   position: relative;
   height: fit-content;
-  @media (min-width: ${ViewportSizes.Phone}px) {
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     display: none;
   }
 `;
@@ -228,7 +240,9 @@ const MobileMenu = ({ items, description, buttonsCollection }: NavBarProps) => {
   const height = use100vh();
   const viewportHeight = height ? `${height}px` : "100vh";
 
-  const isMobile = useMediaQuery(`(max-width: ${ViewportSizes.Phone}px)`);
+  const isMobile = useMediaQuery(
+    `(max-width: ${ViewportSizes.TabletLandscape}px)`
+  );
   const [isOpen, setIsOpen] = useAtom(isOpenAtom);
 
   useLockBodyScroll(isOpen);
@@ -344,7 +358,23 @@ export const InternalNavBar = (props: NavBarProps) => {
           {props.items.map((item) => {
             return <MenuItem key={item.id} item={item} />;
           })}
-          {isLoggedIn ? <UserDropdownMenu /> : null}
+          {isLoggedIn ? (
+            <UserDropdownMenu />
+          ) : (
+            <MenuItem
+              item={{
+                contenido: (
+                  <>
+                    Ingresar <LogIn size={12} />
+                  </>
+                ),
+                id: "Login",
+                onClick: () => {
+                  window.location.href = `${API_URL}/auth/github`;
+                },
+              }}
+            />
+          )}
         </StyledLinksContainer>
         <MobileMenu
           items={[
@@ -383,7 +413,19 @@ export const InternalNavBar = (props: NavBarProps) => {
                     },
                   },
                 ]
-              : []),
+              : [
+                  {
+                    contenido: (
+                      <>
+                        <LogIn size={26} /> Ingresar
+                      </>
+                    ),
+                    id: "Login",
+                    onClick: () => {
+                      window.location.href = `${API_URL}/auth/github`;
+                    },
+                  },
+                ]),
           ]}
           buttonsCollection={props.buttonsCollection}
           description={props.description}

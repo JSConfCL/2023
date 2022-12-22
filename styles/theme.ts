@@ -105,12 +105,18 @@ const theme: Theme = {
         },
       },
     },
+    navBar: {
+      textColor: colors.jsconfBlack,
+      activeTextColor: colors.jsconfBlack,
+      mobileTextColor: colors.jsconfBlack,
+      activeMobileTextColor: colors.jsconfRed,
+    },
     navBarDropDown: {
       backgroundColor: colors.black,
-      imageBorderColor: colors.jsconfYellow,
+      imageBorderColor: colors.jsconfBlack,
       shadowColor: colors.jsconfBlack,
       textColor: colors.white,
-      chevronColor: colors.black,
+      chevronColor: colors.jsconfBlack,
     },
     global: {
       backgroundColor: colors.black,
@@ -157,12 +163,18 @@ export const previaTheme: Theme = {
         },
       },
     },
+    navBar: {
+      textColor: colors.jsconfBlack,
+      activeTextColor: colors.jsconfRed,
+      mobileTextColor: colors.jsconfBlack,
+      activeMobileTextColor: colors.jsconfBlack,
+    },
     navBarDropDown: {
       backgroundColor: colors.white,
       imageBorderColor: colors.jsconfBlack,
       shadowColor: colors.jsconfBlack,
       textColor: colors.jsconfBlack,
-      chevronColor: colors.black,
+      chevronColor: colors.jsconfBlack,
     },
   },
 };

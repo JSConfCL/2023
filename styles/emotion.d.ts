@@ -21,6 +21,13 @@ type NavBarDropDownMenu = {
   chevronColor: string;
 };
 
+type NavBarComponentStyles = {
+  textColor: string;
+  activeTextColor: string;
+  mobileTextColor: string;
+  activeMobileTextColor: string;
+};
+
 type Colors = {
   jsconfYellow: string;
   jsconfBlack: string;
@@ -80,6 +87,7 @@ declare module "@emotion/react" {
           tertiary: ButtonVariantStyles;
         };
       };
+      navBar: NavBarComponentStyles;
       navBarDropDown: NavBarDropDownMenu;
       global: {
         backgroundColor: string;
