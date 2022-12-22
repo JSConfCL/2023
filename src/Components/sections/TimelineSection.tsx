@@ -5,6 +5,7 @@ import { add, parseISO } from "date-fns";
 import { format, formatInTimeZone } from "date-fns-tz";
 import esLocale from "date-fns/locale/es";
 import ReactCountryFlag from "react-country-flag";
+import { transparentize } from "polished";
 
 import { H2, H3 } from "../core/Typography";
 import { PrimaryStyledLink } from "../Links/index";
@@ -19,7 +20,6 @@ const fadeOut = keyframes`
   from {
     opacity: 1
   }
-
   to {
     opacity: 0
   }
@@ -41,13 +41,13 @@ const colorOut = keyframes`
   }
 
   to {
-    background: #000;
+    background: transparent;
   }
 `;
 
 const colorIn = keyframes`
   from {
-    background: #000;
+    background: transparent;
   }
 
   to {
@@ -165,7 +165,7 @@ const StyledButton = styled.button`
 
 const TableCell = styled.td`
   display: block;
-  color: white;
+  color: ${({ theme }) => theme.colors.textColor};
   font-size: 18px;
   text-transform: capitalize;
 
@@ -195,21 +195,22 @@ const ImageCell = styled(TableCell)`
 `;
 
 const TimeCell = styled(TableCell)`
-  color: ${jsconfTheme.colors.jsconfYellow};
   margin-bottom: 8px;
-  font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
   vertical-align: bottom;
+  white-space: nowrap;
 `;
 
 const AuthorCell = styled(TableCell)`
   margin-top: 16px;
-  vertical-align: bottom;
   padding-right: 16px;
+  white-space: nowrap;
+  font-size: 20px;
+  color: ${({ theme }) => theme.colors.altColor};
+  font-weight: bold;
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     padding-right: 16px;
-    text-align: right;
   }
 `;
 
@@ -221,7 +222,7 @@ const TableRow = styled.tr`
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     display: table-row;
-    animation: ${colorOut} 0.5s;
+    animation: ${colorOut} 1s ease;
 
     &:hover {
       animation: ${colorIn} 1s ease;
@@ -257,6 +258,18 @@ const CalendarContainer = styled.div`
     }
   }
 `;
+
+const Language = styled.span`
+  display: inline-block;
+  background: ${transparentize(0.5, jsconfTheme.colors.jsconfRed)};
+  color: white;
+  font-weight: bold;
+  padding: 0 8px;
+  font-size: 0.8em;
+  border-radius: 0px 8px 0px 0px;
+  margin: 8px 0;
+`;
+
 type Flatten<T> = T extends any[] ? T[number] : T;
 
 const getTime = (date: Date, timezone: string) => {
@@ -280,6 +293,11 @@ const CHILE = {
   hasExceptions: true,
 };
 
+const LANGUAGES = {
+  es: "Español",
+  en: "English",
+};
+
 const TimelineRow = ({
   event,
   showLocalTime,
@@ -289,6 +307,9 @@ const TimelineRow = ({
 }) => {
   const date = new Date(event.date);
   const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const language = event.language
+    ? LANGUAGES[event.language as "es" | "en"]
+    : null;
 
   return (
     <TableRow>
@@ -302,15 +323,7 @@ const TimelineRow = ({
           ) : null}
         </Suspense>
       </ImageCell>
-      <TimeCell>
-        <div>
-          <ReactCountryFlag countryCode={CHILE.abbr} />{" "}
-          {getFullTime(date, event.duration, CHILE.timezone)}
-        </div>
-        {showLocalTime ? (
-          <div>🏠 {getFullTime(date, event.duration, localTimezone)}</div>
-        ) : null}
-      </TimeCell>
+      <AuthorCell>{event?.speaker?.name}</AuthorCell>
       <TableCell>
         {event.kind && event.kind !== GENERAL ? (
           <>
@@ -318,9 +331,18 @@ const TimelineRow = ({
             <br />
           </>
         ) : null}
-        {event.title}
+        <div>{event.title}</div>
+        {language ? <Language>{language}</Language> : null}
       </TableCell>
-      <AuthorCell>{event?.speaker?.name}</AuthorCell>
+      <TimeCell>
+        <div>
+          <ReactCountryFlag countryCode={CHILE.abbr} />{" "}
+          {getFullTime(date, event.duration, CHILE.timezone)}
+        </div>
+        {showLocalTime ? (
+          <div>📍 {getFullTime(date, event.duration, localTimezone)}</div>
+        ) : null}
+      </TimeCell>
     </TableRow>
   );
 };
@@ -391,9 +413,10 @@ const TimelineSection = (props: {
             </StyledButtons>
             <div>* Los horarios están sujetos a cambio</div>
             {showDifferentTimezone ? (
-              <div>
-                ** Los horarios se muestran en la zona horaria de Chile y de tu
-                dispositivo ({localTimezone}).
+              <div style={{ color: jsconfTheme.colors.jsconfRed }}>
+                ** Los horarios se muestran en la zona horaria de{" "}
+                <ReactCountryFlag countryCode={CHILE.abbr} /> Chile y 📍 de tu
+                ubicación ({localTimezone}).
               </div>
             ) : (
               ""

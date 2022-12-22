@@ -1,8 +1,8 @@
+import { Global } from "@emotion/react";
 import styled from "@emotion/styled";
-import { atcb_action } from "add-to-calendar-button";
-import { motion } from "framer-motion";
+import { atcb_action, atcb_init } from "add-to-calendar-button";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   Calendar,
   Copy,
@@ -12,19 +12,11 @@ import {
   Twitter,
 } from "react-feather";
 import toast, { Toaster } from "react-hot-toast";
-
-import { ViewportSizes } from "../../../styles/theme";
 import { ToolTip } from "../Tooltip";
+import { atcbCSS, atcbExtraCSS } from "./addToCalendarStyles";
 
 const SharingInfo = styled.div`
   text-align: center;
-`;
-
-export const FakeTicketContainer = styled(motion.div)`
-  height: 480px;
-  @media (min-width: ${ViewportSizes.Phone}px) {
-    height: 380px;
-  }
 `;
 
 const SocialButton = styled.button(({ theme }) => [
@@ -81,14 +73,18 @@ const SocialAnchor = styled.a<{
   },
 ]);
 
-export const SocialLinks = ({ userTicketId }: { userTicketId: string }) => {
+const SocialLinks = ({ userTicketId }: { userTicketId: string }) => {
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const publicUrl = `${
     process.env.NEXT_PUBLIC_SERVER_URL ?? "https://jsconf.cl"
   }/p/ticket/${userTicketId?.replace("user_ticket_", "") || ""}`;
+  useEffect(() => {
+    atcb_init();
+  }, []);
 
   return (
     <SharingInfo>
+      <Global styles={[atcbCSS, atcbExtraCSS]} />
       <SocialAnchor
         href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
           `Lista mi entrada para la @JSConfCL 🎉. Obtén la tuya en ${publicUrl} . Nos vemos el 03 y 04 de Febrero!`
@@ -161,3 +157,5 @@ export const SocialLinks = ({ userTicketId }: { userTicketId: string }) => {
     </SharingInfo>
   );
 };
+
+export default SocialLinks;

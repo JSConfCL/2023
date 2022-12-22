@@ -8,7 +8,6 @@ import { CSSProperties } from "react";
 import { API_URL } from "../../helpers/API";
 import { transparentize } from "polished";
 import { motion } from "framer-motion";
-import { useFlags } from "flagsmith/react";
 
 export const Paragraph = styled.p`
   color: #fff;
@@ -270,9 +269,6 @@ const style: CSSProperties = {
 };
 
 export const GithubButton = () => {
-  const { google_login_enabled: googleLoginEnabled } = useFlags([
-    "google_login_enabled",
-  ]);
   return (
     <SocialButtonWrapper>
       <GithubLoginButton
@@ -282,7 +278,7 @@ export const GithubButton = () => {
         }}
         text="Ingresa con Github"
       />
-      {googleLoginEnabled.value && (
+      {false && (
         <GoogleLoginButton
           style={style}
           onClick={() => {
