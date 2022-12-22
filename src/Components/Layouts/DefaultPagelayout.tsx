@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
 import dynamic from "next/dynamic";
-import { Suspense, ReactElement } from "react";
+import { Suspense } from "react";
+import type { ReactElement } from "react-markdown/lib/react-markdown";
 
 import { ViewportSizes } from "../../../styles/theme";
-import { NavBarProps } from "../NavBar/InternalNavBar";
 import { StyledWrapperSuspense } from "../NavBar/components";
+import { NavBarProps } from "../NavBar/types";
 
 const TicketNavBar = dynamic(async () => await import("../NavBar/NavBar"), {
   ssr: false,
@@ -40,7 +41,7 @@ export const StyledBlackWrap = styled.section`
   flex-direction: column;
   flex: 1;
   align-items: center;
-  background-color: ${({ theme }) => theme.elements.global.backgroundColor};
+  background-color: ${({ theme }) => theme.colors.backgroundColor};
 `;
 
 export interface LayoutPageProps extends React.ComponentPropsWithoutRef<"div"> {

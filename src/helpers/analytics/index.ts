@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { useFlagsmith } from "flagsmith/react";
 import { useAtomValue } from "jotai";
 import { useEffect } from "react";
 
@@ -7,7 +6,6 @@ import { me } from "../API";
 import { isAuthenticatedAtom } from "../auth";
 
 export const useIdentify = () => {
-  const { identify, initialised, setTraits } = useFlagsmith();
   const isAutenticated = useAtomValue(isAuthenticatedAtom);
   const { refetch } = useQuery(["identifyMe"], me, {
     enabled: false,
@@ -16,14 +14,14 @@ export const useIdentify = () => {
     const run = async () => {
       const { data } = await refetch();
       if (data) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { id, ...userTraits } = data;
-        await identify(id, userTraits);
       }
     };
-    if (isAutenticated && initialised) {
+    if (isAutenticated) {
       run().catch((e) => {
         // console.error(e);
       });
     }
-  }, [identify, initialised, isAutenticated, refetch, setTraits]);
+  }, [isAutenticated, refetch]);
 };

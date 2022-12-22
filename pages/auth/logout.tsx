@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { useFlagsmith } from "flagsmith/react";
 import { useSetAtom } from "jotai";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -25,17 +24,13 @@ const StyledBlackWrapp = styled.section`
 const GithubAuth: NextPage = () => {
   const { isReady, replace } = useRouter();
   const setAccessToken = useSetAtom(accessTokenAtom);
-  const flagsmith = useFlagsmith();
 
   useEffect(() => {
     if (isReady) {
-      if (flagsmith.initialised) {
-        void flagsmith.logout();
-      }
       setAccessToken(null);
       void replace("/tickets");
     }
-  }, [flagsmith, isReady, replace, setAccessToken]);
+  }, [isReady, replace, setAccessToken]);
   return (
     <Container>
       <StyledBlackWrapp />

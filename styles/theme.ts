@@ -1,6 +1,6 @@
 import type { Theme } from "@emotion/react";
 
-export const colors = {
+const _colors = {
   jsconfBlack: "#1E2019",
   jsconfYellow: "#F0E040",
   jsconfRed: "#F45B69",
@@ -14,6 +14,19 @@ export const colors = {
     linkedin: "#0A66C2",
     jsconf: "#F0E040",
   },
+};
+
+export const colors = {
+  ..._colors,
+  titleColor: "#fff",
+  subtitleColor: "#fff",
+  altColor: "#F0E040",
+  textColor: "#fff",
+  backgroundColor: "#000",
+  altBackgroundColor: "#F0E040",
+  footer: "#333",
+  contributorFooter: "#F45B69",
+  friendsBackground: "#000",
 };
 
 const fonts = {
@@ -52,7 +65,7 @@ const breakpoints = {
   tabletLandscapeOnly: generateMediaQueryString(ViewportSizes.TabletLandscape),
 };
 
-export const jsconfTheme: Theme = {
+const theme: Theme = {
   colors,
   fonts,
   breakpoints,
@@ -92,12 +105,64 @@ export const jsconfTheme: Theme = {
         },
       },
     },
+    navBarDropDown: {
+      backgroundColor: colors.black,
+      imageBorderColor: colors.jsconfYellow,
+      shadowColor: colors.jsconfBlack,
+      textColor: colors.white,
+      chevronColor: colors.black,
+    },
     global: {
       backgroundColor: colors.black,
       fontFamily: fonts.Barlow.name,
       headingsFontFamily: fonts.Koulen.name,
       headingsFontWeight: 400,
       color: colors.white,
+    },
+  },
+};
+
+export const jsconfTheme: Theme = {
+  ...theme,
+};
+
+export const previaTheme: Theme = {
+  ...theme,
+  colors: {
+    ...colors,
+    titleColor: "#111",
+    subtitleColor: "#111",
+    altColor: "#F45B69",
+    textColor: "#333",
+    backgroundColor: "#fff",
+    footer: "#fff",
+    altBackgroundColor: "#1E2019",
+    contributorFooter: "#000",
+    friendsBackground: "#000",
+  },
+  elements: {
+    ...theme.elements,
+    buttons: {
+      variants: {
+        ...theme.elements.buttons.variants,
+        primary: {
+          backgroundColor: colors.jsconfRed,
+          backgroundFallbackColor: colors.jsconfRed,
+          textColor: "#fff",
+          borderColor: colors.transparent,
+          borderWidth: 1,
+          borderStyle: "solid",
+          borderTopRightRadius: 24,
+          onHoverColor: "#fff",
+        },
+      },
+    },
+    navBarDropDown: {
+      backgroundColor: colors.white,
+      imageBorderColor: colors.jsconfBlack,
+      shadowColor: colors.jsconfBlack,
+      textColor: colors.jsconfBlack,
+      chevronColor: colors.black,
     },
   },
 };

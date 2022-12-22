@@ -1,24 +1,23 @@
+import { Global } from "@emotion/react";
 import styled from "@emotion/styled";
-import { atcb_init } from "add-to-calendar-button";
 import Atropos from "atropos/react";
 import { AnimatePresence, motion, MotionProps } from "framer-motion";
-import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { Suspense, useEffect, useState } from "react";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 import { GenericLink } from "../TicketSection/shared";
 
-import { SocialLinks } from "./SocialLinks";
+import { atroposCSS } from "./atroposStyles";
+import { FakeTicketContainer } from "./components";
+
+const SocialLinks = dynamic(async () => await import("./SocialLinks"), {
+  ssr: false,
+});
 
 const GetTicket = styled.div`
   text-align: center;
   margin-bottom: 64px;
-`;
-
-export const FakeTicketContainer = styled(motion.div)`
-  height: 480px;
-  @media (min-width: ${ViewportSizes.Phone}px) {
-    height: 380px;
-  }
 `;
 
 const MotionContainer = styled(motion.div)`
@@ -165,6 +164,10 @@ const StyledImg = styled.img`
   min-width: 60px;
 `;
 
+const SocialLinkWrapper = styled.div`
+  height: 60px;
+`;
+
 const TicketUsername = styled.h2`
   color: ${jsconfTheme.colors.jsconfYellow};
 `;
@@ -302,14 +305,11 @@ export const Ticket = ({
   const animation = useAnimation();
 
   useEffect(() => {
-    atcb_init();
-    setTimeout(() => {
-      setLoaded(true);
-    }, 1100);
+    setLoaded(true);
   }, []);
-
   return (
     <>
+      <Global styles={[atroposCSS]} />
       <AnimatePresence mode="sync" initial={fadeIn}>
         {!loaded && <FakeTicketContainer {...animation} />}
         {loaded && (
@@ -364,7 +364,11 @@ export const Ticket = ({
                 </TicketInfo>
               </TicketContainer>
             </StyledAtropos>
-            <SocialLinks userTicketId={userTicketId} />
+            <SocialLinkWrapper>
+              <Suspense fallback={null}>
+                <SocialLinks userTicketId={userTicketId} />
+              </Suspense>
+            </SocialLinkWrapper>
             {showGetTicket ? (
               <GetTicket>
                 <GenericLink href="/tickets">Obtener Tickets</GenericLink>

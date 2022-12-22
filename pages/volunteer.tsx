@@ -1,7 +1,4 @@
-import { useFlags } from "flagsmith/react";
-
 import BannerVolunteer from "../src/Components/Banner/Volunteer";
-import VolunteerForm from "../src/Components/Form/Volunteer";
 
 import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../src/Components/Seo";
@@ -13,6 +10,7 @@ import {
   VolunteerQueryQueryVariables,
 } from "../src/graphql/volunteer.generated";
 import { ParseQuery } from "../src/helpers/types";
+// import VolunteerForm from "../src/Components/Form/Volunteer";
 
 type Page = ParseQuery<VolunteerQueryQuery["page"]>;
 
@@ -22,22 +20,15 @@ export interface PageProps {
 }
 
 export default function VolunteerPage(props: PageProps) {
-  const { "volunteer-form-enabled": volunteerFormEnabled } = useFlags([
-    "volunteer-form-enabled",
-  ]);
-
   return (
     <>
       <Seo {...props.seo} />
       <BannerVolunteer {...props.heroData} />
-      {volunteerFormEnabled.enabled ? (
-        <VolunteerForm />
-      ) : (
-        <TitleDescription
-          title="Proceso Cerrado"
-          description="El proceso de inscripción se ha cerrado, te invitamos a participar en las siguientes ediciones"
-        />
-      )}
+      {/* <VolunteerForm /> */}
+      <TitleDescription
+        title="Proceso Cerrado"
+        description="El proceso de inscripción se ha cerrado, te invitamos a participar en las siguientes ediciones"
+      />
     </>
   );
 }

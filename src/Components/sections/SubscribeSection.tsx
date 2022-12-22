@@ -34,8 +34,8 @@ const Container = styled.section`
 
 const Form = styled.form`
   height: 80px;
-  background: ${({ theme }) => theme.colors.black};
-  color: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.backgroundColor};
+  color: ${({ theme }) => theme.colors.textColor};
   position: relative;
   z-index: 1;
   overflow: hidden;
@@ -43,7 +43,7 @@ const Form = styled.form`
   border-left-color: transparent;
   border-right-color: transparent;
   border-top-color: transparent;
-  border-bottom-color: ${({ theme }) => theme.colors.jsconfYellow};
+  border-bottom-color: ${({ theme }) => theme.colors.altColor};
 `;
 
 const Fieldset = styled.fieldset(
@@ -65,8 +65,8 @@ const buttonWidth = 150;
 const SubmitButton = styled(motion.input)(
   ({ theme }) => `
   position: absolute;
-  background: ${theme.colors.jsconfYellow};
-  color: ${theme.colors.jsconfBlack};
+  background: ${theme.colors.altColor};
+  color: ${theme.colors.black};
   top: 0;
   right: 0;
   height: 100%;
@@ -91,8 +91,8 @@ const EmailInput = styled.input(
   text-align: left;
   line-height: 50px;
   vertical-align: middle;
-  background: ${theme.colors.black};
-  color: ${theme.colors.white}
+  background: ${theme.colors.backgroundColor};
+  color: ${theme.colors.textColor}
 `
 );
 

@@ -33,7 +33,8 @@ const FlexRow = styled.div`
   align-self: flex-start;
   padding: 16px;
   gap: 3rem;
-  background-color: ${({ theme }) => theme.elements.global.backgroundColor};
+  background-color: ${({ theme }) => theme.colors.backgroundColor};
+  color: ${({ theme }) => theme.colors.footer};
   @media (min-width: ${ViewportSizes.Phone}px) {
     gap: 0;
     flex-direction: row;
@@ -46,7 +47,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${({ theme }) => theme.elements.global.backgroundColor};
+  background-color: ${({ theme }) => theme.colors.backgroundColor};
+  color: ${({ theme }) => theme.colors.footer};
   justify-content: center;
   flex-shrink: 0;
 `;

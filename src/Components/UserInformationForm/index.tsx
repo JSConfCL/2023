@@ -416,7 +416,7 @@ export const UserInformationForm = () => {
             />
             <Error {...errors.name} />
           </FormFieldSection>
-
+          {/* 
           <FormFieldSection>
             <FormLabel htmlFor="username">Nombre de Usuario</FormLabel>
             <TextInput
@@ -427,7 +427,7 @@ export const UserInformationForm = () => {
               error={Boolean(errors.username?.type)}
             />
             <Error {...errors.username} />
-          </FormFieldSection>
+          </FormFieldSection> */}
 
           {!user?.email ? (
             <>

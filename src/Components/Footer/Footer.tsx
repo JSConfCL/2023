@@ -13,8 +13,8 @@ interface Props {
 
 const StyledFooter = styled.footer(
   ({ theme }) => `
-  background-color: ${theme.colors.jsconfYellow};
-  color: ${theme.colors.jsconfBlack};
+  background-color: ${theme.colors.altBackgroundColor};
+  color: ${theme.colors.footer};
   z-index: 100;
   justify-content: center;
   align-items: center;

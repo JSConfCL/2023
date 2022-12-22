@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { useFlags } from "flagsmith/react";
 import { motion } from "framer-motion";
 import { lazy, Suspense } from "react";
 
@@ -17,6 +16,7 @@ const Container = styled.section`
   flex-direction: row;
   width: 100%;
   max-width: 1440px;
+  margin: 0 auto;
   gap: 32px 16px;
   padding: 16px;
   justify-content: flex-start;
@@ -46,7 +46,7 @@ const DescriptionContainer = styled(motion.section)`
   max-width: 400px;
 
   p {
-    color: #f0e040;
+    color: ${({ theme }) => theme.colors.altColor};
     font-weight: 400;
   }
 `;
@@ -75,10 +75,6 @@ const TeamSection = (props: { page: PageProps["teamData"] }) => {
       membersCollection: { items },
     },
   } = props;
-  const { "volunteer-form-enabled": volunteerFormEnabled } = useFlags([
-    "volunteer-form-enabled",
-  ]);
-
   return (
     <Container>
       <DescriptionContainer>
@@ -88,7 +84,7 @@ const TeamSection = (props: { page: PageProps["teamData"] }) => {
         </Suspense>
         <HR />
       </DescriptionContainer>
-      {callToAction && volunteerFormEnabled.enabled && (
+      {false && (
         <ContainerButton>
           <PrimaryStyledLink href={callToAction.link}>
             {callToAction.contenido}

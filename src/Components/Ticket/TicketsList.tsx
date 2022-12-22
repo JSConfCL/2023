@@ -8,7 +8,6 @@ export const TicketsList = ({
 }: {
   user: UserType;
   tickets?: OwnTicket[];
-  shareEnabled?: boolean;
 }) => {
   if (!tickets?.length) {
     return <div>No hay tickets.</div>;

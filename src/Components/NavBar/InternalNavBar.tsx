@@ -1,22 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
 import styled from "@emotion/styled";
 import { motion, useAnimation, Variants } from "framer-motion";
-import { atom, useAtom, useSetAtom } from "jotai";
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { lazy, Suspense } from "react";
 import { use100vh } from "react-div-100vh";
-import { Menu as MenuIcon, X } from "react-feather";
+import { Menu as MenuIcon, X, LogOut, Settings, Bookmark } from "react-feather";
 import { Portal } from "react-portal";
 import { useLockBodyScroll } from "react-use";
-import { Simplify } from "type-fest";
 
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
+import { isAuthenticatedAtom, accessTokenAtom } from "../../helpers/auth";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { SecondaryStyledButton, SecondaryStyledLink } from "../Links";
 import JSConfLogo from "../svgs/logo";
 
+import { UserDropdownMenu } from "./DropdownMenu";
 import { NavBarSize } from "./components";
+import { MenuItemType, NavBarProps } from "./types";
+
 const Description = lazy(async () => await import("../core/Description"));
 
 const StyledNav = styled(motion.nav)`
@@ -47,6 +50,7 @@ const StyledLinksContainer = styled.ul`
   flex-direction: row;
   align-items: center;
   gap: 20px;
+
   @media (max-width: ${ViewportSizes.Phone}px) {
     display: none;
   }
@@ -106,7 +110,7 @@ const StyledPortalWrapper = styled(motion.section)<{ height: number | string }>`
   top: -200vh;
   overflow: scroll;
 
-  background-color: #f0e040;
+  background-color: ${({ theme }) => theme.colors.altColor};
   flex-direction: column;
   align-items: center;
   font-size: 32px;
@@ -169,39 +173,6 @@ const MobileFeatherIconWrapper = styled.span`
   }
 `;
 
-interface LinkMenuItem {
-  id: string;
-  link: string;
-  onClick?: never;
-  isBlank: boolean;
-  contenido: string;
-}
-interface ButtonMenuItem {
-  id: string;
-  link?: never;
-  onClick: () => void;
-  contenido: string;
-}
-
-interface ButtonItem {
-  link: string;
-  onClick?: never;
-  contenido: string;
-}
-interface ButtonItemOnClick {
-  link?: never;
-  onClick: () => void;
-  contenido: string;
-}
-
-type MenuItemType = Simplify<LinkMenuItem | ButtonMenuItem>;
-
-export type NavBarProps = Simplify<{
-  items: MenuItemType[];
-  description?: any;
-  buttonsCollection?: Array<Simplify<ButtonItem | ButtonItemOnClick>>;
-}>;
-
 const FakeButton = styled.div`
   cursor: pointer;
 `;
@@ -220,6 +191,7 @@ const isOpenAtom = atom(false);
 const MenuItem = ({ item }: { item: MenuItemType }) => {
   const { pathname } = useRouter();
   const setIsOpen = useSetAtom(isOpenAtom);
+
   return (
     <StyledLink
       key={item.id}
@@ -234,10 +206,14 @@ const MenuItem = ({ item }: { item: MenuItemType }) => {
         </FakeButton>
       ) : item.isBlank ? (
         <Link rel="preconnect" href={item.link} passHref>
-          <a target="_blank">{item.contenido}</a>
+          <a target="_blank">
+            <span>{item.contenido}</span>
+          </a>
         </Link>
       ) : (
-        <Link href={item.link}>{item.contenido}</Link>
+        <Link href={item.link}>
+          <span>{item.contenido}</span>
+        </Link>
       )}
       {item?.link === pathname ? <UnderLine /> : null}
     </StyledLink>
@@ -355,6 +331,8 @@ const NavVariant: Variants = {
 };
 
 export const InternalNavBar = (props: NavBarProps) => {
+  const isLoggedIn = useAtomValue(isAuthenticatedAtom);
+  const setAccessToken = useSetAtom(accessTokenAtom);
   return (
     <StyledNav variants={NavVariant} animate="animate" initial="initial">
       <StyledWrapper>
@@ -367,9 +345,47 @@ export const InternalNavBar = (props: NavBarProps) => {
           {props.items.map((item) => {
             return <MenuItem key={item.id} item={item} />;
           })}
+          {isLoggedIn ? <UserDropdownMenu /> : null}
         </StyledLinksContainer>
         <MobileMenu
-          items={props.items}
+          items={[
+            ...props.items,
+            ...(isLoggedIn
+              ? [
+                  {
+                    contenido: (
+                      <>
+                        <Bookmark size={26} /> Mis Tickets
+                      </>
+                    ),
+                    id: "MyTickets",
+                    link: "/mytickets",
+                    isBlank: false,
+                  },
+                  {
+                    contenido: (
+                      <>
+                        <Settings size={26} /> Configuracion
+                      </>
+                    ),
+                    id: "Settings",
+                    link: "/settings",
+                    isBlank: false,
+                  },
+                  {
+                    contenido: (
+                      <>
+                        <LogOut size={26} /> Salir
+                      </>
+                    ),
+                    id: "Logout",
+                    onClick: () => {
+                      setAccessToken(null);
+                    },
+                  },
+                ]
+              : []),
+          ]}
           buttonsCollection={props.buttonsCollection}
           description={props.description}
         />

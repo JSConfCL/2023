@@ -13,6 +13,14 @@ type ButtonVariantStyles = {
   minWidth?: number;
 };
 
+type NavBarDropDownMenu = {
+  backgroundColor: string;
+  textColor: string;
+  shadowColor: string;
+  imageBorderColor: string;
+  chevronColor: string;
+};
+
 type Colors = {
   jsconfYellow: string;
   jsconfBlack: string;
@@ -27,6 +35,15 @@ type Colors = {
     linkedin: string;
     jsconf: string;
   };
+  titleColor: string;
+  subtitleColor: string;
+  altColor: string;
+  textColor: string;
+  backgroundColor: string;
+  altBackgroundColor: string;
+  footer: string;
+  contributorFooter: string;
+  friendsBackground: string;
 };
 
 declare module "@emotion/react" {
@@ -63,6 +80,7 @@ declare module "@emotion/react" {
           tertiary: ButtonVariantStyles;
         };
       };
+      navBarDropDown: NavBarDropDownMenu;
       global: {
         backgroundColor: string;
         fontFamily: string;

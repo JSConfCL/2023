@@ -3,7 +3,7 @@ import { transparentize } from "polished";
 import { lazy } from "react";
 
 import { PageProps } from "../../../pages";
-import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
+import { ViewportSizes } from "../../../styles/theme";
 import useMediaQuery from "../../helpers/useMediaQuery";
 
 import { PrimaryStyledLink } from "../Links";
@@ -19,6 +19,7 @@ const Container = styled.section`
   flex-direction: column;
   width: 100%;
   max-width: 1440px;
+  margin: 0 auto;
   gap: 0px 32px;
   padding: 16px;
   justify-content: space-between;
@@ -48,14 +49,16 @@ const ImageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     align-items: center;
     justify-self: center;
   }
 `;
 
-const ConstributorType = styled.section`
-  background-color: ${transparentize(0.86, jsconfTheme.colors.jsconfRed)};
+const ContributorType = styled.section`
+  background-color: ${({ theme }) =>
+    transparentize(0.86, theme.colors.contributorFooter)};
   border-radius: 32px;
   position: relative;
   padding: 2rem 1rem;
@@ -68,7 +71,7 @@ const ConstributorType = styled.section`
 const ContributorName = styled.h3`
   position: absolute;
   font-size: 32px;
-  color: white;
+  color: ${({ theme }) => theme.colors.textColor};
   top: -34px;
   left: 29px;
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
@@ -112,9 +115,9 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
         </PrimaryStyledLink>
       </FlexSpace>
       {props.page?.items?.map((item) => (
-        <ConstributorType key={item.sys.id}>
+        <ContributorType key={item.sys.id}>
           <ContributorName>{item.name}</ContributorName>
-          <RenderingLayout constributorTypeName={item.name}>
+          <RenderingLayout contributorTypeName={item.name}>
             {item?.contributorsCollection?.items?.map((contributorItem) => (
               <ImageContainer key={contributorItem.sys.id}>
                 <Flex>
@@ -132,7 +135,7 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
               </ImageContainer>
             ))}
           </RenderingLayout>
-        </ConstributorType>
+        </ContributorType>
       ))}
     </Container>
   );

@@ -15,7 +15,7 @@ const LeftSide = styled.div`
   flex: 2;
 `;
 
-const RigthSide = styled.div`
+const RightSide = styled.div`
   width: 100%;
   flex: 1;
 `;
@@ -43,7 +43,7 @@ const CreaTuCuenta = () => {
             Podrás reasignarlos y regalarlos sin problemas.
           </Paragraph>
         </LeftSide>
-        <RigthSide>
+        <RightSide>
           <div>
             <GithubLoginButton
               style={style}
@@ -62,7 +62,7 @@ const CreaTuCuenta = () => {
               text="Ingresa con Google"
             />
           </div>
-        </RigthSide>
+        </RightSide>
       </SideContainer>
     </Container>
   );

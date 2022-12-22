@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 
-import { useFlags } from "flagsmith/react";
 import { motion } from "framer-motion";
 import { transparentize } from "polished";
 import { CSSProperties } from "react";
@@ -194,7 +193,7 @@ export const LeftSide = styled(motion.div)`
   gap: 2rem;
 `;
 
-export const RigthSide = styled(motion.div)`
+export const RightSide = styled(motion.div)`
   width: 100%;
   flex: 1;
   display: flex;
@@ -273,9 +272,6 @@ const style: CSSProperties = {
 };
 
 export const GithubButton = () => {
-  const { google_login_enabled: googleLoginEnabled } = useFlags([
-    "google_login_enabled",
-  ]);
   return (
     <SocialButtonWrapper>
       <GithubLoginButton
@@ -285,7 +281,7 @@ export const GithubButton = () => {
         }}
         text="Ingresa con Github"
       />
-      {googleLoginEnabled.value && (
+      {false && (
         <GoogleLoginButton
           style={style}
           onClick={() => {

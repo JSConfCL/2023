@@ -9,7 +9,7 @@ import {
   Paragraph,
   SideContainer,
   LeftSide,
-  RigthSide,
+  RightSide,
   ImageWrapper,
   Shadow,
   ImageContainer,
@@ -110,14 +110,14 @@ const NoTickets = ({ imageUrl }: { imageUrl: string }) => {
             </>
           )}
         </LeftSide>
-        <RigthSide>
+        <RightSide>
           <ImageWrapper>
             <ImageContainer>
               <Image mobile={imageUrl} alt={"Un ticket de la JSCconf"} />
               <Shadow />
             </ImageContainer>
           </ImageWrapper>
-        </RigthSide>
+        </RightSide>
       </SideContainer>
     </>
   );

@@ -19,6 +19,7 @@ const Container = styled.section`
   padding: 16px;
   justify-content: flex-start;
   flex-wrap: wrap;
+  margin: 0 auto;
 
   > h2 {
     padding: 48px 0px;
@@ -41,7 +42,7 @@ const DescriptionContainer = styled(motion.section)`
   max-width: 400px;
 
   p {
-    color: #f0e040;
+    color: ${({ theme }) => theme.colors.altColor};
     font-weight: 400;
   }
 `;
@@ -60,7 +61,10 @@ const LoadMoreButton = styled.button`
   color: #f0e040;
 `;
 
-const SpeakerSection = (props: { page: PageProps["speakerData"] }) => {
+const SpeakerSection = (props: {
+  page: PageProps["speakerData"];
+  theme?: string;
+}) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const {
     page: { title, description, speakersCollection },
