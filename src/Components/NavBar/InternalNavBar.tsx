@@ -86,10 +86,14 @@ const StyledLink = styled.li<{ isActive: boolean }>`
   position: relative;
   cursor: pointer;
   color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.jsconfRed : theme.colors.white};
+    isActive
+      ? theme.elements.navBar.activeTextColor
+      : theme.elements.navBar.textColor};
   @media (max-width: ${ViewportSizes.TabletLandscape}px) {
     color: ${({ isActive, theme }) =>
-      isActive ? theme.colors.jsconfRed : theme.colors.jsconfBlack};
+      isActive
+        ? theme.elements.navBar.activeMobileTextColor
+        : theme.elements.navBar.mobileTextColor};
   }
   transition-property: all;
   transition-timing-function: ease-in-out;
