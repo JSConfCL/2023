@@ -123,11 +123,14 @@ const CartItem = ({
     <Ticket>
       <TicketHeader>
         <SubTitle>
-          {name} —{" "}
-          {Intl.NumberFormat("es-CL", {
-            currency: "CLP",
-            style: "currency",
-          }).format(price)}
+          {name}
+          {isAvailable
+            ? ` — ` +
+              Intl.NumberFormat("es-CL", {
+                currency: "CLP",
+                style: "currency",
+              }).format(price)
+            : null}
         </SubTitle>
         <TicketControlWrapper>
           {isAvailable ? (

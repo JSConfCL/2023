@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import { lazy, Suspense } from "react";
 
 import { StyledWrapperSuspense } from "../src/Components/NavBar/components";
+import Seo from "../src/Components/Seo";
+
 import {
   LaPreviaDocument,
   LaPreviaQuery,
@@ -158,6 +160,7 @@ export interface PageProps {
 const Home: NextPage<PageProps> = (props: PageProps) => {
   return (
     <Container>
+      <Seo {...props.seo} />
       <Suspense fallback={<StyledWrapperSuspense />}>
         <NavBar id="yEsNC4mdITUXpMO1REbOv" />
       </Suspense>
