@@ -106,8 +106,8 @@ const theme: Theme = {
       },
     },
     navBar: {
-      textColor: colors.jsconfBlack,
-      activeTextColor: colors.jsconfBlack,
+      textColor: colors.white,
+      activeTextColor: colors.jsconfRed,
       mobileTextColor: colors.jsconfBlack,
       activeMobileTextColor: colors.jsconfRed,
     },
@@ -130,6 +130,17 @@ const theme: Theme = {
 
 export const jsconfTheme: Theme = {
   ...theme,
+};
+
+export const landingTheme: Theme = {
+  ...theme,
+  elements: {
+    ...theme.elements,
+    navBar: {
+      ...theme.elements.navBar,
+      textColor: colors.jsconfBlack,
+    },
+  },
 };
 
 export const previaTheme: Theme = {
