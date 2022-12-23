@@ -24,7 +24,7 @@ import { Provider } from "urql";
 import { urlQlient } from "../src/graphql/urql";
 import { isAuthenticatedAtom } from "../src/helpers/auth";
 import { GlobalStyles } from "../styles/globalStyles";
-import { jsconfTheme, previaTheme } from "../styles/theme";
+import { jsconfTheme, landingTheme, previaTheme } from "../styles/theme";
 
 const WebSchema = dynamic(
   async () => await import("../src/Components/schema/webpage"),
@@ -108,14 +108,18 @@ const AppWithQueryClients = ({
       })
   );
 
+  const theme =
+    {
+      "/laprevia": previaTheme,
+      "/": landingTheme,
+    }[pathname] ?? jsconfTheme;
+
   return (
     <CacheProvider value={cache}>
       <Provider value={urlQlient}>
         <TanstackQueryProvider client={queryClient}>
           <Hydrate state={(pageProps as any).dehydratedState}>
-            <ThemeProvider
-              theme={pathname === "/laprevia" ? previaTheme : jsconfTheme}
-            >
+            <ThemeProvider theme={theme}>
               <GlobalStyles />
               <Suspense fallback={null}>
                 <WebSchema />
