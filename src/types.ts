@@ -1667,6 +1667,7 @@ export type Member = Entry & {
   __typename?: "Member";
   contentfulMetadata: ContentfulMetadata;
   linkedFrom?: Maybe<MemberLinkingCollections>;
+  linkedin?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
   photo?: Maybe<Asset>;
   sys: Sys;
@@ -1677,6 +1678,11 @@ export type Member = Entry & {
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/member) */
 export type MemberLinkedFromArgs = {
   allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/member) */
+export type MemberLinkedinArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/member) */
@@ -1712,6 +1718,13 @@ export type MemberFilter = {
   AND?: InputMaybe<Array<InputMaybe<MemberFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<MemberFilter>>>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  linkedin?: InputMaybe<Scalars["String"]>;
+  linkedin_contains?: InputMaybe<Scalars["String"]>;
+  linkedin_exists?: InputMaybe<Scalars["Boolean"]>;
+  linkedin_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  linkedin_not?: InputMaybe<Scalars["String"]>;
+  linkedin_not_contains?: InputMaybe<Scalars["String"]>;
+  linkedin_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   name?: InputMaybe<Scalars["String"]>;
   name_contains?: InputMaybe<Scalars["String"]>;
   name_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -1758,6 +1771,8 @@ export type MemberLinkingCollectionsTeamBlockCollectionArgs = {
 };
 
 export enum MemberOrder {
+  LinkedinAsc = "linkedin_ASC",
+  LinkedinDesc = "linkedin_DESC",
   NameAsc = "name_ASC",
   NameDesc = "name_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
@@ -2832,10 +2847,12 @@ export type Speaker = Entry & {
   about?: Maybe<Scalars["String"]>;
   cardType?: Maybe<Scalars["String"]>;
   city?: Maybe<Scalars["String"]>;
+  companyName?: Maybe<Scalars["String"]>;
   contentfulMetadata: ContentfulMetadata;
   country?: Maybe<Scalars["String"]>;
   github?: Maybe<Scalars["String"]>;
   linkedFrom?: Maybe<SpeakerLinkingCollections>;
+  linkedin?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
   photo?: Maybe<Asset>;
   position?: Maybe<Scalars["String"]>;
@@ -2861,6 +2878,11 @@ export type SpeakerCityArgs = {
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
+export type SpeakerCompanyNameArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
 export type SpeakerCountryArgs = {
   locale?: InputMaybe<Scalars["String"]>;
 };
@@ -2873,6 +2895,11 @@ export type SpeakerGithubArgs = {
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
 export type SpeakerLinkedFromArgs = {
   allowedLocales?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
+export type SpeakerLinkedinArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
@@ -3064,6 +3091,13 @@ export type SpeakerFilter = {
   city_not?: InputMaybe<Scalars["String"]>;
   city_not_contains?: InputMaybe<Scalars["String"]>;
   city_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  companyName?: InputMaybe<Scalars["String"]>;
+  companyName_contains?: InputMaybe<Scalars["String"]>;
+  companyName_exists?: InputMaybe<Scalars["Boolean"]>;
+  companyName_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  companyName_not?: InputMaybe<Scalars["String"]>;
+  companyName_not_contains?: InputMaybe<Scalars["String"]>;
+  companyName_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
   country?: InputMaybe<Scalars["String"]>;
   country_contains?: InputMaybe<Scalars["String"]>;
@@ -3079,6 +3113,13 @@ export type SpeakerFilter = {
   github_not?: InputMaybe<Scalars["String"]>;
   github_not_contains?: InputMaybe<Scalars["String"]>;
   github_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  linkedin?: InputMaybe<Scalars["String"]>;
+  linkedin_contains?: InputMaybe<Scalars["String"]>;
+  linkedin_exists?: InputMaybe<Scalars["Boolean"]>;
+  linkedin_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  linkedin_not?: InputMaybe<Scalars["String"]>;
+  linkedin_not_contains?: InputMaybe<Scalars["String"]>;
+  linkedin_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   name?: InputMaybe<Scalars["String"]>;
   name_contains?: InputMaybe<Scalars["String"]>;
   name_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -3151,10 +3192,14 @@ export enum SpeakerOrder {
   CardTypeDesc = "cardType_DESC",
   CityAsc = "city_ASC",
   CityDesc = "city_DESC",
+  CompanyNameAsc = "companyName_ASC",
+  CompanyNameDesc = "companyName_DESC",
   CountryAsc = "country_ASC",
   CountryDesc = "country_DESC",
   GithubAsc = "github_ASC",
   GithubDesc = "github_DESC",
+  LinkedinAsc = "linkedin_ASC",
+  LinkedinDesc = "linkedin_DESC",
   NameAsc = "name_ASC",
   NameDesc = "name_DESC",
   PositionAsc = "position_ASC",
@@ -4613,6 +4658,13 @@ export type CfSpeakerNestedFilter = {
   city_not?: InputMaybe<Scalars["String"]>;
   city_not_contains?: InputMaybe<Scalars["String"]>;
   city_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  companyName?: InputMaybe<Scalars["String"]>;
+  companyName_contains?: InputMaybe<Scalars["String"]>;
+  companyName_exists?: InputMaybe<Scalars["Boolean"]>;
+  companyName_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  companyName_not?: InputMaybe<Scalars["String"]>;
+  companyName_not_contains?: InputMaybe<Scalars["String"]>;
+  companyName_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
   country?: InputMaybe<Scalars["String"]>;
   country_contains?: InputMaybe<Scalars["String"]>;
@@ -4628,6 +4680,13 @@ export type CfSpeakerNestedFilter = {
   github_not?: InputMaybe<Scalars["String"]>;
   github_not_contains?: InputMaybe<Scalars["String"]>;
   github_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  linkedin?: InputMaybe<Scalars["String"]>;
+  linkedin_contains?: InputMaybe<Scalars["String"]>;
+  linkedin_exists?: InputMaybe<Scalars["Boolean"]>;
+  linkedin_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  linkedin_not?: InputMaybe<Scalars["String"]>;
+  linkedin_not_contains?: InputMaybe<Scalars["String"]>;
+  linkedin_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   name?: InputMaybe<Scalars["String"]>;
   name_contains?: InputMaybe<Scalars["String"]>;
   name_exists?: InputMaybe<Scalars["Boolean"]>;
