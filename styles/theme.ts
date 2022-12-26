@@ -116,7 +116,7 @@ const theme: Theme = {
       imageBorderColor: colors.jsconfBlack,
       shadowColor: colors.jsconfBlack,
       textColor: colors.white,
-      chevronColor: colors.jsconfBlack,
+      chevronColor: colors.white,
     },
     global: {
       backgroundColor: colors.black,
@@ -139,6 +139,10 @@ export const landingTheme: Theme = {
     navBar: {
       ...theme.elements.navBar,
       textColor: colors.jsconfBlack,
+    },
+    navBarDropDown: {
+      ...theme.elements.navBarDropDown,
+      chevronColor: colors.jsconfBlack,
     },
   },
 };
