@@ -80,7 +80,7 @@ const useGetFoodAllergyOptions = (foodAllergy?: string | null) => {
         label: "Crustaceos",
       },
       {
-        value: "nueces",
+        value: "ninguna",
         label: "Ninguna",
       },
     ];
