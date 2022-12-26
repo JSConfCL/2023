@@ -23,6 +23,10 @@ const NavBar = dynamic(
   }
 );
 
+const WhySection = lazy(
+  async () => await import("../src/Components/sections/WhySection/laprevia")
+);
+
 const SpeakerSection = lazy(
   async () => await import("../src/Components/sections/SpeakerSection")
 );
@@ -152,6 +156,7 @@ type Page = ParseQuery<LaPreviaQuery["page"]>;
 export interface PageProps {
   seo: Page["seo"];
   heroData: Page["heroBlock"];
+  whyItems: Page["whyBlockCollection"]["items"];
   speakerData: Page["speakersBlock"];
   teamData: Page["teamBlock"];
   events: Page["eventsCollection"]["items"];
@@ -194,6 +199,13 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
           </ExtraInfo>
         </Hero>
       </Suspense>
+      <section>
+        {props?.whyItems && (
+          <div id="about">
+            <WhySection whyItems={props?.whyItems} />
+          </div>
+        )}
+      </section>
       <Suspense fallback={null}>
         {props?.speakerData && (
           <div id="speakers">
@@ -240,6 +252,7 @@ export async function getStaticProps() {
   const props = {
     seo: page?.seo || null,
     heroData: page?.heroBlock || null,
+    whyItems: page?.whyBlockCollection.items || null,
     speakerData: page?.speakersBlock || null,
     teamData: page?.teamBlock || null,
     events: page?.eventsCollection.items || null,
