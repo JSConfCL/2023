@@ -64,6 +64,7 @@ const Hero = styled.section`
   align-items: center;
   flex-direction: column;
   justify-content: space-around;
+  margin-bottom: 200px;
 `;
 
 const HeroInfo = styled.div`
@@ -150,6 +151,7 @@ type Page = ParseQuery<LaPreviaQuery["page"]>;
 
 export interface PageProps {
   seo: Page["seo"];
+  heroData: Page["heroBlock"];
   speakerData: Page["speakersBlock"];
   teamData: Page["teamBlock"];
   events: Page["eventsCollection"]["items"];
@@ -174,23 +176,27 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
           </HeroInfo>
           <ExtraInfo>
             <div>
-              Streaming en vivo.
-              <br />
-              Más de 10 charlistas
+              {props.heroData.firstSubtitle.split("\n").map((line) => (
+                <>
+                  {line}
+                  <br />
+                </>
+              ))}
             </div>
             <div>
-              Gratis
-              <br />
-              Enero 7, 2023
-              <br />
-              Desde las 12:00 Chile
+              {props.heroData.secondSubtitle.split("\n").map((line) => (
+                <>
+                  {line}
+                  <br />
+                </>
+              ))}
             </div>
           </ExtraInfo>
         </Hero>
       </Suspense>
       <Suspense fallback={null}>
         {props?.speakerData && (
-          <div id="speakers" style={{ marginTop: "200px" }}>
+          <div id="speakers">
             <SpeakerSection page={props?.speakerData} />
           </div>
         )}
@@ -233,6 +239,7 @@ export async function getStaticProps() {
   const page = queryResults.data?.page as Page;
   const props = {
     seo: page?.seo || null,
+    heroData: page?.heroBlock || null,
     speakerData: page?.speakersBlock || null,
     teamData: page?.teamBlock || null,
     events: page?.eventsCollection.items || null,
