@@ -15,7 +15,7 @@ import {
 const YesTicketsCreateAccount = ({ imageUrl }: { imageUrl: string }) => {
   return (
     <>
-      <SectionTile status="active" number="01." text="Obtén tus tickets!" />
+      <SectionTile status="active" number="01." text="Obten tus tickets!" />
       <SideContainer>
         <LeftSide>
           <Paragraph>Hay tickets disponibles! 🎉</Paragraph>
@@ -27,7 +27,6 @@ const YesTicketsCreateAccount = ({ imageUrl }: { imageUrl: string }) => {
         </LeftSide>
         <RightSide>
           <ImageWrapper>
-            y
             <ImageContainer>
               <Image mobile={imageUrl} alt={"Un ticket de la JSConf"} />
               <Shadow />
