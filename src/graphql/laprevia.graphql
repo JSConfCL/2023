@@ -5,6 +5,18 @@ query LaPrevia($locale: String!, $isPreview: Boolean = false) {
       description
       metadata
     }
+    heroBlock {
+      firstSubtitle
+      secondSubtitle
+    }
+    whyBlockCollection {
+      items {
+        title
+        description {
+          json
+        }
+      }
+    }
     speakersBlock(preview: $isPreview) {
       title
       description {
