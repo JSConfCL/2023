@@ -149,7 +149,7 @@ const mobileStyle = {
 };
 
 const Card = (props: any) => {
-  const { name, position, photo, cardType, type, index } = props;
+  const { name, position, photo, cardType, type, index, companyName } = props;
   const isMobile = useMediaQuery("(max-width: 768px)");
   const extraStyle = isMobile ? mobileStyle : styleProps(cardType, type);
   return (
@@ -181,7 +181,10 @@ const Card = (props: any) => {
         <BlockDescription type={type}>
           <H3>{name}</H3>
           <HR />
-          <P>{position}</P>
+          <P>
+            {position}
+            <br /> @ {companyName}
+          </P>
           <HR />
         </BlockDescription>
       )}
