@@ -183,7 +183,11 @@ const Card = (props: any) => {
           <HR />
           <P>
             {position}
-            <br /> @ {companyName}
+            {companyName ? (
+              <>
+                <br /> @ {companyName}
+              </>
+            ) : null}
           </P>
           <HR />
         </BlockDescription>
