@@ -30,7 +30,7 @@ type WhyCardProps =
     }
   | undefined;
 
-const Container = styled.section<{ direction: boolean }>`
+const Container = styled.section<{ direction: boolean; hasImage: boolean }>`
   padding: 16px 0px;
   padding-left: ${({ direction }) => (!direction ? "16px" : "0px")};
   padding-right: ${({ direction }) => (!direction ? "0px" : "16px")};
@@ -39,7 +39,7 @@ const Container = styled.section<{ direction: boolean }>`
   flex-direction: ${({ direction }) => (!direction ? "row-reverse" : "row")};
   overflow: hidden;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: ${({ hasImage }) => (hasImage ? "space-between" : "center")};
   max-width: 100%;
   width: 100vw;
 
@@ -55,7 +55,8 @@ const Container = styled.section<{ direction: boolean }>`
 
   @media (min-width: ${ViewportSizes.Phone}px) {
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: ${({ hasImage }) =>
+      hasImage ? "space-between" : "center"};
     flex-direction: ${({ direction }) => (!direction ? "row" : "row-reverse")};
     gap: 32px;
     padding: 48px 0px;
@@ -65,6 +66,7 @@ const Container = styled.section<{ direction: boolean }>`
     picture {
       min-width: 400px;
     }
+
     img {
       margin-top: 115px;
       max-width: 611px;
@@ -102,6 +104,9 @@ const WrapperDescription = styled.section`
   gap: 32px 0px;
   order: 2;
 
+  p {
+    color: ${({ theme }) => theme.colors.textColor};
+  }
   @media (min-width: ${ViewportSizes.Phone}px) {
     max-width: 450px;
   }
@@ -116,7 +121,7 @@ const Number = styled.section<{ direction: boolean }>`
   /* identical to box height, or 100% */
   display: flex;
   align-items: flex-start;
-  color: #f0e040;
+  color: ${({ theme }) => theme.colors.altColor};
   width: 100px;
   margin-right: ${({ direction }) => (!direction ? "-6px" : "0px")};
   margin-left: ${({ direction }) => (direction ? "-30px" : "0px")};
@@ -134,7 +139,10 @@ const Number = styled.section<{ direction: boolean }>`
 
 const WhyCard = (props: WhyCardProps) => {
   return (
-    <Container direction={props?.number! % 2 === 0}>
+    <Container
+      direction={props?.number! % 2 === 0}
+      hasImage={Boolean(props?.fullImage?.url)}
+    >
       <WrapperDescription>
         <H2>{props?.title!}</H2>
         <Suspense fallback={null}>
@@ -142,19 +150,22 @@ const WhyCard = (props: WhyCardProps) => {
         </Suspense>
         <HR />
       </WrapperDescription>
-      <Suspense fallback={null}>
-        <Image
-          desktop={props?.fullImage?.url}
-          mobile={props?.fullImage?.url!}
-          alt={props?.icon?.description! || ""}
-          style={{
-            borderRadius: "0px 32px 0px 0px",
-            aspectRatio: "611 / 390",
-            objectFit: "cover",
-            objectPosition: "center",
-          }}
-        />
-      </Suspense>
+      {props?.fullImage?.url ? (
+        <Suspense fallback={null}>
+          <Image
+            desktop={props.fullImage.url}
+            mobile={props.fullImage.url}
+            alt={props?.icon?.description! || ""}
+            style={{
+              borderRadius: "0px 32px 0px 0px",
+              aspectRatio: "611 / 390",
+              objectFit: "cover",
+              objectPosition: "center",
+            }}
+          />
+        </Suspense>
+      ) : null}
+
       <Number direction={props?.number! % 2 === 0}>0{props?.number!}</Number>
     </Container>
   );

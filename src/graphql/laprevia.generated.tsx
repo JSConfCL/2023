@@ -18,6 +18,19 @@ export type LaPreviaQuery = {
       description?: string | null;
       metadata?: any | null;
     } | null;
+    heroBlock?: {
+      __typename?: "HeroBlock";
+      firstSubtitle?: string | null;
+      secondSubtitle?: string | null;
+    } | null;
+    whyBlockCollection?: {
+      __typename?: "PageWhyBlockCollection";
+      items: Array<{
+        __typename?: "WhyBlock";
+        title?: string | null;
+        description?: { __typename?: "WhyBlockDescription"; json: any } | null;
+      } | null>;
+    } | null;
     speakersBlock?: {
       __typename?: "SpeakerBlock";
       title?: string | null;
@@ -122,6 +135,18 @@ export const LaPreviaDocument = gql`
         title
         description
         metadata
+      }
+      heroBlock {
+        firstSubtitle
+        secondSubtitle
+      }
+      whyBlockCollection {
+        items {
+          title
+          description {
+            json
+          }
+        }
       }
       speakersBlock(preview: $isPreview) {
         title
