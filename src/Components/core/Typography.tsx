@@ -51,7 +51,7 @@ export const P = styled(motion.p)`
   font-weight: 400;
   font-size: 18px;
   font-style: normal;
-  color: #e2e2e2;
+  color: ${({ theme }) => theme.colors.subtextColor};
   letter-spacing: 0.5px;
   line-height: 1.75rem;
 

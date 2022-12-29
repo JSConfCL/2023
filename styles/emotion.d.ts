@@ -46,6 +46,7 @@ type Colors = {
   subtitleColor: string;
   altColor: string;
   textColor: string;
+  subtextColor: string;
   backgroundColor: string;
   altBackgroundColor: string;
   footer: string;
