@@ -14,27 +14,35 @@ import { B, P, UL, LI } from "./Typography";
 
 const Section = styled(motion.section)``;
 
-const descriptionRichTextOptions = {
+const getDescriptionRichTextOptions = (variant: "sm" | null | undefined) => ({
   renderNode: {
     [BLOCKS.PARAGRAPH]: (node: Block | Inline, children: ReactNode) => (
-      <P>{children}</P>
+      <P variant={variant}>{children}</P>
     ),
     [BLOCKS.UL_LIST]: (node: Block | Inline, children: ReactNode) => (
-      <UL>{children}</UL>
+      <UL variant={variant}>{children}</UL>
     ),
     [BLOCKS.LIST_ITEM]: (node: Block | Inline, children: ReactNode) => (
-      <LI>{children}</LI>
+      <LI variant={variant}>{children}</LI>
     ),
   },
   renderMark: {
     [MARKS.BOLD]: (text: ReactNode) => <B>{text}</B>,
   },
   renderText: (text: string) => text,
-};
-const Description = (props: { data: Document; animationVariants?: any }) => {
+});
+
+const Description = (props: {
+  data: Document;
+  animationVariants?: any;
+  variant?: "sm" | null;
+}) => {
   return (
     <Section variants={props.animationVariants}>
-      {documentToReactComponents(props.data, descriptionRichTextOptions)}
+      {documentToReactComponents(
+        props.data,
+        getDescriptionRichTextOptions(props.variant)
+      )}
     </Section>
   );
 };

@@ -46,41 +46,48 @@ export const H3 = styled(motion.h3)`
   }
 `;
 
-export const P = styled(motion.p)`
+export const P = styled(motion.p)<{ variant?: "sm" | null }>`
   font-family: "Barlow";
   font-weight: 400;
-  font-size: 18px;
+  font-size: ${({ variant }) => (variant === "sm" ? "16px" : "18px")};
   font-style: normal;
   color: ${({ theme }) => theme.colors.subtextColor};
   letter-spacing: 0.5px;
   line-height: 1.75rem;
 
   @media (min-width: ${ViewportSizes.Phone}px) {
-    font-size: 20px;
+    font-size: ${({ variant }) => (variant === "sm" ? "16px" : "20px")};
   }
 `;
 
-export const B = styled(motion.b)`
+export const B = styled(motion.b)<{ variant?: "sm" | null }>`
   font-weight: bold;
-  font-size: 18px;
+  font-size: ${({ variant }) => (variant === "sm" ? "16px" : "18px")};
   line-height: 1.75rem;
+
   @media (min-width: ${ViewportSizes.Phone}px) {
-    font-size: 20px;
+    font-size: ${({ variant }) => (variant === "sm" ? "16px" : "20px")};
   }
 `;
 
-export const UL = styled(motion.ul)`
+export const UL = styled(motion.ul)<{ variant?: "sm" | null }>`
   list-style: disc;
   margin-inline-start: 1em;
   padding-left: 1rem;
   line-height: 1.75rem;
+  font-size: ${({ variant }) => (variant === "sm" ? "16px" : "18px")};
+
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    font-size: ${({ variant }) => (variant === "sm" ? "16px" : "20px")};
+  }
 `;
 
-export const LI = styled(motion.li)`
-  font-size: 18px;
+export const LI = styled(motion.li)<{ variant?: "sm" | null }>`
   line-height: 1.75rem;
+  font-size: ${({ variant }) => (variant === "sm" ? "16px" : "18px")};
+
   @media (min-width: ${ViewportSizes.Phone}px) {
-    font-size: 20px;
+    font-size: ${({ variant }) => (variant === "sm" ? "16px" : "20px")};
   }
 `;
 

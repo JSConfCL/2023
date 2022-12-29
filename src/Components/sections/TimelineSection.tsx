@@ -331,7 +331,7 @@ const CollapsableInfo = ({ information }: { information?: Document }) => {
           />
         </ChevronContainer>
       </TitleActions>
-      {show ? <Description data={information} /> : null}
+      {show ? <Description variant="sm" data={information} /> : null}
     </div>
   );
 };
