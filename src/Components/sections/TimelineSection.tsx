@@ -264,7 +264,7 @@ const CalendarContainer = styled.div`
   }
 `;
 
-const Language = styled.span`
+const Tag = styled.span`
   display: inline-block;
   background: ${transparentize(0.5, jsconfTheme.colors.jsconfRed)};
   color: white;
@@ -314,6 +314,21 @@ const TitleActions = styled.div`
 const ChevronContainer = styled.span`
   cursor: pointer;
 `;
+
+const Language = ({ language }: { language?: string | null }) => {
+  if (!language) {
+    return null;
+  }
+  return <Tag>{language}</Tag>;
+};
+
+const Kind = ({ kind }: { kind?: string }) => {
+  if (!kind || kind === GENERAL) {
+    return null;
+  }
+
+  return <Title>{kind}</Title>;
+};
 
 const CollapsableInfo = ({ information }: { information?: Document }) => {
   const [show, setShow] = useState(false);
@@ -366,18 +381,10 @@ const TimelineRow = ({
       </ImageCell>
       <AuthorCell>{event?.speaker?.name}</AuthorCell>
       <TableCell>
-        {event.kind && event.kind !== GENERAL ? (
-          <>
-            {event.kind}
-            <br />
-          </>
-        ) : null}
-        <div>
-          <Title>{event.title}</Title>
-          <CollapsableInfo information={event.description?.json} />
-        </div>
-
-        {language ? <Language>{language}</Language> : null}
+        <Kind kind={event.kind} />
+        <Title>{event.title}</Title>
+        <CollapsableInfo information={event.description?.json} />
+        <Language language={language} />
       </TableCell>
       <TimeCell>
         <div>
