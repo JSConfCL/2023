@@ -51,7 +51,6 @@ export const P = styled(motion.p)<{ variant?: "sm" | null }>`
   font-weight: 400;
   font-size: ${({ variant }) => (variant === "sm" ? "16px" : "18px")};
   font-style: normal;
-  color: ${({ theme }) => theme.colors.subtextColor};
   letter-spacing: 0.5px;
   line-height: 1.75rem;
 

@@ -17,6 +17,7 @@ const Container = styled(motion.section)<{ type: string; index: number }>`
   height: 300px;
   display: ${({ type }) => (type === "blank" ? "none" : "inherit")};
   overflow: hidden;
+  color: white;
 
   @media (min-width: ${ViewportSizes.SmallPhone}px) {
     width: calc(50% - 16px);
