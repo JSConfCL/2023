@@ -201,18 +201,22 @@ const TimeCell = styled(TableCell)`
   font-size: 18px;
   vertical-align: bottom;
   white-space: nowrap;
+
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    width: 12%;
+  }
 `;
 
 const AuthorCell = styled(TableCell)`
   margin-top: 16px;
   padding-right: 16px;
-  white-space: nowrap;
   font-size: 20px;
   color: ${({ theme }) => theme.colors.altColor};
   font-weight: bold;
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     padding-right: 16px;
+    width: 15%;
   }
 `;
 
