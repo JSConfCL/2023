@@ -90,6 +90,9 @@ query LaPrevia($locale: String!, $isPreview: Boolean = false) {
         duration
         language
         kind
+        description {
+          json
+        }
         speaker {
           name
           photo {

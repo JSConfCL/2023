@@ -152,6 +152,7 @@ export type HomeQueryQuery = {
         language?: string | null;
         kind?: string | null;
         sys: { __typename?: "Sys"; id: string };
+        description?: { __typename?: "EventDescription"; json: any } | null;
         speaker?: {
           __typename?: "Speaker";
           name?: string | null;
@@ -324,6 +325,9 @@ export const HomeQueryDocument = gql`
           duration
           language
           kind
+          description {
+            json
+          }
           speaker {
             name
             photo {
