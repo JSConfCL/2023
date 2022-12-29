@@ -46,6 +46,7 @@ type Colors = {
   subtitleColor: string;
   altColor: string;
   textColor: string;
+  subtextColor: string;
   backgroundColor: string;
   altBackgroundColor: string;
   footer: string;
@@ -86,6 +87,9 @@ declare module "@emotion/react" {
           secondary: ButtonVariantStyles;
           tertiary: ButtonVariantStyles;
         };
+      };
+      card: {
+        textColor: string;
       };
       navBar: NavBarComponentStyles;
       navBarDropDown: NavBarDropDownMenu;

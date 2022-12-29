@@ -127,6 +127,9 @@ query HomeQuery($locale: String!, $isPreview: Boolean = false) {
         duration
         language
         kind
+        description {
+          json
+        }
         speaker {
           name
           photo {

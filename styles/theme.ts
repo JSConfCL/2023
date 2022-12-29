@@ -22,6 +22,7 @@ export const colors = {
   subtitleColor: "#fff",
   altColor: "#F0E040",
   textColor: "#fff",
+  subtextColor: "#e2e2e2",
   backgroundColor: "#000",
   altBackgroundColor: "#F0E040",
   footer: "#333",
@@ -105,6 +106,9 @@ const theme: Theme = {
         },
       },
     },
+    card: {
+      textColor: colors.white,
+    },
     navBar: {
       textColor: colors.white,
       activeTextColor: colors.jsconfRed,
@@ -155,6 +159,7 @@ export const previaTheme: Theme = {
     subtitleColor: "#111",
     altColor: "#F45B69",
     textColor: "#333",
+    subtextColor: "#444",
     backgroundColor: "#fff",
     footer: "#fff",
     altBackgroundColor: "#1E2019",

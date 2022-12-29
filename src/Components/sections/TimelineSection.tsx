@@ -1,3 +1,4 @@
+import type { Document } from "@contentful/rich-text-types";
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 import { add, parseISO } from "date-fns";
@@ -6,11 +7,13 @@ import esLocale from "date-fns/locale/es";
 import { transparentize } from "polished";
 import { Suspense, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
+import { ChevronDown, ChevronUp } from "react-feather";
 
 import { PageProps } from "../../../pages";
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 
 import { PrimaryStyledLink } from "../Links/index";
+import Description from "../core/Description";
 import { H2, H3 } from "../core/Typography";
 
 const GENERAL = "general";
@@ -166,7 +169,6 @@ const TableCell = styled.td`
   display: block;
   color: ${({ theme }) => theme.colors.textColor};
   font-size: 18px;
-  text-transform: capitalize;
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     display: table-cell;
@@ -198,18 +200,22 @@ const TimeCell = styled(TableCell)`
   font-size: 18px;
   vertical-align: bottom;
   white-space: nowrap;
+
+  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+    width: 12%;
+  }
 `;
 
 const AuthorCell = styled(TableCell)`
   margin-top: 16px;
   padding-right: 16px;
-  white-space: nowrap;
   font-size: 20px;
   color: ${({ theme }) => theme.colors.altColor};
   font-weight: bold;
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     padding-right: 16px;
+    width: 15%;
   }
 `;
 
@@ -258,7 +264,7 @@ const CalendarContainer = styled.div`
   }
 `;
 
-const Language = styled.span`
+const Tag = styled.span`
   display: inline-block;
   background: ${transparentize(0.5, jsconfTheme.colors.jsconfRed)};
   color: white;
@@ -297,6 +303,57 @@ const LANGUAGES = {
   en: "English",
 };
 
+const Title = styled.div`
+  text-transform: capitalize;
+`;
+
+const TitleActions = styled.div`
+  text-align: right;
+`;
+
+const ChevronContainer = styled.span`
+  cursor: pointer;
+`;
+
+const Language = ({ language }: { language?: string | null }) => {
+  if (!language) {
+    return null;
+  }
+  return <Tag>{language}</Tag>;
+};
+
+const Kind = ({ kind }: { kind?: string }) => {
+  if (!kind || kind === GENERAL) {
+    return null;
+  }
+
+  return <Title>{kind}</Title>;
+};
+
+const CollapsableInfo = ({ information }: { information?: Document }) => {
+  const [show, setShow] = useState(false);
+  const Chevron = show ? ChevronUp : ChevronDown;
+
+  if (!information) {
+    return null;
+  }
+
+  return (
+    <div>
+      <TitleActions>
+        <ChevronContainer>
+          <Chevron
+            onClick={() => {
+              setShow((tmpShow) => !tmpShow);
+            }}
+          />
+        </ChevronContainer>
+      </TitleActions>
+      {show ? <Description variant="sm" data={information} /> : null}
+    </div>
+  );
+};
+
 const TimelineRow = ({
   event,
   showLocalTime,
@@ -324,14 +381,10 @@ const TimelineRow = ({
       </ImageCell>
       <AuthorCell>{event?.speaker?.name}</AuthorCell>
       <TableCell>
-        {event.kind && event.kind !== GENERAL ? (
-          <>
-            {event.kind}
-            <br />
-          </>
-        ) : null}
-        <div>{event.title}</div>
-        {language ? <Language>{language}</Language> : null}
+        <Kind kind={event.kind} />
+        <Title>{event.title}</Title>
+        <CollapsableInfo information={event.description?.json} />
+        <Language language={language} />
       </TableCell>
       <TimeCell>
         <div>
