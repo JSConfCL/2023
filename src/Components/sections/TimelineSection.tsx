@@ -169,7 +169,6 @@ const TableCell = styled.td`
   display: block;
   color: ${({ theme }) => theme.colors.textColor};
   font-size: 18px;
-  text-transform: capitalize;
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     display: table-cell;
@@ -304,6 +303,10 @@ const LANGUAGES = {
   en: "English",
 };
 
+const Title = styled.div`
+  text-transform: capitalize;
+`;
+
 const TitleActions = styled.div`
   text-align: right;
 `;
@@ -370,7 +373,7 @@ const TimelineRow = ({
           </>
         ) : null}
         <div>
-          {event.title}
+          <Title>{event.title}</Title>
           <CollapsableInfo information={event.description?.json} />
         </div>
 
