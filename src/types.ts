@@ -2856,6 +2856,7 @@ export type Speaker = Entry & {
   name?: Maybe<Scalars["String"]>;
   photo?: Maybe<Asset>;
   position?: Maybe<Scalars["String"]>;
+  slug?: Maybe<Scalars["String"]>;
   sys: Sys;
   twitter?: Maybe<Scalars["String"]>;
   type?: Maybe<Scalars["String"]>;
@@ -2915,6 +2916,11 @@ export type SpeakerPhotoArgs = {
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
 export type SpeakerPositionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
+export type SpeakerSlugArgs = {
   locale?: InputMaybe<Scalars["String"]>;
 };
 
@@ -3135,6 +3141,13 @@ export type SpeakerFilter = {
   position_not?: InputMaybe<Scalars["String"]>;
   position_not_contains?: InputMaybe<Scalars["String"]>;
   position_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  slug?: InputMaybe<Scalars["String"]>;
+  slug_contains?: InputMaybe<Scalars["String"]>;
+  slug_exists?: InputMaybe<Scalars["Boolean"]>;
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  slug_not?: InputMaybe<Scalars["String"]>;
+  slug_not_contains?: InputMaybe<Scalars["String"]>;
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   sys?: InputMaybe<SysFilter>;
   twitter?: InputMaybe<Scalars["String"]>;
   twitter_contains?: InputMaybe<Scalars["String"]>;
@@ -3204,6 +3217,8 @@ export enum SpeakerOrder {
   NameDesc = "name_DESC",
   PositionAsc = "position_ASC",
   PositionDesc = "position_DESC",
+  SlugAsc = "slug_ASC",
+  SlugDesc = "slug_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",
@@ -4702,6 +4717,13 @@ export type CfSpeakerNestedFilter = {
   position_not?: InputMaybe<Scalars["String"]>;
   position_not_contains?: InputMaybe<Scalars["String"]>;
   position_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  slug?: InputMaybe<Scalars["String"]>;
+  slug_contains?: InputMaybe<Scalars["String"]>;
+  slug_exists?: InputMaybe<Scalars["Boolean"]>;
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  slug_not?: InputMaybe<Scalars["String"]>;
+  slug_not_contains?: InputMaybe<Scalars["String"]>;
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   sys?: InputMaybe<SysFilter>;
   twitter?: InputMaybe<Scalars["String"]>;
   twitter_contains?: InputMaybe<Scalars["String"]>;

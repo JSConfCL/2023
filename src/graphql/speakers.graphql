@@ -1,0 +1,8 @@
+query Speakers($isPreview: Boolean = false) {
+  speakerCollection(preview: $isPreview) {
+    items {
+      slug
+      name
+    }
+  }
+}
