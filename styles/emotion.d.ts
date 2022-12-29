@@ -88,6 +88,9 @@ declare module "@emotion/react" {
           tertiary: ButtonVariantStyles;
         };
       };
+      card: {
+        textColor: string;
+      };
       navBar: NavBarComponentStyles;
       navBarDropDown: NavBarDropDownMenu;
       global: {

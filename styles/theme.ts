@@ -106,6 +106,9 @@ const theme: Theme = {
         },
       },
     },
+    card: {
+      textColor: colors.white,
+    },
     navBar: {
       textColor: colors.white,
       activeTextColor: colors.jsconfRed,
