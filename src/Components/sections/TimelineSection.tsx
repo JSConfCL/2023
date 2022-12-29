@@ -1,3 +1,4 @@
+import type { Document } from "@contentful/rich-text-types";
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 import { add, parseISO } from "date-fns";
@@ -6,11 +7,13 @@ import esLocale from "date-fns/locale/es";
 import { transparentize } from "polished";
 import { Suspense, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
+import { ChevronDown, ChevronUp } from "react-feather";
 
 import { PageProps } from "../../../pages";
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 
 import { PrimaryStyledLink } from "../Links/index";
+import Description from "../core/Description";
 import { H2, H3 } from "../core/Typography";
 
 const GENERAL = "general";
@@ -297,6 +300,38 @@ const LANGUAGES = {
   en: "English",
 };
 
+const TitleActions = styled.div`
+  text-align: right;
+`;
+
+const ChevronContainer = styled.span`
+  cursor: pointer;
+`;
+
+const CollapsableInfo = ({ information }: { information?: Document }) => {
+  const [show, setShow] = useState(false);
+  const Chevron = show ? ChevronUp : ChevronDown;
+
+  if (!information) {
+    return null;
+  }
+
+  return (
+    <div>
+      <TitleActions>
+        <ChevronContainer>
+          <Chevron
+            onClick={() => {
+              setShow((tmpShow) => !tmpShow);
+            }}
+          />
+        </ChevronContainer>
+      </TitleActions>
+      {show ? <Description data={information} /> : null}
+    </div>
+  );
+};
+
 const TimelineRow = ({
   event,
   showLocalTime,
@@ -330,7 +365,11 @@ const TimelineRow = ({
             <br />
           </>
         ) : null}
-        <div>{event.title}</div>
+        <div>
+          {event.title}
+          <CollapsableInfo information={event.description?.json} />
+        </div>
+
         {language ? <Language>{language}</Language> : null}
       </TableCell>
       <TimeCell>
