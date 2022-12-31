@@ -108,11 +108,16 @@ const AppWithQueryClients = ({
       })
   );
 
-  const theme =
+  let theme =
     {
       "/laprevia": previaTheme,
       "/": landingTheme,
     }[pathname] ?? jsconfTheme;
+
+  if (pathname === "/speakers/[id]") {
+    // https://giphy.com/gifs/sad-crying-sadness-hmE2rlinFM7fi
+    theme = (pageProps as any)?.isPrevia ? previaTheme : landingTheme;
+  }
 
   return (
     <CacheProvider value={cache}>
