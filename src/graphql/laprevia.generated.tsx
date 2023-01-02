@@ -167,27 +167,6 @@ export const LaPreviaDocument = gql`
             }
             cardType
             type
-          }
-        }
-      }
-      speakersBlock(preview: $isPreview) {
-        title
-        description {
-          json
-        }
-        speakersCollection(preview: $isPreview) {
-          items {
-            sys {
-              id
-            }
-            name
-            position
-            photo {
-              url
-              description
-            }
-            cardType
-            type
             companyName
           }
         }
