@@ -111,6 +111,7 @@ const StyledJSConfLogoWrapper = styled.a`
   min-height: 50px;
   aspect-ratio: 1/1;
   cursor: pointer;
+  color: ${({ theme }) => theme.elements.navBar.textColor};
 `;
 
 const StyledPortalWrapper = styled(motion.section)<{ height: number | string }>`
