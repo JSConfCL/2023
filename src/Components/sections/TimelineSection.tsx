@@ -1,9 +1,8 @@
 import type { Document } from "@contentful/rich-text-types";
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
-import { add, parseISO } from "date-fns";
-import { format, formatInTimeZone } from "date-fns-tz";
-import esLocale from "date-fns/locale/es";
+import { parseISO } from "date-fns";
+import { format } from "date-fns-tz";
 import { transparentize } from "polished";
 import { Suspense, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
@@ -12,6 +11,7 @@ import { ChevronDown, ChevronUp } from "react-feather";
 import { PageProps } from "../../../pages";
 import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
 
+import { CHILE, getFullTime, getLongDate } from "../../helpers/datesntimes";
 import { PrimaryStyledLink } from "../Links/index";
 import Description from "../core/Description";
 import { H2, H3 } from "../core/Typography";
@@ -277,27 +277,6 @@ const Tag = styled.span`
 
 type Flatten<T> = T extends any[] ? T[number] : T;
 
-const getTime = (date: Date, timezone: string) => {
-  return `${formatInTimeZone(date, timezone, "HH")}:${formatInTimeZone(
-    date,
-    timezone,
-    "mm"
-  )}`;
-};
-
-const getFullTime = (date: Date, duration: number, timezone: string) =>
-  `${getTime(date, timezone)} - ${getTime(
-    add(date, { minutes: duration }),
-    timezone
-  )}`;
-
-const CHILE = {
-  abbr: "CL",
-  title: "Chile",
-  timezone: "America/Santiago",
-  hasExceptions: true,
-};
-
 const LANGUAGES = {
   es: "Español",
   en: "English",
@@ -458,8 +437,7 @@ const TimelineSection = (props: {
                   className={date === selectedDate ? "active" : ""}
                   onClick={() => setSelectedDate(date)}
                 >
-                  {format(parseISO(date), "EEEE", { locale: esLocale })}{" "}
-                  {format(parseISO(date), "d")}
+                  {getLongDate(date)}
                 </StyledButton>
               ))}
             </StyledButtons>
