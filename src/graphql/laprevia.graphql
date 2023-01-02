@@ -36,6 +36,7 @@ query LaPrevia($locale: String!, $isPreview: Boolean = false) {
           cardType
           type
           companyName
+          slug
         }
       }
     }

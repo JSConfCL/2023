@@ -47,6 +47,7 @@ export type LaPreviaQuery = {
           cardType?: string | null;
           type?: string | null;
           companyName?: string | null;
+          slug?: string | null;
           sys: { __typename?: "Sys"; id: string };
           photo?: {
             __typename?: "Asset";
@@ -168,6 +169,7 @@ export const LaPreviaDocument = gql`
             cardType
             type
             companyName
+            slug
           }
         }
       }

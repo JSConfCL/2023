@@ -80,6 +80,7 @@ query HomeQuery($locale: String!, $isPreview: Boolean = false) {
           cardType
           type
           companyName
+          slug
         }
       }
     }

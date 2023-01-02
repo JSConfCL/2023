@@ -92,6 +92,7 @@ const BlockDescription = styled(motion.section)<{ type: string }>`
       type === "blank" ? "transparent" : "rgb(100 31 37 / 19%)"};
   }
 `;
+
 const HR = styled.hr`
   border-width: 1px;
   border-color: white;
@@ -150,9 +151,11 @@ const mobileStyle = {
 };
 
 const Card = (props: any) => {
-  const { name, position, photo, cardType, type, index, companyName } = props;
+  const { name, position, photo, cardType, type, index, companyName, slug } =
+    props;
   const isMobile = useMediaQuery("(max-width: 768px)");
   const extraStyle = isMobile ? mobileStyle : styleProps(cardType, type);
+
   return (
     <Container
       type={type}
@@ -180,7 +183,13 @@ const Card = (props: any) => {
       </BlockColor>
       {type !== "blank" && (
         <BlockDescription type={type}>
-          <H3>{name}</H3>
+          {slug ? (
+            <a href={`/speakers/${slug as string}`}>
+              <H3>{name}</H3>
+            </a>
+          ) : (
+            <H3>{name}</H3>
+          )}
           <HR />
           <P>
             {position}
