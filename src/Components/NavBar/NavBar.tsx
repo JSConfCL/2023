@@ -1,11 +1,19 @@
 import { useMemo } from "react";
 
+import { PREVIA_LINK } from "../../helpers/config";
+
 import { InternalNavBar } from "./InternalNavBar";
 import { StyledWrapperSuspense } from "./components";
 import { parseNavBarData } from "./helper";
 import { useNavBarQueryQuery } from "./navBar.generated";
 
-const NavBar = ({ id = "22KytadLhMxFZMtvlUYCbl" }: { id?: string }) => {
+const NavBar = ({
+  id = "22KytadLhMxFZMtvlUYCbl",
+  isPreviaSpeakers = false,
+}: {
+  id?: string;
+  isPreviaSpeakers?: boolean;
+}) => {
   const [{ data }] = useNavBarQueryQuery({
     variables: {
       id,
@@ -17,8 +25,18 @@ const NavBar = ({ id = "22KytadLhMxFZMtvlUYCbl" }: { id?: string }) => {
     if (!data) {
       return [];
     }
-    return [...parseNavBarData(data.navigationBar).items];
-  }, [data]);
+
+    const items = [...parseNavBarData(data.navigationBar).items];
+    if (isPreviaSpeakers) {
+      items.forEach((item) => {
+        if (item.link) {
+          item.link = `${PREVIA_LINK}/${item.link}`;
+        }
+      });
+    }
+
+    return items;
+  }, [data, isPreviaSpeakers]);
 
   if (!navBarItems.length) {
     return <StyledWrapperSuspense />;
