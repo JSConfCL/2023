@@ -78,6 +78,7 @@ query LaPrevia($locale: String!, $isPreview: Boolean = false) {
           photo {
             url
           }
+          slug
         }
       }
     }

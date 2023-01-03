@@ -136,6 +136,7 @@ query HomeQuery($locale: String!, $isPreview: Boolean = false) {
           photo {
             url
           }
+          slug
         }
       }
     }

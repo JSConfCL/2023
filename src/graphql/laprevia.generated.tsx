@@ -91,6 +91,7 @@ export type LaPreviaQuery = {
         speaker?: {
           __typename?: "Speaker";
           name?: string | null;
+          slug?: string | null;
           photo?: { __typename?: "Asset"; url?: string | null } | null;
         } | null;
       } | null>;
@@ -211,6 +212,7 @@ export const LaPreviaDocument = gql`
             photo {
               url
             }
+            slug
           }
         }
       }

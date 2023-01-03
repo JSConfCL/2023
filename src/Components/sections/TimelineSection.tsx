@@ -345,6 +345,7 @@ const TimelineRow = ({
   const language = event.language
     ? LANGUAGES[event.language as "es" | "en"]
     : null;
+  const slug = event?.speaker?.slug;
 
   return (
     <TableRow>
@@ -358,10 +359,18 @@ const TimelineRow = ({
           ) : null}
         </Suspense>
       </ImageCell>
-      <AuthorCell>{event?.speaker?.name}</AuthorCell>
+      <AuthorCell>
+        {slug ? (
+          <a href={`/speakers/${slug}`}>{event?.speaker?.name}</a>
+        ) : (
+          event?.speaker?.name
+        )}
+      </AuthorCell>
       <TableCell>
         <Kind kind={event.kind} />
-        <Title>{event.title}</Title>
+        <Title>
+          {slug ? <a href={`/speakers/${slug}`}>{event.title}</a> : event.title}
+        </Title>
         <CollapsableInfo information={event.description?.json} />
         <Language language={language} />
       </TableCell>
