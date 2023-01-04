@@ -1940,6 +1940,7 @@ export type Page = Entry & {
   contentCollection?: Maybe<PageContentCollection>;
   contentfulMetadata: ContentfulMetadata;
   eventsCollection?: Maybe<PageEventsCollection>;
+  flags?: Maybe<Scalars["JSON"]>;
   followUsBlock?: Maybe<FollowUsBlock>;
   footer?: Maybe<Footer>;
   heroBlock?: Maybe<HeroBlock>;
@@ -1978,6 +1979,11 @@ export type PageEventsCollectionArgs = {
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
   skip?: InputMaybe<Scalars["Int"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
+export type PageFlagsArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/page) */
@@ -2114,6 +2120,7 @@ export type PageFilter = {
   contentCollection_exists?: InputMaybe<Scalars["Boolean"]>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
   eventsCollection_exists?: InputMaybe<Scalars["Boolean"]>;
+  flags_exists?: InputMaybe<Scalars["Boolean"]>;
   followUsBlock?: InputMaybe<CfFollowUsBlockNestedFilter>;
   followUsBlock_exists?: InputMaybe<Scalars["Boolean"]>;
   footer?: InputMaybe<CfFooterNestedFilter>;
@@ -2856,6 +2863,7 @@ export type Speaker = Entry & {
   name?: Maybe<Scalars["String"]>;
   photo?: Maybe<Asset>;
   position?: Maybe<Scalars["String"]>;
+  slug?: Maybe<Scalars["String"]>;
   sys: Sys;
   twitter?: Maybe<Scalars["String"]>;
   type?: Maybe<Scalars["String"]>;
@@ -2915,6 +2923,11 @@ export type SpeakerPhotoArgs = {
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
 export type SpeakerPositionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/speaker) */
+export type SpeakerSlugArgs = {
   locale?: InputMaybe<Scalars["String"]>;
 };
 
@@ -3135,6 +3148,13 @@ export type SpeakerFilter = {
   position_not?: InputMaybe<Scalars["String"]>;
   position_not_contains?: InputMaybe<Scalars["String"]>;
   position_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  slug?: InputMaybe<Scalars["String"]>;
+  slug_contains?: InputMaybe<Scalars["String"]>;
+  slug_exists?: InputMaybe<Scalars["Boolean"]>;
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  slug_not?: InputMaybe<Scalars["String"]>;
+  slug_not_contains?: InputMaybe<Scalars["String"]>;
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   sys?: InputMaybe<SysFilter>;
   twitter?: InputMaybe<Scalars["String"]>;
   twitter_contains?: InputMaybe<Scalars["String"]>;
@@ -3204,6 +3224,8 @@ export enum SpeakerOrder {
   NameDesc = "name_DESC",
   PositionAsc = "position_ASC",
   PositionDesc = "position_DESC",
+  SlugAsc = "slug_ASC",
+  SlugDesc = "slug_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",
@@ -3263,13 +3285,20 @@ export type SponsorTypeArgs = {
 export type SponsorBlock = Entry & {
   __typename?: "SponsorBlock";
   contentfulMetadata: ContentfulMetadata;
+  externalLink?: Maybe<Scalars["String"]>;
   image?: Maybe<Asset>;
   imageParamsDesktop?: Maybe<Scalars["String"]>;
   imageParamsMobile?: Maybe<Scalars["String"]>;
   linkedFrom?: Maybe<SponsorBlockLinkingCollections>;
   name?: Maybe<Scalars["String"]>;
+  slug?: Maybe<Scalars["String"]>;
   sys: Sys;
   title?: Maybe<SponsorBlockTitle>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
+export type SponsorBlockExternalLinkArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
@@ -3299,6 +3328,11 @@ export type SponsorBlockNameArgs = {
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
+export type SponsorBlockSlugArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
 export type SponsorBlockTitleArgs = {
   locale?: InputMaybe<Scalars["String"]>;
 };
@@ -3315,6 +3349,13 @@ export type SponsorBlockFilter = {
   AND?: InputMaybe<Array<InputMaybe<SponsorBlockFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<SponsorBlockFilter>>>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  externalLink?: InputMaybe<Scalars["String"]>;
+  externalLink_contains?: InputMaybe<Scalars["String"]>;
+  externalLink_exists?: InputMaybe<Scalars["Boolean"]>;
+  externalLink_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  externalLink_not?: InputMaybe<Scalars["String"]>;
+  externalLink_not_contains?: InputMaybe<Scalars["String"]>;
+  externalLink_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   imageParamsDesktop?: InputMaybe<Scalars["String"]>;
   imageParamsDesktop_contains?: InputMaybe<Scalars["String"]>;
   imageParamsDesktop_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -3337,6 +3378,13 @@ export type SponsorBlockFilter = {
   name_not?: InputMaybe<Scalars["String"]>;
   name_not_contains?: InputMaybe<Scalars["String"]>;
   name_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  slug?: InputMaybe<Scalars["String"]>;
+  slug_contains?: InputMaybe<Scalars["String"]>;
+  slug_exists?: InputMaybe<Scalars["Boolean"]>;
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  slug_not?: InputMaybe<Scalars["String"]>;
+  slug_not_contains?: InputMaybe<Scalars["String"]>;
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   sys?: InputMaybe<SysFilter>;
   title_contains?: InputMaybe<Scalars["String"]>;
   title_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -3364,12 +3412,16 @@ export type SponsorBlockLinkingCollectionsSponsorTypeCollectionArgs = {
 };
 
 export enum SponsorBlockOrder {
+  ExternalLinkAsc = "externalLink_ASC",
+  ExternalLinkDesc = "externalLink_DESC",
   ImageParamsDesktopAsc = "imageParamsDesktop_ASC",
   ImageParamsDesktopDesc = "imageParamsDesktop_DESC",
   ImageParamsMobileAsc = "imageParamsMobile_ASC",
   ImageParamsMobileDesc = "imageParamsMobile_DESC",
   NameAsc = "name_ASC",
   NameDesc = "name_DESC",
+  SlugAsc = "slug_ASC",
+  SlugDesc = "slug_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
   SysFirstPublishedAtDesc = "sys_firstPublishedAt_DESC",
   SysIdAsc = "sys_id_ASC",
@@ -4702,6 +4754,13 @@ export type CfSpeakerNestedFilter = {
   position_not?: InputMaybe<Scalars["String"]>;
   position_not_contains?: InputMaybe<Scalars["String"]>;
   position_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  slug?: InputMaybe<Scalars["String"]>;
+  slug_contains?: InputMaybe<Scalars["String"]>;
+  slug_exists?: InputMaybe<Scalars["Boolean"]>;
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  slug_not?: InputMaybe<Scalars["String"]>;
+  slug_not_contains?: InputMaybe<Scalars["String"]>;
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   sys?: InputMaybe<SysFilter>;
   twitter?: InputMaybe<Scalars["String"]>;
   twitter_contains?: InputMaybe<Scalars["String"]>;
