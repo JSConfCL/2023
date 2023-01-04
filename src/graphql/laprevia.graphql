@@ -116,5 +116,6 @@ query LaPrevia($locale: String!, $isPreview: Boolean = false) {
         }
       }
     }
+    flags
   }
 }
