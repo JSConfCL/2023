@@ -130,6 +130,7 @@ query LaPrevia($locale: String!, $isPreview: Boolean = false) {
             }
             imageParamsMobile
             imageParamsDesktop
+            externalLink
           }
         }
       }

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Link from "next/link";
 import { transparentize } from "polished";
 import { lazy } from "react";
 
@@ -121,16 +122,24 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
             {item?.contributorsCollection?.items?.map((contributorItem) => (
               <ImageContainer key={contributorItem.sys.id}>
                 <Flex>
-                  <Image
-                    alt=""
-                    mobile={contributorItem?.image?.url}
-                    desktop={contributorItem?.image?.url}
-                    params={
-                      isMobile
-                        ? contributorItem?.imageParamsMobile
-                        : contributorItem?.imageParamsDesktop || ""
-                    }
-                  />
+                  <Link
+                    rel="preconnect"
+                    href={contributorItem.externalLink}
+                    passHref
+                  >
+                    <a target="_blank">
+                      <Image
+                        alt=""
+                        mobile={contributorItem?.image?.url}
+                        desktop={contributorItem?.image?.url}
+                        params={
+                          isMobile
+                            ? contributorItem?.imageParamsMobile
+                            : contributorItem?.imageParamsDesktop || ""
+                        }
+                      />
+                    </a>
+                  </Link>
                 </Flex>
               </ImageContainer>
             ))}
