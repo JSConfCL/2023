@@ -289,6 +289,7 @@ export const Ticket = ({
   userTicketStatus,
   fadeIn,
   showGetTicket = false,
+  showEdit = true,
 }: {
   userTicketId: string;
   userPhoto: string | null;
@@ -300,6 +301,7 @@ export const Ticket = ({
   userTicketStatus: string;
   fadeIn: boolean;
   showGetTicket?: boolean;
+  showEdit?: boolean;
 }) => {
   const [loaded, setLoaded] = useState(!fadeIn);
   const animation = useAnimation();
@@ -366,7 +368,7 @@ export const Ticket = ({
             </StyledAtropos>
             <SocialLinkWrapper>
               <Suspense fallback={null}>
-                <SocialLinks userTicketId={userTicketId} />
+                <SocialLinks userTicketId={userTicketId} showEdit={showEdit} />
               </Suspense>
             </SocialLinkWrapper>
             {showGetTicket ? (

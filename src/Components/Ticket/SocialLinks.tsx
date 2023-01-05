@@ -75,7 +75,13 @@ const SocialAnchor = styled.a<{
   },
 ]);
 
-const SocialLinks = ({ userTicketId }: { userTicketId: string }) => {
+const SocialLinks = ({
+  userTicketId,
+  showEdit,
+}: {
+  userTicketId: string;
+  showEdit: boolean;
+}) => {
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const publicUrl = `${
     process.env.NEXT_PUBLIC_SERVER_URL ?? "https://jsconf.cl"
@@ -148,13 +154,15 @@ const SocialLinks = ({ userTicketId }: { userTicketId: string }) => {
       >
         <Copy size={32} />
       </SocialButton>
-      <ToolTip content={`Edita tu ticket`}>
-        <Link href={`/mytickets/${userTicketId}`} legacyBehavior>
-          <SocialAnchor ref={anchorRef} type="jsconf">
-            <Edit size={32} />
-          </SocialAnchor>
-        </Link>
-      </ToolTip>
+      {showEdit ? (
+        <ToolTip content={`Edita tu ticket`}>
+          <Link href={`/mytickets/${userTicketId}`} legacyBehavior>
+            <SocialAnchor ref={anchorRef} type="jsconf">
+              <Edit size={32} />
+            </SocialAnchor>
+          </Link>
+        </ToolTip>
+      ) : null}
       <Toaster />
     </SharingInfo>
   );
