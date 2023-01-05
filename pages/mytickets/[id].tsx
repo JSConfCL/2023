@@ -11,7 +11,7 @@ import {
 } from "../../src/Components/Layouts/DefaultPagelayout";
 import { UserPreferencesForm } from "../../src/Components/UserPreferencesForm";
 
-import { oneTicket, updateOneTicket } from "../../src/helpers/API";
+import { me, oneTicket, updateOneTicket } from "../../src/helpers/API";
 import { PreferencesType } from "../../src/helpers/API/types";
 
 export const fadeIn = keyframes`
@@ -38,7 +38,7 @@ const ImageWrapper = styled.div`
 const ticketApiUrl = process.env.NEXT_PUBLIC_WORKER_IMAGE_API!;
 
 const Settings = () => {
-  const { query, isReady } = useRouter();
+  const { query, isReady, push } = useRouter();
   const [isImageLoaded, setImageIsLoaded] = useState(false);
   const ticketId = query.id as string;
   const updateTicket = useCallback(
@@ -50,8 +50,12 @@ const Settings = () => {
   );
   const getOneTicket = useCallback(async () => {
     const responses = await oneTicket(ticketId);
+    const currentUser = await me();
+    if (currentUser.id !== responses.owner.id) {
+      await push("/");
+    }
     return responses.preferences;
-  }, [ticketId]);
+  }, [ticketId, push]);
 
   return (
     <FormPageContainer>
