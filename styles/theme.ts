@@ -129,6 +129,9 @@ const theme: Theme = {
       headingsFontWeight: 400,
       color: colors.white,
     },
+    speakerSection: {
+      subtitleColor: "#4b4b4b",
+    },
   },
 };
 
@@ -195,6 +198,9 @@ export const previaTheme: Theme = {
       shadowColor: colors.jsconfBlack,
       textColor: colors.jsconfBlack,
       chevronColor: colors.jsconfBlack,
+    },
+    speakerSection: {
+      subtitleColor: colors.white,
     },
   },
 };

@@ -1,0 +1,35 @@
+query SpeakerQuery($id: String!, $isPreview: Boolean = false) {
+  speakerCollection(where: { slug: $id }, preview: true) {
+    items {
+      sys {
+        id
+      }
+      name
+      photo {
+        url
+      }
+      position
+      companyName
+      about
+      twitter
+      github
+      web
+      linkedin
+    }
+  }
+  eventCollection(where: { speaker: { slug: $id } }, preview: $isPreview) {
+    items {
+      sys {
+        id
+      }
+      title
+      date
+      duration
+      language
+      kind
+      description {
+        json
+      }
+    }
+  }
+}

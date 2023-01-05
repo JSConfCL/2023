@@ -97,6 +97,7 @@ export type HomeQueryQuery = {
           cardType?: string | null;
           type?: string | null;
           companyName?: string | null;
+          slug?: string | null;
           sys: { __typename?: "Sys"; id: string };
           photo?: {
             __typename?: "Asset";
@@ -156,6 +157,7 @@ export type HomeQueryQuery = {
         speaker?: {
           __typename?: "Speaker";
           name?: string | null;
+          slug?: string | null;
           photo?: { __typename?: "Asset"; url?: string | null } | null;
         } | null;
       } | null>;
@@ -279,6 +281,7 @@ export const HomeQueryDocument = gql`
             cardType
             type
             companyName
+            slug
           }
         }
       }
@@ -334,6 +337,7 @@ export const HomeQueryDocument = gql`
             photo {
               url
             }
+            slug
           }
         }
       }

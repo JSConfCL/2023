@@ -47,6 +47,7 @@ export type LaPreviaQuery = {
           cardType?: string | null;
           type?: string | null;
           companyName?: string | null;
+          slug?: string | null;
           sys: { __typename?: "Sys"; id: string };
           photo?: {
             __typename?: "Asset";
@@ -90,6 +91,7 @@ export type LaPreviaQuery = {
         speaker?: {
           __typename?: "Speaker";
           name?: string | null;
+          slug?: string | null;
           photo?: { __typename?: "Asset"; url?: string | null } | null;
         } | null;
       } | null>;
@@ -168,28 +170,8 @@ export const LaPreviaDocument = gql`
             }
             cardType
             type
-          }
-        }
-      }
-      speakersBlock(preview: $isPreview) {
-        title
-        description {
-          json
-        }
-        speakersCollection(preview: $isPreview) {
-          items {
-            sys {
-              id
-            }
-            name
-            position
-            photo {
-              url
-              description
-            }
-            cardType
-            type
             companyName
+            slug
           }
         }
       }
@@ -231,6 +213,7 @@ export const LaPreviaDocument = gql`
             photo {
               url
             }
+            slug
           }
         }
       }

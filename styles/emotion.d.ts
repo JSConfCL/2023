@@ -100,6 +100,9 @@ declare module "@emotion/react" {
         headingsFontWeight: number;
         color: string;
       };
+      speakerSection: {
+        subtitleColor: string;
+      };
     };
   }
 }
