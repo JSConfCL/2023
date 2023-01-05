@@ -3,6 +3,7 @@ import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 import { parseISO } from "date-fns";
 import { format } from "date-fns-tz";
+import Link from "next/link";
 import { transparentize } from "polished";
 import { Suspense, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
@@ -347,29 +348,35 @@ const TimelineRow = ({
     : null;
   const slug = event?.speaker?.slug;
 
+  const WithLinkWrapper = slug
+    ? ({ children }: { children: any }) => (
+        <Link rel="preconnect" href={`/speakers/${slug}`} passHref>
+          <a>{children}</a>
+        </Link>
+      )
+    : ({ children }: { children: any }) => <>{children}</>;
+
   return (
     <TableRow>
       <ImageCell>
         <Suspense fallback={null}>
           {event?.speaker?.photo?.url ? (
-            <img
-              alt={event?.speaker?.name || "Speaker"}
-              src={`${event?.speaker?.photo?.url}?fit=thumb&w=320&h=320&f=face`}
-            />
+            <WithLinkWrapper>
+              <img
+                alt={event?.speaker?.name || "Speaker"}
+                src={`${event?.speaker?.photo?.url}?fit=thumb&w=320&h=320&f=face`}
+              />
+            </WithLinkWrapper>
           ) : null}
         </Suspense>
       </ImageCell>
       <AuthorCell>
-        {slug ? (
-          <a href={`/speakers/${slug}`}>{event?.speaker?.name}</a>
-        ) : (
-          event?.speaker?.name
-        )}
+        <WithLinkWrapper>{event?.speaker?.name}</WithLinkWrapper>
       </AuthorCell>
       <TableCell>
         <Kind kind={event.kind} />
         <Title>
-          {slug ? <a href={`/speakers/${slug}`}>{event.title}</a> : event.title}
+          <WithLinkWrapper>{event.title}</WithLinkWrapper>
         </Title>
         <CollapsableInfo information={event.description?.json} />
         <Language language={language} />
