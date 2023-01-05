@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { lazy, Suspense } from "react";
 
 import { ViewportSizes } from "../../styles/theme";
@@ -9,7 +10,7 @@ import { H3, P } from "./core/Typography";
 
 const Image = lazy(async () => await import("./core/Image"));
 
-const Container = styled(motion.section)<{ type: string; index: number }>`
+const Container = styled(motion.section)<{ type: string }>`
   background: ${({ type }) => (type === "blank" ? "transparent" : "white")};
   border-radius: 0px 32px 0px 0px;
   position: relative;
@@ -150,59 +151,82 @@ const mobileStyle = {
   aspectRatio: "390 / 400",
 };
 
-const Card = (props: any) => {
-  const { name, position, photo, cardType, type, index, companyName, slug } =
-    props;
+interface CardProps {
+  name?: string;
+  position?: any;
+  photo?: {
+    url: string;
+    description?: string;
+  };
+  cardType?: string;
+  type: string;
+  index?: number;
+  companyName?: string;
+  slug?: string;
+}
+
+const Card = (props: CardProps) => {
+  const {
+    name,
+    position,
+    photo,
+    cardType = "",
+    type,
+    companyName,
+    slug,
+  } = props;
   const isMobile = useMediaQuery("(max-width: 768px)");
   const extraStyle = isMobile ? mobileStyle : styleProps(cardType, type);
+  const WithLinkWrapper = slug
+    ? ({ children }: { children: any }) => (
+        <Link rel="preconnect" href={`/speakers/${slug}`} passHref>
+          <a>{children}</a>
+        </Link>
+      )
+    : ({ children }: { children: any }) => <>{children}</>;
 
   return (
-    <Container
-      type={type}
-      index={index}
-      variants={containerVariants}
-      whileHover="hover"
-      whileFocus="hover"
-      whileTap="hover"
-      initial="initial"
-    >
-      <BlockColor type={type}>
-        <Suspense fallback={null}>
-          <Image
-            mobile={photo?.url!}
-            alt={photo?.description!}
-            style={{
-              borderRadius: "0px 32px 0px 0px",
-              position: "relative",
-              objectFit: "cover",
-              mixBlendMode: "multiply",
-              ...extraStyle,
-            }}
-          />
-        </Suspense>
-      </BlockColor>
-      {type !== "blank" && (
-        <BlockDescription type={type}>
-          {slug ? (
-            <a href={`/speakers/${slug as string}`}>
-              <H3>{name}</H3>
-            </a>
-          ) : (
+    <WithLinkWrapper>
+      <Container
+        type={type}
+        variants={containerVariants}
+        whileHover="hover"
+        whileFocus="hover"
+        whileTap="hover"
+        initial="initial"
+      >
+        <BlockColor type={type}>
+          <Suspense fallback={null}>
+            <Image
+              mobile={photo?.url!}
+              alt={photo?.description!}
+              style={{
+                borderRadius: "0px 32px 0px 0px",
+                position: "relative",
+                objectFit: "cover",
+                mixBlendMode: "multiply",
+                ...extraStyle,
+              }}
+            />
+          </Suspense>
+        </BlockColor>
+        {type !== "blank" && (
+          <BlockDescription type={type}>
             <H3>{name}</H3>
-          )}
-          <HR />
-          <P>
-            {position}
-            {companyName ? (
-              <>
-                <br /> @ {companyName}
-              </>
-            ) : null}
-          </P>
-          <HR />
-        </BlockDescription>
-      )}
-    </Container>
+            <HR />
+            <P>
+              {position}
+              {companyName ? (
+                <>
+                  <br /> @ {companyName}
+                </>
+              ) : null}
+            </P>
+            <HR />
+          </BlockDescription>
+        )}
+      </Container>
+    </WithLinkWrapper>
   );
 };
 
