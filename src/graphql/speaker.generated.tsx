@@ -43,7 +43,7 @@ export type SpeakerQueryQuery = {
 
 export const SpeakerQueryDocument = gql`
   query SpeakerQuery($id: String!, $isPreview: Boolean = false) {
-    speakerCollection(where: { slug: $id }, preview: true) {
+    speakerCollection(where: { slug: $id }, preview: $isPreview) {
       items {
         sys {
           id
