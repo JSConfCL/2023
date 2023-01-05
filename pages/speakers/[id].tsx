@@ -103,10 +103,12 @@ const HeroImage = styled.div`
     filter: grayscale(100%);
     border-radius: 0 32px 0 0;
     display: block;
+    max-height: 350px;
 
     @media (min-width: ${ViewportSizes.Phone}px) {
       flex: 0 0;
       width: 400px;
+      max-height: unset;
     }
   }
 `;
