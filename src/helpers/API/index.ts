@@ -20,10 +20,10 @@ export type ErrorResponse = {
   message: string[];
 };
 
-const customFetch = async (
+const baseFetch = async (
   input: RequestInfo | URL,
   init?: RequestInit | undefined
-): Promise<any> => {
+): Promise<Response> => {
   const headers = new Headers(init?.headers);
   const token = getValidToken();
   if (token !== null) {
@@ -33,7 +33,33 @@ const customFetch = async (
   headers.append("x-trace-id", `traceid_${nanoid()}`);
   headers.append("Accept-Language", `es`);
   headers.append("x-fetch", `raw`);
-  const res = await fetch(input, { ...init, headers });
+
+  return await fetch(input, { ...init, headers });
+};
+
+const canBeAnonymousFetch = async (
+  input: RequestInfo | URL,
+  init?: RequestInit | undefined
+): Promise<any> => {
+  const res = await baseFetch(input, init);
+
+  if (res.status >= 200 && res.status < 300) {
+    return await res.json();
+  }
+
+  if (res.status === 401) {
+    return {};
+  }
+
+  throw new Error("Error");
+};
+
+const customFetch = async (
+  input: RequestInfo | URL,
+  init?: RequestInit | undefined
+): Promise<any> => {
+  const res = await baseFetch(input, init);
+
   if (res.status >= 200 && res.status < 300) {
     return await res.json();
   }
@@ -72,6 +98,10 @@ export const createPayment = async (object: {
 
 export const me = async (): Promise<UserType> => {
   return await customFetch(`${API_URL}/users/me`);
+};
+
+export const anonymousMe = async (): Promise<UserType> => {
+  return await canBeAnonymousFetch(`${API_URL}/users/me`);
 };
 
 export const myTickets = async (): Promise<OwnTicket[]> => {
