@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
+import { useQuery } from "@tanstack/react-query";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 
 import { DefaultPageLayout } from "../../../src/Components/Layouts/DefaultPagelayout";
 import { Ticket } from "../../../src/Components/Ticket/Ticket";
+import { anonymousMe } from "../../../src/helpers/API";
 import { PublicTicket } from "../../../src/helpers/API/types";
 
 export const config = {
@@ -22,6 +24,8 @@ const TicketPage = ({
   ticket: PublicTicket;
   cleanedId: string;
 }) => {
+  const { data: user } = useQuery(["me"], anonymousMe);
+
   return (
     <div>
       <Head>
@@ -82,6 +86,7 @@ const TicketPage = ({
         ticketSeason={ticket.ticketSeason}
         fadeIn
         showGetTicket
+        showEdit={user?.id === ticket.userId}
       />
     </div>
   );
