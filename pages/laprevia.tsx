@@ -182,18 +182,18 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
           <ExtraInfo>
             <div>
               {props.heroData.firstSubtitle.split("\n").map((line) => (
-                <>
+                <span key={line}>
                   {line}
                   <br />
-                </>
+                </span>
               ))}
             </div>
             <div>
               {props.heroData.secondSubtitle.split("\n").map((line) => (
-                <>
+                <span key={line}>
                   {line}
                   <br />
-                </>
+                </span>
               ))}
             </div>
           </ExtraInfo>
