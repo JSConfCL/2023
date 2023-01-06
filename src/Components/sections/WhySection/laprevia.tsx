@@ -1,11 +1,14 @@
 import styled from "@emotion/styled";
+import dynamic from "next/dynamic";
 import { lazy, Suspense } from "react";
 
 import { PageProps } from "../../../../pages/laprevia";
 
-import { PrimaryStyledLink } from "../../../Components/Links";
-
 const WhyCard = lazy(async () => await import("../../Card/Why"));
+
+const GetAccount = dynamic(async () => await import("../../GetAccount"), {
+  ssr: false,
+});
 
 const Container = styled.div`
   max-width: 1440px;
@@ -21,9 +24,7 @@ const WhySection = ({ whyItems }: { whyItems?: PageProps["whyItems"] }) => {
         </Suspense>
       ))}
       <div style={{ textAlign: "center" }}>
-        <PrimaryStyledLink href="/tickets">
-          Registarme en JSConf
-        </PrimaryStyledLink>
+        <GetAccount />
       </div>
     </Container>
   );
