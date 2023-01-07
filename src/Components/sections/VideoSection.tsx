@@ -32,6 +32,8 @@ const Container = styled.section`
   padding: 16px;
   justify-content: space-between;
   margin: 0 auto;
+  position: relative;
+  z-index: 20;
 
   > h2 {
     padding: 48px 0px;
