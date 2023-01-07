@@ -13,6 +13,7 @@ export type TicketsQueryQuery = {
   __typename?: "Query";
   page?: {
     __typename?: "Page";
+    flags?: any | null;
     seo?: {
       __typename?: "Seo";
       title?: string | null;
@@ -149,6 +150,7 @@ export const TicketsQueryDocument = gql`
           }
         }
       }
+      flags
     }
   }
 `;
