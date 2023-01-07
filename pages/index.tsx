@@ -3,8 +3,10 @@ import type { NextPage } from "next";
 import { lazy, Suspense } from "react";
 
 import Seo from "../src/Components/Seo";
+import StickContainer from "../src/Components/StickContainer";
 import EventSchema from "../src/Components/schema/event";
 import Hero from "../src/Components/sections/Hero";
+
 import {
   HomeQueryDocument,
   HomeQueryQuery,
@@ -51,7 +53,17 @@ export interface PageProps {
   events: Page["eventsCollection"]["items"];
   sponsorType: Page["sponsorTypeCollection"];
   friends: Page["communityFriendsCollection"];
+  flags: Page["flags"];
 }
+
+const Banner = styled.div`
+  background-color: ${({ theme }) => theme.colors.jsconfRed};
+  color: white;
+  margin: 0 auto;
+  width: 90%;
+  font-size: 2rem;
+  padding: 16px;
+`;
 
 const Container = styled.section`
   display: flex;
@@ -97,6 +109,18 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
         <Suspense fallback={null}>
           {props.teamData && <TeamSection page={props.teamData} />}
         </Suspense>
+        {props.flags?.messages ? (
+          <StickContainer>
+            <Banner>
+              {props.flags?.messages?.map((message: string) => (
+                <div
+                  key={message}
+                  dangerouslySetInnerHTML={{ __html: message }}
+                />
+              ))}
+            </Banner>
+          </StickContainer>
+        ) : null}
       </StyledBlackWrapp>
     </Container>
   );
@@ -121,6 +145,7 @@ export async function getStaticProps() {
     events: page?.eventsCollection.items || null,
     sponsorType: page?.sponsorTypeCollection || null,
     friends: page?.communityFriendsCollection || null,
+    flags: page?.flags || null,
   };
 
   return {

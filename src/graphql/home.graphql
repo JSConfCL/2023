@@ -174,5 +174,6 @@ query HomeQuery($locale: String!, $isPreview: Boolean = false) {
         }
       }
     }
+    flags
   }
 }
