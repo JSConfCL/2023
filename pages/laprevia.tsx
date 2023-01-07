@@ -204,6 +204,11 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
           </ExtraInfo>
         </Hero>
       </Suspense>
+      <Suspense fallback={null}>
+        <div id="player">
+          <VideoSection videoId={props.flags?.videoId ?? ""} />
+        </div>
+      </Suspense>
       <section>
         {props?.whyItems && (
           <div id="about">
@@ -211,11 +216,6 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
           </div>
         )}
       </section>
-      <Suspense fallback={null}>
-        <div id="player">
-          <VideoSection videoId={props.flags?.videoId ?? ""} />
-        </div>
-      </Suspense>
       <Suspense fallback={null}>
         {props?.speakerData && (
           <div id="speakers">
