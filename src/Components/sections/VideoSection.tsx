@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useAtomValue } from "jotai";
 import dynamic from "next/dynamic";
 import React, { useState, useEffect } from "react";
 import {
@@ -12,6 +13,7 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 
 import { ViewportSizes } from "../../../styles/theme";
+import { isAuthenticatedAtom } from "../../helpers/auth";
 import useMediaQuery from "../../helpers/useMediaQuery";
 
 import { H2 } from "../core/Typography";
@@ -30,6 +32,8 @@ const Container = styled.section`
   padding: 16px;
   justify-content: space-between;
   margin: 0 auto;
+  position: relative;
+  z-index: 20;
 
   > h2 {
     padding: 48px 0px;
@@ -77,6 +81,36 @@ const ChatContainer = styled(IframeContainer)`
   flex: 1 1 100%;
 `;
 
+const FakeVideo = styled.div`
+  width: 100%;
+  padding-bottom: 56.25%;
+  background: #666;
+  position: relative;
+`;
+
+const FakeVideoInfo = styled.div`
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: absolute;
+  font-size: 1.5rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 16px;
+  color: white;
+
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    font-size: 2rem;
+  }
+
+  @media (min-width: ${ViewportSizes.Desktop}px) {
+    font-size: 2.5rem;
+  }
+`;
+
 const HR = styled.hr`
   border-width: 1px;
   border-color: #f45b69;
@@ -120,6 +154,7 @@ const VideoSection = ({
   const [chatSize, setChatSize] = useState(chatConfigurations.length - 1);
   const [origin, setOrigin] = useState("");
   const [port, setPort] = useState("");
+  const isLoggedIn = useAtomValue(isAuthenticatedAtom);
 
   useEffect(() => {
     if (window !== undefined) {
@@ -140,6 +175,23 @@ const VideoSection = ({
 
   if (!videoId) {
     return <></>;
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <Container>
+        <H2 whileHover={{ scale: 1.01 }}>Ver la Previa</H2>
+        <HR />
+        <FakeVideo>
+          <FakeVideoInfo>
+            Para poder ver la previa debes tener una cuenta de la JSConf 😥
+          </FakeVideoInfo>
+        </FakeVideo>
+        <div style={{ textAlign: "center", marginTop: "16px " }}>
+          <GetAccount />
+        </div>
+      </Container>
+    );
   }
 
   return (
@@ -238,9 +290,6 @@ const VideoSection = ({
             style={{ position: "relative", top: "4px" }}
           />
         </Button>
-      </div>
-      <div style={{ textAlign: "center", marginTop: "16px " }}>
-        <GetAccount />
       </div>
       <Toaster />
     </Container>

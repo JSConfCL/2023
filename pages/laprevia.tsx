@@ -47,8 +47,11 @@ const FriendSection = lazy(
   async () => await import("../src/Components/sections/FriendSection")
 );
 
-const VideoSection = lazy(
-  async () => await import("../src/Components/sections/VideoSection")
+const VideoSection = dynamic(
+  async () => await import("../src/Components/sections/VideoSection"),
+  {
+    ssr: false,
+  }
 );
 
 const Container = styled.div`
@@ -73,6 +76,7 @@ const Hero = styled.section`
   flex-direction: column;
   justify-content: space-around;
   margin-bottom: 200px;
+  position: relative;
 `;
 
 const HeroInfo = styled.div`
@@ -177,6 +181,11 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
         <NavBar id="yEsNC4mdITUXpMO1REbOv" />
       </Suspense>
       <Suspense fallback={null}>
+        <div id="player">
+          <VideoSection videoId={props.flags?.videoId ?? ""} />
+        </div>
+      </Suspense>
+      <Suspense fallback={null}>
         <Hero id="home">
           <Particles backgroundColor="#fff" />
           <div />
@@ -203,11 +212,6 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
             </div>
           </ExtraInfo>
         </Hero>
-      </Suspense>
-      <Suspense fallback={null}>
-        <div id="player">
-          <VideoSection videoId={props.flags?.videoId ?? ""} />
-        </div>
       </Suspense>
       <section>
         {props?.whyItems && (
