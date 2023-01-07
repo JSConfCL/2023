@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue, useSetAtom } from "jotai";
 
@@ -8,6 +9,7 @@ import {
 import { CartContainer } from "../../src/Components/Cart/CartContainer";
 import { DefaultPageLayout } from "../../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../../src/Components/Seo";
+import StickContainer from "../../src/Components/StickContainer";
 import NoTickets from "../../src/Components/TicketSection/NoTickets";
 import YesTicketsCreateAccount from "../../src/Components/TicketSection/YesTicketsCreateAccount";
 import { PageContainer } from "../../src/Components/common/PageContainer";
@@ -25,7 +27,17 @@ type Page = ParseQuery<TicketsQueryQuery["page"]>;
 
 export interface PageProps {
   seo: Page["seo"];
+  flags: Page["flags"];
 }
+
+const Banner = styled.div`
+  background-color: ${({ theme }) => theme.colors.jsconfRed};
+  color: white;
+  margin: 0 auto;
+  width: 90%;
+  font-size: 2rem;
+  padding: 16px;
+`;
 
 const image =
   "https://images.ctfassets.net/1kfhsqlc8ewi/EAE7GIGq6Uk26KmdTC9T6/00be1cabc2d9b1dea800dbdb7e31c1bd/ticket.png";
@@ -57,6 +69,18 @@ export default function Tickets(props: PageProps) {
     <PageContainer>
       <Seo {...props.seo} />
       {!isLoading && <TicketContent />}
+      {props.flags?.messages ? (
+        <StickContainer>
+          <Banner>
+            {props.flags?.messages?.map((message: string) => (
+              <div
+                key={message}
+                dangerouslySetInnerHTML={{ __html: message }}
+              />
+            ))}
+          </Banner>
+        </StickContainer>
+      ) : null}
     </PageContainer>
   );
 }
@@ -77,6 +101,7 @@ export async function getStaticProps() {
 
   const props: PageProps = {
     seo: page?.seo || null,
+    flags: page?.flags || null,
   };
 
   return {
