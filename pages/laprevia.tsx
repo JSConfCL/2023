@@ -47,8 +47,11 @@ const FriendSection = lazy(
   async () => await import("../src/Components/sections/FriendSection")
 );
 
-const VideoSection = lazy(
-  async () => await import("../src/Components/sections/VideoSection")
+const VideoSection = dynamic(
+  async () => await import("../src/Components/sections/VideoSection"),
+  {
+    ssr: false,
+  }
 );
 
 const Container = styled.div`
