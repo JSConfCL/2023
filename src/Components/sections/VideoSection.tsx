@@ -12,6 +12,8 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 
 import { ViewportSizes } from "../../../styles/theme";
+import useMediaQuery from "../../helpers/useMediaQuery";
+
 import { H2 } from "../core/Typography";
 
 const GetAccount = dynamic(async () => await import("../GetAccount"), {
@@ -50,8 +52,12 @@ const PlayerContainer = styled.div`
 
 const IframeContainer = styled.div`
   position: relative;
-  padding-bottom: 56.25%;
+  padding-bottom: 100%;
   margin: 1rem 0;
+
+  @media (min-width: ${ViewportSizes.TabletLandscape}) {
+    padding-bottom: 56.25%;
+  }
 
   iframe {
     position: absolute;
@@ -97,6 +103,9 @@ const Button = styled.button`
   }
 `;
 
+const desktopChatConfigurations = ["0 0 50%", "0 0 33%", "0 0 25%", "0 0 0%"];
+const mobileChatConfigurations = ["0 0 100%", "0 0 0%"];
+
 const VideoSection = ({
   videoId,
   includesChat = true,
@@ -104,8 +113,11 @@ const VideoSection = ({
   videoId: string;
   includesChat?: boolean;
 }) => {
-  const chatConfigurations = ["0 0 50%", "0 0 33%", "0 0 25%", "0 0 0%"];
-  const [chatSize, setChatSize] = useState(3);
+  const isMobile = useMediaQuery(`(max-width: ${ViewportSizes.Phone - 1}px)`);
+  const chatConfigurations = isMobile
+    ? mobileChatConfigurations
+    : desktopChatConfigurations;
+  const [chatSize, setChatSize] = useState(chatConfigurations.length - 1);
   const [origin, setOrigin] = useState("");
   const [port, setPort] = useState("");
 
@@ -116,30 +128,33 @@ const VideoSection = ({
     }
   }, [setOrigin]);
 
-  const chatConfiguration = chatConfigurations[chatSize];
-
-  if (!videoId) {
-    return <></>;
-  }
-
+  const flex =
+    chatSize > chatConfigurations.length - 1
+      ? chatConfigurations[chatConfigurations.length - 1]
+      : chatConfigurations[chatSize];
+  const paddingBottom = isMobile ? "100%" : "56.25%";
   const httpScheme = origin.startsWith("https") ? "https" : "http";
   const embedDomain = origin.includes("localhost")
     ? origin.replace("http://", "").replace(`:${port}`, "")
     : origin.replace("https://", "");
+
+  if (!videoId) {
+    return <></>;
+  }
 
   return (
     <Container>
       <H2 whileHover={{ scale: 1.01 }}>Ver la Previa</H2>
       <HR />
       <PlayerContainer>
-        <VideoContainer>
+        <VideoContainer style={{ paddingBottom }}>
           <iframe
             src={`${httpScheme}://www.youtube-nocookie.com/embed/${videoId}?theme=dark&autoplay=1&keyboard=1&autohide=2&cc_load_policy=1&modestbranding=1&fs=1&rel=0&iv_load_policy=3&mute=0&loop=0&share=0`}
             allowFullScreen
           />
         </VideoContainer>
         {includesChat ? (
-          <ChatContainer style={{ flex: chatConfiguration }}>
+          <ChatContainer style={{ paddingBottom, flex }}>
             <iframe
               src={`${httpScheme}://www.youtube.com/live_chat?v=${videoId}&embed_domain=${embedDomain}`}
               allowFullScreen
@@ -151,17 +166,19 @@ const VideoSection = ({
       <div style={{ textAlign: "right", paddingRight: "24px" }}>
         {includesChat ? (
           <>
-            <Button
-              disabled={chatSize === 0}
-              onClick={() => {
-                setChatSize(0);
-              }}
-            >
-              <ChevronsLeft
-                size={24}
-                style={{ position: "relative", top: "4px" }}
-              />
-            </Button>
+            {!isMobile ? (
+              <Button
+                disabled={chatSize === 0}
+                onClick={() => {
+                  setChatSize(0);
+                }}
+              >
+                <ChevronsLeft
+                  size={24}
+                  style={{ position: "relative", top: "4px" }}
+                />
+              </Button>
+            ) : null}
             <Button
               disabled={chatSize === 0}
               onClick={() => {
@@ -190,17 +207,19 @@ const VideoSection = ({
                 style={{ position: "relative", top: "4px" }}
               />
             </Button>
-            <Button
-              disabled={chatSize === chatConfigurations.length - 1}
-              onClick={() => {
-                setChatSize(chatConfigurations.length - 1);
-              }}
-            >
-              <ChevronsRight
-                size={24}
-                style={{ position: "relative", top: "4px" }}
-              />
-            </Button>
+            {!isMobile ? (
+              <Button
+                disabled={chatSize >= chatConfigurations.length - 1}
+                onClick={() => {
+                  setChatSize(chatConfigurations.length - 1);
+                }}
+              >
+                <ChevronsRight
+                  size={24}
+                  style={{ position: "relative", top: "4px" }}
+                />
+              </Button>
+            ) : null}
           </>
         ) : null}
         <Button>
