@@ -47,6 +47,10 @@ const FriendSection = lazy(
   async () => await import("../src/Components/sections/FriendSection")
 );
 
+const VideoSection = lazy(
+  async () => await import("../src/Components/sections/VideoSection")
+);
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -162,6 +166,7 @@ export interface PageProps {
   events: Page["eventsCollection"]["items"];
   sponsorType: Page["sponsorTypeCollection"];
   friends: Page["communityFriendsCollection"];
+  flags: Page["flags"];
 }
 
 const Home: NextPage<PageProps> = (props: PageProps) => {
@@ -206,6 +211,11 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
           </div>
         )}
       </section>
+      <Suspense fallback={null}>
+        <div id="player">
+          <VideoSection videoId={props.flags?.videoId ?? ""} />
+        </div>
+      </Suspense>
       <Suspense fallback={null}>
         {props?.speakerData && (
           <div id="speakers">
@@ -258,6 +268,7 @@ export async function getStaticProps() {
     events: page?.eventsCollection.items || null,
     sponsorType: page?.sponsorTypeCollection || null,
     friends: page?.communityFriendsCollection || null,
+    flags: page?.flags || {},
   };
 
   return {
