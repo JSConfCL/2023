@@ -1,13 +1,7 @@
 import styled from "@emotion/styled";
 import Countdown from "react-countdown";
 
-const StickContainer = styled.div`
-  position: fixed;
-  z-index: 101;
-  display: block;
-  width: 100%;
-  bottom: 10px;
-`;
+import StickContainer from "./StickContainer";
 
 const Stick = styled.div`
   background: #f45b69;
