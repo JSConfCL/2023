@@ -170,6 +170,7 @@ query HomeQuery($locale: String!, $isPreview: Boolean = false) {
             imageParamsMobile
             imageParamsDesktop
             externalLink
+            slug
           }
         }
       }
