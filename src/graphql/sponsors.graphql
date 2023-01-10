@@ -1,0 +1,8 @@
+query Sponsors($isPreview: Boolean = false) {
+  sponsorBlockCollection(preview: $isPreview) {
+    items {
+      slug
+      name
+    }
+  }
+}
