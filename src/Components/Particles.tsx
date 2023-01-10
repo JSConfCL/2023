@@ -1,22 +1,40 @@
 import { css, Global } from "@emotion/react";
+import { transparentize } from "polished";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import type { Engine } from "tsparticles-engine";
 
-import config from "./sections/config";
+import { jsconfTheme } from "../../styles/theme";
+
+import { makeConfig } from "./sections/config";
 
 interface ParticleProps {
   id?: string;
   backgroundColor?: string;
+  color?: string | string[];
+  shape?: string;
+  configuration?: string;
 }
 
 const ParticleComponent = ({
   id = "tsparticles-container",
-  backgroundColor = "#f0e040d4",
+  backgroundColor = jsconfTheme.colors.jsconfYellow,
+  color = [transparentize(0.5, jsconfTheme.colors.jsconfBlack)],
+  shape = "polygon",
+  configuration = "jsconf",
 }: ParticleProps) => {
   const particlesInit = async (main: Engine) => {
     await loadFull(main);
   };
+  const finalColor = typeof color === "string" ? [color] : color;
+
+  const config = makeConfig({
+    configuration,
+    backgroundColor,
+    color: finalColor,
+    shape,
+  });
+
   return (
     <>
       <Global
