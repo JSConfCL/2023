@@ -5,7 +5,7 @@ import { parseISO } from "date-fns";
 import { format } from "date-fns-tz";
 import Link from "next/link";
 import { transparentize } from "polished";
-import { Suspense, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { ChevronDown, ChevronUp } from "react-feather";
 
@@ -16,8 +16,6 @@ import { CHILE, getFullTime, getLongDate } from "../../helpers/datesntimes";
 import { PrimaryStyledLink } from "../Links/index";
 import Description from "../core/Description";
 import { H2, H3 } from "../core/Typography";
-
-const GENERAL = "general";
 
 const fadeOut = keyframes`
   from {
@@ -197,7 +195,6 @@ const ImageCell = styled(TableCell)`
 `;
 
 const TimeCell = styled(TableCell)`
-  margin-bottom: 8px;
   font-size: 18px;
   vertical-align: bottom;
   white-space: nowrap;
@@ -222,6 +219,7 @@ const AuthorCell = styled(TableCell)`
 
 const TableRow = styled.tr`
   display: block;
+  position: relative;
   width: 100%;
   border-bottom: 1px solid #ffffff4d;
   padding: 32px 16px;
@@ -267,13 +265,20 @@ const CalendarContainer = styled.div`
 
 const Tag = styled.span`
   display: inline-block;
-  background: ${transparentize(0.5, jsconfTheme.colors.jsconfRed)};
+  background: ${transparentize(0.2, jsconfTheme.colors.jsconfRed)};
   color: white;
   font-weight: bold;
   padding: 0 8px;
   font-size: 0.8em;
   border-radius: 0px 8px 0px 0px;
   margin: 8px 0;
+`;
+
+const Tags = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
 `;
 
 type Flatten<T> = T extends any[] ? T[number] : T;
@@ -288,7 +293,13 @@ const Title = styled.div`
 `;
 
 const TitleActions = styled.div`
-  text-align: right;
+  position: absolute;
+  right: 2rem;
+  top: 1rem;
+
+  @media (max-width: ${ViewportSizes.TabletLandscape}px) {
+    top: 3rem;
+  }
 `;
 
 const ChevronContainer = styled.span`
@@ -302,35 +313,46 @@ const Language = ({ language }: { language?: string | null }) => {
   return <Tag>{language}</Tag>;
 };
 
-const Kind = ({ kind }: { kind?: string }) => {
-  if (!kind || kind === GENERAL) {
-    return null;
-  }
-
-  return <Title>{kind}</Title>;
-};
-
-const CollapsableInfo = ({ information }: { information?: Document }) => {
-  const [show, setShow] = useState(false);
-  const Chevron = show ? ChevronUp : ChevronDown;
-
+const CollapsableInfo = ({
+  information,
+  show,
+}: {
+  information?: Document;
+  show: boolean;
+}) => {
   if (!information) {
     return null;
   }
 
   return (
-    <div>
-      <TitleActions>
-        <ChevronContainer>
-          <Chevron
-            onClick={() => {
-              setShow((tmpShow) => !tmpShow);
-            }}
-          />
-        </ChevronContainer>
-      </TitleActions>
-      {show ? <Description variant="sm" data={information} /> : null}
-    </div>
+    <div>{show ? <Description variant="sm" data={information} /> : null}</div>
+  );
+};
+
+const FloatingChevron = ({
+  hasInformation,
+  show,
+  setShow,
+}: {
+  hasInformation: boolean;
+  show: boolean;
+  setShow: Dispatch<SetStateAction<boolean>>;
+}) => {
+  const Chevron = show ? ChevronUp : ChevronDown;
+
+  if (!hasInformation) {
+    return null;
+  }
+  return (
+    <TitleActions>
+      <ChevronContainer>
+        <Chevron
+          onClick={() => {
+            setShow((tmpShow) => !tmpShow);
+          }}
+        />
+      </ChevronContainer>
+    </TitleActions>
   );
 };
 
@@ -341,6 +363,7 @@ const TimelineRow = ({
   event: Flatten<PageProps["events"]>;
   showLocalTime: boolean;
 }) => {
+  const [show, setShow] = useState(false);
   const date = new Date(event.date);
   const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const language = event.language
@@ -356,30 +379,31 @@ const TimelineRow = ({
       )
     : ({ children }: { children: any }) => <>{children}</>;
 
+  const hasInformation = event.description?.json;
   return (
     <TableRow>
       <ImageCell>
-        <Suspense fallback={null}>
-          {event?.speaker?.photo?.url ? (
-            <WithLinkWrapper>
-              <img
-                alt={event?.speaker?.name || "Speaker"}
-                src={`${event?.speaker?.photo?.url}?fit=thumb&w=320&h=320&f=face`}
-              />
-            </WithLinkWrapper>
-          ) : null}
-        </Suspense>
+        {event?.speaker?.photo?.url ? (
+          <WithLinkWrapper>
+            <img
+              alt={event?.speaker?.name || "Speaker"}
+              src={`${event?.speaker?.photo?.url}?fit=thumb&w=320&h=320&f=face`}
+            />
+          </WithLinkWrapper>
+        ) : null}
       </ImageCell>
       <AuthorCell>
         <WithLinkWrapper>{event?.speaker?.name}</WithLinkWrapper>
       </AuthorCell>
       <TableCell>
-        <Kind kind={event.kind} />
         <Title>
           <WithLinkWrapper>{event.title}</WithLinkWrapper>
         </Title>
-        <CollapsableInfo information={event.description?.json} />
-        <Language language={language} />
+        <CollapsableInfo show={show} information={event.description?.json} />
+        <Tags>
+          <Language language={language} />
+          <Tag>Traduccion simultanea</Tag>
+        </Tags>
       </TableCell>
       <TimeCell>
         <div>
@@ -390,6 +414,11 @@ const TimelineRow = ({
           <div>📍 {getFullTime(date, event.duration, localTimezone)}</div>
         ) : null}
       </TimeCell>
+      <FloatingChevron
+        show={show}
+        setShow={setShow}
+        hasInformation={hasInformation}
+      />
     </TableRow>
   );
 };
@@ -470,7 +499,7 @@ const TimelineSection = (props: {
           </StyledActions>
         </StyledActionsContainer>
         <CalendarContainer>
-          <H3>General</H3>
+          <H3>Escenario Principal</H3>
           <Table>
             <tbody>
               {generalEvents.map((event) => (
@@ -484,7 +513,7 @@ const TimelineSection = (props: {
           </Table>
           {workshopEvents.length ? (
             <>
-              <H3>Talleres</H3>
+              <H3>Talleres / Workshops</H3>
               <Table>
                 <tbody>
                   {workshopEvents.map((event) => (
