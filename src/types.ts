@@ -3284,16 +3284,36 @@ export type SponsorTypeArgs = {
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
 export type SponsorBlock = Entry & {
   __typename?: "SponsorBlock";
+  bgColor?: Maybe<Scalars["String"]>;
   contentfulMetadata: ContentfulMetadata;
+  description?: Maybe<SponsorBlockDescription>;
+  effectColors?: Maybe<Array<Maybe<Scalars["String"]>>>;
   externalLink?: Maybe<Scalars["String"]>;
   image?: Maybe<Asset>;
   imageParamsDesktop?: Maybe<Scalars["String"]>;
   imageParamsMobile?: Maybe<Scalars["String"]>;
   linkedFrom?: Maybe<SponsorBlockLinkingCollections>;
   name?: Maybe<Scalars["String"]>;
+  navColor?: Maybe<Scalars["String"]>;
   slug?: Maybe<Scalars["String"]>;
   sys: Sys;
+  textColor?: Maybe<Scalars["String"]>;
   title?: Maybe<SponsorBlockTitle>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
+export type SponsorBlockBgColorArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
+export type SponsorBlockDescriptionArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
+export type SponsorBlockEffectColorsArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
@@ -3328,7 +3348,17 @@ export type SponsorBlockNameArgs = {
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
+export type SponsorBlockNavColorArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
 export type SponsorBlockSlugArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/sponsorBlock) */
+export type SponsorBlockTextColorArgs = {
   locale?: InputMaybe<Scalars["String"]>;
 };
 
@@ -3345,10 +3375,49 @@ export type SponsorBlockCollection = {
   total: Scalars["Int"];
 };
 
+export type SponsorBlockDescription = {
+  __typename?: "SponsorBlockDescription";
+  json: Scalars["JSON"];
+  links: SponsorBlockDescriptionLinks;
+};
+
+export type SponsorBlockDescriptionAssets = {
+  __typename?: "SponsorBlockDescriptionAssets";
+  block: Array<Maybe<Asset>>;
+  hyperlink: Array<Maybe<Asset>>;
+};
+
+export type SponsorBlockDescriptionEntries = {
+  __typename?: "SponsorBlockDescriptionEntries";
+  block: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  inline: Array<Maybe<Entry>>;
+};
+
+export type SponsorBlockDescriptionLinks = {
+  __typename?: "SponsorBlockDescriptionLinks";
+  assets: SponsorBlockDescriptionAssets;
+  entries: SponsorBlockDescriptionEntries;
+};
+
 export type SponsorBlockFilter = {
   AND?: InputMaybe<Array<InputMaybe<SponsorBlockFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<SponsorBlockFilter>>>;
+  bgColor?: InputMaybe<Scalars["String"]>;
+  bgColor_contains?: InputMaybe<Scalars["String"]>;
+  bgColor_exists?: InputMaybe<Scalars["Boolean"]>;
+  bgColor_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  bgColor_not?: InputMaybe<Scalars["String"]>;
+  bgColor_not_contains?: InputMaybe<Scalars["String"]>;
+  bgColor_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  description_contains?: InputMaybe<Scalars["String"]>;
+  description_exists?: InputMaybe<Scalars["Boolean"]>;
+  description_not_contains?: InputMaybe<Scalars["String"]>;
+  effectColors_contains_all?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  effectColors_contains_none?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  effectColors_contains_some?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  effectColors_exists?: InputMaybe<Scalars["Boolean"]>;
   externalLink?: InputMaybe<Scalars["String"]>;
   externalLink_contains?: InputMaybe<Scalars["String"]>;
   externalLink_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -3378,6 +3447,13 @@ export type SponsorBlockFilter = {
   name_not?: InputMaybe<Scalars["String"]>;
   name_not_contains?: InputMaybe<Scalars["String"]>;
   name_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  navColor?: InputMaybe<Scalars["String"]>;
+  navColor_contains?: InputMaybe<Scalars["String"]>;
+  navColor_exists?: InputMaybe<Scalars["Boolean"]>;
+  navColor_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  navColor_not?: InputMaybe<Scalars["String"]>;
+  navColor_not_contains?: InputMaybe<Scalars["String"]>;
+  navColor_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   slug?: InputMaybe<Scalars["String"]>;
   slug_contains?: InputMaybe<Scalars["String"]>;
   slug_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -3386,6 +3462,13 @@ export type SponsorBlockFilter = {
   slug_not_contains?: InputMaybe<Scalars["String"]>;
   slug_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   sys?: InputMaybe<SysFilter>;
+  textColor?: InputMaybe<Scalars["String"]>;
+  textColor_contains?: InputMaybe<Scalars["String"]>;
+  textColor_exists?: InputMaybe<Scalars["Boolean"]>;
+  textColor_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  textColor_not?: InputMaybe<Scalars["String"]>;
+  textColor_not_contains?: InputMaybe<Scalars["String"]>;
+  textColor_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   title_contains?: InputMaybe<Scalars["String"]>;
   title_exists?: InputMaybe<Scalars["Boolean"]>;
   title_not_contains?: InputMaybe<Scalars["String"]>;
@@ -3412,6 +3495,8 @@ export type SponsorBlockLinkingCollectionsSponsorTypeCollectionArgs = {
 };
 
 export enum SponsorBlockOrder {
+  BgColorAsc = "bgColor_ASC",
+  BgColorDesc = "bgColor_DESC",
   ExternalLinkAsc = "externalLink_ASC",
   ExternalLinkDesc = "externalLink_DESC",
   ImageParamsDesktopAsc = "imageParamsDesktop_ASC",
@@ -3420,6 +3505,8 @@ export enum SponsorBlockOrder {
   ImageParamsMobileDesc = "imageParamsMobile_DESC",
   NameAsc = "name_ASC",
   NameDesc = "name_DESC",
+  NavColorAsc = "navColor_ASC",
+  NavColorDesc = "navColor_DESC",
   SlugAsc = "slug_ASC",
   SlugDesc = "slug_DESC",
   SysFirstPublishedAtAsc = "sys_firstPublishedAt_ASC",
@@ -3430,6 +3517,8 @@ export enum SponsorBlockOrder {
   SysPublishedAtDesc = "sys_publishedAt_DESC",
   SysPublishedVersionAsc = "sys_publishedVersion_ASC",
   SysPublishedVersionDesc = "sys_publishedVersion_DESC",
+  TextColorAsc = "textColor_ASC",
+  TextColorDesc = "textColor_DESC",
 }
 
 export type SponsorBlockTitle = {
@@ -3807,6 +3896,8 @@ export type Talk = Entry & {
   linkedFrom?: Maybe<TalkLinkingCollections>;
   speaker?: Maybe<Entry>;
   sys: Sys;
+  testColors?: Maybe<Scalars["String"]>;
+  testColors2?: Maybe<Array<Maybe<Scalars["String"]>>>;
   title?: Maybe<Scalars["String"]>;
 };
 
@@ -3829,6 +3920,16 @@ export type TalkLinkedFromArgs = {
 export type TalkSpeakerArgs = {
   locale?: InputMaybe<Scalars["String"]>;
   preview?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/talk) */
+export type TalkTestColorsArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/talk) */
+export type TalkTestColors2Args = {
+  locale?: InputMaybe<Scalars["String"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/talk) */
@@ -3887,6 +3988,17 @@ export type TalkFilter = {
   duration_not_in?: InputMaybe<Array<InputMaybe<Scalars["Int"]>>>;
   speaker_exists?: InputMaybe<Scalars["Boolean"]>;
   sys?: InputMaybe<SysFilter>;
+  testColors?: InputMaybe<Scalars["String"]>;
+  testColors2_contains_all?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  testColors2_contains_none?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  testColors2_contains_some?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  testColors2_exists?: InputMaybe<Scalars["Boolean"]>;
+  testColors_contains?: InputMaybe<Scalars["String"]>;
+  testColors_exists?: InputMaybe<Scalars["Boolean"]>;
+  testColors_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  testColors_not?: InputMaybe<Scalars["String"]>;
+  testColors_not_contains?: InputMaybe<Scalars["String"]>;
+  testColors_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   title?: InputMaybe<Scalars["String"]>;
   title_contains?: InputMaybe<Scalars["String"]>;
   title_exists?: InputMaybe<Scalars["Boolean"]>;
@@ -3919,6 +4031,8 @@ export enum TalkOrder {
   SysPublishedAtDesc = "sys_publishedAt_DESC",
   SysPublishedVersionAsc = "sys_publishedVersion_ASC",
   SysPublishedVersionDesc = "sys_publishedVersion_DESC",
+  TestColorsAsc = "testColors_ASC",
+  TestColorsDesc = "testColors_DESC",
   TitleAsc = "title_ASC",
   TitleDesc = "title_DESC",
 }

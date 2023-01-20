@@ -1,0 +1,35 @@
+query LinkTree($locale: String!, $isPreview: Boolean = false) {
+  page(id: "3yNee3jJ5xkHkCPyszAiOp", locale: $locale, preview: $isPreview) {
+    seo {
+      title
+      description
+      metadata
+    }
+    heroBlock {
+      tile
+      firstSubtitle
+      secondSubtitle
+    }
+    navBar {
+      description {
+        json
+      }
+      linksCollection(limit: 20) {
+        items {
+          sys {
+            id
+          }
+          contenido
+          link
+          isBlank
+        }
+      }
+      buttonsCollection(limit: 20) {
+        items {
+          contenido
+          link
+        }
+      }
+    }
+  }
+}
