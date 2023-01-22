@@ -162,6 +162,7 @@ interface CardProps {
   type: string;
   index?: number;
   companyName?: string;
+  volunteerType?: string;
   slug?: string;
 }
 
@@ -174,6 +175,7 @@ const Card = (props: CardProps) => {
     type,
     companyName,
     slug,
+    volunteerType,
   } = props;
   const isMobile = useMediaQuery("(max-width: 768px)");
   const extraStyle = isMobile ? mobileStyle : styleProps(cardType, type);
@@ -216,11 +218,10 @@ const Card = (props: CardProps) => {
             <HR />
             <P>
               {position}
-              {companyName ? (
-                <>
-                  <br /> @ {companyName}
-                </>
-              ) : null}
+              <>
+                <br />
+                {companyName ? `@ ${companyName} ` : volunteerType}
+              </>
             </P>
             <HR />
           </BlockDescription>
