@@ -26,6 +26,9 @@ import { ParseQuery } from "../../src/helpers/types";
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
 
+const MEETUP = "meetup";
+const WORKSHOP = "workshop";
+
 export interface PageProps {
   seo: Page["seo"];
   flags: Page["flags"];
@@ -57,6 +60,7 @@ const TicketContent = () => {
     return <NoTickets imageUrl={image} />;
   }
 };
+
 export default function Tickets(props: PageProps) {
   const setAvailableTicketsAtom = useSetAtom(availableTicketsAtom);
   const setTicketsAtom = useSetAtom(ticketsAtom);
@@ -64,6 +68,7 @@ export default function Tickets(props: PageProps) {
     onSuccess: (data) => {
       const availableTickets: Entrada[] = [];
       const notAvailableTickets: Entrada[] = [];
+
       data.forEach((ticket) => {
         if (ticket.quantity) {
           availableTickets.push(ticket);
@@ -71,7 +76,12 @@ export default function Tickets(props: PageProps) {
           notAvailableTickets.push(ticket);
         }
       });
-      const jsconfTickets = [...availableTickets, ...notAvailableTickets];
+
+      const jsconfTickets = [
+        ...availableTickets,
+        ...notAvailableTickets,
+      ].filter((ticket) => ![MEETUP, WORKSHOP].includes(ticket.type));
+
       setAvailableTicketsAtom(jsconfTickets.length > 0);
       setTicketsAtom(
         jsconfTickets.map((el) => ({ ...el, currentQuantity: 0 }))
