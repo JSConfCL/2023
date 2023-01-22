@@ -402,7 +402,7 @@ const TimelineRow = ({
         <CollapsableInfo show={show} information={event.description?.json} />
         <Tags>
           <Language language={language} />
-          <Tag>Traduccion simultanea</Tag>
+          {event?.includesTranslation ? <Tag>Traduccion simultanea</Tag> : null}
         </Tags>
       </TableCell>
       <TimeCell>
