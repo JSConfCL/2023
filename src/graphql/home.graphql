@@ -128,6 +128,7 @@ query HomeQuery($locale: String!, $isPreview: Boolean = false) {
         duration
         language
         kind
+        includesTranslation
         description {
           json
         }
