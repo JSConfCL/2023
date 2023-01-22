@@ -1,3 +1,4 @@
+
 import gql from "graphql-tag";
 import * as Urql from "urql";
 
@@ -153,6 +154,7 @@ export type HomeQueryQuery = {
         duration?: number | null;
         language?: string | null;
         kind?: string | null;
+        includesTranslation?: boolean | null;
         sys: { __typename?: "Sys"; id: string };
         description?: { __typename?: "EventDescription"; json: any } | null;
         speaker?: {
@@ -331,6 +333,7 @@ export const HomeQueryDocument = gql`
           duration
           language
           kind
+          includesTranslation
           description {
             json
           }
