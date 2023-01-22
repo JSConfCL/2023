@@ -46,7 +46,7 @@ type Page = ParseQuery<HomeQueryQuery["page"]>;
 export interface PageProps {
   whyItems: Page["whyBlockCollection"];
   howItems: Page["howBlockCollection"];
-  aboutItems: Page["aboutBlockCollection"];
+  aboutItems: Page["aboutBlockCollection"]["items"];
   heroData: Page["heroBlock"];
   speakerData: Page["speakersBlock"];
   seo: Page["seo"];

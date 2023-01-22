@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import dynamic from "next/dynamic";
 import { lazy, Suspense } from "react";
 
-import { PageProps } from "../../../../pages/laprevia";
+import { PageProps as HomePageProps } from "../../../../pages/index";
+import { PageProps as LaPreviaProps } from "../../../../pages/laprevia";
 
 const WhyCard = lazy(async () => await import("../../Card/Why"));
 
@@ -15,7 +16,11 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-const WhySection = ({ whyItems }: { whyItems?: PageProps["whyItems"] }) => {
+const WhySection = ({
+  whyItems,
+}: {
+  whyItems?: LaPreviaProps["whyItems"] | HomePageProps["aboutItems"];
+}) => {
   return (
     <Container>
       {whyItems?.map((elem, index) => (
