@@ -126,6 +126,11 @@ const AppWithQueryClients = ({
         ? landingTheme
         : jsconfTheme;
   }
+
+  if (pathname === "/workshop/[id]") {
+    theme = jsconfTheme;
+  }
+
   return (
     <CacheProvider value={cache}>
       <Provider value={urlQlient}>
