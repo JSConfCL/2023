@@ -39,6 +39,17 @@ export type HomeQueryQuery = {
         contenido?: string | null;
       } | null;
     } | null;
+    aboutBlockCollection?: {
+      __typename?: "PageAboutBlockCollection";
+      items: Array<{
+        __typename?: "AboutBlock";
+        title?: string | null;
+        description?: {
+          __typename?: "AboutBlockDescription";
+          json: any;
+        } | null;
+      } | null>;
+    } | null;
     whyBlockCollection?: {
       __typename?: "PageWhyBlockCollection";
       items: Array<{
@@ -224,6 +235,14 @@ export const HomeQueryDocument = gql`
         secondButton {
           link
           contenido
+        }
+      }
+      aboutBlockCollection {
+        items {
+          title
+          description {
+            json
+          }
         }
       }
       whyBlockCollection {

@@ -16,7 +16,7 @@ import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 
 const WhySection = lazy(
-  async () => await import("../src/Components/sections/WhySection")
+  async () => await import("../src/Components/sections/WhySection/laprevia")
 );
 const HowSection = lazy(
   async () => await import("../src/Components/sections/HowSection")
@@ -46,6 +46,7 @@ type Page = ParseQuery<HomeQueryQuery["page"]>;
 export interface PageProps {
   whyItems: Page["whyBlockCollection"];
   howItems: Page["howBlockCollection"];
+  aboutItems: Page["aboutBlockCollection"];
   heroData: Page["heroBlock"];
   speakerData: Page["speakersBlock"];
   seo: Page["seo"];
@@ -86,9 +87,13 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
         <Hero heroData={props.heroData} />
       </Suspense>
       <StyledBlackWrapp>
-        <Suspense fallback={null}>
-          {props.whyItems?.items && <WhySection page={props.whyItems} />}
-        </Suspense>
+        <section>
+          {props?.aboutItems && (
+            <div id="about">
+              <WhySection whyItems={props?.aboutItems} />
+            </div>
+          )}
+        </section>
         <Suspense fallback={null}>
           {props.howItems && <HowSection page={props.howItems} />}
         </Suspense>
@@ -139,6 +144,7 @@ export async function getStaticProps() {
     heroData: page?.heroBlock || null,
     whyItems: page?.whyBlockCollection || null,
     howItems: page?.howBlockCollection || null,
+    aboutItems: page?.aboutBlockCollection.items || null,
     speakerData: page?.speakersBlock || null,
     seo: page?.seo || null,
     teamData: page?.teamBlock || null,

@@ -21,6 +21,14 @@ query HomeQuery($locale: String!, $isPreview: Boolean = false) {
         contenido
       }
     }
+    aboutBlockCollection {
+      items {
+        title
+        description {
+          json
+        }
+      }
+    }
     whyBlockCollection {
       items {
         title
