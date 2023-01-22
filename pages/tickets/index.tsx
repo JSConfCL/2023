@@ -5,6 +5,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import {
   availableTicketsAtom,
   ticketsAtom,
+  Entrada,
 } from "../../src/Components/Cart/CartAtom";
 import { CartContainer } from "../../src/Components/Cart/CartContainer";
 import { DefaultPageLayout } from "../../src/Components/Layouts/DefaultPagelayout";
@@ -61,8 +62,20 @@ export default function Tickets(props: PageProps) {
   const setTicketsAtom = useSetAtom(ticketsAtom);
   const { isLoading } = useQuery(ticket, fetchTickets, {
     onSuccess: (data) => {
-      setAvailableTicketsAtom(data.length > 0);
-      setTicketsAtom(data.map((el) => ({ ...el, currentQuantity: 0 })));
+      const availableTickets: Entrada[] = [];
+      const notAvailableTickets: Entrada[] = [];
+      data.forEach((ticket) => {
+        if (ticket.quantity) {
+          availableTickets.push(ticket);
+        } else {
+          notAvailableTickets.push(ticket);
+        }
+      });
+      const jsconfTickets = [...availableTickets, ...notAvailableTickets];
+      setAvailableTicketsAtom(jsconfTickets.length > 0);
+      setTicketsAtom(
+        jsconfTickets.map((el) => ({ ...el, currentQuantity: 0 }))
+      );
     },
   });
   return (
