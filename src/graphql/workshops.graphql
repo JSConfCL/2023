@@ -1,0 +1,7 @@
+query WorkshopsQuery($isPreview: Boolean = false) {
+  eventCollection(where: { kind: "workshop" }, preview: $isPreview) {
+    items {
+      slug
+    }
+  }
+}
