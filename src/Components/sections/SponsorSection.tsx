@@ -82,15 +82,15 @@ const ContributorName = styled.h3`
   }
 `;
 
-const Flex = styled.div`
+const Flex = styled.div<{ direction?: string }>`
   display: flex;
   justify-content: space-between;
-  flex-direction: column;
+  flex-direction: ${({ direction }) => direction ?? "row"};
   gap: 30px;
   justify-content: flex-start;
+
   @media (min-width: ${ViewportSizes.Phone}px) {
     align-items: center;
-    flex-direction: row;
   }
 `;
 
@@ -121,7 +121,7 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
           <RenderingLayout contributorTypeName={item.name}>
             {item?.contributorsCollection?.items?.map((contributorItem) => (
               <ImageContainer key={contributorItem.sys.id}>
-                <Flex>
+                <Flex direction="column">
                   <Link
                     rel="preconnect"
                     href={contributorItem.externalLink}
@@ -140,6 +140,15 @@ const SponsorSection = (props: { page: PageProps["sponsorType"] }) => {
                       />
                     </a>
                   </Link>
+                  {contributorItem?.slug ? (
+                    <Link
+                      rel="preconnect"
+                      href={`/sponsors/${contributorItem.slug}`}
+                      passHref
+                    >
+                      <a>Ver Perfil</a>
+                    </Link>
+                  ) : null}
                 </Flex>
               </ImageContainer>
             ))}

@@ -119,6 +119,13 @@ const AppWithQueryClients = ({
     theme = (pageProps as any)?.isPrevia ? previaTheme : landingTheme;
   }
 
+  if (pathname === "/sponsors/[id]") {
+    // https://giphy.com/gifs/sad-crying-sadness-hmE2rlinFM7fi
+    theme =
+      (pageProps as any)?.colors?.navColor === "#000"
+        ? landingTheme
+        : jsconfTheme;
+  }
   return (
     <CacheProvider value={cache}>
       <Provider value={urlQlient}>

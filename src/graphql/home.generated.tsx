@@ -189,6 +189,7 @@ export type HomeQueryQuery = {
             imageParamsMobile?: string | null;
             imageParamsDesktop?: string | null;
             externalLink?: string | null;
+            slug?: string | null;
             sys: { __typename?: "Sys"; id: string };
             title?: { __typename?: "SponsorBlockTitle"; json: any } | null;
             image?: { __typename?: "Asset"; url?: string | null } | null;
@@ -372,6 +373,7 @@ export const HomeQueryDocument = gql`
               imageParamsMobile
               imageParamsDesktop
               externalLink
+              slug
             }
           }
         }

@@ -1,0 +1,19 @@
+query SponsorDetails($id: String!, $isPreview: Boolean = false) {
+  sponsorBlockCollection(where: { slug: $id }, preview: $isPreview) {
+    items {
+      slug
+      name
+      description {
+        json
+      }
+      image {
+        url
+      }
+      externalLink
+      textColor
+      bgColor
+      navColor
+      effectColors
+    }
+  }
+}
