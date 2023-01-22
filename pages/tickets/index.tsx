@@ -5,6 +5,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import {
   availableTicketsAtom,
   ticketsAtom,
+  Entrada,
 } from "../../src/Components/Cart/CartAtom";
 import { CartContainer } from "../../src/Components/Cart/CartContainer";
 import { DefaultPageLayout } from "../../src/Components/Layouts/DefaultPagelayout";
@@ -24,6 +25,9 @@ import { isAuthenticatedAtom } from "../../src/helpers/auth";
 import { ParseQuery } from "../../src/helpers/types";
 
 type Page = ParseQuery<TicketsQueryQuery["page"]>;
+
+const MEETUP = "meetup";
+const WORKSHOP = "workshop";
 
 export interface PageProps {
   seo: Page["seo"];
@@ -56,13 +60,32 @@ const TicketContent = () => {
     return <NoTickets imageUrl={image} />;
   }
 };
+
 export default function Tickets(props: PageProps) {
   const setAvailableTicketsAtom = useSetAtom(availableTicketsAtom);
   const setTicketsAtom = useSetAtom(ticketsAtom);
   const { isLoading } = useQuery(ticket, fetchTickets, {
     onSuccess: (data) => {
-      setAvailableTicketsAtom(data.length > 0);
-      setTicketsAtom(data.map((el) => ({ ...el, currentQuantity: 0 })));
+      const availableTickets: Entrada[] = [];
+      const notAvailableTickets: Entrada[] = [];
+
+      data.forEach((ticket) => {
+        if (ticket.quantity) {
+          availableTickets.push(ticket);
+        } else {
+          notAvailableTickets.push(ticket);
+        }
+      });
+
+      const jsconfTickets = [
+        ...availableTickets,
+        ...notAvailableTickets,
+      ].filter((ticket) => ![MEETUP, WORKSHOP].includes(ticket.type));
+
+      setAvailableTicketsAtom(jsconfTickets.length > 0);
+      setTicketsAtom(
+        jsconfTickets.map((el) => ({ ...el, currentQuantity: 0 }))
+      );
     },
   });
   return (
