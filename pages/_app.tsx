@@ -131,6 +131,10 @@ const AppWithQueryClients = ({
     theme = jsconfTheme;
   }
 
+  if (pathname === "/events/[id]") {
+    theme = previaTheme;
+  }
+
   return (
     <CacheProvider value={cache}>
       <Provider value={urlQlient}>
