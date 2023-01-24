@@ -160,7 +160,7 @@ export const UserPreferencesForm = <T extends PreferencesType>({
   const { data: user, refetch } = useQuery(getterKey, getterFunction);
   const [isMutating, setMutating] = useState(false);
   const foodPreferenceId = useId();
-  const shirtSizeId = useId();
+  // const shirtSizeId = useId();
   const shirtStyleId = useId();
   const pronounsSelectId = useId();
   const [submitMessage, setSubmitMessage] = useState("");
@@ -281,26 +281,27 @@ export const UserPreferencesForm = <T extends PreferencesType>({
         <H3>Preferencias</H3>
         <P>{subtitle}</P>
         <FormFieldsSection>
-          <FormFieldSection>
+          {/* <FormFieldSection>
             <FormLabel>Tamaño de Polera</FormLabel>
             <Controller
               name="shirtSize"
               control={control}
               render={({ field }) => (
                 <Select
-                  {...field}
-                  placeholder="Tamaño de Polera"
-                  isSearchable={false}
-                  styles={customStyles}
-                  options={defaultShirtSizeOptions}
-                  instanceId={shirtSizeId}
+                {...field}
+                placeholder="Tamaño de Polera"
+                isSearchable={false}
+                styles={customStyles}
+                options={defaultShirtSizeOptions}
+                instanceId={shirtSizeId}
+                readonly
                 />
               )}
             />
             <Error {...errors.shirtSize} />
-          </FormFieldSection>
+          </FormFieldSection> */}
 
-          <FormFieldSection>
+          {/* <FormFieldSection>
             <FormLabel>Estilo de Polera</FormLabel>
             <Controller
               name="shirtStyle"
@@ -317,7 +318,7 @@ export const UserPreferencesForm = <T extends PreferencesType>({
               )}
             />
             <Error {...errors.shirtStyle} />
-          </FormFieldSection>
+          </FormFieldSection> */}
 
           <FormFieldSection>
             <FormLabel>Preferencias Alimenticias</FormLabel>
