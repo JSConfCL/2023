@@ -97,6 +97,7 @@ const ExtraInfo = styled.div`
 
   div {
     text-align: center;
+    margin-bottom: 24px;
   }
 
   @media (min-width: ${ViewportSizes.Phone}px) {
@@ -295,6 +296,7 @@ export async function getStaticProps({ params }: { params: any }) {
   const queryResults = await urlQlient
     .query<EventQuery, EventQueryVariables>(EventDocument, {
       id: pageInfo ?? "",
+      locale: "es-CL",
       isPreview: Boolean(process.env.NEXT_PUBLIC_CONTENTFUL_IS_PREVIEW),
     })
     .toPromise();

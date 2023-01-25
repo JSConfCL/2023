@@ -52,7 +52,7 @@ const Container = styled.div`
   background: ${({ theme }) => theme.colors.backgroundColor};
   scroll-behavior: smooth;
   width: 100%;
-  background: #333;
+  background: #000;
 `;
 
 const Hero = styled.section`
@@ -163,7 +163,12 @@ export default function Events(props: WorkshopProps) {
       </Suspense>
       <Suspense fallback={null}>
         <Hero id="home">
-          <Particles backgroundColor="#333" />
+          <Particles
+            backgroundColor={"#000"}
+            color={"#f0e040"}
+            shape="circle"
+            configuration="sponsors"
+          />
           <HeroInfo style={{ zIndex: "5" }}>
             <HeroText>
               <div>

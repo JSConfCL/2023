@@ -1,5 +1,5 @@
-query Event($id: String!, $isPreview: Boolean = false) {
-  page(id: $id, preview: $isPreview) {
+query Event($locale: String!, $id: String!, $isPreview: Boolean = false) {
+  page(id: $id, locale: $locale, preview: $isPreview) {
     name
     subtitle
     seo {
