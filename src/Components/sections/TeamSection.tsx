@@ -108,6 +108,7 @@ const TeamSection = (props: { page: PageProps["teamData"] }) => {
                   {item?.twitter}
                 </a>
               }
+              volunteerType={item?.type}
             />
           </Suspense>
         );
