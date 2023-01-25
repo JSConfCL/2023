@@ -240,7 +240,7 @@ const RegisterTicketButton = ({
           await handleSubmit();
         }}
       >
-        Registrarme en Evento
+        Registrarme en el Evento
       </UpdateButton>
     );
   }
