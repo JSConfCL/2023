@@ -2,11 +2,12 @@ import styled from "@emotion/styled";
 import type { NextPage } from "next";
 import { lazy, Suspense } from "react";
 
+import Banner from "../src/Components/BannerComponent";
+import FlagMessage, { Message } from "../src/Components/FlagMessage";
 import Seo from "../src/Components/Seo";
 import StickContainer from "../src/Components/StickContainer";
 import EventSchema from "../src/Components/schema/event";
 import Hero from "../src/Components/sections/Hero";
-
 import {
   HomeQueryDocument,
   HomeQueryQuery,
@@ -56,15 +57,6 @@ export interface PageProps {
   friends: Page["communityFriendsCollection"];
   flags: Page["flags"];
 }
-
-const Banner = styled.div`
-  background-color: ${({ theme }) => theme.colors.jsconfRed};
-  color: white;
-  margin: 0 auto;
-  width: 90%;
-  font-size: 2rem;
-  padding: 16px;
-`;
 
 const Container = styled.section`
   display: flex;
@@ -117,11 +109,8 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
         {props.flags?.messages ? (
           <StickContainer>
             <Banner>
-              {props.flags?.messages?.map((message: string) => (
-                <div
-                  key={message}
-                  dangerouslySetInnerHTML={{ __html: message }}
-                />
+              {props.flags?.messages?.map((message: Message) => (
+                <FlagMessage key={message.message} message={message} />
               ))}
             </Banner>
           </StickContainer>

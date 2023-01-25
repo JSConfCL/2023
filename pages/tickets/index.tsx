@@ -1,13 +1,14 @@
-import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue, useSetAtom } from "jotai";
 
+import Banner from "../../src/Components/BannerComponent";
 import {
   availableTicketsAtom,
   ticketsAtom,
   Entrada,
 } from "../../src/Components/Cart/CartAtom";
 import { CartContainer } from "../../src/Components/Cart/CartContainer";
+import FlagMessage, { Message } from "../../src/Components/FlagMessage";
 import { DefaultPageLayout } from "../../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../../src/Components/Seo";
 import StickContainer from "../../src/Components/StickContainer";
@@ -33,15 +34,6 @@ export interface PageProps {
   seo: Page["seo"];
   flags: Page["flags"];
 }
-
-const Banner = styled.div`
-  background-color: ${({ theme }) => theme.colors.jsconfRed};
-  color: white;
-  margin: 0 auto;
-  width: 90%;
-  font-size: 2rem;
-  padding: 16px;
-`;
 
 const image =
   "https://images.ctfassets.net/1kfhsqlc8ewi/EAE7GIGq6Uk26KmdTC9T6/00be1cabc2d9b1dea800dbdb7e31c1bd/ticket.png";
@@ -95,11 +87,8 @@ export default function Tickets(props: PageProps) {
       {props.flags?.messages ? (
         <StickContainer>
           <Banner>
-            {props.flags?.messages?.map((message: string) => (
-              <div
-                key={message}
-                dangerouslySetInnerHTML={{ __html: message }}
-              />
+            {props.flags?.messages?.map((message: Message) => (
+              <FlagMessage key={message.message} message={message} />
             ))}
           </Banner>
         </StickContainer>

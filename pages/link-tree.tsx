@@ -2,8 +2,10 @@ import styled from "@emotion/styled";
 import type { NextPage } from "next";
 import { useEffect } from "react";
 
+import Icon from "../src/Components/Icon";
 import Seo from "../src/Components/Seo";
 import JSConfLogo from "../src/Components/svgs/logo";
+
 import {
   LinkTreeDocument,
   LinkTreeQuery,
@@ -13,6 +15,7 @@ import { ParseQuery } from "../src/helpers/types";
 import { ViewportSizes } from "../styles/theme";
 
 type Page = ParseQuery<LinkTreeQuery["page"]>;
+
 export interface PageProps {
   seo: Page["seo"];
   heroData: Page["heroBlock"];
@@ -144,7 +147,7 @@ const Home: NextPage<PageProps> = ({
         <br />
         {links.map((link) => (
           <A key={link.link} href={link.link}>
-            {link.contenido}
+            <Icon name={link.iconName} /> {link.contenido}
           </A>
         ))}
       </Hero>
