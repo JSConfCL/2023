@@ -1,9 +1,11 @@
+
 import gql from "graphql-tag";
 import * as Urql from "urql";
 
 import * as Types from "../types";
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type EventQueryVariables = Types.Exact<{
+  locale: Types.Scalars["String"];
   id: Types.Scalars["String"];
   isPreview?: Types.InputMaybe<Types.Scalars["Boolean"]>;
 }>;
@@ -137,8 +139,8 @@ export type EventQuery = {
 };
 
 export const EventDocument = gql`
-  query Event($id: String!, $isPreview: Boolean = false) {
-    page(id: $id, preview: $isPreview) {
+  query Event($locale: String!, $id: String!, $isPreview: Boolean = false) {
+    page(id: $id, locale: $locale, preview: $isPreview) {
       name
       subtitle
       seo {
