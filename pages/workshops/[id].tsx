@@ -137,7 +137,7 @@ const B = styled.b`
 const SmartButtonContainer = styled.div`
   text-align: center;
   position: relative;
-  margin-top: 24px;
+  margin: 24px 16px 16px 16px;
   font-size: 20px;
 `;
 
