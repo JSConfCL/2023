@@ -97,6 +97,7 @@ const ExtraInfo = styled.div`
 
   div {
     text-align: center;
+    margin-bottom: 24px;
   }
 
   @media (min-width: ${ViewportSizes.Phone}px) {
