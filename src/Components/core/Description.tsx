@@ -4,13 +4,14 @@ import {
   BLOCKS,
   Document,
   Inline,
+  INLINES,
   MARKS,
 } from "@contentful/rich-text-types";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
 
-import { B, P, UL, LI } from "./Typography";
+import { B, P, UL, LI, Anchor } from "./Typography";
 
 const Section = styled(motion.section)``;
 
@@ -24,6 +25,9 @@ const getDescriptionRichTextOptions = (variant: "sm" | null | undefined) => ({
     ),
     [BLOCKS.LIST_ITEM]: (node: Block | Inline, children: ReactNode) => (
       <LI variant={variant}>{children}</LI>
+    ),
+    [INLINES.HYPERLINK]: (node: Block | Inline, children: ReactNode) => (
+      <Anchor>{children}</Anchor>
     ),
   },
   renderMark: {
