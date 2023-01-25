@@ -1,0 +1,124 @@
+query Event($id: String!, $isPreview: Boolean = false) {
+  page(id: $id, preview: $isPreview) {
+    name
+    subtitle
+    seo {
+      title
+      description
+      metadata
+    }
+    heroBlock {
+      firstSubtitle
+      secondSubtitle
+    }
+    whyBlockCollection {
+      items {
+        title
+        description {
+          json
+        }
+      }
+    }
+    speakersBlock(preview: $isPreview) {
+      title
+      description {
+        json
+      }
+      speakersCollection(preview: $isPreview) {
+        items {
+          sys {
+            id
+          }
+          name
+          position
+          photo {
+            url
+            description
+          }
+          cardType
+          type
+          companyName
+          slug
+        }
+      }
+    }
+    teamBlock {
+      membersCollection {
+        items {
+          name
+          type
+          twitter
+          photo {
+            url
+          }
+        }
+      }
+      title
+      description {
+        json
+      }
+      callToAction {
+        contenido
+        link
+      }
+    }
+    eventsCollection {
+      items {
+        sys {
+          id
+        }
+        title
+        date
+        duration
+        language
+        kind
+        includesTranslation
+        description {
+          json
+        }
+        speaker {
+          name
+          photo {
+            url
+          }
+          slug
+        }
+      }
+    }
+    communityFriendsCollection(limit: 20) {
+      items {
+        name
+        image {
+          title
+          url
+        }
+        link
+      }
+    }
+    sponsorTypeCollection(limit: 20) {
+      items {
+        sys {
+          id
+        }
+        name
+        contributorsCollection(limit: 20) {
+          items {
+            sys {
+              id
+            }
+            title {
+              json
+            }
+            image {
+              url
+            }
+            imageParamsMobile
+            imageParamsDesktop
+            externalLink
+          }
+        }
+      }
+    }
+    flags
+  }
+}

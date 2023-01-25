@@ -66,8 +66,8 @@ export const AgotadasSubtitle = styled(SubTitle)`
 `;
 
 export const GenericBtn = styled(motion.button)`
-  border-color: ${({ theme }) => theme.colors.jsconfYellow};
-  color: ${({ theme }) => theme.colors.jsconfYellow};
+  border-color: ${({ theme }) => theme.colors.altColor};
+  color: ${({ theme }) => theme.colors.altColor};
   border-width: 2px;
   border-style: solid;
   font-weight: 700;
@@ -85,9 +85,9 @@ export const GenericBtn = styled(motion.button)`
   &:active,
   &:focus,
   &:hover {
-    box-shadow: 0 0.5em 0.5em -0.4em ${({ theme }) => theme.colors.jsconfRed};
-    border-color: ${({ theme }) => theme.colors.jsconfRed};
-    color: ${({ theme }) => theme.colors.jsconfRed};
+    box-shadow: 0 0.5em 0.5em -0.4em ${({ theme }) => transparentize(0.2)(theme.colors.altColor)};
+    border-color: ${({ theme }) => transparentize(0.2)(theme.colors.altColor)};
+    color: ${({ theme }) => transparentize(0.2)(theme.colors.altColor)};
   }
   &:focus,
   &:hover {
@@ -99,8 +99,9 @@ export const GenericBtn = styled(motion.button)`
   }
   &:disabled,
   &:disabled:hover {
-    border-color: ${({ theme }) => transparentize(0.78)(theme.colors.white)};
-    color: ${({ theme }) => transparentize(0.75)(theme.colors.white)};
+    border-color: ${({ theme }) =>
+      transparentize(0.78)(theme.colors.textColor)};
+    color: ${({ theme }) => transparentize(0.75)(theme.colors.textColor)};
     box-shadow: none;
     cursor: not-allowed;
     transform: translateY(0em);
@@ -141,8 +142,9 @@ export const GenericLink = styled(motion.a)`
   }
   &:disabled,
   &:disabled:hover {
-    border-color: ${({ theme }) => transparentize(0.78)(theme.colors.white)};
-    color: ${({ theme }) => transparentize(0.75)(theme.colors.white)};
+    border-color: ${({ theme }) =>
+      transparentize(0.78)(theme.colors.textColor)};
+    color: ${({ theme }) => transparentize(0.75)(theme.colors.textColor)};
     box-shadow: none;
     cursor: not-allowed;
     transform: translateY(0em);

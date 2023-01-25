@@ -1,0 +1,34 @@
+query WorkshopQuery($id: String!, $isPreview: Boolean = false) {
+  eventCollection(where: { slug: $id }, preview: $isPreview) {
+    items {
+      sys {
+        id
+      }
+      title
+      date
+      duration
+      language
+      kind
+      ticketId
+      description {
+        json
+      }
+      speaker {
+        sys {
+          id
+        }
+        name
+        photo {
+          url
+        }
+        position
+        companyName
+        about
+        twitter
+        github
+        web
+        linkedin
+      }
+    }
+  }
+}

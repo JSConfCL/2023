@@ -38,6 +38,7 @@ const StyledNav = styled(motion.nav)`
   width: 100%;
   display: flex;
   overflow: hidden;
+  color: ${({ theme }) => theme.elements.navBar.textColor};
 `;
 
 const StyledWrapper = styled.div(({ theme }) => ({

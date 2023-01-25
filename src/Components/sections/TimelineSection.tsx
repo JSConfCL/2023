@@ -359,9 +359,11 @@ const FloatingChevron = ({
 const TimelineRow = ({
   event,
   showLocalTime,
+  showPictures,
 }: {
   event: Flatten<PageProps["events"]>;
   showLocalTime: boolean;
+  showPictures: boolean;
 }) => {
   const [show, setShow] = useState(false);
   const date = new Date(event.date);
@@ -382,16 +384,18 @@ const TimelineRow = ({
   const hasInformation = event.description?.json;
   return (
     <TableRow>
-      <ImageCell>
-        {event?.speaker?.photo?.url ? (
-          <WithLinkWrapper>
-            <img
-              alt={event?.speaker?.name || "Speaker"}
-              src={`${event?.speaker?.photo?.url}?fit=thumb&w=320&h=320&f=face`}
-            />
-          </WithLinkWrapper>
-        ) : null}
-      </ImageCell>
+      {showPictures ? (
+        <ImageCell>
+          {event?.speaker?.photo?.url ? (
+            <WithLinkWrapper>
+              <img
+                alt={event?.speaker?.name || "Speaker"}
+                src={`${event?.speaker?.photo?.url}?fit=thumb&w=320&h=320&f=face`}
+              />
+            </WithLinkWrapper>
+          ) : null}
+        </ImageCell>
+      ) : null}
       <AuthorCell>
         <WithLinkWrapper>{event?.speaker?.name}</WithLinkWrapper>
       </AuthorCell>
@@ -427,6 +431,7 @@ const TimelineSection = (props: {
   events: PageProps["events"];
   showLocalTime?: boolean;
   showTickets?: boolean;
+  showPictures?: boolean;
 }) => {
   const events = props.events;
   const dates = Array.from(
@@ -456,6 +461,7 @@ const TimelineSection = (props: {
   const isDifferentTimezone = localTimezone !== CHILE.timezone;
   const showDifferentTimezone =
     Boolean(props.showLocalTime) && isDifferentTimezone;
+  const showPictures = props.showPictures ?? true;
 
   return (
     <div style={{ position: "relative" }}>
@@ -507,6 +513,7 @@ const TimelineSection = (props: {
                   key={event.title}
                   event={event}
                   showLocalTime={showDifferentTimezone}
+                  showPictures={showPictures}
                 />
               ))}
             </tbody>
@@ -521,6 +528,7 @@ const TimelineSection = (props: {
                       key={event.title}
                       event={event}
                       showLocalTime={showDifferentTimezone}
+                      showPictures={showPictures}
                     />
                   ))}
                 </tbody>
