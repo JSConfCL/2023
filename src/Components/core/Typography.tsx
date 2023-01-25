@@ -100,7 +100,7 @@ export const Strong = styled.strong`
 `;
 
 export const Anchor = styled.a`
-  color: ${({ theme }) => theme.colors.jsconfYellow};
+  color: ${({ theme }) => theme.colors.altColor};
   font-weight: bold;
   height: 50px;
   transition-duration: 250ms;
@@ -109,7 +109,7 @@ export const Anchor = styled.a`
   &:active,
   &:focus,
   &:hover {
-    color: ${({ theme }) => theme.colors.jsconfRed};
+    color: ${({ theme }) => transparentize(0.75)(theme.colors.altColor)};
   }
   &:focus,
   &:hover {
