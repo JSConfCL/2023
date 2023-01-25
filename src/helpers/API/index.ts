@@ -104,6 +104,20 @@ export const anonymousMe = async (): Promise<UserType> => {
   return await canBeAnonymousFetch(`${API_URL}/users/me`);
 };
 
+export const anonymousTickets = async (): Promise<OwnTicket[]> => {
+  return await canBeAnonymousFetch(`${API_URL}/users/me/tickets`);
+};
+
+export const getTicket = async (id: string): Promise<unknown> => {
+  return await canBeAnonymousFetch(`${API_URL}/tickets/${id}/info`);
+};
+
+export const redeemTicket = async (id: string): Promise<unknown> => {
+  return await canBeAnonymousFetch(`${API_URL}/tickets/${id}`, {
+    method: "POST",
+  });
+};
+
 export const myTickets = async (): Promise<OwnTicket[]> => {
   return await customFetch(`${API_URL}/users/me/tickets`);
 };
