@@ -1607,6 +1607,7 @@ export type LinkItem = Entry & {
   __typename?: "LinkItem";
   contenido?: Maybe<Scalars["String"]>;
   contentfulMetadata: ContentfulMetadata;
+  iconName?: Maybe<Scalars["String"]>;
   isBlank?: Maybe<Scalars["Boolean"]>;
   link?: Maybe<Scalars["String"]>;
   linkedFrom?: Maybe<LinkItemLinkingCollections>;
@@ -1615,6 +1616,11 @@ export type LinkItem = Entry & {
 
 /** para CTAs, links, header links, etc. TIene un "contenido" y una "url" [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/linkItem) */
 export type LinkItemContenidoArgs = {
+  locale?: InputMaybe<Scalars["String"]>;
+};
+
+/** para CTAs, links, header links, etc. TIene un "contenido" y una "url" [See type definition](https://app.contentful.com/spaces/1kfhsqlc8ewi/content_types/linkItem) */
+export type LinkItemIconNameArgs = {
   locale?: InputMaybe<Scalars["String"]>;
 };
 
@@ -1652,6 +1658,13 @@ export type LinkItemFilter = {
   contenido_not_contains?: InputMaybe<Scalars["String"]>;
   contenido_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  iconName?: InputMaybe<Scalars["String"]>;
+  iconName_contains?: InputMaybe<Scalars["String"]>;
+  iconName_exists?: InputMaybe<Scalars["Boolean"]>;
+  iconName_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  iconName_not?: InputMaybe<Scalars["String"]>;
+  iconName_not_contains?: InputMaybe<Scalars["String"]>;
+  iconName_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   isBlank?: InputMaybe<Scalars["Boolean"]>;
   isBlank_exists?: InputMaybe<Scalars["Boolean"]>;
   isBlank_not?: InputMaybe<Scalars["Boolean"]>;
@@ -1720,6 +1733,8 @@ export type LinkItemLinkingCollectionsTeamBlockCollectionArgs = {
 export enum LinkItemOrder {
   ContenidoAsc = "contenido_ASC",
   ContenidoDesc = "contenido_DESC",
+  IconNameAsc = "iconName_ASC",
+  IconNameDesc = "iconName_DESC",
   IsBlankAsc = "isBlank_ASC",
   IsBlankDesc = "isBlank_DESC",
   LinkAsc = "link_ASC",
@@ -4943,6 +4958,13 @@ export type CfLinkItemNestedFilter = {
   contenido_not_contains?: InputMaybe<Scalars["String"]>;
   contenido_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  iconName?: InputMaybe<Scalars["String"]>;
+  iconName_contains?: InputMaybe<Scalars["String"]>;
+  iconName_exists?: InputMaybe<Scalars["Boolean"]>;
+  iconName_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  iconName_not?: InputMaybe<Scalars["String"]>;
+  iconName_not_contains?: InputMaybe<Scalars["String"]>;
+  iconName_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   isBlank?: InputMaybe<Scalars["Boolean"]>;
   isBlank_exists?: InputMaybe<Scalars["Boolean"]>;
   isBlank_not?: InputMaybe<Scalars["Boolean"]>;

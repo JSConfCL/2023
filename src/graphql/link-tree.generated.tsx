@@ -37,6 +37,7 @@ export type LinkTreeQuery = {
           contenido?: string | null;
           link?: string | null;
           isBlank?: boolean | null;
+          iconName?: string | null;
           sys: { __typename?: "Sys"; id: string };
         } | null>;
       } | null;
@@ -77,6 +78,7 @@ export const LinkTreeDocument = gql`
             contenido
             link
             isBlank
+            iconName
           }
         }
         buttonsCollection(limit: 20) {

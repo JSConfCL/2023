@@ -22,6 +22,7 @@ query LinkTree($locale: String!, $isPreview: Boolean = false) {
           contenido
           link
           isBlank
+          iconName
         }
       }
       buttonsCollection(limit: 20) {
