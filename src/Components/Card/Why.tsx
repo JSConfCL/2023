@@ -123,7 +123,7 @@ const Number = styled.section<{ direction: boolean }>`
   align-items: flex-start;
   color: ${({ theme }) => theme.colors.altColor};
   width: 100px;
-  margin-right: ${({ direction }) => (!direction ? "-6px" : "0px")};
+  margin-right: ${({ direction }) => (!direction ? "-6px" : "10px")};
   margin-left: ${({ direction }) => (direction ? "-30px" : "0px")};
   order: 1;
 
