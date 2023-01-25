@@ -1,4 +1,3 @@
-
 import gql from "graphql-tag";
 import * as Urql from "urql";
 
@@ -38,6 +37,17 @@ export type HomeQueryQuery = {
         link?: string | null;
         contenido?: string | null;
       } | null;
+    } | null;
+    aboutBlockCollection?: {
+      __typename?: "PageAboutBlockCollection";
+      items: Array<{
+        __typename?: "AboutBlock";
+        title?: string | null;
+        description?: {
+          __typename?: "AboutBlockDescription";
+          json: any;
+        } | null;
+      } | null>;
     } | null;
     whyBlockCollection?: {
       __typename?: "PageWhyBlockCollection";
@@ -224,6 +234,14 @@ export const HomeQueryDocument = gql`
         secondButton {
           link
           contenido
+        }
+      }
+      aboutBlockCollection {
+        items {
+          title
+          description {
+            json
+          }
         }
       }
       whyBlockCollection {
