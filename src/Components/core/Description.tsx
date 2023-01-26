@@ -27,7 +27,7 @@ const getDescriptionRichTextOptions = (variant: "sm" | null | undefined) => ({
       <LI variant={variant}>{children}</LI>
     ),
     [INLINES.HYPERLINK]: (node: Block | Inline, children: ReactNode) => (
-      <Anchor>{children}</Anchor>
+      <Anchor href={node?.data?.uri ?? ""}>{children}</Anchor>
     ),
   },
   renderMark: {
