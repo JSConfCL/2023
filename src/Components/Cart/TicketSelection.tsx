@@ -75,11 +75,10 @@ export const TicketSelection = ({
           </>
         ) : (
           <>
-            Las entradas están agotadas! ... por ahora 😄. Lanzaremos un nuevo
-            batch de entradas el día 21 de Diciembre! <br /> Mientras tanto,
-            mantente atento a nuestras redes sociales, durante los próximos
-            meses tendremos anuncios de la JSConf, (y regalaremos más de alguna
-            entrada!)
+            Las entradas están agotadas.
+            <br /> Mientras tanto, mantente atento a nuestras redes sociales,
+            estaremos avisando de regalos de nuestros Partners. Además podrás
+            ver el evento en línea.
           </>
         )}
       </Paragraph>
