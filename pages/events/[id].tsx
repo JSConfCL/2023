@@ -189,9 +189,14 @@ export default function Events(props: PageProps) {
             <H1>{props.title}</H1>
             <H2>{props.subtitle}</H2>
             <Suspense fallback={null}>
-              <SmartButtonContainer>
-                <RegisterTicketButton ticketId={ticketId} jsconfTheme={false} />
-              </SmartButtonContainer>
+              {ticketId ? (
+                <SmartButtonContainer>
+                  <RegisterTicketButton
+                    ticketId={ticketId}
+                    jsconfTheme={false}
+                  />
+                </SmartButtonContainer>
+              ) : null}
             </Suspense>
           </HeroInfo>
           <ExtraInfo>
