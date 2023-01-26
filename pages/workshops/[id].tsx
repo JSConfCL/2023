@@ -123,10 +123,21 @@ const H2Alt = styled(H2)`
   color: #eee;
   font-size: 18px;
   line-height: 18px;
+  margin: 0;
 
   @media (min-width: ${ViewportSizes.Phone}px) {
     font-size: 36px;
     line-height: 36px;
+  }
+`;
+
+const DateInfo = styled.span`
+  display: inline-block;
+  font-size: 16px;
+  margin-bottom: 32px;
+
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    font-size: 0.5em;
   }
 `;
 
@@ -185,6 +196,7 @@ export default function Events(props: WorkshopProps) {
                     CHILE.timezone
                   )}
                 </H2Alt>
+                <DateInfo>* Los horarios están sujetos a cambio</DateInfo>
                 <br />
                 <Description data={workshop?.description?.json} />
                 <Suspense fallback={null}>
