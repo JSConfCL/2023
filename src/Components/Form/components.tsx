@@ -81,9 +81,28 @@ const StyledButtonContainer = styled.span`
   padding-left: 1rem;
   padding-right: 1rem;
 `;
+
+const BackgroundPositioning = styled.div`
+  position: absolute;
+  background-color: white;
+  filter: blur(2.5rem);
+  z-index: -1;
+  top: -1rem;
+  bottom: -1rem;
+  left: -1rem;
+  right: -1rem;
+  pointer-events: none;
+  transition: all 250ms ease-in-out;
+`;
+
 const StyledButton = styled(GenericBtn)`
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   margin-left: auto;
+  &:hover ${BackgroundPositioning} {
+    filter: blur(0.75rem);
+  }
 `;
 const LoaderWrapper = styled.div`
   display: flex;
@@ -108,6 +127,7 @@ export const UpdateButton = ({
 }: React.ComponentProps<typeof StyledButton> & { loading?: boolean }) => {
   return (
     <StyledButton {...props}>
+      <BackgroundPositioning />
       <StyledButtonContainer>
         {children}
         <LoaderWrapper>

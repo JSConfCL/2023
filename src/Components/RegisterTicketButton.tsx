@@ -211,9 +211,7 @@ const RegisterTicketButton = ({
   if (!user?.id) {
     return (
       <div>
-        <PrimaryStyledLink href="/tickets">
-          Registrarme en JSConf
-        </PrimaryStyledLink>
+        <PrimaryStyledLink href="/tickets">Registrarme</PrimaryStyledLink>
       </div>
     );
   }
@@ -245,7 +243,7 @@ const RegisterTicketButton = ({
           await handleSubmit();
         }}
       >
-        Registrarme en Evento
+        Registrarme en el Evento
       </UpdateButton>
     );
   }
