@@ -188,9 +188,11 @@ export default function Events(props: WorkshopProps) {
                 <br />
                 <Description data={workshop?.description?.json} />
                 <Suspense fallback={null}>
-                  <SmartButtonContainer>
-                    <RegisterTicketButton ticketId={workshop.ticketId} />
-                  </SmartButtonContainer>
+                  {workshop.ticketId ? (
+                    <SmartButtonContainer>
+                      <RegisterTicketButton ticketId={workshop.ticketId} />
+                    </SmartButtonContainer>
+                  ) : null}
                 </Suspense>
               </div>
             </HeroText>

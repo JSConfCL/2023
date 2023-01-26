@@ -97,10 +97,10 @@ const StyledCanvas = styled.canvas`
 `;
 
 const RegisterTicketButton = ({
-  ticketId,
+  ticketId = "",
   jsconfTheme = true,
 }: {
-  ticketId: string;
+  ticketId?: string;
   jsconfTheme?: boolean;
 }) => {
   const ref =
@@ -129,6 +129,7 @@ const RegisterTicketButton = ({
     RedeemedTicket | undefined
   >();
   const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
+
   const handleSubmit = async () => {
     setIsLoadingSubmit(true);
     const ticket = (await redeemTicket(ticketId)) as RedeemedTicket;
@@ -178,6 +179,10 @@ const RegisterTicketButton = ({
       }, 1000);
     }
   }, [submitedTicket, jsconfTheme]);
+
+  if (!ticketId) {
+    return <></>;
+  }
 
   if (
     submitedTicket?.id &&
