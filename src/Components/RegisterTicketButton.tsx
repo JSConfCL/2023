@@ -206,9 +206,7 @@ const RegisterTicketButton = ({
   if (!user?.id) {
     return (
       <div>
-        <PrimaryStyledLink href="/tickets">
-          Registrarme en JSConf
-        </PrimaryStyledLink>
+        <PrimaryStyledLink href="/tickets">Registrarme</PrimaryStyledLink>
       </div>
     );
   }
