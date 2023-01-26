@@ -85,7 +85,7 @@ const StyledTitle = styled.h1(({ theme }) => ({
 }));
 
 const A = styled.a`
-  display: inline-block;
+  display: inline-flex;
   text-align: center;
   border: 2px solid ${({ theme }) => theme.colors.jsconfYellow};
   border-radius: 4px;
@@ -93,6 +93,9 @@ const A = styled.a`
   font-size: 16px;
   padding: 8px;
   margin-bottom: 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 
   @media (min-width: ${ViewportSizes.Phone}px) {
     padding: 16px;
