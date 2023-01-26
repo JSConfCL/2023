@@ -26,6 +26,9 @@ export const TicketsList = ({
           ticketName={ticket.ticket.name}
           ticketType={ticket.ticket.type}
           ticketSeason={ticket.ticket.season}
+          showSocialLinks={
+            ticket.ticket.type !== "workshop" && ticket.ticket.type !== "meetup"
+          }
           fadeIn
         />
       ))}
