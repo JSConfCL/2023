@@ -4,6 +4,7 @@ import confetti from "canvas-confetti";
 import { useState, useRef, useEffect } from "react";
 import { Loader } from "react-feather";
 
+import { ViewportSizes } from "../../styles/theme";
 import {
   anonymousMe,
   anonymousTickets,
@@ -13,7 +14,6 @@ import {
 
 import { UpdateButton } from "./Form/components";
 import { PrimaryStyledLink } from "./Links";
-
 interface RedeemedTicket {
   burnedAt?: string;
   created_at: string;
@@ -94,6 +94,21 @@ const StyledCanvas = styled.canvas`
   width: 100vw;
   overflow: hidden;
   z-index: 10;
+`;
+
+const StyledAvailability = styled.div`
+  font-size: 1.2em;
+  margin-bottom: 8px;
+
+  b {
+    color: ${({ theme }) => theme.colors.altColor};
+    font-size: 1.2em;
+    font-weight: 700;
+  }
+
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    margin-bottom: 16px;
+  }
 `;
 
 const RegisterTicketButton = ({
@@ -227,7 +242,14 @@ const RegisterTicketButton = ({
   }
 
   if (myTickets?.find((tmpTicket) => tmpTicket.ticketId === ticketId)) {
-    return <UpdateButton disabled>Ya estás registrado</UpdateButton>;
+    return (
+      <>
+        <StyledAvailability>
+          Hay <b>{ticketInfo?.quantity}</b> tickets disponibles
+        </StyledAvailability>
+        <UpdateButton disabled>Ya estás registrado</UpdateButton>
+      </>
+    );
   }
 
   if (ticketInfo?.id && !ticketInfo?.quantity) {
@@ -236,15 +258,20 @@ const RegisterTicketButton = ({
 
   if (ticketInfo?.canRedeem) {
     return (
-      <UpdateButton
-        disabled={isLoadingSubmit}
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        onClick={async () => {
-          await handleSubmit();
-        }}
-      >
-        Registrarme en el Evento
-      </UpdateButton>
+      <>
+        <StyledAvailability>
+          Hay <b>{ticketInfo?.quantity}</b> tickets disponibles
+        </StyledAvailability>
+        <UpdateButton
+          disabled={isLoadingSubmit}
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onClick={async () => {
+            await handleSubmit();
+          }}
+        >
+          Reservar
+        </UpdateButton>
+      </>
     );
   }
 
