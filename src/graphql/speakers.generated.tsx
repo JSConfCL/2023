@@ -21,7 +21,7 @@ export type SpeakersQuery = {
 
 export const SpeakersDocument = gql`
   query Speakers($isPreview: Boolean = false) {
-    speakerCollection(preview: $isPreview) {
+    speakerCollection(preview: $isPreview, where: { slug_exists: true }) {
       items {
         slug
         name
