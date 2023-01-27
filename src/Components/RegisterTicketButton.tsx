@@ -226,6 +226,9 @@ const RegisterTicketButton = ({
   if (!user?.id) {
     return (
       <div>
+        <StyledAvailability>
+          Hay <b>{ticketInfo?.quantity}</b> tickets disponibles
+        </StyledAvailability>
         <PrimaryStyledLink href="/tickets">Registrarme</PrimaryStyledLink>
       </div>
     );
@@ -275,7 +278,14 @@ const RegisterTicketButton = ({
     );
   }
 
-  return <></>;
+  return (
+    <>
+      <StyledAvailability>
+        Hay <b>{ticketInfo?.quantity}</b> tickets disponibles
+      </StyledAvailability>
+      <UpdateButton disabled>No tienes acceso a este evento</UpdateButton>
+    </>
+  );
 };
 
 export default RegisterTicketButton;
