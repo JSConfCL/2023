@@ -3,9 +3,10 @@ import styled from "@emotion/styled";
 import Atropos from "atropos/react";
 import { AnimatePresence, motion, MotionProps } from "framer-motion";
 import dynamic from "next/dynamic";
+import { transparentize } from "polished";
 import { Suspense, useEffect, useState } from "react";
 
-import { jsconfTheme, ViewportSizes } from "../../../styles/theme";
+import { ViewportSizes } from "../../../styles/theme";
 import { GenericLink } from "../TicketSection/shared";
 
 import { atroposCSS } from "./atroposStyles";
@@ -37,11 +38,11 @@ const StyledAtropos = styled(Atropos)`
   }
 `;
 
-const TicketContainer = styled.div`
+const TicketContainer = styled.div<{ bgColor: string }>`
   width: 350px;
   height: 480px;
   margin: 0 auto 16px;
-  background: ${({ theme }) => theme.colors.jsconfBlack};
+  background: ${({ bgColor }) => bgColor};
   position: relative;
   cursor: pointer;
   overflow: hidden;
@@ -84,13 +85,18 @@ const TicketContainer = styled.div`
   }
 `;
 
-const TicketInfo = styled.div`
+const TicketInfo = styled.div<{
+  color: string;
+  bgColor: string;
+  altColor: string;
+}>`
+  color: ${({ color }) => color};
   width: calc(100% - 32px);
   height: calc(100% - 32px);
   position: relative;
   top: 16px;
   left: 16px;
-  border: 8px solid ${jsconfTheme.colors.jsconfYellow};
+  border: 8px solid ${({ altColor }) => altColor};
 
   @media (min-width: ${ViewportSizes.Phone}px) {
     background-position: 435px 154px;
@@ -100,14 +106,14 @@ const TicketInfo = styled.div`
     display: inline-block;
     width: 65px;
     height: 65px;
-    background: ${({ theme }) => theme.colors.jsconfBlack};
+    background: ${({ bgColor }) => bgColor};
     left: -40px;
     top: 150px;
     content: "";
     position: absolute;
     border-radius: 50%;
-    border-bottom: 8px solid ${({ theme }) => theme.colors.jsconfYellow};
-    border-right: 8px solid ${({ theme }) => theme.colors.jsconfYellow};
+    border-bottom: 8px solid ${({ altColor }) => altColor};
+    border-right: 8px solid ${({ altColor }) => altColor};
     border-top: 8px solid transparent;
     border-left: 8px solid transparent;
     transform: rotate(315deg);
@@ -117,7 +123,7 @@ const TicketInfo = styled.div`
     display: inline-block;
     width: 65px;
     height: 65px;
-    background: ${({ theme }) => theme.colors.jsconfBlack};
+    background: ${({ bgColor }) => bgColor};
     right: -40px;
     top: 150px;
     content: "";
@@ -125,8 +131,8 @@ const TicketInfo = styled.div`
     border-radius: 50%;
     border-bottom: 8px solid transparent;
     border-right: 8px solid transparent;
-    border-top: 8px solid ${({ theme }) => theme.colors.jsconfYellow};
-    border-left: 8px solid ${({ theme }) => theme.colors.jsconfYellow};
+    border-top: 8px solid ${({ altColor }) => altColor};
+    border-left: 8px solid ${({ altColor }) => altColor};
     transform: rotate(315deg);
   }
 `;
@@ -168,8 +174,8 @@ const SocialLinkWrapper = styled.div`
   height: 60px;
 `;
 
-const TicketUsername = styled.h2`
-  color: ${jsconfTheme.colors.jsconfYellow};
+const TicketUsername = styled.h2<{ altColor: string }>`
+  color: ${({ altColor }) => altColor};
 `;
 
 const TicketName = styled.h2`
@@ -207,8 +213,9 @@ const StyledLineContainer = styled.div`
   }
 `;
 
-const StyledLine = styled.div`
-  border: 1px solid ${jsconfTheme.colors.jsconfYellow};
+const StyledLine = styled.div<{ altColor: string; bgColor: string }>`
+  background: ${({ bgColor }) => transparentize(0.2, bgColor)};
+  border: 1px solid ${({ altColor }) => altColor};
   text-align: center;
   padding: 8px 0;
   flex: 1 1 50%;
@@ -244,22 +251,27 @@ const HumanStatus: { [K: string]: string } = {
   on_sale: "A la venta",
 };
 
-const StyledBackgroundImage = styled.div`
+const StyledBackgroundImage = styled.div<{ color: string }>`
+  background-color: ${({ color }) => color};
+  --svg: url("/images/logo.svg");
+  background-image: var(--svg);
+  -webkit-mask: var(--svg);
+  mask: var(--svg);
+
   position: absolute;
   height: 120%;
   width: 120%;
   bottom: -20%;
   right: -20%;
-  background-image: url("/images/logo.svg");
+  color: 'red'
   background-size: cover;
-  background-position: 106px 304px;
-  background-repeat: no-repeat;
+  mask-position: 106px 304px;
+  mask-repeat: no-repeat;
 
   @media (min-width: ${ViewportSizes.Phone}px) {
-    background-image: url("/images/logo.svg");
     background-size: cover;
-    background-position: 450px 205px;
-    background-repeat: no-repeat;
+    mask-position: 450px 205px;
+    mask-repeat: no-repeat;
   }
 `;
 
@@ -291,6 +303,7 @@ export const Ticket = ({
   showGetTicket = false,
   showEdit = true,
   showSocialLinks = true,
+  selectedTheme = "jsconf",
 }: {
   userTicketId: string;
   userPhoto: string | null;
@@ -304,13 +317,36 @@ export const Ticket = ({
   showGetTicket?: boolean;
   showEdit?: boolean;
   showSocialLinks?: boolean;
+  selectedTheme?: "jsconf" | "workshop" | "meetup";
 }) => {
   const [loaded, setLoaded] = useState(!fadeIn);
   const animation = useAnimation();
 
+  const theme = {
+    jsconf: {
+      color: "white",
+      altColor: "#F0E040",
+      bgColor: "#1E2019",
+      logoColor: "black",
+    },
+    workshop: {
+      color: "white",
+      altColor: "#F0E040",
+      bgColor: "#000",
+      logoColor: "white",
+    },
+    meetup: {
+      color: "#333",
+      altColor: "#F45B69",
+      bgColor: "white",
+      logoColor: "#333",
+    },
+  }[selectedTheme];
+
   useEffect(() => {
     setLoaded(true);
   }, []);
+
   return (
     <>
       <Global styles={[atroposCSS]} />
@@ -325,18 +361,30 @@ export const Ticket = ({
               shadowOffset={100}
             >
               <TicketContainer
+                bgColor={theme.bgColor}
                 data-atropos-opacity="1;0.85"
                 data-atropos-offset="-5"
               >
-                <StyledBackgroundImage data-atropos-offset="-10" />
-                <TicketInfo data-atropos-offset="2">
+                <StyledBackgroundImage
+                  color={theme.logoColor}
+                  data-atropos-offset="-10"
+                />
+                <TicketInfo
+                  color={theme.color}
+                  bgColor={theme.bgColor}
+                  altColor={theme.altColor}
+                  data-atropos-offset="2"
+                >
                   <StyledTr data-atropos-offset="2">
                     <TicketHeader>
                       <div style={{ height: "60px" }} data-atropos-offset="8">
                         <StyledImg src={userPhoto ?? ""} />
                       </div>
                       <div style={{ paddingLeft: "16px" }}>
-                        <TicketUsername data-atropos-offset="5">
+                        <TicketUsername
+                          altColor={theme.altColor}
+                          data-atropos-offset="5"
+                        >
                           {userUsername ? "@" + userUsername : ""}
                         </TicketUsername>
                         <TicketName data-atropos-offset="5">
@@ -350,16 +398,32 @@ export const Ticket = ({
                     </StyledTd>
                     <TicketSection style={{ padding: 0 }}>
                       <StyledLineContainer data-atropos-offset="3">
-                        <StyledLine data-atropos-offset="1">
+                        <StyledLine
+                          altColor={theme.altColor}
+                          bgColor={theme.bgColor}
+                          data-atropos-offset="1"
+                        >
                           {ticketName}
                         </StyledLine>
-                        <StyledLine data-atropos-offset="2">
+                        <StyledLine
+                          altColor={theme.altColor}
+                          bgColor={theme.bgColor}
+                          data-atropos-offset="2"
+                        >
                           {HumanTypes[ticketType] ?? ""}
                         </StyledLine>
-                        <StyledLine data-atropos-offset="3">
+                        <StyledLine
+                          altColor={theme.altColor}
+                          bgColor={theme.bgColor}
+                          data-atropos-offset="3"
+                        >
                           {HumanSeasons[ticketSeason] ?? ""}
                         </StyledLine>
-                        <StyledLine data-atropos-offset="4">
+                        <StyledLine
+                          altColor={theme.altColor}
+                          bgColor={theme.bgColor}
+                          data-atropos-offset="4"
+                        >
                           {HumanStatus[userTicketStatus] ?? ""}
                         </StyledLine>
                       </StyledLineContainer>

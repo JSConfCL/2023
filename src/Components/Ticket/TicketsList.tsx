@@ -29,6 +29,13 @@ export const TicketsList = ({
           showSocialLinks={
             ticket.ticket.type !== "workshop" && ticket.ticket.type !== "meetup"
           }
+          selectedTheme={
+            ticket.ticket.type === "workshop"
+              ? "workshop"
+              : ticket.ticket.type === "meetup"
+              ? "meetup"
+              : "jsconf"
+          }
           fadeIn
         />
       ))}
