@@ -26,6 +26,7 @@ type NavBarComponentStyles = {
   activeTextColor: string;
   mobileTextColor: string;
   activeMobileTextColor: string;
+  bgColor: string;
 };
 
 type Colors = {
@@ -99,6 +100,9 @@ declare module "@emotion/react" {
         headingsFontFamily: string;
         headingsFontWeight: number;
         color: string;
+      };
+      videoSection: {
+        bgColor: string;
       };
       speakerSection: {
         subtitleColor: string;
