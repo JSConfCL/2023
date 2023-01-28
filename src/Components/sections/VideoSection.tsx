@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useAtomValue } from "jotai";
 import dynamic from "next/dynamic";
+import { transparentize } from "polished";
 import React, { useState, useEffect } from "react";
 import {
   ChevronLeft,
@@ -113,26 +114,33 @@ const FakeVideoInfo = styled.div`
 
 const HR = styled.hr`
   border-width: 1px;
-  border-color: #f45b69;
+  border-color: ${({ theme }) => theme.colors.altColor};
   border-style: solid;
   width: 50%;
-  background-color: #f45b69;
+  background-color: ${({ theme }) => theme.colors.altColor};
   margin-bottom: 16px;
 `;
 
 const Button = styled.button`
   cursor: pointer;
   border-radius: 50%;
-  background: #f45b69;
+  background: ${({ theme }) =>
+    theme.elements.buttons.variants.primary.backgroundColor};
   text-align: center;
   width: 32px;
   height: 32px;
   line-height: 32px;
   margin: 0 8px;
-  color: white;
+  color: ${({ theme }) => theme.elements.buttons.variants.primary.textColor};
 
   &[disabled] {
-    background: #ddd;
+    background: ${({ theme }) =>
+      transparentize(
+        0.5,
+        theme.elements.buttons.variants.primary.backgroundColor
+      )};
+    color: ${({ theme }) =>
+      transparentize(0.5, theme.elements.buttons.variants.primary.textColor)};
     cursor: not-allowed;
   }
 `;
