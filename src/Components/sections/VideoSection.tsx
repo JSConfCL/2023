@@ -149,11 +149,15 @@ const desktopChatConfigurations = ["0 0 50%", "0 0 33%", "0 0 25%", "0 0 0%"];
 const mobileChatConfigurations = ["0 0 100%", "0 0 0%"];
 
 const VideoSection = ({
-  videoId,
   includesChat = true,
+  title,
+  url,
+  videoId,
 }: {
-  videoId: string;
   includesChat?: boolean;
+  title: string;
+  url: string;
+  videoId: string;
 }) => {
   const isMobile = useMediaQuery(`(max-width: ${ViewportSizes.Phone - 1}px)`);
   const chatConfigurations = isMobile
@@ -188,11 +192,11 @@ const VideoSection = ({
   if (!isLoggedIn) {
     return (
       <Container>
-        <H2 whileHover={{ scale: 1.01 }}>Ver la Previa</H2>
+        <H2 whileHover={{ scale: 1.01 }}>Ver {title}</H2>
         <HR />
         <FakeVideo>
           <FakeVideoInfo>
-            Para poder ver la previa debes tener una cuenta de la JSConf 😥
+            Para poder ver {title} debes tener una cuenta de la JSConf 😥
           </FakeVideoInfo>
         </FakeVideo>
         <div style={{ textAlign: "center", marginTop: "16px " }}>
@@ -204,7 +208,7 @@ const VideoSection = ({
 
   return (
     <Container>
-      <H2 whileHover={{ scale: 1.01 }}>Ver la Previa</H2>
+      <H2 whileHover={{ scale: 1.01 }}>Ver {title}</H2>
       <HR />
       <PlayerContainer>
         <VideoContainer style={{ paddingBottom }}>
@@ -286,7 +290,7 @@ const VideoSection = ({
           <Copy
             onClick={() => {
               navigator.clipboard
-                .writeText(`${origin}/laprevia#player`)
+                .writeText(`${origin}${url ? `/${url}` : ""}#player`)
                 .then(() => {
                   toast.success("Enlace copiado con éxito!");
                 })
