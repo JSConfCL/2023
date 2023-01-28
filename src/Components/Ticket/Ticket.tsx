@@ -157,10 +157,14 @@ const StyledTr = styled.div`
   height: 100%;
 `;
 
-const StyledTd = styled.div`
-  padding: 24px;
-  flex: 0 0;
+const StyledTd = styled.div<{ bgColor: string }>`
+  margin: 0 24px 0 26px;
+  background: ${({ bgColor }) => transparentize(0.2, bgColor)};
+  flex: 1 1 100%;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const StyledImg = styled.img`
@@ -187,9 +191,10 @@ const Title = styled.h1`
   font-size: 48px;
   line-height: 32px;
   text-align: left;
+
   @media (min-width: ${ViewportSizes.Phone}px) {
-    font-size: 80px;
-    line-height: 80px;
+    font-size: 60px;
+    line-height: 60px;
   }
 `;
 
@@ -198,8 +203,8 @@ const SubTitle = styled.h2`
   line-height: 20px;
   text-align: left;
   @media (min-width: ${ViewportSizes.Phone}px) {
-    font-size: 32px;
-    line-height: 32px;
+    font-size: 26px;
+    line-height: 26px;
   }
 `;
 
@@ -227,6 +232,12 @@ const StyledLine = styled.div<{ altColor: string; bgColor: string }>`
     }
   }
 `;
+
+const HumanTicket: { [K: string]: string } = {
+  jsconf: "JSConf Chile",
+  meetup: "Meetup",
+  workshop: "Workshop",
+};
 
 const HumanSeasons: { [K: string]: string } = {
   early_bird: "Compra Temprana",
@@ -291,6 +302,8 @@ const useAnimation = (): MotionProps => {
 };
 
 export const Ticket = ({
+  title = "JSConf Chile",
+  subtitle = "Feb.03-04 2023 | Santiago",
   userTicketId,
   userPhoto,
   userUsername,
@@ -305,6 +318,8 @@ export const Ticket = ({
   showSocialLinks = true,
   selectedTheme = "jsconf",
 }: {
+  title?: string;
+  subtitle?: string;
   userTicketId: string;
   userPhoto: string | null;
   userUsername: string | null;
@@ -392,9 +407,9 @@ export const Ticket = ({
                         </TicketName>
                       </div>
                     </TicketHeader>
-                    <StyledTd data-atropos-offset="5">
-                      <Title>JSConf Chile</Title>
-                      <SubTitle>Feb.03-04 2023 | Santiago</SubTitle>
+                    <StyledTd bgColor={theme.bgColor} data-atropos-offset="5">
+                      <Title>{title}</Title>
+                      <SubTitle>{subtitle}</SubTitle>
                     </StyledTd>
                     <TicketSection style={{ padding: 0 }}>
                       <StyledLineContainer data-atropos-offset="3">
@@ -403,21 +418,21 @@ export const Ticket = ({
                           bgColor={theme.bgColor}
                           data-atropos-offset="1"
                         >
-                          {ticketName}
+                          {HumanTicket[selectedTheme]}
                         </StyledLine>
                         <StyledLine
                           altColor={theme.altColor}
                           bgColor={theme.bgColor}
                           data-atropos-offset="2"
                         >
-                          {HumanTypes[ticketType] ?? ""}
+                          {HumanTypes[ticketType] ?? "General"}
                         </StyledLine>
                         <StyledLine
                           altColor={theme.altColor}
                           bgColor={theme.bgColor}
                           data-atropos-offset="3"
                         >
-                          {HumanSeasons[ticketSeason] ?? ""}
+                          {HumanSeasons[ticketSeason] ?? "General"}
                         </StyledLine>
                         <StyledLine
                           altColor={theme.altColor}
