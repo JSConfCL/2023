@@ -5,6 +5,7 @@ import { lazy, Suspense } from "react";
 
 import Banner from "../src/Components/BannerComponent";
 import FlagMessage, { Message } from "../src/Components/FlagMessage";
+import { StyledWrapperSuspense } from "../src/Components/NavBar/components";
 import Seo from "../src/Components/Seo";
 import StickContainer from "../src/Components/StickContainer";
 import EventSchema from "../src/Components/schema/event";
@@ -50,6 +51,13 @@ const VideoSection = dynamic(
   }
 );
 
+const NavBar = dynamic(
+  async () => await import("../src/Components/NavBar/NavBar"),
+  {
+    ssr: false,
+  }
+);
+
 type Page = ParseQuery<HomeQueryQuery["page"]>;
 
 export interface PageProps {
@@ -78,11 +86,21 @@ const StyledBlackWrapp = styled.section`
   background-color: ${({ theme }) => theme.elements.global.backgroundColor};
 `;
 
+const NavBarWrapper = styled.div`
+  height: 100px;
+  background-color: ${({ theme }) => theme.elements.navBar.bgColor};
+`;
+
 const Home: NextPage<PageProps> = (props: PageProps) => {
   return (
     <Container>
       <Seo {...props.seo} />
       <EventSchema />
+      <NavBarWrapper>
+        <Suspense fallback={<StyledWrapperSuspense />}>
+          <NavBar />
+        </Suspense>
+      </NavBarWrapper>
       <Suspense fallback={null}>
         <div id="player">
           <VideoSection
