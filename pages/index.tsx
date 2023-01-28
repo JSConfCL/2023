@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import type { NextPage } from "next";
+import dynamic from "next/dynamic";
 import { lazy, Suspense } from "react";
 
 import Banner from "../src/Components/BannerComponent";
@@ -42,6 +43,13 @@ const FriendSection = lazy(
   async () => await import("../src/Components/sections/FriendSection")
 );
 
+const VideoSection = dynamic(
+  async () => await import("../src/Components/sections/VideoSection"),
+  {
+    ssr: false,
+  }
+);
+
 type Page = ParseQuery<HomeQueryQuery["page"]>;
 
 export interface PageProps {
@@ -75,6 +83,15 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
     <Container>
       <Seo {...props.seo} />
       <EventSchema />
+      <Suspense fallback={null}>
+        <div id="player">
+          <VideoSection
+            url=""
+            title="JSConf Chile"
+            videoId={props.flags?.videoId ?? ""}
+          />
+        </div>
+      </Suspense>
       <Suspense fallback={null}>
         <Hero heroData={props.heroData} />
       </Suspense>
