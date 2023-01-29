@@ -453,6 +453,7 @@ export const Ticket = ({
                   <SocialLinks
                     userTicketId={userTicketId}
                     showEdit={showEdit && selectedTheme === "jsconf"}
+                    ticketType={selectedTheme}
                   />
                 </Suspense>
               </SocialLinkWrapper>

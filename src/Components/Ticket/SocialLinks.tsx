@@ -78,9 +78,11 @@ const SocialAnchor = styled.a<{
 const SocialLinks = ({
   userTicketId,
   showEdit,
+  ticketType,
 }: {
   userTicketId: string;
   showEdit: boolean;
+  ticketType: string;
 }) => {
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const publicUrl = `${
@@ -90,12 +92,17 @@ const SocialLinks = ({
     atcb_init();
   }, []);
 
+  const twitterUrl =
+    ticketType === "jsconf"
+      ? `Lista mi entrada para la @JSConfCL 🎉. Obtén la tuya en ${publicUrl} . Nos vemos el 03 y 04 de Febrero!`
+      : publicUrl;
+
   return (
     <SharingInfo>
       <Global styles={[atcbCSS, atcbExtraCSS]} />
       <SocialAnchor
         href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-          `Lista mi entrada para la @JSConfCL 🎉. Obtén la tuya en ${publicUrl} . Nos vemos el 03 y 04 de Febrero!`
+          twitterUrl
         )}`}
         target="_blank"
         rel="noreferrer"
@@ -123,23 +130,25 @@ const SocialLinks = ({
       >
         <Linkedin size={32} />
       </SocialAnchor>
-      <SocialButton
-        onClick={() => {
-          atcb_action({
-            name: "JSConf Chile",
-            startDate: "2023-02-03",
-            endDate: "2023-02-04",
-            startTime: "08:00",
-            endTime: "19:00",
-            description:
-              "Acompáñanos, en la primera edición Chilena, de la más prestigiosa conferencia de JavaScript. 2 días de Charlistas internacionales, comunidad, aprendizaje y conexiones, este 03 y 04 de Febrero, 2023.",
-            options: ["Google", "Apple", "Microsoft365", "Outlook.com"],
-            timeZone: "America/Santiago",
-          });
-        }}
-      >
-        <Calendar size={32} />
-      </SocialButton>
+      {ticketType === "jsconf" ? (
+        <SocialButton
+          onClick={() => {
+            atcb_action({
+              name: "JSConf Chile",
+              startDate: "2023-02-03",
+              endDate: "2023-02-04",
+              startTime: "08:00",
+              endTime: "19:00",
+              description:
+                "Acompáñanos, en la primera edición Chilena, de la más prestigiosa conferencia de JavaScript. 2 días de Charlistas internacionales, comunidad, aprendizaje y conexiones, este 03 y 04 de Febrero, 2023.",
+              options: ["Google", "Apple", "Microsoft365", "Outlook.com"],
+              timeZone: "America/Santiago",
+            });
+          }}
+        >
+          <Calendar size={32} />
+        </SocialButton>
+      ) : null}
       <SocialButton
         onClick={() => {
           navigator.clipboard
