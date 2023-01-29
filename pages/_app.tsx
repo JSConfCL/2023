@@ -127,7 +127,7 @@ const AppWithQueryClients = ({
         : jsconfTheme;
   }
 
-  if (pathname === "/workshop/[id]") {
+  if (pathname.startsWith("/workshops")) {
     theme = jsconfTheme;
   }
 
