@@ -238,11 +238,7 @@ export default function Events(props: PageProps) {
       <Suspense fallback={null}>
         {props?.events && (
           <div id="agenda">
-            <TimelineSection
-              events={props?.events}
-              showLocalTime
-              showPictures={false}
-            />
+            <TimelineSection events={props?.events} showLocalTime />
           </div>
         )}
       </Suspense>
