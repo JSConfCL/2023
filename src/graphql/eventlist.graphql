@@ -1,0 +1,12 @@
+query EventsList($isPreview: Boolean = false) {
+  pageCollection(where: { flags_exists: true }, preview: $isPreview) {
+    items {
+      sys {
+        id
+      }
+      name
+      subtitle
+      flags
+    }
+  }
+}

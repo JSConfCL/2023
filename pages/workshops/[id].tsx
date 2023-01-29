@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { lazy, Suspense } from "react";
 
 import Seo from "../../src/Components/Seo";
@@ -199,13 +200,18 @@ export default function Events(props: WorkshopProps) {
                 <DateInfo>* Los horarios están sujetos a cambio</DateInfo>
                 <br />
                 <Description data={workshop?.description?.json} />
-                <Suspense fallback={null}>
-                  {workshop.ticketId ? (
-                    <SmartButtonContainer>
-                      <RegisterTicketButton ticketId={workshop.ticketId} />
-                    </SmartButtonContainer>
-                  ) : null}
-                </Suspense>
+                <div style={{ minHeight: "150px" }}>
+                  <Suspense fallback={null}>
+                    {workshop.ticketId ? (
+                      <SmartButtonContainer>
+                        <RegisterTicketButton ticketId={workshop.ticketId} />
+                      </SmartButtonContainer>
+                    ) : null}
+                  </Suspense>
+                </div>
+                <Link href={`/workshops/`} passHref>
+                  <a style={{ fontSize: "0.6em" }}>Ver Listado de Workshops</a>
+                </Link>
               </div>
             </HeroText>
           </HeroInfo>

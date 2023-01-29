@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { lazy, Suspense } from "react";
 
 import { MapPin, Calendar } from "react-feather";
@@ -154,6 +155,7 @@ const SmartButtonContainer = styled.div`
   position: relative;
   margin: 24px 16px 16px 16px;
   font-size: 20px;
+  min-height: 150px;
 `;
 
 type Page = ParseQuery<EventQuery["page"]>;
@@ -198,6 +200,9 @@ export default function Events(props: PageProps) {
                 </SmartButtonContainer>
               ) : null}
             </Suspense>
+            <Link href={`/events/`} passHref>
+              <a style={{ fontSize: "0.6em" }}>Ver Listado de Eventos</a>
+            </Link>
           </HeroInfo>
           <ExtraInfo>
             <div>
@@ -238,11 +243,7 @@ export default function Events(props: PageProps) {
       <Suspense fallback={null}>
         {props?.events && (
           <div id="agenda">
-            <TimelineSection
-              events={props?.events}
-              showLocalTime
-              showPictures={false}
-            />
+            <TimelineSection events={props?.events} showLocalTime />
           </div>
         )}
       </Suspense>

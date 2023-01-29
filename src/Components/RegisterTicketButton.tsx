@@ -53,7 +53,7 @@ interface TicketInfo {
 
 const LoaderWrapperWrapper = styled.div`
   position: relative;
-  margin-top: 100px;
+  margin-top: 60px;
 `;
 
 const LoaderWrapper = styled.span`
