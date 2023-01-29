@@ -182,7 +182,11 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
       </Suspense>
       <Suspense fallback={null}>
         <div id="player">
-          <VideoSection videoId={props.flags?.videoId ?? ""} />
+          <VideoSection
+            url="laprevia"
+            title="La Previa"
+            videoId={props.flags?.videoId ?? ""}
+          />
         </div>
       </Suspense>
       <Suspense fallback={null}>

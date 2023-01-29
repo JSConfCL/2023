@@ -114,6 +114,7 @@ const theme: Theme = {
       activeTextColor: colors.jsconfRed,
       mobileTextColor: colors.jsconfBlack,
       activeMobileTextColor: colors.jsconfRed,
+      bgColor: colors.jsconfYellow,
     },
     navBarDropDown: {
       backgroundColor: colors.black,
@@ -128,6 +129,9 @@ const theme: Theme = {
       headingsFontFamily: fonts.Koulen.name,
       headingsFontWeight: 400,
       color: colors.white,
+    },
+    videoSection: {
+      bgColor: colors.black,
     },
     speakerSection: {
       subtitleColor: "#4b4b4b",
@@ -191,6 +195,7 @@ export const previaTheme: Theme = {
       activeTextColor: colors.jsconfRed,
       mobileTextColor: colors.jsconfBlack,
       activeMobileTextColor: colors.jsconfBlack,
+      bgColor: colors.white,
     },
     navBarDropDown: {
       backgroundColor: colors.white,
@@ -198,6 +203,9 @@ export const previaTheme: Theme = {
       shadowColor: colors.jsconfBlack,
       textColor: colors.jsconfBlack,
       chevronColor: colors.jsconfBlack,
+    },
+    videoSection: {
+      bgColor: colors.white,
     },
     speakerSection: {
       subtitleColor: colors.white,

@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useAtomValue } from "jotai";
 import dynamic from "next/dynamic";
+import { transparentize } from "polished";
 import React, { useState, useEffect } from "react";
 import {
   ChevronLeft,
@@ -21,6 +22,10 @@ import { H2 } from "../core/Typography";
 const GetAccount = dynamic(async () => await import("../GetAccount"), {
   ssr: false,
 });
+
+const Wrapper = styled.section`
+  background: ${({ theme }) => theme.elements.videoSection.bgColor};
+`;
 
 const Container = styled.section`
   align-self: center;
@@ -113,26 +118,33 @@ const FakeVideoInfo = styled.div`
 
 const HR = styled.hr`
   border-width: 1px;
-  border-color: #f45b69;
+  border-color: ${({ theme }) => theme.colors.altColor};
   border-style: solid;
   width: 50%;
-  background-color: #f45b69;
+  background-color: ${({ theme }) => theme.colors.altColor};
   margin-bottom: 16px;
 `;
 
 const Button = styled.button`
   cursor: pointer;
   border-radius: 50%;
-  background: #f45b69;
+  background: ${({ theme }) =>
+    theme.elements.buttons.variants.primary.backgroundColor};
   text-align: center;
   width: 32px;
   height: 32px;
   line-height: 32px;
   margin: 0 8px;
-  color: white;
+  color: ${({ theme }) => theme.elements.buttons.variants.primary.textColor};
 
   &[disabled] {
-    background: #ddd;
+    background: ${({ theme }) =>
+      transparentize(
+        0.5,
+        theme.elements.buttons.variants.primary.backgroundColor
+      )};
+    color: ${({ theme }) =>
+      transparentize(0.5, theme.elements.buttons.variants.primary.textColor)};
     cursor: not-allowed;
   }
 `;
@@ -141,11 +153,15 @@ const desktopChatConfigurations = ["0 0 50%", "0 0 33%", "0 0 25%", "0 0 0%"];
 const mobileChatConfigurations = ["0 0 100%", "0 0 0%"];
 
 const VideoSection = ({
-  videoId,
   includesChat = true,
+  title,
+  url,
+  videoId,
 }: {
-  videoId: string;
   includesChat?: boolean;
+  title: string;
+  url: string;
+  videoId: string;
 }) => {
   const isMobile = useMediaQuery(`(max-width: ${ViewportSizes.Phone - 1}px)`);
   const chatConfigurations = isMobile
@@ -179,120 +195,124 @@ const VideoSection = ({
 
   if (!isLoggedIn) {
     return (
-      <Container>
-        <H2 whileHover={{ scale: 1.01 }}>Ver la Previa</H2>
-        <HR />
-        <FakeVideo>
-          <FakeVideoInfo>
-            Para poder ver la previa debes tener una cuenta de la JSConf 😥
-          </FakeVideoInfo>
-        </FakeVideo>
-        <div style={{ textAlign: "center", marginTop: "16px " }}>
-          <GetAccount />
-        </div>
-      </Container>
+      <Wrapper>
+        <Container>
+          <H2 whileHover={{ scale: 1.01 }}>Ver {title}</H2>
+          <HR />
+          <FakeVideo>
+            <FakeVideoInfo>
+              Para poder ver {title} debes tener una cuenta de la JSConf 😥
+            </FakeVideoInfo>
+          </FakeVideo>
+          <div style={{ textAlign: "center", marginTop: "16px " }}>
+            <GetAccount />
+          </div>
+        </Container>
+      </Wrapper>
     );
   }
 
   return (
-    <Container>
-      <H2 whileHover={{ scale: 1.01 }}>Ver la Previa</H2>
-      <HR />
-      <PlayerContainer>
-        <VideoContainer style={{ paddingBottom }}>
-          <iframe
-            src={`${httpScheme}://www.youtube-nocookie.com/embed/${videoId}?theme=dark&autoplay=1&keyboard=1&autohide=2&cc_load_policy=1&modestbranding=1&fs=1&rel=0&iv_load_policy=3&mute=0&loop=0&share=0`}
-            allowFullScreen
-          />
-        </VideoContainer>
-        {includesChat ? (
-          <ChatContainer style={{ paddingBottom, flex }}>
+    <Wrapper>
+      <Container>
+        <H2 whileHover={{ scale: 1.01 }}>Ver {title}</H2>
+        <HR />
+        <PlayerContainer>
+          <VideoContainer style={{ paddingBottom }}>
             <iframe
-              src={`${httpScheme}://www.youtube.com/live_chat?v=${videoId}&embed_domain=${embedDomain}`}
+              src={`${httpScheme}://www.youtube-nocookie.com/embed/${videoId}?theme=dark&autoplay=1&keyboard=1&autohide=2&cc_load_policy=1&modestbranding=1&fs=1&rel=0&iv_load_policy=3&mute=0&loop=0&share=0`}
               allowFullScreen
             />
-          </ChatContainer>
-        ) : null}
-      </PlayerContainer>
+          </VideoContainer>
+          {includesChat ? (
+            <ChatContainer style={{ paddingBottom, flex }}>
+              <iframe
+                src={`${httpScheme}://www.youtube.com/live_chat?v=${videoId}&embed_domain=${embedDomain}`}
+                allowFullScreen
+              />
+            </ChatContainer>
+          ) : null}
+        </PlayerContainer>
 
-      <div style={{ textAlign: "right", paddingRight: "24px" }}>
-        {includesChat ? (
-          <>
-            {!isMobile ? (
+        <div style={{ textAlign: "right", paddingRight: "24px" }}>
+          {includesChat ? (
+            <>
+              {!isMobile ? (
+                <Button
+                  disabled={chatSize === 0}
+                  onClick={() => {
+                    setChatSize(0);
+                  }}
+                >
+                  <ChevronsLeft
+                    size={24}
+                    style={{ position: "relative", top: "4px" }}
+                  />
+                </Button>
+              ) : null}
               <Button
                 disabled={chatSize === 0}
                 onClick={() => {
-                  setChatSize(0);
+                  setChatSize((tmpChatSize) => Math.max(0, tmpChatSize - 1));
                 }}
               >
-                <ChevronsLeft
+                <ChevronLeft
                   size={24}
                   style={{ position: "relative", top: "4px" }}
                 />
               </Button>
-            ) : null}
-            <Button
-              disabled={chatSize === 0}
-              onClick={() => {
-                setChatSize((tmpChatSize) => Math.max(0, tmpChatSize - 1));
-              }}
-            >
-              <ChevronLeft
-                size={24}
-                style={{ position: "relative", top: "4px" }}
+              <MessageCircle
+                size={32}
+                style={{ position: "relative", top: "8px" }}
               />
-            </Button>
-            <MessageCircle
-              size={32}
-              style={{ position: "relative", top: "8px" }}
-            />
-            <Button
-              disabled={chatSize >= chatConfigurations.length - 1}
-              onClick={() => {
-                setChatSize((tmpChatSize) =>
-                  Math.min(chatConfigurations.length - 1, tmpChatSize + 1)
-                );
-              }}
-            >
-              <ChevronRight
-                size={24}
-                style={{ position: "relative", top: "4px" }}
-              />
-            </Button>
-            {!isMobile ? (
               <Button
                 disabled={chatSize >= chatConfigurations.length - 1}
                 onClick={() => {
-                  setChatSize(chatConfigurations.length - 1);
+                  setChatSize((tmpChatSize) =>
+                    Math.min(chatConfigurations.length - 1, tmpChatSize + 1)
+                  );
                 }}
               >
-                <ChevronsRight
+                <ChevronRight
                   size={24}
                   style={{ position: "relative", top: "4px" }}
                 />
               </Button>
-            ) : null}
-          </>
-        ) : null}
-        <Button>
-          <Copy
-            onClick={() => {
-              navigator.clipboard
-                .writeText(`${origin}/laprevia#player`)
-                .then(() => {
-                  toast.success("Enlace copiado con éxito!");
-                })
-                .catch(() => {
-                  toast.error("Hubo un error, intentalo nuevamente!");
-                });
-            }}
-            size={24}
-            style={{ position: "relative", top: "4px" }}
-          />
-        </Button>
-      </div>
-      <Toaster />
-    </Container>
+              {!isMobile ? (
+                <Button
+                  disabled={chatSize >= chatConfigurations.length - 1}
+                  onClick={() => {
+                    setChatSize(chatConfigurations.length - 1);
+                  }}
+                >
+                  <ChevronsRight
+                    size={24}
+                    style={{ position: "relative", top: "4px" }}
+                  />
+                </Button>
+              ) : null}
+            </>
+          ) : null}
+          <Button>
+            <Copy
+              onClick={() => {
+                navigator.clipboard
+                  .writeText(`${origin}${url ? `/${url}` : ""}#player`)
+                  .then(() => {
+                    toast.success("Enlace copiado con éxito!");
+                  })
+                  .catch(() => {
+                    toast.error("Hubo un error, intentalo nuevamente!");
+                  });
+              }}
+              size={24}
+              style={{ position: "relative", top: "4px" }}
+            />
+          </Button>
+        </div>
+        <Toaster />
+      </Container>
+    </Wrapper>
   );
 };
 

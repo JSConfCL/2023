@@ -1,17 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import styled from "@emotion/styled";
-import dynamic from "next/dynamic";
 import { lazy, Suspense } from "react";
 
 import { PageProps } from "../../../pages";
 import { SecondaryStyledLink, TertiaryStyledLink } from "../Links";
-import { StyledWrapperSuspense } from "../NavBar/components";
 
 const Particles = lazy(async () => await import("../Particles"));
-
-const NavBar = dynamic(async () => await import("../NavBar/NavBar"), {
-  ssr: false,
-});
 
 const StyledWrapper = styled.section(({ theme }) => ({
   width: "100%",
@@ -202,9 +196,6 @@ export const Hero = ({ heroData }: { heroData: PageProps["heroData"] }) => {
           src={`${heroData.background.url}?fm=webp`}
           alt={heroData.background.title}
         />
-      </Suspense>
-      <Suspense fallback={<StyledWrapperSuspense />}>
-        <NavBar />
       </Suspense>
       <Suspense>
         <Particles />
