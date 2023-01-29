@@ -131,7 +131,7 @@ const AppWithQueryClients = ({
     theme = jsconfTheme;
   }
 
-  if (pathname === "/events/[id]") {
+  if (pathname.startsWith("/events")) {
     theme = previaTheme;
   }
 
