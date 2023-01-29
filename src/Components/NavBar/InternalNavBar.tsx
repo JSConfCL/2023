@@ -38,7 +38,6 @@ const StyledNav = styled(motion.nav)`
   width: 100%;
   display: flex;
   overflow: hidden;
-  background: ${({ theme }) => theme.elements.navBar.bgColor};
   color: ${({ theme }) => theme.elements.navBar.textColor};
 `;
 
