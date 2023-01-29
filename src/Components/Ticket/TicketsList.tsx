@@ -22,18 +22,15 @@ export const TicketsList = ({
                 title: "Workshop",
                 subtitle: ticket.ticket.description,
                 selectedTheme: "workshop",
-                showSocialLinks: false,
               }
             : ticket.ticket.type === "meetup"
             ? {
                 title: ticket.ticket.name,
                 subtitle: ticket.ticket.description,
                 selectedTheme: "meetup",
-                showSocialLinks: false,
               }
             : {
                 selectedTheme: "jsconf",
-                showSocialLinks: true,
               };
 
         return (
@@ -49,7 +46,6 @@ export const TicketsList = ({
             ticketName={ticket.ticket.name}
             ticketType={ticket.ticket.type}
             ticketSeason={ticket.ticket.season}
-            showSocialLinks={ticketOptions.showSocialLinks}
             selectedTheme={
               ticketOptions.selectedTheme as "workshop" | "meetup" | "jsconf"
             }
