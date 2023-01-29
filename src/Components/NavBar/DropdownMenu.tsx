@@ -79,6 +79,7 @@ const DrowndownContainer = styled.div<{ isOpen: boolean }>`
       transparentize(0.7, theme.elements.navBarDropDown.shadowColor)};
   gap: 0.75rem;
   color: ${({ theme }) => theme.elements.navBarDropDown.textColor};
+  z-index: 10;
 `;
 
 const StyledUsername = styled.span`
