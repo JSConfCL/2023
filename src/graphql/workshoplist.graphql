@@ -1,0 +1,16 @@
+query WorkshopsList($isPreview: Boolean = false) {
+  eventCollection(
+    where: { kind: "workshop", slug_exists: true, ticketId_exists: true }
+    preview: $isPreview
+  ) {
+    items {
+      slug
+      title
+      date
+      duration
+      language
+      kind
+      ticketId
+    }
+  }
+}
