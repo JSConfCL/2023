@@ -194,35 +194,42 @@ const ImageCell = styled(TableCell)`
   }
 `;
 
+const TitleCell = styled(TableCell)``;
+
 const TimeCell = styled(TableCell)`
   font-size: 18px;
   vertical-align: bottom;
   white-space: nowrap;
+  padding-bottom: 1rem;
+  text-align: right;
+  padding-right: 1rem;
 
-  @media (min-width: ${ViewportSizes.TabletLandscape}px) {
+  /* @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     width: 12%;
-  }
+  } */
 `;
 
 const AuthorCell = styled(TableCell)`
-  margin-top: 16px;
   padding-right: 16px;
+  padding-top: 1rem;
   font-size: 20px;
   color: ${({ theme }) => theme.colors.altColor};
   font-weight: bold;
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     padding-right: 16px;
+    padding-top: 0rem;
     width: 15%;
   }
 `;
 
 const TableRow = styled.tr`
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   position: relative;
   width: 100%;
   border-bottom: 1px solid #ffffff4d;
-  padding: 32px 16px;
 
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     display: table-row;
@@ -252,14 +259,17 @@ const Table = styled.table`
   @media (min-width: ${ViewportSizes.TabletLandscape}px) {
     margin-bottom: 100px;
   }
+  tbody {
+    width: 100%;
+  }
 `;
 
 const CalendarContainer = styled.div`
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
   ${jsconfTheme.breakpoints.phoneOnly} {
-    h3 {
-      margin-top: 32px;
-      padding: 0 16px;
-    }
+    margin-top: 32px;
   }
 `;
 
@@ -268,10 +278,11 @@ const Tag = styled.span`
   background: ${transparentize(0.2, jsconfTheme.colors.jsconfRed)};
   color: white;
   font-weight: bold;
-  padding: 0 8px;
-  font-size: 0.8em;
+  line-height: 0;
+  font-size: 1rem;
+  margin: 0;
+  padding: 12px 8px;
   border-radius: 0px 8px 0px 0px;
-  margin: 8px 0;
 `;
 
 const Tags = styled.div`
@@ -292,13 +303,20 @@ const Title = styled.div`
   text-transform: capitalize;
 `;
 
+const TitleWrapperContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.5rem;
+  gap: 0.25rem;
+`;
+
 const TitleActions = styled.div`
   position: absolute;
-  right: 2rem;
-  top: 1rem;
+  right: 0.5rem;
+  top: 1.5rem;
 
   @media (max-width: ${ViewportSizes.TabletLandscape}px) {
-    top: 3rem;
+    top: 1rem;
   }
 `;
 
@@ -400,19 +418,27 @@ const TimelineRow = ({
           ) : null}
         </ImageCell>
       ) : null}
-      <AuthorCell>
-        <WithLinkWrapper>{event?.speaker?.name}</WithLinkWrapper>
-      </AuthorCell>
-      <TableCell>
-        <Title>
-          <WithLinkWrapper>{event.title}</WithLinkWrapper>
-        </Title>
-        <CollapsableInfo show={show} information={event.description?.json} />
-        <Tags>
-          <Language language={language} />
-          {event?.includesTranslation ? <Tag>Traduccion simultanea</Tag> : null}
-        </Tags>
-      </TableCell>
+      {event?.speaker?.name ? (
+        <AuthorCell>
+          <WithLinkWrapper>{event.speaker.name}</WithLinkWrapper>
+        </AuthorCell>
+      ) : (
+        <div></div>
+      )}
+      <TitleCell>
+        <TitleWrapperContainer>
+          <Title>
+            <WithLinkWrapper>{event.title}</WithLinkWrapper>
+          </Title>
+          <CollapsableInfo show={show} information={event.description?.json} />
+          <Tags>
+            <Language language={language} />
+            {event?.includesTranslation ? (
+              <Tag>Traduccion simultanea</Tag>
+            ) : null}
+          </Tags>
+        </TitleWrapperContainer>
+      </TitleCell>
       <TimeCell>
         <div>
           <ReactCountryFlag countryCode={CHILE.abbr} />{" "}
