@@ -112,6 +112,9 @@ export const UpdateButton = ({
   return (
     <StyledButton {...props}>
       <StyledButtonContainer>
+        <LoaderWrapper>
+          <Loader size={16} style={{ opacity: 0 }} />
+        </LoaderWrapper>
         {children}
         <LoaderWrapper>
           {loading ? (
