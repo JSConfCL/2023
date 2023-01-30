@@ -41,14 +41,14 @@ const Hero = styled.section`
   color: #000;
   font-size: 42px;
   width: 100vw;
-  max-width: 1400px;
   margin: 0 auto;
   z-index: 1;
-  height: calc(100vh - 150px);
+  min-height: calc(100vh - 150px);
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: center;
+  padding-top: 4rem;
+  justify-content: flex-start;
   position: relative;
 `;
 
@@ -58,6 +58,10 @@ const HeroInfo = styled.div`
   @media (min-width: ${ViewportSizes.Phone}px) {
     text-align: center;
   }
+`;
+
+const WorkshopsContainer = styled.div`
+  padding-bottom: 5rem;
 `;
 
 const HeroText = styled.div`
@@ -165,31 +169,33 @@ const Home: NextPage<PageProps> = ({ workshops, seo }: PageProps) => {
           <HeroInfo style={{ zIndex: "5" }}>
             <HeroText>
               <H1>Listado de Workshops</H1>
-              {dates.map((date) => (
-                <div key={date}>
-                  <H2>{getLongDate(date)}</H2>
-                  <div
-                    style={{
-                      zIndex: "10",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "8px",
-                      margin: "16px",
-                    }}
-                  >
-                    {workshops
-                      .filter((workshop) => workshop.date.startsWith(date))
-                      .sort(
-                        (workshop1, workshop2) =>
-                          Date.parse(workshop1.date) -
-                          Date.parse(workshop2.date)
-                      )
-                      .map((workshop) => (
-                        <Card key={workshop.title} {...workshop} />
-                      ))}
+              <WorkshopsContainer>
+                {dates.map((date) => (
+                  <div key={date}>
+                    <H2>{getLongDate(date)}</H2>
+                    <div
+                      style={{
+                        zIndex: "10",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "8px",
+                        margin: "16px",
+                      }}
+                    >
+                      {workshops
+                        .filter((workshop) => workshop.date.startsWith(date))
+                        .sort(
+                          (workshop1, workshop2) =>
+                            Date.parse(workshop1.date) -
+                            Date.parse(workshop2.date)
+                        )
+                        .map((workshop) => (
+                          <Card key={workshop.title} {...workshop} />
+                        ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </WorkshopsContainer>
             </HeroText>
           </HeroInfo>
         </Hero>
