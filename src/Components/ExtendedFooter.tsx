@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-import { lazy, Suspense } from "react";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 import { ViewportSizes } from "../../styles/theme";
 import {
@@ -9,11 +10,11 @@ import {
 
 import { ParseQuery } from "../helpers/types";
 
-const Footer = lazy(async () => await import("../Components/Footer/Footer"));
-const SubscribeSection = lazy(
+const Footer = dynamic(async () => await import("../Components/Footer/Footer"));
+const SubscribeSection = dynamic(
   async () => await import("../Components/sections/SubscribeSection")
 );
-const FollowUsSection = lazy(
+const FollowUsSection = dynamic(
   async () => await import("../Components/sections/FollowUsSection")
 );
 

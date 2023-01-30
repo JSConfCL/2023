@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { transparentize } from "polished";
-import { lazy } from "react";
 
 import { PageProps } from "../../../pages";
 import { ViewportSizes } from "../../../styles/theme";
@@ -9,8 +9,8 @@ import useMediaQuery from "../../helpers/useMediaQuery";
 
 import { PrimaryStyledLink } from "../Links";
 
-const Image = lazy(async () => await import("../core/Image"));
-const RenderingLayout = lazy(
+const Image = dynamic(async () => await import("../core/Image"));
+const RenderingLayout = dynamic(
   async () => await import("../core/RenderingLayout")
 );
 

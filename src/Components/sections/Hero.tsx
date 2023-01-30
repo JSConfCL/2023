@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import styled from "@emotion/styled";
-import { lazy, Suspense } from "react";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 import { PageProps } from "../../../pages";
 import { SecondaryStyledLink, TertiaryStyledLink } from "../Links";
 
-const Particles = lazy(async () => await import("../Particles"));
+const Particles = dynamic(async () => await import("../Particles"));
 
 const StyledWrapper = styled.section(({ theme }) => ({
   width: "100%",

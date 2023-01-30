@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import React, { Suspense, lazy } from "react";
+import dynamic from "next/dynamic";
+import React, { Suspense } from "react";
 
 import { PageProps } from "../../../pages";
 import { ViewportSizes } from "../../../styles/theme";
 import useMediaQuery from "../../helpers/useMediaQuery";
 import { H2, H3 } from "../core/Typography";
 
-const Description = lazy(async () => await import("../core/Description"));
-const Image = lazy(async () => await import("../core/Image"));
+const Description = dynamic(async () => await import("../core/Description"));
+const Image = dynamic(async () => await import("../core/Image"));
 
 const Container = styled.section`
   align-self: center;

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 
 import Banner from "../src/Components/BannerComponent";
 import FlagMessage, { Message } from "../src/Components/FlagMessage";
@@ -18,29 +18,29 @@ import {
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 
-const WhySection = lazy(
+const WhySection = dynamic(
   async () => await import("../src/Components/sections/WhySection/laprevia")
 );
-const HowSection = lazy(
+const HowSection = dynamic(
   async () => await import("../src/Components/sections/HowSection")
 );
-const TeamSection = lazy(
+const TeamSection = dynamic(
   async () => await import("../src/Components/sections/TeamSection")
 );
 
-const SponsorSection = lazy(
+const SponsorSection = dynamic(
   async () => await import("../src/Components/sections/SponsorSection")
 );
 
-const SpeakerSection = lazy(
+const SpeakerSection = dynamic(
   async () => await import("../src/Components/sections/SpeakerSection")
 );
 
-const TimelineSection = lazy(
+const TimelineSection = dynamic(
   async () => await import("../src/Components/sections/TimelineSection")
 );
 
-const FriendSection = lazy(
+const FriendSection = dynamic(
   async () => await import("../src/Components/sections/FriendSection")
 );
 

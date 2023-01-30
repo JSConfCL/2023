@@ -11,14 +11,7 @@ import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import {
-  lazy,
-  ReactElement,
-  ReactNode,
-  Suspense,
-  useEffect,
-  useState,
-} from "react";
+import { ReactElement, ReactNode, Suspense, useEffect, useState } from "react";
 import { Provider } from "urql";
 
 import { urlQlient } from "../src/graphql/urql";
@@ -33,7 +26,7 @@ const WebSchema = dynamic(
   }
 );
 
-const ExtendedFooter = lazy(
+const ExtendedFooter = dynamic(
   async () => await import("../src/Components/ExtendedFooter")
 );
 

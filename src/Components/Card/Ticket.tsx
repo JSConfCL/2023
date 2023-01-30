@@ -1,13 +1,14 @@
 import { Document } from "@contentful/rich-text-types";
 import styled from "@emotion/styled";
-import { lazy, Suspense } from "react";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 import { ViewportSizes } from "../../../styles/theme";
 import Description from "../core/Description";
 import Image from "../core/Image";
 import { H2 } from "../core/Typography";
 
-const ButtonLoginCollection = lazy(
+const ButtonLoginCollection = dynamic(
   async () => await import("../Collection/ButtonLoginCollection")
 );
 

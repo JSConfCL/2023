@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import dynamic from "next/dynamic";
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import { Linkedin, Twitter, GitHub, Paperclip } from "react-feather";
 
 import { StyledWrapperSuspense } from "../../src/Components/NavBar/components";
@@ -36,15 +36,15 @@ import { jsconfTheme, ViewportSizes } from "../../styles/theme";
 const NavBar = dynamic(
   async () => await import("../../src/Components/NavBar/NavBar"),
   {
-    ssr: true,
+    ssr: false,
   }
 );
 
-const Particles = lazy(
+const Particles = dynamic(
   async () => await import("../../src/Components/Particles")
 );
 
-const SpeakerSection = lazy(
+const SpeakerSection = dynamic(
   async () => await import("../../src/Components/sections/SpeakerSection")
 );
 
@@ -481,7 +481,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: any }) {
-  if (!params || !params.id) {
+  if (!params?.id) {
     return { props: {} };
   }
 

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 
 import Seo from "../../src/Components/Seo";
 import Description from "../../src/Components/core/Description";
@@ -22,14 +22,14 @@ import { CHILE, getFullTime, getLongDate } from "../../src/helpers/datesntimes";
 import { ParseQuery } from "../../src/helpers/types";
 import { ViewportSizes } from "../../styles/theme";
 
-const Particles = lazy(
+const Particles = dynamic(
   async () => await import("../../src/Components/Particles")
 );
 
 const NavBar = dynamic(
   async () => await import("../../src/Components/NavBar/NavBar"),
   {
-    ssr: true,
+    ssr: false,
   }
 );
 
@@ -242,7 +242,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: any }) {
-  if (!params || !params.id) {
+  if (!params?.id) {
     return { props: {} };
   }
 

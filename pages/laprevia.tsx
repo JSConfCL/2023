@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 
 import { StyledWrapperSuspense } from "../src/Components/NavBar/components";
 import Seo from "../src/Components/Seo";
@@ -14,7 +14,9 @@ import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 import { ViewportSizes } from "../styles/theme";
 
-const Particles = lazy(async () => await import("../src/Components/Particles"));
+const Particles = dynamic(
+  async () => await import("../src/Components/Particles")
+);
 
 const NavBar = dynamic(
   async () => await import("../src/Components/NavBar/NavBar"),
@@ -23,27 +25,27 @@ const NavBar = dynamic(
   }
 );
 
-const WhySection = lazy(
+const WhySection = dynamic(
   async () => await import("../src/Components/sections/WhySection/laprevia")
 );
 
-const SpeakerSection = lazy(
+const SpeakerSection = dynamic(
   async () => await import("../src/Components/sections/SpeakerSection")
 );
 
-const SponsorSection = lazy(
+const SponsorSection = dynamic(
   async () => await import("../src/Components/sections/SponsorSection")
 );
 
-const TeamSection = lazy(
+const TeamSection = dynamic(
   async () => await import("../src/Components/sections/TeamSection")
 );
 
-const TimelineSection = lazy(
+const TimelineSection = dynamic(
   async () => await import("../src/Components/sections/TimelineSection")
 );
 
-const FriendSection = lazy(
+const FriendSection = dynamic(
   async () => await import("../src/Components/sections/FriendSection")
 );
 

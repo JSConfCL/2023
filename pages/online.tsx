@@ -1,5 +1,6 @@
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 
+import HowCard from "../src/Components/Card/How";
 import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../src/Components/Seo";
 import {
@@ -10,8 +11,6 @@ import {
 
 import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
-
-const HowCard = lazy(async () => await import("../src/Components/Card/How"));
 
 type Page = ParseQuery<HowQueryQuery["page"]>;
 

@@ -1,13 +1,13 @@
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { transparentize } from "polished";
-import { lazy } from "react";
 
 import { PageProps } from "../../../pages";
 import { ViewportSizes } from "../../../styles/theme";
 
-const Image = lazy(async () => await import("../core/Image"));
+const Image = dynamic(async () => await import("../core/Image"));
 
 const wiggleAnimation = keyframes`
   0%, 7% {
