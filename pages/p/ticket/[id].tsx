@@ -26,6 +26,23 @@ const TicketPage = ({
 }) => {
   const { data: user } = useQuery(["me"], anonymousMe);
 
+  const ticketOptions =
+    ticket.ticketType === "workshop"
+      ? {
+          title: "Workshop",
+          subtitle: ticket.ticketDescription,
+          selectedTheme: "workshop",
+        }
+      : ticket.ticketType === "meetup"
+      ? {
+          title: ticket.ticketName,
+          subtitle: ticket.ticketDescription,
+          selectedTheme: "meetup",
+        }
+      : {
+          selectedTheme: "jsconf",
+        };
+
   return (
     <div>
       <Head>
@@ -76,6 +93,8 @@ const TicketPage = ({
       </Head>
       <StyledSpacer />
       <Ticket
+        title={ticketOptions.title}
+        subtitle={ticketOptions.subtitle}
         userTicketId={ticket.ticketId}
         userTicketStatus={ticket.status}
         userPhoto={ticket?.userPhoto ?? ""}
@@ -87,6 +106,9 @@ const TicketPage = ({
         fadeIn
         showGetTicket
         showEdit={user?.id === ticket.userId}
+        selectedTheme={
+          ticketOptions.selectedTheme as "workshop" | "meetup" | "jsconf"
+        }
       />
     </div>
   );

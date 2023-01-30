@@ -65,6 +65,7 @@ export interface PublicTicket {
   ticketName: string;
   ticketType: string;
   ticketSeason: string;
+  ticketDescription: string;
 }
 
 export type SingleTicketType = {
