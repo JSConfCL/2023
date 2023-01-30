@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import { lazy, Suspense } from "react";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 import { PageProps } from "../../../pages";
 import { ViewportSizes } from "../../../styles/theme";
 import { PrimaryStyledLink } from "../Links/index";
 import { H2 } from "../core/Typography";
 
-const Description = lazy(async () => await import("../core/Description"));
-const Card = lazy(async () => await import("../Card"));
+const Description = dynamic(async () => await import("../core/Description"));
+const Card = dynamic(async () => await import("../Card"));
 
 const Container = styled.section`
   align-self: center;

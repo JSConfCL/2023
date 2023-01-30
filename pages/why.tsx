@@ -1,5 +1,7 @@
-import { lazy, Suspense } from "react";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
+import WhyCard from "../src/Components/Card/Why";
 import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../src/Components/Seo";
 import { urlQlient } from "../src/graphql/urql";
@@ -10,10 +12,9 @@ import {
 } from "../src/graphql/why.generated";
 import { ParseQuery } from "../src/helpers/types";
 
-const WhyBanner = lazy(
+const WhyBanner = dynamic(
   async () => await import("../src/Components/Banner/Why")
 );
-const WhyCard = lazy(async () => await import("../src/Components/Card/Why"));
 
 type Page = ParseQuery<WhyQueryQuery["page"]>;
 

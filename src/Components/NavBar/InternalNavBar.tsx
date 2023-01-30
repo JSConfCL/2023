@@ -2,9 +2,10 @@
 import styled from "@emotion/styled";
 import { motion, useAnimation, Variants } from "framer-motion";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { lazy, Suspense } from "react";
+import React, { Suspense } from "react";
 import { use100vh } from "react-div-100vh";
 import {
   Menu as MenuIcon,
@@ -28,7 +29,7 @@ import { UserDropdownMenu } from "./DropdownMenu";
 import { NavBarSize } from "./components";
 import { MenuItemType, NavBarProps } from "./types";
 
-const Description = lazy(async () => await import("../core/Description"));
+const Description = dynamic(async () => await import("../core/Description"));
 
 const StyledNav = styled(motion.nav)`
   z-index: 100;

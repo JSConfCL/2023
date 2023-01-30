@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 import dynamic from "next/dynamic";
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 
 import { PageProps as HomePageProps } from "../../../../pages/index";
 import { PageProps as LaPreviaProps } from "../../../../pages/laprevia";
 
-const WhyCard = lazy(async () => await import("../../Card/Why"));
+import WhyCard from "../../Card/Why";
 
 const GetAccount = dynamic(async () => await import("../../GetAccount"), {
   ssr: false,
@@ -23,11 +23,11 @@ const WhySection = ({
 }) => {
   return (
     <Container>
-      {whyItems?.map((elem, index) => (
-        <Suspense key={`why-card-${index}`} fallback={null}>
+      <Suspense fallback={null}>
+        {whyItems?.map((elem, index) => (
           <WhyCard number={index + 1} {...elem} key={`why-card-${index}`} />
-        </Suspense>
-      ))}
+        ))}
+      </Suspense>
       <div style={{ textAlign: "center" }}>
         <GetAccount />
       </div>

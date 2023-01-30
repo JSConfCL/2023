@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 
 import { ViewportSizes } from "../../styles/theme";
 import useMediaQuery from "../helpers/useMediaQuery";
 
 import { H3, P } from "./core/Typography";
 
-const Image = lazy(async () => await import("./core/Image"));
+const Image = dynamic(async () => await import("./core/Image"));
 
 const Container = styled(motion.section)<{ type: string }>`
   background: ${({ type }) => (type === "blank" ? "transparent" : "white")};

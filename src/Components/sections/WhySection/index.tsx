@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import React, { lazy, Suspense } from "react";
+import dynamic from "next/dynamic";
+import React, { Suspense } from "react";
 
 import { PageProps } from "../../../../pages";
 import { ViewportSizes } from "../../../../styles/theme";
@@ -9,7 +10,7 @@ import { H2 } from "../../core/Typography";
 
 import Description from "./Description";
 
-const Image = lazy(async () => await import("../../core/Image"));
+const Image = dynamic(async () => await import("../../core/Image"));
 
 const Container = styled.section`
   align-self: center;

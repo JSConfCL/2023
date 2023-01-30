@@ -1,15 +1,16 @@
 import { Document } from "@contentful/rich-text-types";
 import styled from "@emotion/styled";
-import { lazy, Suspense } from "react";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 import { ViewportSizes } from "../../../styles/theme";
 import { PrimaryStyledLink } from "../Links";
 import { H2 } from "../core/Typography";
 import { JSConfLogo } from "../svgs/logo";
 
-const Description = lazy(async () => await import("../core/Description"));
-const Image = lazy(async () => await import("../core/Image"));
-const GoogleMapReact = lazy(async () => await import("google-map-react"));
+const Description = dynamic(async () => await import("../core/Description"));
+const Image = dynamic(async () => await import("../core/Image"));
+const GoogleMapReact = dynamic(async () => await import("google-map-react"));
 
 type HowCardProps =
   | {

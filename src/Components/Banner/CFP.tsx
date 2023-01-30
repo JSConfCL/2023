@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
-import { lazy, Suspense } from "react";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 import { PageProps } from "../../../pages/cfp";
 import { ViewportSizes } from "../../../styles/theme";
 import { PrimaryStyledLink } from "../Links";
 import { H1 } from "../core/Typography";
 
-const Description = lazy(async () => await import("../core/Description"));
-const Image = lazy(async () => await import("../core/Image"));
-const JSConfLogo = lazy(async () => await import("../svgs/logo"));
+const Description = dynamic(async () => await import("../core/Description"));
+const Image = dynamic(async () => await import("../core/Image"));
+const JSConfLogo = dynamic(async () => await import("../svgs/logo"));
 
 const Container = styled.section`
   display: flex;

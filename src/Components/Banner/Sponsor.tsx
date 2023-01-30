@@ -1,12 +1,13 @@
 import styled from "@emotion/styled";
-import { lazy, Suspense } from "react";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 import { PageProps } from "../../../pages/sponsor";
 import { ViewportSizes } from "../../../styles/theme";
 import { H1 } from "../core/Typography";
 
-const Description = lazy(async () => await import("../core/Description"));
-const Image = lazy(async () => await import("../core/Image"));
+const Description = dynamic(async () => await import("../core/Description"));
+const Image = dynamic(async () => await import("../core/Image"));
 
 const Container = styled.section`
   display: flex;

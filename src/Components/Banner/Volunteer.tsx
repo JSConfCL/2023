@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-import { Suspense, lazy } from "react";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import ReactMarkdown from "react-markdown";
 
 import remarkGfm from "remark-gfm";
@@ -10,7 +11,7 @@ import Image from "../core/Image";
 import { Anchor, H1, P, UL, LI, Strong } from "../core/Typography";
 import JSConfLogo from "../svgs/logo";
 
-const Description = lazy(async () => await import("../core/Description"));
+const Description = dynamic(async () => await import("../core/Description"));
 
 const StyledH1 = styled(H1)`
   z-index: 3;

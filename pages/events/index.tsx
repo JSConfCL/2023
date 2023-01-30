@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { ExternalLink } from "react-feather";
 
@@ -19,7 +19,7 @@ import { urlQlient } from "../../src/graphql/urql";
 import { CHILE, getFullTime, getLongDate } from "../../src/helpers/datesntimes";
 import { ViewportSizes } from "../../styles/theme";
 
-const Particles = lazy(
+const Particles = dynamic(
   async () => await import("../../src/Components/Particles")
 );
 

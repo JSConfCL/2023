@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import dynamic from "next/dynamic";
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import { Share } from "react-feather";
 
-const QRCode = lazy(async () => await import("react-qr-code"));
+const QRCode = dynamic(async () => await import("react-qr-code"));
 const JSConfLogo = dynamic(async () => await import("../svgs/logo"));
 
 const Container = styled.section`

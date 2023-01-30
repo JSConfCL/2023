@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
-import { lazy, Suspense } from "react";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
+import SponsorCard from "../src/Components/Card/Sponsor";
 import { DefaultPageLayout } from "../src/Components/Layouts/DefaultPagelayout";
 import Seo from "../src/Components/Seo";
 import {
@@ -12,11 +14,8 @@ import { urlQlient } from "../src/graphql/urql";
 import { ParseQuery } from "../src/helpers/types";
 import { ViewportSizes } from "../styles/theme";
 
-const BannerSponsor = lazy(
+const BannerSponsor = dynamic(
   async () => await import("../src/Components/Banner/Sponsor")
-);
-const SponsorCard = lazy(
-  async () => await import("../src/Components/Card/Sponsor")
 );
 
 type Page = ParseQuery<SponsorQueryQuery["page"]>;
