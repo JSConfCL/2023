@@ -36,7 +36,7 @@ import { jsconfTheme, ViewportSizes } from "../../styles/theme";
 const NavBar = dynamic(
   async () => await import("../../src/Components/NavBar/NavBar"),
   {
-    ssr: true,
+    ssr: false,
   }
 );
 

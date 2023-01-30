@@ -32,7 +32,7 @@ interface SponsorProps {
 const NavBar = dynamic(
   async () => await import("../../src/Components/NavBar/NavBar"),
   {
-    ssr: true,
+    ssr: false,
   }
 );
 

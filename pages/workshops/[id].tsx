@@ -29,7 +29,7 @@ const Particles = dynamic(
 const NavBar = dynamic(
   async () => await import("../../src/Components/NavBar/NavBar"),
   {
-    ssr: true,
+    ssr: false,
   }
 );
 

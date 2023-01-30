@@ -5,7 +5,7 @@ import { parseISO } from "date-fns";
 import { format } from "date-fns-tz";
 import Link from "next/link";
 import { transparentize } from "polished";
-import { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { ChevronDown, ChevronUp } from "react-feather";
 
@@ -366,6 +366,7 @@ const TimelineRow = ({
   showPictures: boolean;
 }) => {
   const [show, setShow] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const date = new Date(event.date);
   const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const language = event.language
@@ -381,6 +382,9 @@ const TimelineRow = ({
       )
     : ({ children }: { children: any }) => <>{children}</>;
 
+  React.useEffect(() => {
+    setLoaded(true);
+  }, []);
   const hasInformation = event.description?.json;
   return (
     <TableRow>
@@ -418,11 +422,13 @@ const TimelineRow = ({
           <div>📍 {getFullTime(date, event.duration, localTimezone)}</div>
         ) : null}
       </TimeCell>
-      <FloatingChevron
-        show={show}
-        setShow={setShow}
-        hasInformation={hasInformation}
-      />
+      {loaded && (
+        <FloatingChevron
+          show={show}
+          setShow={setShow}
+          hasInformation={hasInformation}
+        />
+      )}
     </TableRow>
   );
 };
