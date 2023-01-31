@@ -43,14 +43,14 @@ const Hero = styled.section`
   color: #000;
   font-size: 42px;
   width: 100vw;
-  max-width: 1400px;
   margin: 0 auto;
-  z-index: 3;
-  height: calc(100vh - 150px);
+  z-index: 1;
+  min-height: calc(100vh - 150px);
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: space-around;
+  padding-top: 4rem;
+  justify-content: flex-start;
   position: relative;
 `;
 
@@ -90,18 +90,30 @@ const StyledCard = styled.a`
   display: block;
   background: rgba(255, 255, 255, 0.8);
   color: #333;
-  padding: 16px;
   font-size: 20px;
   cursor: pointer;
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
-  border-bottom: 2px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
 
-  span {
-    font-family: "Permanent Marker";
-    font-weight: bold;
-    font-size: 1.2em;
-    color: ${({ theme }) => theme.colors.altColor};
+const EventTitle = styled.span`
+  font-family: "Permanent Marker";
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: ${({ theme }) => theme.colors.altColor};
+`;
+const EventsContainer = styled.div`
+  padding-bottom: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-direction: column;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    justify-content: flex-start;
   }
 `;
 
@@ -124,6 +136,16 @@ interface Event {
   };
 }
 
+const ExternalLinkWrapper = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    justify-content: center;
+  }
+`;
+
 interface PageProps {
   seo: any;
   events: Event[];
@@ -134,14 +156,16 @@ const Card = ({ name, subtitle, slug, date, duration }: Event) => {
   return (
     <Link href={`/events/${slug}`} passHref>
       <StyledCard>
-        <span style={{ fontSize: "2em", display: "block" }}>{name}</span>
+        <EventTitle>{name}</EventTitle>
         <span style={{ display: "block" }}>{subtitle}</span>
         <div style={{ textTransform: "capitalize" }}>{getLongDate(date)}</div>
         <div>
           <ReactCountryFlag countryCode={CHILE.abbr} />{" "}
           {getFullTime(dateinDate, duration, CHILE.timezone)}
         </div>
-        Ver más <ExternalLink size={24} />
+        <ExternalLinkWrapper>
+          Ver más <ExternalLink size={24} />
+        </ExternalLinkWrapper>
       </StyledCard>
     </Link>
   );
@@ -160,18 +184,16 @@ const Home: NextPage<PageProps> = ({ events, seo }: PageProps) => {
           <HeroInfo style={{ zIndex: "5" }}>
             <HeroText>
               <H1>Listado de Eventos</H1>
-              <div style={{ zIndex: "10" }}>
+              <EventsContainer>
                 {events
                   .sort(
                     (event1, event2) =>
                       Date.parse(event1.date) - Date.parse(event2.date)
                   )
                   .map((event) => (
-                    <div style={{ color: "red" }} key={event.name}>
-                      <Card key={event.name} {...event} />
-                    </div>
+                    <Card key={event.name} {...event} />
                   ))}
-              </div>
+              </EventsContainer>
             </HeroText>
           </HeroInfo>
         </Hero>
