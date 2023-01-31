@@ -62,6 +62,14 @@ const HeroInfo = styled.div`
 
 const WorkshopsContainer = styled.div`
   padding-bottom: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-direction: column;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    justify-content: flex-start;
+  }
 `;
 
 const HeroText = styled.div`
@@ -69,6 +77,7 @@ const HeroText = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding: 0 24px;
+  gap: 1rem;
 `;
 
 const H1 = styled.h1`
@@ -108,14 +117,27 @@ const StyledCard = styled.a`
   display: block;
   background: rgba(0, 0, 0, 0.5);
   color: white;
-  padding: 16px;
   font-size: 20px;
   cursor: pointer;
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
-  span {
-    font-size: 1.2em;
-    color: ${({ theme }) => theme.colors.altColor};
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+const WorkshopTitle = styled.span`
+  font-size: 1.2em;
+  color: ${({ theme }) => theme.colors.altColor};
+`;
+
+const ExternalLinkWrapper = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    justify-content: center;
   }
 `;
 
@@ -139,12 +161,14 @@ const Card = ({ title, slug, date, duration }: Workshop) => {
   return (
     <Link href={`/workshops/${slug}`} passHref>
       <StyledCard>
-        <span>{title}</span>
+        <WorkshopTitle>{title}</WorkshopTitle>
         <div>
           <ReactCountryFlag countryCode={CHILE.abbr} />{" "}
           {getFullTime(dateinDate, duration, CHILE.timezone)}
         </div>
-        Ver más <ExternalLink size={24} />
+        <ExternalLinkWrapper>
+          Ver más <ExternalLink size={24} />
+        </ExternalLinkWrapper>
       </StyledCard>
     </Link>
   );
@@ -169,33 +193,24 @@ const Home: NextPage<PageProps> = ({ workshops, seo }: PageProps) => {
           <HeroInfo style={{ zIndex: "5" }}>
             <HeroText>
               <H1>Listado de Workshops</H1>
-              <WorkshopsContainer>
-                {dates.map((date) => (
-                  <div key={date}>
-                    <H2>{getLongDate(date)}</H2>
-                    <div
-                      style={{
-                        zIndex: "10",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "8px",
-                        margin: "16px",
-                      }}
-                    >
-                      {workshops
-                        .filter((workshop) => workshop.date.startsWith(date))
-                        .sort(
-                          (workshop1, workshop2) =>
-                            Date.parse(workshop1.date) -
-                            Date.parse(workshop2.date)
-                        )
-                        .map((workshop) => (
-                          <Card key={workshop.title} {...workshop} />
-                        ))}
-                    </div>
-                  </div>
-                ))}
-              </WorkshopsContainer>
+              {dates.map((date) => (
+                <div key={date}>
+                  <H2>{getLongDate(date)}</H2>
+
+                  <WorkshopsContainer>
+                    {workshops
+                      .filter((workshop) => workshop.date.startsWith(date))
+                      .sort(
+                        (workshop1, workshop2) =>
+                          Date.parse(workshop1.date) -
+                          Date.parse(workshop2.date)
+                      )
+                      .map((workshop) => (
+                        <Card key={workshop.title} {...workshop} />
+                      ))}
+                  </WorkshopsContainer>
+                </div>
+              ))}
             </HeroText>
           </HeroInfo>
         </Hero>
