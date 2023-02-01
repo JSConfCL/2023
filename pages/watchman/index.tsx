@@ -186,7 +186,7 @@ const Watchman: NextPage = (props) => {
               <StyledSearch>
                 <Input
                   type="text"
-                  placeholder="Text"
+                  placeholder="Buscar por nombre, email o username"
                   onChange={(e) => setText(e.target.value)}
                   value={text}
                 />
