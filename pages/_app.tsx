@@ -128,6 +128,11 @@ const AppWithQueryClients = ({
     theme = previaTheme;
   }
 
+  if (pathname.startsWith("/watchman")) {
+    theme = previaTheme;
+  }
+  const includesFooter = !pathname.startsWith("/watchman");
+
   return (
     <CacheProvider value={cache}>
       <Provider value={urlQlient}>
@@ -139,9 +144,11 @@ const AppWithQueryClients = ({
                 <WebSchema />
               </Suspense>
               <LayoutAndContent Component={Component} pageProps={pageProps} />
-              <Suspense fallback={null}>
-                <ExtendedFooter />
-              </Suspense>
+              {includesFooter ? (
+                <Suspense fallback={null}>
+                  <ExtendedFooter />
+                </Suspense>
+              ) : null}
             </ThemeProvider>
           </Hydrate>
         </TanstackQueryProvider>
