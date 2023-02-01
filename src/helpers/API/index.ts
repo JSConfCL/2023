@@ -128,6 +128,12 @@ export const publicTicket = async (ticketId: string): Promise<PublicTicket> => {
   );
 };
 
+export const publicTicketNoTicket = async (
+  ticketId: string
+): Promise<PublicTicket> => {
+  return await customFetch(`${API_URL}/tickets/qr/info/${ticketId}`);
+};
+
 export const updateMe = async (
   object: Partial<UserPayload>
 ): Promise<UserType> => {
@@ -191,4 +197,20 @@ export const finishGoogleLogin = async ({
   user: UserType;
 }> => {
   return await customFetch(`${API_URL}/auth/google/callback?code=${code}`);
+};
+
+export const searchTicketId = async (text: string): Promise<any> => {
+  return await customFetch(
+    `${API_URL}/user-tickets?name=${text}&email=${text}`
+  );
+};
+
+export const redeemsForTicket = async (ticketId: string): Promise<any> => {
+  return await customFetch(`${API_URL}/redeem/ticket/${ticketId}`);
+};
+
+export const redeemForId = async (redeemId: string): Promise<any> => {
+  return await customFetch(`${API_URL}/redeem/${redeemId}`, {
+    method: "POST",
+  });
 };
