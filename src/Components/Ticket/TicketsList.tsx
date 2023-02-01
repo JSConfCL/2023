@@ -22,15 +22,24 @@ export const TicketsList = ({
                 title: "Workshop",
                 subtitle: ticket.ticket.description,
                 selectedTheme: "workshop",
+                image: "black",
+                bgColor: "#fff",
+                fgColor: "#000",
               }
             : ticket.ticket.type === "meetup"
             ? {
                 title: ticket.ticket.name,
                 subtitle: ticket.ticket.description,
                 selectedTheme: "meetup",
+                image: "red",
+                bgColor: "#fff",
+                fgColor: "#F45B69",
               }
             : {
                 selectedTheme: "jsconf",
+                image: "yellow",
+                bgColor: "#F0E040",
+                fgColor: "#000",
               };
 
         return (

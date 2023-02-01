@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import {
   Calendar,
+  Code,
   Copy,
   Edit,
   Facebook,
@@ -19,6 +20,7 @@ import { atcbCSS, atcbExtraCSS } from "./addToCalendarStyles";
 
 const SharingInfo = styled.div`
   text-align: center;
+  display: inline-block;
 `;
 
 const SocialButton = styled.button(({ theme }) => [
@@ -79,10 +81,14 @@ const SocialLinks = ({
   userTicketId,
   showEdit,
   ticketType,
+  showQR,
+  flipFunction,
 }: {
   userTicketId: string;
   showEdit: boolean;
   ticketType: string;
+  showQR: boolean;
+  flipFunction: () => void;
 }) => {
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const publicUrl = `${
@@ -100,6 +106,11 @@ const SocialLinks = ({
   return (
     <SharingInfo>
       <Global styles={[atcbCSS, atcbExtraCSS]} />
+      {showQR ? (
+        <SocialButton onClick={flipFunction}>
+          <Code size={32} />
+        </SocialButton>
+      ) : null}
       <SocialAnchor
         href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
           twitterUrl

@@ -5,6 +5,9 @@ import { AnimatePresence, motion, MotionProps } from "framer-motion";
 import dynamic from "next/dynamic";
 import { transparentize } from "polished";
 import { Suspense, useEffect, useState } from "react";
+import ReactCardFlip from "react-card-flip";
+import { Maximize2 } from "react-feather";
+import { QRCode } from "react-qrcode-logo";
 
 import { ViewportSizes } from "../../../styles/theme";
 import { GenericLink } from "../TicketSection/shared";
@@ -15,6 +18,32 @@ import { FakeTicketContainer } from "./components";
 const SocialLinks = dynamic(async () => await import("./SocialLinks"), {
   ssr: false,
 });
+
+const SocialButton = styled.button(({ theme }) => [
+  {
+    display: `inline-block`,
+    position: "relative",
+    fontWeight: "bold",
+    margin: "0 16px",
+    cursor: "pointer",
+    "&:after": {
+      content: `""`,
+      position: "absolute",
+      width: "100%",
+      transform: "scaleX(0)",
+      height: "4px",
+      bottom: "-8px",
+      left: 0,
+      backgroundColor: theme.colors.white,
+      transformOrigin: "bottom right",
+      transition: "transform 0.25s ease-out",
+    },
+    "&:hover:after": {
+      transform: "scaleX(1)",
+      transformOrigin: "bottom left",
+    },
+  },
+]);
 
 const GetTicket = styled.div`
   text-align: center;
@@ -335,6 +364,9 @@ export const Ticket = ({
   selectedTheme?: "jsconf" | "workshop" | "meetup";
 }) => {
   const [loaded, setLoaded] = useState(!fadeIn);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+
   const animation = useAnimation();
 
   const theme = {
@@ -343,24 +375,65 @@ export const Ticket = ({
       altColor: "#F0E040",
       bgColor: "#1E2019",
       logoColor: "black",
+
+      qrAltColor: "#000",
+      qrBgColor: transparentize(0.5, "#F0E040"),
+      qrImage: "yellow",
+      qrButton: "#F0E040",
     },
     workshop: {
       color: "white",
       altColor: "#F0E040",
       bgColor: "#000",
       logoColor: "white",
+
+      qrAltColor: "#000",
+      qrBgColor: "#fff",
+      qrImage: "black",
+      qrButton: "#F0E040",
     },
     meetup: {
       color: "#333",
       altColor: "#F45B69",
       bgColor: "white",
       logoColor: "#333",
+      qrAltColor: "#F45B69",
+      qrBgColor: "#fff",
+      qrImage: "red",
+      qrButton: "#F45B69",
     },
   }[selectedTheme];
 
   useEffect(() => {
     setLoaded(true);
   }, []);
+
+  if (isFocused) {
+    return (
+      <div
+        style={{
+          zIndex: 1000,
+          background: selectedTheme === "meetup" ? "white" : "black",
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        onClick={() => setIsFocused(false)}
+      >
+        <QRCode
+          value={userTicketId}
+          size={300}
+          bgColor={theme.qrBgColor}
+          fgColor={theme.qrAltColor}
+        />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -369,92 +442,133 @@ export const Ticket = ({
         {!loaded && <FakeTicketContainer {...animation} />}
         {loaded && (
           <MotionContainer {...animation}>
-            <StyledAtropos
-              highlight
-              activeOffset={40}
-              shadowScale={1.5}
-              shadowOffset={100}
-            >
-              <TicketContainer
-                bgColor={theme.bgColor}
-                data-atropos-opacity="1;0.85"
-                data-atropos-offset="-5"
-              >
-                <StyledBackgroundImage
-                  color={theme.logoColor}
-                  data-atropos-offset="-10"
-                />
+            <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
+              <div>
+                <StyledAtropos
+                  highlight
+                  activeOffset={40}
+                  shadowScale={1.5}
+                  shadowOffset={100}
+                >
+                  <TicketContainer
+                    bgColor={theme.bgColor}
+                    data-atropos-opacity="1;0.85"
+                    data-atropos-offset="-5"
+                  >
+                    <StyledBackgroundImage
+                      color={theme.logoColor}
+                      data-atropos-offset="-10"
+                    />
+                    <TicketInfo
+                      color={theme.color}
+                      bgColor={theme.bgColor}
+                      altColor={theme.altColor}
+                      data-atropos-offset="2"
+                    >
+                      <StyledTr data-atropos-offset="2">
+                        <TicketHeader>
+                          <div
+                            style={{ height: "60px" }}
+                            data-atropos-offset="8"
+                          >
+                            <StyledImg src={userPhoto ?? ""} />
+                          </div>
+                          <div style={{ paddingLeft: "16px" }}>
+                            <TicketUsername
+                              altColor={theme.altColor}
+                              data-atropos-offset="5"
+                            >
+                              {userUsername ? "@" + userUsername : ""}
+                            </TicketUsername>
+                            <TicketName data-atropos-offset="5">
+                              {userName ? normalizedString(userName) : ""}
+                            </TicketName>
+                          </div>
+                        </TicketHeader>
+                        <StyledTd
+                          bgColor={theme.bgColor}
+                          data-atropos-offset="5"
+                        >
+                          <Title>{title}</Title>
+                          <SubTitle>{subtitle}</SubTitle>
+                        </StyledTd>
+                        <TicketSection style={{ padding: 0 }}>
+                          <StyledLineContainer data-atropos-offset="3">
+                            <StyledLine
+                              altColor={theme.altColor}
+                              bgColor={theme.bgColor}
+                              data-atropos-offset="1"
+                            >
+                              {HumanTicket[selectedTheme]}
+                            </StyledLine>
+                            <StyledLine
+                              altColor={theme.altColor}
+                              bgColor={theme.bgColor}
+                              data-atropos-offset="2"
+                            >
+                              {HumanTypes[ticketType] ?? "General"}
+                            </StyledLine>
+                            <StyledLine
+                              altColor={theme.altColor}
+                              bgColor={theme.bgColor}
+                              data-atropos-offset="3"
+                            >
+                              {HumanSeasons[ticketSeason] ?? "General"}
+                            </StyledLine>
+                            <StyledLine
+                              altColor={theme.altColor}
+                              bgColor={theme.bgColor}
+                              data-atropos-offset="4"
+                            >
+                              {HumanStatus[userTicketStatus] ?? ""}
+                            </StyledLine>
+                          </StyledLineContainer>
+                        </TicketSection>
+                      </StyledTr>
+                    </TicketInfo>
+                  </TicketContainer>
+                </StyledAtropos>
+              </div>
+              <TicketContainer bgColor={theme.bgColor}>
+                <StyledBackgroundImage color={theme.logoColor} />
                 <TicketInfo
                   color={theme.color}
                   bgColor={theme.bgColor}
                   altColor={theme.altColor}
-                  data-atropos-offset="2"
+                  style={{ textAlign: "center" }}
                 >
-                  <StyledTr data-atropos-offset="2">
-                    <TicketHeader>
-                      <div style={{ height: "60px" }} data-atropos-offset="8">
-                        <StyledImg src={userPhoto ?? ""} />
-                      </div>
-                      <div style={{ paddingLeft: "16px" }}>
-                        <TicketUsername
-                          altColor={theme.altColor}
-                          data-atropos-offset="5"
-                        >
-                          {userUsername ? "@" + userUsername : ""}
-                        </TicketUsername>
-                        <TicketName data-atropos-offset="5">
-                          {userName ? normalizedString(userName) : ""}
-                        </TicketName>
-                      </div>
-                    </TicketHeader>
-                    <StyledTd bgColor={theme.bgColor} data-atropos-offset="5">
-                      <Title>{title}</Title>
-                      <SubTitle>{subtitle}</SubTitle>
-                    </StyledTd>
-                    <TicketSection style={{ padding: 0 }}>
-                      <StyledLineContainer data-atropos-offset="3">
-                        <StyledLine
-                          altColor={theme.altColor}
-                          bgColor={theme.bgColor}
-                          data-atropos-offset="1"
-                        >
-                          {HumanTicket[selectedTheme]}
-                        </StyledLine>
-                        <StyledLine
-                          altColor={theme.altColor}
-                          bgColor={theme.bgColor}
-                          data-atropos-offset="2"
-                        >
-                          {HumanTypes[ticketType] ?? "General"}
-                        </StyledLine>
-                        <StyledLine
-                          altColor={theme.altColor}
-                          bgColor={theme.bgColor}
-                          data-atropos-offset="3"
-                        >
-                          {HumanSeasons[ticketSeason] ?? "General"}
-                        </StyledLine>
-                        <StyledLine
-                          altColor={theme.altColor}
-                          bgColor={theme.bgColor}
-                          data-atropos-offset="4"
-                        >
-                          {HumanStatus[userTicketStatus] ?? ""}
-                        </StyledLine>
-                      </StyledLineContainer>
-                    </TicketSection>
-                  </StyledTr>
+                  <QRCode
+                    value={userTicketId}
+                    logoImage={`images/qr-images/logo-${theme.qrImage}.jpg`}
+                    size={230}
+                    bgColor={theme.qrBgColor}
+                    fgColor={theme.qrAltColor}
+                  />
+                  <br />
+                  <SocialButton
+                    onClick={() => {
+                      setIsFocused(true);
+                    }}
+                  >
+                    <Maximize2 color={theme.qrButton} size={32} />
+                  </SocialButton>
                 </TicketInfo>
               </TicketContainer>
-            </StyledAtropos>
+            </ReactCardFlip>
             {showSocialLinks ? (
               <SocialLinkWrapper>
                 <Suspense fallback={null}>
-                  <SocialLinks
-                    userTicketId={userTicketId}
-                    showEdit={showEdit && selectedTheme === "jsconf"}
-                    ticketType={selectedTheme}
-                  />
+                  <div>
+                    <SocialLinks
+                      userTicketId={userTicketId}
+                      showQR={showEdit}
+                      showEdit={showEdit && selectedTheme === "jsconf"}
+                      ticketType={selectedTheme}
+                      flipFunction={() => {
+                        setIsFlipped((tmpFlipped) => !tmpFlipped);
+                      }}
+                    />
+                  </div>
                 </Suspense>
               </SocialLinkWrapper>
             ) : null}
