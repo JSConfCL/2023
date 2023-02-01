@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Camera, Type, Search, Loader } from "react-feather";
-import { QrReader } from "react-qr-reader";
+import { useZxing } from "react-zxing";
 
 import { searchTicketId } from "../../src/helpers/API";
 import { colors } from "../../styles/theme";
@@ -154,6 +154,15 @@ const Watchman: NextPage = (props) => {
     cacheTime: 0,
     enabled: false,
   });
+  const { ref } = useZxing({
+    async onResult(result) {
+      const possibleText = result?.getText();
+      if (possibleText?.startsWith(KEY)) {
+        const route = `/watchman/${possibleText}`;
+        await router.push(route);
+      }
+    },
+  });
 
   const handleSearch = async (e: any) => {
     e?.preventDefault();
@@ -222,21 +231,9 @@ const Watchman: NextPage = (props) => {
             ) : null}
           </>
         ) : null}
-        {mode === MODES.qr ? (
-          <>
-            <QrReader
-              constraints={{ facingMode: "environment" }}
-              // eslint-disable-next-line @typescript-eslint/no-misused-promises
-              onResult={async (result, _) => {
-                const possibleText = result?.getText();
-                if (possibleText?.startsWith(KEY)) {
-                  const route = `/watchman/${possibleText}`;
-                  await router.push(route);
-                }
-              }}
-            />
-          </>
-        ) : null}
+        <div style={{ display: mode === MODES.qr ? "block" : "none" }}>
+          <video width="100%" ref={ref} />
+        </div>
         <Actions>
           <Button
             onClick={() => {
