@@ -383,7 +383,6 @@ export const InternalNavBar = (props: NavBarProps) => {
         </StyledLinksContainer>
         <MobileMenu
           items={[
-            ...props.items,
             ...(isLoggedIn
               ? [
                   {
@@ -431,6 +430,7 @@ export const InternalNavBar = (props: NavBarProps) => {
                     },
                   },
                 ]),
+            ...props.items,
           ]}
           buttonsCollection={props.buttonsCollection}
           description={props.description}
