@@ -4,6 +4,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Camera, Type, Search, Loader, Image } from "react-feather";
+import { QRCode } from "react-qrcode-logo";
 import { useZxing } from "react-zxing";
 
 import { searchTicketId } from "../../src/helpers/API";
@@ -237,8 +238,16 @@ const Watchman: NextPage = (props) => {
         </div>
         {mode === MODES.tickets || mode === "" ? (
           <>
+            <br />
             <p>Escanea QR hacia Mis Tickets</p>
-            <img src="/images/mis_tickets_qr.png" alt="Mis tickets" />
+            <br />
+            <QRCode
+              value="https://jsconf.cl/watchman"
+              logoImage="images/qr-images/logo-yellow.jpg"
+              size={350}
+              bgColor="#fff"
+              fgColor="#000"
+            />
           </>
         ) : null}
         <Actions>
