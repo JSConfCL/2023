@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import {
   Calendar,
-  Code,
   Copy,
   Edit,
   Facebook,
@@ -15,6 +14,7 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 
 import { ToolTip } from "../Tooltip";
+import { QrIcon } from "../svgs/qr";
 
 import { atcbCSS, atcbExtraCSS } from "./addToCalendarStyles";
 
@@ -108,7 +108,7 @@ const SocialLinks = ({
       <Global styles={[atcbCSS, atcbExtraCSS]} />
       {showQR ? (
         <SocialButton onClick={flipFunction}>
-          <Code size={32} />
+          <QrIcon size={32} />
         </SocialButton>
       ) : null}
       <SocialAnchor

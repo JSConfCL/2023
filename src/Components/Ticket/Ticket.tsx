@@ -315,6 +315,20 @@ const StyledBackgroundImage = styled.div<{ color: string }>`
   }
 `;
 
+const QrContainer = styled.div`
+  width: 330px;
+  height: 450px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    width: 630px;
+    height: 330px;
+  }
+`;
+
 const normalizedString = (str: string) =>
   str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
@@ -535,23 +549,23 @@ export const Ticket = ({
                   color={theme.color}
                   bgColor={theme.bgColor}
                   altColor={theme.altColor}
-                  style={{ textAlign: "center" }}
                 >
-                  <QRCode
-                    value={userTicketId}
-                    logoImage={`images/qr-images/logo-${theme.qrImage}.jpg`}
-                    size={230}
-                    bgColor={theme.qrBgColor}
-                    fgColor={theme.qrAltColor}
-                  />
-                  <br />
-                  <SocialButton
-                    onClick={() => {
-                      setIsFocused(true);
-                    }}
-                  >
-                    <Maximize2 color={theme.qrButton} size={32} />
-                  </SocialButton>
+                  <QrContainer>
+                    <QRCode
+                      value={userTicketId}
+                      logoImage={`images/qr-images/logo-${theme.qrImage}.jpg`}
+                      size={230}
+                      bgColor={theme.qrBgColor}
+                      fgColor={theme.qrAltColor}
+                    />
+                    <SocialButton
+                      onClick={() => {
+                        setIsFocused(true);
+                      }}
+                    >
+                      <Maximize2 size={32} />{" "}
+                    </SocialButton>
+                  </QrContainer>
                 </TicketInfo>
               </TicketContainer>
             </ReactCardFlip>
