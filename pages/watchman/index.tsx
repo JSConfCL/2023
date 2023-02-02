@@ -238,9 +238,7 @@ const Watchman: NextPage = (props) => {
         </div>
         {mode === MODES.tickets || mode === "" ? (
           <>
-            <br />
-            <p>Escanea QR hacia Mis Tickets</p>
-            <br />
+            <p style={{ padding: "8px" }}>Escanea QR hacia Mis Tickets</p>
             <QRCode
               value="https://jsconf.cl/watchman"
               logoImage="images/qr-images/logo-yellow.jpg"
