@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Camera, Type, Search, Loader, Image } from "react-feather";
 import { QRCode } from "react-qrcode-logo";
 import { useZxing } from "react-zxing";
@@ -145,6 +145,8 @@ const Watchman: NextPage = (props) => {
   const initialMode = router.query.mode as string;
   const [text, setText] = useState("");
   const [mode, setMode] = useState(initialMode ?? "");
+  const [page, setPage] = useState("");
+
   const {
     data: ticketList,
     refetch,
@@ -174,6 +176,10 @@ const Watchman: NextPage = (props) => {
   const handleClick = async (ticketId: string) => {
     await router.push(`/watchman/${ticketId}`);
   };
+
+  useEffect(() => {
+    setPage(`${window.location.origin}/mytickets`);
+  }, [setPage]);
 
   return (
     <Wrapper>
@@ -240,7 +246,7 @@ const Watchman: NextPage = (props) => {
           <>
             <p style={{ padding: "8px" }}>Escanea QR hacia Mis Tickets</p>
             <QRCode
-              value="https://jsconf.cl/watchman"
+              value={page}
               logoImage="images/qr-images/logo-yellow.jpg"
               size={350}
               bgColor="#fff"
