@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { Camera, Type, Search, Loader } from "react-feather";
+import { Camera, Type, Search, Loader, Image } from "react-feather";
 import { useZxing } from "react-zxing";
 
 import { searchTicketId } from "../../src/helpers/API";
@@ -71,6 +71,7 @@ const StyledSearch = styled.div`
 const MODES = {
   text: "TEXT",
   qr: "QR",
+  tickets: "TICKETS",
 };
 
 const KEY = "user_ticket_";
@@ -234,7 +235,20 @@ const Watchman: NextPage = (props) => {
         <div style={{ display: mode === MODES.qr ? "block" : "none" }}>
           <video width="100%" ref={ref} />
         </div>
+        {mode === MODES.tickets || mode === "" ? (
+          <>
+            <p>Escanea QR hacia Mis Tickets</p>
+            <img src="/images/mis_tickets_qr.png" alt="Mis tickets" />
+          </>
+        ) : null}
         <Actions>
+          <Button
+            onClick={() => {
+              setMode(MODES.tickets);
+            }}
+          >
+            <Image size={24} />
+          </Button>
           <Button
             onClick={() => {
               setMode(MODES.text);
