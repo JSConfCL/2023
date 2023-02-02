@@ -11,6 +11,7 @@ import {
   CheckSquare,
   Loader,
   AlertCircle,
+  Image,
 } from "react-feather";
 
 import {
@@ -271,6 +272,14 @@ const Watchman: NextPage = (props) => {
         ))}
 
         <Actions>
+          <Button
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            onClick={async () => {
+              await handleSearch("TICKETS");
+            }}
+          >
+            <Image size={24} />
+          </Button>
           <Button
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={async () => {
