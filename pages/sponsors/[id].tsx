@@ -53,20 +53,21 @@ const Hero = styled.section`
   width: 100vw;
   max-width: 1400px;
   margin: 0 auto;
-  z-index: 3;
-  height: calc(100vh - 150px);
+  z-index: 1;
+  min-height: calc(100vh - 150px);
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: space-around;
-  margin-bottom: 100px;
+  padding-top: 4rem;
+  justify-content: flex-start;
+  position: relative;
 `;
 
 const HeroInfo = styled.div`
   margin: 0 auto;
   width: 90%;
   max-width: 800px;
-  padding: 32px;
+  padding: 16px;
   text-align: center;
   font-size: 20px;
 `;
@@ -88,6 +89,20 @@ const Info = styled.div<{ color: string }>`
     }
   }
 `;
+
+const SponsorContainer = styled.div`
+  padding-bottom: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-direction: column;
+  overflow-y: scroll;
+  @media (min-width: ${ViewportSizes.Phone}px) {
+    justify-content: flex-start;
+  }
+`;
+
 const Sponsor = (props: SponsorProps) => {
   const {
     items: [sponsor],
@@ -105,34 +120,37 @@ const Sponsor = (props: SponsorProps) => {
           color={colors.effectColors}
           shape="circle"
           configuration="sponsors"
+          fullScreen={true}
         />
         <Hero>
           <HeroInfo style={{ zIndex: "5" }}>
-            <div>
-              <Link
-                rel="preconnect"
-                href={sponsor?.externalLink ?? ""}
-                passHref
-              >
-                <a target="_blank">
-                  <img
-                    alt={sponsor?.name ?? ""}
-                    src={sponsor?.image?.url!}
-                    style={{ maxWidth: "400px" }}
-                  />
-                </a>
-              </Link>
-            </div>
-            <Info color={colors.textColor}>
-              <Description data={sponsor?.description?.json} />
-              <Link
-                rel="preconnect"
-                href={sponsor?.externalLink ?? ""}
-                passHref
-              >
-                <a target="_blank">Ir a su página</a>
-              </Link>
-            </Info>
+            <SponsorContainer>
+              <div>
+                <Link
+                  rel="preconnect"
+                  href={sponsor?.externalLink ?? ""}
+                  passHref
+                >
+                  <a target="_blank">
+                    <img
+                      alt={sponsor?.name ?? ""}
+                      src={sponsor?.image?.url!}
+                      style={{ width: "100%", maxWidth: "400px" }}
+                    />
+                  </a>
+                </Link>
+              </div>
+              <Info color={colors.textColor}>
+                <Description data={sponsor?.description?.json} />
+                <Link
+                  rel="preconnect"
+                  href={sponsor?.externalLink ?? ""}
+                  passHref
+                >
+                  <a target="_blank">Ir a su página</a>
+                </Link>
+              </Info>
+            </SponsorContainer>
           </HeroInfo>
         </Hero>
       </Suspense>

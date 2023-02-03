@@ -237,6 +237,7 @@ export const makeConfig = ({
   color = [transparentize(0.5, jsconfTheme.colors.jsconfBlack)],
   shape = "polygon",
   configuration = "jsconf",
+  fullScreen = false,
 }): any => {
   const base =
     {
@@ -248,6 +249,7 @@ export const makeConfig = ({
   configs.background.color.value = backgroundColor;
   configs.particles.color.value = color;
   configs.particles.shape.type = shape;
-  configs.fullScreen = false;
+  configs.fullScreen = fullScreen;
+
   return configs;
 };

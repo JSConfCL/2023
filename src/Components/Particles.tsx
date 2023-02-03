@@ -14,6 +14,7 @@ interface ParticleProps {
   color?: string | string[];
   shape?: string;
   configuration?: string;
+  fullScreen?: boolean;
 }
 
 const ParticleComponent = ({
@@ -22,6 +23,7 @@ const ParticleComponent = ({
   color = [transparentize(0.5, jsconfTheme.colors.jsconfBlack)],
   shape = "polygon",
   configuration = "jsconf",
+  fullScreen = false,
 }: ParticleProps) => {
   const particlesInit = async (main: Engine) => {
     await loadFull(main);
@@ -33,6 +35,7 @@ const ParticleComponent = ({
     backgroundColor,
     color: finalColor,
     shape,
+    fullScreen,
   });
 
   return (
