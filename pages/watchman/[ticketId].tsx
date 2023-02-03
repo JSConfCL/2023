@@ -18,6 +18,7 @@ import {
   publicTicketNoTicket as publicTicket,
   redeemsForTicket,
   redeemForId,
+  oneTicket,
 } from "../../src/helpers/API";
 import { colors } from "../../styles/theme";
 
@@ -96,6 +97,20 @@ const StyledTicket = styled.div<{ color: string }>`
   border-left: 10px solid ${({ color }) => color};
   padding: 8px;
   margin-bottom: 16px;
+`;
+
+const FlexWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const FlexItem = styled.div`
+  flex: 1 1 50%;
+`;
+
+const BC = styled.span`
+  font-weight: bold;
+  text-transform: capitalize;
 `;
 
 const NOT_REDEEMED = "not_redeemed";
@@ -178,6 +193,12 @@ const Watchman: NextPage = (props) => {
     retry: false,
     cacheTime: 0,
   }) as { isLoading: boolean; data?: any };
+  const { data: preferences } = useQuery({
+    queryKey: ["oneTicket", ticketId],
+    queryFn: async () => await oneTicket(ticketId),
+    retry: false,
+    cacheTime: 0,
+  });
 
   const mutation = useMutation(
     async (redeemId: string) => {
@@ -248,6 +269,27 @@ const Watchman: NextPage = (props) => {
           userUsername={publicTicketData.username}
           userName={publicTicketData.name}
         />
+        {publicTicketData.ticketType !== "meetup" &&
+        publicTicketData.ticketType !== "workshop" ? (
+          <>
+            <H2>Preferences</H2>
+            <FlexWrap>
+              <FlexItem>
+                Pronombre: <BC>{preferences?.preferences?.pronouns}</BC>
+              </FlexItem>
+              <FlexItem>
+                Alergias: <BC>{preferences?.preferences?.foodAllergy}</BC>
+              </FlexItem>
+              <FlexItem>
+                Comida: <BC>{preferences?.preferences?.foodPreference}</BC>
+              </FlexItem>
+              <FlexItem>
+                Polera: <BC>{preferences?.preferences?.shirtSize}</BC>
+              </FlexItem>
+            </FlexWrap>
+          </>
+        ) : null}
+
         <H2>Redemptions</H2>
         {ticketInfo?.redemptions?.map((r: RedemptionSummary) => (
           <RedemptionRow key={r.id}>
